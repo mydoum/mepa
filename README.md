@@ -3,7 +3,7 @@ SIGL MEPA 2017
 
 Continuous Integration
 ---------------
-TODO
+[![Build Status](https://travis-ci.org/sigl-mepa-2017/mepa.svg?branch=master)](https://travis-ci.org/sigl-mepa-2017/mepa)
 
 Staging environment
 ---------------
@@ -17,7 +17,7 @@ Members
 Requirements
 ---------------
 * JDK 8
-* Maven >= 3.3.9
+* Maven >= 3.2
 
 How to run it
 ---------------
