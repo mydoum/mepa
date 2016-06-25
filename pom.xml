@@ -50,7 +50,7 @@
         <slf4j.version>1.7.21</slf4j.version>
         <spring.version>4.3.0.RELEASE</spring.version>
         <tiles.version>3.0.5</tiles.version>
-        <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
+        <webapp-runner.version>8.0.33.0</webapp-runner.version>
     </properties>
 
     <dependencies>

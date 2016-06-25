@@ -25,9 +25,9 @@ How to run it
 ```
 mvn clean install
 ```
-* Run Tomcat server:
+* Run webapp:
 ```
-mvn tomcat7:run -pl mepa-front
+java -jar mepa-front/target/dependency/webapp-runner.jar --port 8080 mepa-front/target/*.war
 ```
 * Open `http://localhost:8080/` in your favorite web browser
 
