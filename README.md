@@ -4,9 +4,11 @@ SIGL MEPA 2017
 Continuous Integration
 ---------------
 [![Build Status](https://travis-ci.org/sigl-mepa-2017/mepa.svg?branch=master)](https://travis-ci.org/sigl-mepa-2017/mepa)
+https://travis-ci.org/sigl-mepa-2017/mepa
 
 Staging environment
 ---------------
+[![Heroku](http://heroku-badge.herokuapp.com/?app=mepa&style=flat&svg=1)]
 https://mepa.herokuapp.com/
 
 Members
