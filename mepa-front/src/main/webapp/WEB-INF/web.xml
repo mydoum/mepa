@@ -9,6 +9,11 @@
         <param-value>classpath:front-common-context.xml</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>spring.profiles.default</param-name>
+        <param-value>dev</param-value>
+    </context-param>
+
     <!-- i18n configuration -->
     <!-- Resource bundle used for JSTL fmt:message tag -->
     <context-param>

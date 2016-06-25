@@ -5,35 +5,66 @@
                         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
                         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
 ">
-    <!-- Load configuration file -->
-    <context:property-placeholder location="classpath:database-config.properties"/>
-
     <!-- Scans the classpath of this application for @Components to deploy as beans -->
     <context:component-scan base-package="fr.epita.sigl.mepa.core"/>
 
-    <!-- Remove this data source below when you will use a JNDI data source -->
-    <bean id="coreDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${dataSource.driverClassName}"/>
-        <property name="url" value="${dataSource.url}"/>
-        <property name="username" value="${dataSource.username}"/>
-        <property name="password" value="${dataSource.password}"/>
-    </bean>
+    <beans profile="dev">
+        <!-- In memory database -->
+        <bean id="devDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="org.h2.Driver"/>
+            <property name="url" value="jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;MODE=PostgreSQL"/>
+            <property name="username" value="sa"/>
+            <property name="password" value=""/>
+        </bean>
 
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="coreDataSource"/>
-        <property name="packagesToScan" value="fr.epita.sigl.mepa.core.domain"/>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
-                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-            </props>
-        </property>
-    </bean>
+        <bean id="devSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+            <property name="dataSource" ref="devDataSource"/>
+            <property name="packagesToScan" value="fr.epita.sigl.mepa.core.domain"/>
+            <property name="hibernateProperties">
+                <props>
+                    <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                    <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+                    <prop key="hibernate.show_sql">true</prop>
+                </props>
+            </property>
+        </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-    <!-- Declare a transaction manager -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
-          p:sessionFactory-ref="sessionFactory"/>
+        <tx:annotation-driven transaction-manager="devTransactionManager"/>
+        <!-- Declare a transaction manager -->
+        <bean id="devTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+              p:sessionFactory-ref="devSessionFactory"/>
+    </beans>
+
+    <beans profile="staging">
+        <!-- PostgreSQL database -->
+        <bean class="java.net.URI" id="stagingDatabaseUrl">
+            <constructor-arg value="#{systemEnvironment['DATABASE_URL']}"/>
+        </bean>
+
+        <bean id="stagingDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="org.postgresql.Driver"/>
+            <property name="url"
+                      value="#{ 'jdbc:postgresql://' + @stagingDatabaseUrl.getHost() + ':' + @stagingDatabaseUrl.getPort() + @stagingDatabaseUrl.getPath() }"/>
+            <property name="username" value="#{ @stagingDatabaseUrl.getUserInfo().split(':')[0] }"/>
+            <property name="password" value="#{ @stagingDatabaseUrl.getUserInfo().split(':')[1] }"/>
+        </bean>
+
+        <bean id="stagingSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+            <property name="dataSource" ref="stagingDataSource"/>
+            <property name="packagesToScan" value="fr.epita.sigl.mepa.core.domain"/>
+            <property name="hibernateProperties">
+                <props>
+                    <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>
+                    <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+                    <prop key="hibernate.show_sql">false</prop>
+                </props>
+            </property>
+        </bean>
+
+        <tx:annotation-driven transaction-manager="stagingTransactionManager"/>
+        <!-- Declare a transaction manager -->
+        <bean id="stagingTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+              p:sessionFactory-ref="stagingSessionFactory"/>
+    </beans>
 
 </beans>
