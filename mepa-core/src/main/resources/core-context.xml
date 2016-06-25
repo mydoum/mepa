@@ -17,7 +17,7 @@
             <property name="password" value=""/>
         </bean>
 
-        <bean id="devSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <bean id="devSessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
             <property name="dataSource" ref="devDataSource"/>
             <property name="packagesToScan" value="fr.epita.sigl.mepa.core.domain"/>
             <property name="hibernateProperties">
@@ -31,7 +31,7 @@
 
         <tx:annotation-driven transaction-manager="devTransactionManager"/>
         <!-- Declare a transaction manager -->
-        <bean id="devTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+        <bean id="devTransactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager"
               p:sessionFactory-ref="devSessionFactory"/>
     </beans>
 
@@ -49,7 +49,7 @@
             <property name="password" value="#{ @stagingDatabaseUrl.getUserInfo().split(':')[1] }"/>
         </bean>
 
-        <bean id="stagingSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <bean id="stagingSessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
             <property name="dataSource" ref="stagingDataSource"/>
             <property name="packagesToScan" value="fr.epita.sigl.mepa.core.domain"/>
             <property name="hibernateProperties">
@@ -63,7 +63,7 @@
 
         <tx:annotation-driven transaction-manager="stagingTransactionManager"/>
         <!-- Declare a transaction manager -->
-        <bean id="stagingTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+        <bean id="stagingTransactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager"
               p:sessionFactory-ref="stagingSessionFactory"/>
     </beans>
 

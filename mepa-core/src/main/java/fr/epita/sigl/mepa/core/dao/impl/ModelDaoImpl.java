@@ -2,9 +2,9 @@ package fr.epita.sigl.mepa.core.dao.impl;
 
 import fr.epita.sigl.mepa.core.dao.ModelDao;
 import fr.epita.sigl.mepa.core.domain.Model;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

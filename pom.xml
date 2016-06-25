@@ -38,15 +38,15 @@
         <commons-dbcp.version>2.1.1</commons-dbcp.version>
         <commons-lang.version>3.4</commons-lang.version>
         <h2.version>1.4.192</h2.version>
-        <hibernate.version>4.3.11.Final</hibernate.version>
+        <hibernate.version>5.2.0.Final</hibernate.version>
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
-        <jsp-api.version>2.2.1</jsp-api.version>
+        <jsp-api.version>2.3.1</jsp-api.version>
         <jstl.version>1.2</jstl.version>
         <junit.version>4.12</junit.version>
         <logback.version>1.1.7</logback.version>
         <mockito.version>1.10.19</mockito.version>
         <postgresql.version>9.4.1208</postgresql.version>
-        <servlet-api.version>3.0.1</servlet-api.version>
+        <servlet-api.version>3.1.0</servlet-api.version>
         <slf4j.version>1.7.21</slf4j.version>
         <spring.version>4.3.0.RELEASE</spring.version>
         <tiles.version>3.0.5</tiles.version>
