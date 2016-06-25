@@ -8,7 +8,7 @@ https://travis-ci.org/sigl-mepa-2017/mepa
 
 Staging environment
 ---------------
-[![Heroku](http://heroku-badge.herokuapp.com/?app=mepa&style=flat&svg=1)]
+[![Heroku](http://heroku-badge.herokuapp.com/?app=mepa&style=flat&svg=1)](https://mepa.herokuapp.com/)
 https://mepa.herokuapp.com/
 
 Members
