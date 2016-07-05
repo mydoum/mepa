@@ -38,7 +38,7 @@
         <commons-dbcp.version>2.1.1</commons-dbcp.version>
         <commons-lang.version>3.4</commons-lang.version>
         <h2.version>1.4.192</h2.version>
-        <hibernate.version>5.2.0.Final</hibernate.version>
+        <hibernate.version>5.2.1.Final</hibernate.version>
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
         <jsp-api.version>2.3.1</jsp-api.version>
         <jstl.version>1.2</jstl.version>
