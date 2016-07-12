@@ -17,6 +17,13 @@
         <url>https://sigl.epita.fr/</url>
     </organization>
 
+    <url>https://mepa.herokuapp.com/</url>
+
+    <ciManagement>
+        <system>Travis</system>
+        <url>https://travis-ci.org/sigl-mepa-2017/mepa</url>
+    </ciManagement>
+
     <scm>
         <connection>scm:git:git@github.com/sigl-mepa-2017/mepa.git</connection>
         <developerConnection>scm:git:git@github.com/sigl-mepa-2017/mepa.git</developerConnection>
