@@ -15,10 +15,11 @@ Members
 ---------------
 * BEAUFILS Damien
 * MARIN Florian
-* DE CHENERILLES Grégoire
+* DE CHENERILLES Grï¿½goire
 * MACE Simon
 * GOASDOUE Jordan
 * ZHENG Valentin
+* CLAEBOTS Charles
 
 Requirements
 ---------------
