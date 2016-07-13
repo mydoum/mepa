@@ -15,6 +15,7 @@ Members
 ---------------
 * BEAUFILS Damien
 * MARIN Florian
+* SAYAGH Tahar
 * DE CHENERILLES Gregoire
 * MACE Simon
 * GOASDOUE Jordan
