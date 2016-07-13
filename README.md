@@ -15,6 +15,7 @@ Members
 ---------------
 * BEAUFILS Damien
 * MARIN Florian
+* WAUQUIEZ Simon
 * SAYAGH Tahar
 * DE CHENERILLES Gregoire
 * MACE Simon
