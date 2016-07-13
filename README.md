@@ -20,6 +20,7 @@ Members
 * GOASDOUE Jordan
 * ZHENG Valentin
 * CLAEBOTS Charles
+* LEBRUN Xavier
 
 Requirements
 ---------------
