@@ -15,7 +15,7 @@ Members
 ---------------
 * BEAUFILS Damien
 * MARIN Florian
-* DE CHENERILLES Gr�goire
+* DE CHENERILLES Gregoire
 * MACE Simon
 * GOASDOUE Jordan
 * ZHENG Valentin
