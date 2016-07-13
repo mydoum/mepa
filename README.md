@@ -16,6 +16,8 @@ Members
 * BEAUFILS Damien
 * MARIN Florian
 * DE CHENERILLES Grégoire
+* MACE Simon
+* GOASDOUE Jordan
 
 Requirements
 ---------------
