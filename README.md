@@ -18,6 +18,7 @@ Members
 * DE CHENERILLES Grégoire
 * MACE Simon
 * GOASDOUE Jordan
+* ZHENG Valentin
 
 Requirements
 ---------------
