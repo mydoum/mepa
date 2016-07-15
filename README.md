@@ -23,6 +23,7 @@ Members
 * ZHENG Valentin
 * CLAEBOTS Charles
 * LEBEL Gildas
+* ASSAADI Ayoub
 
 Requirements
 ---------------
