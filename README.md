@@ -24,6 +24,7 @@ Members
 * CLAEBOTS Charles
 * LEBEL Gildas
 * ASSAADI Ayoub
+* CAPES Hugo
 
 Requirements
 ---------------
