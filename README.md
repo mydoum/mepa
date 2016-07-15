@@ -21,6 +21,7 @@ Members
 * ZHENG Valentin
 * CLAEBOTS Charles
 * LEBRUN Xavier
+* DROUIN Nicolas
 
 Requirements
 ---------------
