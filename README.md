@@ -24,6 +24,7 @@ Members
 * CLAEBOTS Charles
 * LEBEL Gildas
 * ASSAADI Ayoub
+* ELHattab Bachir 
 
 Requirements
 ---------------
