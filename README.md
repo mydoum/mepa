@@ -22,6 +22,7 @@ Members
 * GOASDOUE Jordan
 * ZHENG Valentin
 * CLAEBOTS Charles
+* LEBEL Gildas
 
 Requirements
 ---------------
