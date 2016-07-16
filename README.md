@@ -25,6 +25,7 @@ Members
 * LEBEL Gildas
 * ASSAADI Ayoub
 * CAPES Hugo
+* GHIRIGHINI Steven
 
 Requirements
 ---------------
