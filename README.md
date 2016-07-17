@@ -26,6 +26,7 @@ Members
 * ASSAADI Ayoub
 * CAPES Hugo
 * GHIRIGHINI Steven
+* GIRALDO Alonso
 
 Requirements
 ---------------
