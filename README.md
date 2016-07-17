@@ -27,6 +27,7 @@ Members
 * CAPES Hugo
 * GHIRIGHINI Steven
 * GIRALDO Alonso
+* DENIS Antoine
 
 Requirements
 ---------------
