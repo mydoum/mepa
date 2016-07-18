@@ -13,6 +13,7 @@ https://mepa.herokuapp.com/
 
 Members
 ---------------
+* THIAW-KINE Roman
 * CHEMOULA Jacky
 * BEAUFILS Damien
 * MARIN Florian
