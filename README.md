@@ -13,6 +13,7 @@ https://mepa.herokuapp.com/
 
 Members
 ---------------
+* CHEMOULA Jacky
 * BEAUFILS Damien
 * MARIN Florian
 * WAUQUIEZ Simon
