@@ -36,6 +36,8 @@ Members
 * LASNE Guillaume
 * MOHANARAJ Nieveetha
 * MBADI BAYEBEC Prosper Emmanuel
+* BENMAHI Soufiane
+
 
 Requirements
 ---------------
