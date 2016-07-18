@@ -28,6 +28,7 @@ Members
 * GHIRIGHINI Steven
 * GIRALDO Alonso
 * DENIS Antoine
+* LASNE Guillaume
 
 Requirements
 ---------------
