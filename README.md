@@ -32,6 +32,7 @@ Members
 * GIRALDO Alonso
 * DENIS Antoine
 * LASNE Guillaume
+* MOHANARAJ Nieveetha
 
 Requirements
 ---------------
