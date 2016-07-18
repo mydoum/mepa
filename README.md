@@ -35,6 +35,7 @@ Members
 * DENIS Antoine
 * LASNE Guillaume
 * MOHANARAJ Nieveetha
+* MBADI BAYEBEC Prosper Emmanuel
 
 Requirements
 ---------------
