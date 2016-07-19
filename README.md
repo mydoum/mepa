@@ -13,6 +13,9 @@ https://mepa.herokuapp.com/
 
 Members
 ---------------
+* THIAW-KINE Roman
+* EAR Patrick
+* CHEMOULA Jacky
 * BEAUFILS Damien
 * MARIN Florian
 * WAUQUIEZ Simon
@@ -22,11 +25,20 @@ Members
 * GOASDOUE Jordan
 * ZHENG Valentin
 * CLAEBOTS Charles
-* LEBEL Gildas
-* ASSAADI Ayoub
-* CAPES Hugo
 * LEBRUN Xavier
 * DROUIN Nicolas
+* LEBEL Gildas
+* ASSAADI Ayoub
+* ELHattab Bachir 
+* CAPES Hugo
+* GHIRIGHINI Steven
+* GIRALDO Alonso
+* DENIS Antoine
+* LASNE Guillaume
+* MOHANARAJ Nieveetha
+* MBADI BAYEBEC Prosper Emmanuel
+* BENMAHI Soufiane
+
 
 Requirements
 ---------------
