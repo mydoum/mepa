@@ -22,6 +22,8 @@
             <a class="btn btn-lg btn-primary" href="${coreExampleUrl}" role="button">View Core (Database) module and
                 form validation example</a>
         </p>
+        <c:url var="exportCsvUrl" value="/project/download"/>
+        <a class="btn btn-lg btn-primary" href="${exportCsvUrl}" role="button">Export CSV</a>
 
         <p class="text-center well-done">
             <c:url var="wellDoneImgUrl" value="/img/welldone.jpg"/>
