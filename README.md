@@ -25,6 +25,8 @@ Members
 * LEBEL Gildas
 * ASSAADI Ayoub
 * CAPES Hugo
+* LEBRUN Xavier
+* DROUIN Nicolas
 
 Requirements
 ---------------
