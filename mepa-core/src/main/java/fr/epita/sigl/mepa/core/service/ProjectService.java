@@ -7,14 +7,14 @@ import java.util.List;
 
 public interface ProjectService {
 
-    void createModel(Project project);
+    void createProject(Project project);
 
-    void updateModel(Project project);
+    void updateProject(Project project);
 
-    void deleteModel(Project project);
+    void deleteProject(Project project);
 
-    Project getModelById(Long id);
+    Project getProjectById(Long id);
 
-    List<Project> getAllModels();
+    List<Project> getAllProjects();
 
 }
