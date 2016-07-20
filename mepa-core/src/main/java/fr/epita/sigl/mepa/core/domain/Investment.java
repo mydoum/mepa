@@ -32,22 +32,22 @@ public class Investment {
     private Date date; //investment date
 
     @NotNull
-    private Long user_id; //Id of the user who is investing
+    private Long userId; //Id of the user who is investing
 
     @NotNull
     private Integer amount; //Amount invested on the project
 
     @NotNull
-    private Long project_id;
+    private Long projectId;
 
-    public Long getUser_id (){ return this.user_id; }
-    public void setUser_id (Long user_id){ this.user_id = user_id;}
+    public Long getUserId (){ return this.userId; }
+    public void setUserId (Long user_id){ this.userId = user_id;}
 
     public Integer getAmount() { return this.amount; }
     public void setAmount (Integer amount) { this.amount = amount; }
 
-    public Long getProject_id (){ return this.project_id; }
-    public void setProject_id ( Long project ) { this.project_id = project; }
+    public Long getProjectId (){ return this.projectId; }
+    public void setProjectId ( Long project ) { this.projectId = project; }
 
     public Long getId() {
         return this.id;
