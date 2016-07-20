@@ -6,10 +6,10 @@ $('document').ready(function(){
         input = document.getElementById('input-with-keypress');
 
     noUiSlider.create(keypressSlider, {
-        start: 0,
-        step: 1,
+        start: 0.01,
+        step: 0.01,
         range: {
-            'min': 0,
+            'min': 0.01,
             'max': 1000
         }
     });
@@ -27,7 +27,7 @@ $('document').ready(function(){
 
         // Convert the string to a number.
         var value = Number( keypressSlider.noUiSlider.get() ),
-            sliderStep = keypressSlider.noUiSlider.steps()
+            sliderStep = keypressSlider.noUiSlider.steps();
 
         // Select the stepping for the first handle.
         sliderStep = sliderStep[0];

@@ -6,19 +6,19 @@ import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.UserService;
 import fr.epita.sigl.mepa.core.service.impl.InvestmentlServiceImpl;
 import fr.epita.sigl.mepa.core.service.impl.UserServiceImpl;
-import fr.epita.sigl.mepa.front.model.investment.InvestAmount;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
+
 
 @Controller
 public class InvestController {
@@ -36,16 +36,10 @@ public class InvestController {
     }
 
     @RequestMapping(value = "/invest/investMoney", method = RequestMethod.POST)
-    public String investMoney(ModelMap model, HttpSession session, @Valid InvestAmount investAmount,
-                              BindingResult result) {
-        int moneyAmount = investAmount.getMoneyAmount();
-        model.addAttribute("montant", moneyAmount);
+    public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request) {
+        float moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
+        model.addAttribute("amount", moneyAmount);
         return "/investment/investment";
-    }
-
-    @ModelAttribute("investAmount")
-    public InvestAmount initinvestAmount() {
-        return new InvestAmount();
     }
 
     private ArrayList getallinvestors() {
