@@ -82,7 +82,6 @@ public class Investment {
         this.created = created;
     }
 
-
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
