@@ -9,9 +9,14 @@ import java.util.Date;
 
 @Entity
 @NamedQueries({
+<<<<<<< a5c031ae8e40f98a81e1e07543c998632c38590c
         @NamedQuery(name = "Investment.findById", query = "FROM Investment o WHERE o.id=:id"),
         @NamedQuery(name = "Investment.findAll", query = "FROM Investment o"),
         @NamedQuery(name = "Investment.findAllByProject", query = "FROM Investment o WHERE o.projectId=:projectId"),
+=======
+  //      @NamedQuery(name = "Model.findById", query = "FROM Model o WHERE o.id=:id"),
+  //      @NamedQuery(name = "Model.findAll", query = "FROM Model o")
+>>>>>>> [INVEST][FIELD INIT] Investment fields created
         })
 public class Investment {
 
@@ -56,7 +61,6 @@ public class Investment {
 
     public Long getProjectId (){ return this.projectId; }
     public void setProjectId ( Long project ) { this.projectId = project; }
-
 
     public Long getId() {
         return this.id;
