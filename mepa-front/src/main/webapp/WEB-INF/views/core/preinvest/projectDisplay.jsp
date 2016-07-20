@@ -4,7 +4,6 @@
     <h2>Displaying a project</h2>
     <div class="alert alert-warning">
         Hello World ! :D
-
     </div>
     <div class="table-responsive">
         Name: ${project.name}
