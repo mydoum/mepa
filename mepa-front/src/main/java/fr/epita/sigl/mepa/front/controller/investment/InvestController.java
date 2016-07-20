@@ -1,13 +1,10 @@
 package fr.epita.sigl.mepa.front.controller.investment;
 
-import fr.epita.sigl.mepa.core.dao.InvestmentDao;
 import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.User;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
-import fr.epita.sigl.mepa.core.service.ModelService;
 import fr.epita.sigl.mepa.core.service.UserService;
 import fr.epita.sigl.mepa.core.service.impl.InvestmentlServiceImpl;
-import fr.epita.sigl.mepa.core.service.impl.ModelServiceImpl;
 import fr.epita.sigl.mepa.core.service.impl.UserServiceImpl;
 import fr.epita.sigl.mepa.front.model.investment.InvestAmount;
 import org.slf4j.Logger;
@@ -22,12 +19,12 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Controller
 public class InvestController {
 
     private static final Logger LOG = LoggerFactory.getLogger(InvestController.class);
+
     private InvestmentService investmentService = new InvestmentlServiceImpl();
     private UserService userService = new UserServiceImpl();
 
@@ -51,12 +48,6 @@ public class InvestController {
         return new InvestAmount();
     }
 
-    @RequestMapping(value = "/investlist", method = RequestMethod.GET)
-    public String investlist(ModelMap model, HttpSession session) {
-
-        return "/investment/investment";
-    }
-
     private ArrayList getallinvestors() {
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
         User tmpUser;
@@ -73,5 +64,4 @@ public class InvestController {
         }
         return listOfInvestors;
     }
-
 }
