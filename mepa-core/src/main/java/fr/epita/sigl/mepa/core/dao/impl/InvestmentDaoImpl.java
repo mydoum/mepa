@@ -4,7 +4,6 @@ import fr.epita.sigl.mepa.core.dao.InvestmentDao;
 import fr.epita.sigl.mepa.core.domain.Investment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
