@@ -9,8 +9,8 @@ import java.util.Date;
 
 @Entity
 @NamedQueries({
-  //      @NamedQuery(name = "Model.findById", query = "FROM Model o WHERE o.id=:id"),
-  //      @NamedQuery(name = "Model.findAll", query = "FROM Model o")
+        @NamedQuery(name = "Investment.findById", query = "FROM Model o WHERE o.id=:id"),
+        @NamedQuery(name = "Investment.findAll", query = "FROM Model o")
         })
 public class Investment {
 
