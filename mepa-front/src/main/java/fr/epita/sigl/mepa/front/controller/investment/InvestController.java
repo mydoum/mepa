@@ -74,4 +74,18 @@ public class InvestController {
         Collections.sort(listOfInvestors);
         return listOfInvestors;
     }
+
+    @RequestMapping(value = "/invest/filltables", method = RequestMethod.GET)
+    public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) {
+        for (int i = 0; i < 30; i++) {
+            Investment invest = new Investment();
+            invest.setAmount(15.0f);
+            invest.setProjectId(1l);
+            invest.setUserId(1l);
+            Date date = new Date();
+            invest.setDate(date);
+            investmentService.createInvestment(invest);
+        }
+        return "/investment/investment";
+    }
 }
