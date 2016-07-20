@@ -75,16 +75,16 @@ public class Investment {
     /**
      * @return the data
      */
-    public String getData() {
+   /* public String getData() {
         return this.data;
-    }
+    }*/
 
     /**
      * @param data the data to set
      */
-    public void setData(String data) {
+    /*public void setData(String data) {
         this.data = data;
-    }
+    }*/
 
     @Override
     public String toString() {
