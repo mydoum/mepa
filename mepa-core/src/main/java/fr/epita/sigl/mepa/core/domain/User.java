@@ -8,13 +8,15 @@ import javax.validation.constraints.NotNull;
 
 @NamedQueries({
         @NamedQuery(name = "User.findById", query = "FROM User o WHERE o.id=:id"),
-        @NamedQuery(name = "User.findAll", query = "FROM User o")})
+        @NamedQuery(name = "User.findAll", query = "FROM User o"),
+        @NamedQuery(name  = "User.findByFirstName", query = "FROM User o WHERE o.firstName=:firstName"),
+        @NamedQuery(name  = "User.findByLastName", query = "FROM User o WHERE o.lastName=:lastName")})
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "login", nullable = false, unique=true)
     private String login;
@@ -22,8 +24,8 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "surName", nullable = false)
-    private String surName;
+    @Column(name = "firstName", nullable = false)
+    private String firstName;
 
     @Column(name = "lastName", nullable = false)
     private String lastName;
@@ -44,12 +46,12 @@ public class User {
         this.password = password;
     }
 
-    public String getSurName() {
-        return surName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setSurName(String surName) {
-        this.surName = surName;
+    public void setFirstName(String surName) {
+        this.firstName = surName;
     }
 
     public String getLastName() {
@@ -63,11 +65,11 @@ public class User {
     @NotNull
     private String data;
 
-    public Integer getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

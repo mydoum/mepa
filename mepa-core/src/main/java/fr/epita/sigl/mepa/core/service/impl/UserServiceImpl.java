@@ -23,8 +23,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public User getUserById(Integer id) {
+    public User getUserById(Long id) {
         return this.userDao.getById(id);
+    }
+
+    @Override
+    public User getUserByFirstName(String firstName) {
+        return this.userDao.getByFirstName(firstName);
+    }
+
+    @Override
+    public User getUserByLastName(String lastName) {
+        return this.userDao.getByLastName(lastName);
     }
 
     @Override

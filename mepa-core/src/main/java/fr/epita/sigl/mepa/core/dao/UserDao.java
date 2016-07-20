@@ -8,7 +8,11 @@ public interface UserDao {
 
     void create(User user);
 
-    User getById(Integer id);
+    User getById(Long id);
+
+    User getByFirstName(String firstName);
+
+    User getByLastName(String lastName);
 
     List<User> getAll();
 
