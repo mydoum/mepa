@@ -37,7 +37,7 @@ public class Investment {
     private Integer amount; //Amount invested on the project
 
     @NotNull
-    private String project;
+    private Long project;
 
     public Long getUser_id (){ return this.user_id; }
     public void setUser_id (Long user_id){ this.user_id = user_id;}
