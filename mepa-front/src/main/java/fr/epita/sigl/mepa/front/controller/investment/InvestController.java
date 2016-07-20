@@ -2,8 +2,10 @@ package fr.epita.sigl.mepa.front.controller.investment;
 
 
 import fr.epita.sigl.mepa.core.domain.Investment;
+import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.domain.User;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
+import fr.epita.sigl.mepa.core.service.ProjectService;
 import fr.epita.sigl.mepa.core.service.UserService;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import org.slf4j.Logger;
@@ -30,6 +32,8 @@ public class InvestController {
     private InvestmentService investmentService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ProjectService projectService;
 
     @RequestMapping(value = "/invest", method = RequestMethod.GET)
     public String invest(ModelMap model, HttpSession session) {
@@ -60,7 +64,6 @@ public class InvestController {
         for (Investment invest : investments) {
             Date created = invest.getCreated();
             Float amount = invest.getAmount();
-            Long projectId = invest.getProjectId();
             Long userId = invest.getUserId();
             tmpUser = userService.getUserById(userId);
             firstname = tmpUser.getFirstName();
