@@ -19,6 +19,7 @@
         <put-attribute name="body" value="/WEB-INF/views/home/home.jsp"/>
     </definition>
 
+
     <!-- Invest -->
     <definition name="invest.definition" extends="base.definition">
         <put-attribute name="title" value="invest.title"/>
@@ -30,14 +31,6 @@
     <!-- Preinvest -->
     <definition name="/preinvest/projectDisplay" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectDisplay.jsp"/>
-    </definition>
-
-    <!-- Invest -->
-    <definition name="invest.definition" extends="base.definition">
-        <put-attribute name="title" value="invest.title"/>
-    </definition>
-    <definition name="/investment/investment" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/views/investment/investment.jsp"/>
     </definition>
 
     <!-- Core example -->
