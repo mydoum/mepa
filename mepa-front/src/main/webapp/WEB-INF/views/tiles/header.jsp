@@ -1,12 +1,5 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 <header>
-    <%-- Facebook meta characters--%>
-    <meta property="og:url"           content="https://mepa.herokuapp.com/home" />
-    <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="LISG crowdfounding 2.0" />
-    <meta property="og:description"   content="Description d'un projet" />
-    <meta property="og:image"         content="/img/welldone.jpg" />
-
     <div class="container">
         <div class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
