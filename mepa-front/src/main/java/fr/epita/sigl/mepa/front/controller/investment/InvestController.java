@@ -37,7 +37,11 @@ public class InvestController {
 
     @RequestMapping(value = "/invest", method = RequestMethod.GET)
     public String invest(ModelMap model, HttpSession session) {
-        ArrayList listinvestors = getallinvestors();
+        ArrayList<Investor> listinvestors = getallinvestors();
+        if (listinvestors.isEmpty())
+            System.out.println("toto");
+        else
+            printelements(listinvestors);
         model.addAttribute("investorsList", listinvestors);
         return "/investment/investment";
     }
@@ -46,20 +50,16 @@ public class InvestController {
     public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request) {
         float moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
         model.addAttribute("amount", moneyAmount);
-        ArrayList listinvestors = getallinvestors();
+        ArrayList<Investor> listinvestors = getallinvestors();
         model.addAttribute("investorsList", listinvestors);
         return "/investment/investment";
     }
 
-    private ArrayList getallinvestors() {
-        List toto = investmentService.getAllInvestments();
-        if (toto == null)
-            return null;
-        ArrayList<Investment> investments = new ArrayList<Investment>(toto);
+    private ArrayList<Investor> getallinvestors() {
+        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
         User tmpUser;
         String firstname;
         String lastname;
-
         ArrayList<Investor> listOfInvestors = new ArrayList<Investor>();
         for (Investment invest : investments) {
             Date created = invest.getCreated();
@@ -70,6 +70,7 @@ public class InvestController {
             lastname = tmpUser.getLastName();
             Investor tmpInvestor = new Investor(firstname, lastname, amount, created);
             listOfInvestors.add(tmpInvestor);
+
         }
         Collections.sort(listOfInvestors);
         return listOfInvestors;
@@ -77,6 +78,13 @@ public class InvestController {
 
     @RequestMapping(value = "/invest/filltables", method = RequestMethod.GET)
     public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) {
+        User user = new User();
+        user.setFirstName("Simon");
+        user.setLastName("MACE");
+        user.setLogin("simon.mace@epita.fr");
+        user.setPassword("123");
+        user.setData("toto");
+        userService.createUser(user);
         for (int i = 0; i < 30; i++) {
             Investment invest = new Investment();
             invest.setAmount(15.0f);
@@ -87,5 +95,14 @@ public class InvestController {
             investmentService.createInvestment(invest);
         }
         return "/investment/investment";
+    }
+
+    private void printelements(ArrayList<Investor> listinvestors) {
+        for ( Investor investor: listinvestors) {
+            System.out.println(investor.getFirstname());
+            System.out.println(investor.getLastname());
+            System.out.println(investor.getMoneyAmount());
+            System.out.println(investor.getDateOfInvestment());
+        }
     }
 }

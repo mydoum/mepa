@@ -37,7 +37,7 @@
             </tr>
             </thead>
             <tbody>
-            <c:if test="!empty investorsList">
+            <%-- <c:if test="!empty investorsList"> --%>
 
                 <c:forEach items="${investorsList}" var="investor" varStatus="status">
                     <tr>
@@ -45,9 +45,13 @@
                         <td>${investor.lastname}</td>
                         <td>${investor.moneyAmount}</td>
                         <td>${investor.dateOfInvestment}</td>
+                        <%-- <td>${investor.getFirstname()}</td>
+                        <td>${investor.getLastname()}</td>
+                        <td>${investor.getMoneyAmount()}</td>
+                        <td>${investor.getDateOfInvestment()}</td> --%>
                     </tr>
                 </c:forEach>
-            </c:if>
+            <%-- </c:if> --%>
             </tbody>
         </table>
     </div>

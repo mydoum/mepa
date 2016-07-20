@@ -55,7 +55,9 @@ public class Investor implements Comparable<Investor>{
     {
         // Comparaison sur l'auteur
         int compdate= this.getDateOfInvestment().compareTo(investor.getDateOfInvestment());
-        if(compdate != 0) { return compdate; }
+        if(compdate != 0) {
+            return (- compdate);
+        }
 
         // Comparaison sur l'année
         int compLastName = this.getLastname().compareTo(investor.getLastname());
