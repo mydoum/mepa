@@ -26,6 +26,8 @@ public class Model {
     @Column(name = "created", nullable = false)
     private Date created;
 
+
+
     @NotNull
     private String data;
 

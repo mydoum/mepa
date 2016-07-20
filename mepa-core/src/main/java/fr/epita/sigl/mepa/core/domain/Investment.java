@@ -14,7 +14,6 @@ import java.util.Date;
         @NamedQuery(name = "Investment.findAllByProject", query = "FROM Investment o WHERE o.project_id=:project_id"),
         })
 public class Investment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -80,8 +79,6 @@ public class Investment {
     public void setCreated(Date created) {
         this.created = created;
     }
-
-
 
     @Override
     public String toString() {
