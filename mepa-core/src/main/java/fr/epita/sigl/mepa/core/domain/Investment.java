@@ -14,6 +14,7 @@ import java.util.Date;
         @NamedQuery(name = "Investment.findAllByProject", query = "FROM Investment o WHERE o.projectId=:projectId"),
         })
 public class Investment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -56,6 +57,7 @@ public class Investment {
     public Long getProjectId (){ return this.projectId; }
     public void setProjectId ( Long project ) { this.projectId = project; }
 
+
     public Long getId() {
         return this.id;
     }
@@ -79,6 +81,7 @@ public class Investment {
     public void setCreated(Date created) {
         this.created = created;
     }
+
 
     @Override
     public String toString() {
