@@ -44,4 +44,10 @@ public class InvestmentlServiceImpl implements InvestmentService {
     public List<Investment> getAllInvestments() {
         return this.investmentDao.getAll();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Investment> getAllInvestmentsByProjectId(Long id) {
+        return this.investmentDao.getAllByProjectId(id);
+    }
 }

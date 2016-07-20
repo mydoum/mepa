@@ -14,6 +14,8 @@ public interface InvestmentService {
 
     Investment getInvestmentById(Long id);
 
+    List<Investment> getAllInvestmentsByProjectId(Long id);
+
     List<Investment> getAllInvestments();
 
 }
