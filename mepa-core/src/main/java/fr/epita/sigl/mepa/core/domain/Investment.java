@@ -46,8 +46,8 @@ public class Investment {
     public Integer getAmount() { return this.amount; }
     public void setAmount (Integer amount) { this.amount = amount; }
 
-    public Long getProject (){ return this.project; }
-    public void setProject ( Long project ) { this.project = project; }
+    public Long getProject (){ return this.project_id; }
+    public void setProject ( Long project ) { this.project_id = project; }
 
     public Long getId() {
         return this.id;
