@@ -19,6 +19,14 @@
         <put-attribute name="body" value="/WEB-INF/views/home/home.jsp"/>
     </definition>
 
+    <!-- Invest -->
+    <definition name="invest.definition" extends="base.definition">
+        <put-attribute name="title" value="invest.title"/>
+    </definition>
+    <definition name="/investment/investment" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/investment/investment.jsp"/>
+    </definition>
+
     <!-- Core example -->
     <definition name="/example/core/form" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/example/core/form.jsp"/>

@@ -15,12 +15,24 @@
     <c:url var="defaultCssUrl" value="/css/default.css"/>
     <link rel="stylesheet" href="${defaultCssUrl}" type="text/css"/>
 
+    <%-- Investissement CSS --%>
+    <c:url var="investDefaultCss" value="/css/investment/investment.css"/>
+    <link rel="stylesheet" href="${investDefaultCss}" type="text/css"/>
+    <c:url var="investSliderCss" value="/css/investment/nouislider.min.css"/>
+    <link rel="stylesheet" href="${investSliderCss}" type="text/css"/>
+
     <%-- jQuery --%>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <%-- Bootstrap JavaScript --%>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
             integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
             crossorigin="anonymous"></script>
+
+    <%-- Investissement javascript --%>
+    <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
+    <script src="${investSliderJs}"></script>
+    <c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>
+    <script src="${investSliderPersoJs}"></script>
 </head>
 <body>
 <%-- Header --%>
