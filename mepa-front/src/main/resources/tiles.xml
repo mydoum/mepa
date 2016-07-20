@@ -32,6 +32,17 @@
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectDisplay.jsp"/>
     </definition>
 
+<<<<<<< fb22bb30d12e63a3cae19e8d122c16d0e5fa6b3f
+=======
+    <!-- Invest -->
+    <definition name="invest.definition" extends="base.definition">
+        <put-attribute name="title" value="invest.title"/>
+    </definition>
+    <definition name="/investment/investment" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/investment/investment.jsp"/>
+    </definition>
+
+>>>>>>> [ADD/UPD][INVESTBUTTON] Adding slider + Controller for Invest update
     <!-- Core example -->
     <definition name="/example/core/form" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/example/core/form.jsp"/>

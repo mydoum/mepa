@@ -1,11 +1,10 @@
 package fr.epita.sigl.mepa.front.controller.investment;
 
+
 import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.User;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.UserService;
-import fr.epita.sigl.mepa.core.service.impl.InvestmentlServiceImpl;
-import fr.epita.sigl.mepa.core.service.impl.UserServiceImpl;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
