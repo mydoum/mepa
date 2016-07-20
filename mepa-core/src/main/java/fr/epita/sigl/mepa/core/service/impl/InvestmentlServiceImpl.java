@@ -1,6 +1,7 @@
 package fr.epita.sigl.mepa.core.service.impl;
 
 import fr.epita.sigl.mepa.core.dao.InvestmentDao;
+import fr.epita.sigl.mepa.core.dao.impl.InvestmentDaoImpl;
 import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class InvestmentlServiceImpl implements InvestmentService {
     public void deleteInvestment(Investment investment) {
         this.investmentDao.delete(investment);
     }
-/*
+
     @Override
     @Transactional(readOnly = true)
     public Investment getInvestmentById(Long id) {
@@ -49,5 +50,5 @@ public class InvestmentlServiceImpl implements InvestmentService {
     @Transactional(readOnly = true)
     public List<Investment> getAllInvestmentsByProjectId(Long id) {
         return this.investmentDao.getAllByProjectId(id);
-    }*/
+    }
 }

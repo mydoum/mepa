@@ -11,10 +11,10 @@ public interface InvestmentDao {
     void update(Investment investment);
 
     void delete(Investment investment);
-/*
+
     Investment getById(Long id);
 
     List<Investment> getAll();
 
-    List<Investment> getAllByProjectId(Long id);*/
+    List<Investment> getAllByProjectId(Long id);
 }

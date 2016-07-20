@@ -8,11 +8,11 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-/*@NamedQueries({
+@NamedQueries({
         @NamedQuery(name = "Investment.findById", query = "FROM Investment o WHERE o.id=:id"),
         @NamedQuery(name = "Investment.findAll", query = "FROM Investment o"),
-        @NamedQuery(name = "Investment.findAllByProject", query = "FROM Investment o WHERE o.project_id=:project_id"),
-        })*/
+        @NamedQuery(name = "Investment.findAllByProject", query = "FROM Investment o WHERE o.projectId=:projectId"),
+        })
 public class Investment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

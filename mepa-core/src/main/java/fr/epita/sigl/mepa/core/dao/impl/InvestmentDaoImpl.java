@@ -4,6 +4,7 @@ import fr.epita.sigl.mepa.core.dao.InvestmentDao;
 import fr.epita.sigl.mepa.core.domain.Investment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -34,7 +35,7 @@ public class InvestmentDaoImpl implements InvestmentDao {
     public void delete(Investment investment) {
         this.getSession().delete(investment);
     }
-/*
+
     @Override
     public Investment getById(Long id) {
         Query query = this.getSession().getNamedQuery("Investment.findById");
@@ -50,8 +51,8 @@ public class InvestmentDaoImpl implements InvestmentDao {
 
     @Override
     public List<Investment> getAllByProjectId(Long id){
-        Query query = this.getSession().getNamedQuery("Investment.findAllByProject_id");
+        Query query = this.getSession().getNamedQuery("Investment.findAllByProject");
         query.setParameter("id", id);
         return query.list();
-    }*/
+    }
 }
