@@ -21,30 +21,30 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectDao projectDao;
 
     @Override
-    public void createModel(Project project) {
+    public void createProject(Project project) {
         project.setStartDate(new Date());
         this.projectDao.create(project);
     }
 
     @Override
-    public void updateModel(Project project) {
+    public void updateProject(Project project) {
         this.projectDao.update(project);
     }
 
     @Override
-    public void deleteModel(Project project) {
+    public void deleteProject(Project project) {
         this.projectDao.delete(project);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Project getModelById(Long id) {
+    public Project getProjectById(Long id) {
         return this.projectDao.getById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Project> getAllModels() {
+    public List<Project> getAllProjects() {
         return this.projectDao.getAll();
     }
 }
