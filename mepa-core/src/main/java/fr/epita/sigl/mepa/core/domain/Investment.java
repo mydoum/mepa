@@ -35,7 +35,7 @@ public class Investment {
     private Long userId; //Id of the user who is investing
 
     @NotNull
-    private Integer amount; //Amount invested on the project
+    private Float amount; //Amount invested on the project
 
     @NotNull
     private Long projectId;
@@ -43,8 +43,16 @@ public class Investment {
     public Long getUserId (){ return this.userId; }
     public void setUserId (Long user_id){ this.userId = user_id;}
 
-    public Integer getAmount() { return this.amount; }
-    public void setAmount (Integer amount) { this.amount = amount; }
+    public Float getAmount() { return this.amount; }
+    public void setAmount (Float amount) { this.amount = amount; }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Long getProjectId (){ return this.projectId; }
     public void setProjectId ( Long project ) { this.projectId = project; }
@@ -73,19 +81,7 @@ public class Investment {
         this.created = created;
     }
 
-    /**
-     * @return the data
-     */
-   /* public String getData() {
-        return this.data;
-    }*/
 
-    /**
-     * @param data the data to set
-     */
-    /*public void setData(String data) {
-        this.data = data;
-    }*/
 
     @Override
     public String toString() {
