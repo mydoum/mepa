@@ -23,5 +23,40 @@
             <p align="center"><input type="submit" class="btn btn-primary" value="Investir"></p>
         </form:form>
     </div>
+    <br />
+    <div class="container">
+        <tr />
+        <h2>Liste des investisseurs</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Donation</th>
+                <th>Date de donation</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:if test="!empty investorsList">
+
+                <c:forEach items="${investorsList}" var="investor" varStatus="status">
+                    <tr>
+                        <td>${investor.firstname}</td>
+                        <td>${investor.lastname}</td>
+                        <td>${investor.moneyAmount}</td>
+                        <td>${investor.dateOfInvestment}</td>
+                    </tr>
+                </c:forEach>
+            </c:if>
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <div class="download">
+        <p align="center">
+            <a href="/invest/download"><span class="btn btn-primary">Download</span></a>
+        </p>
+
+    </div>
 </div>
 

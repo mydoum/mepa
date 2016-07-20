@@ -5,6 +5,11 @@ import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.User;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.UserService;
+<<<<<<< 147c07fecab9b7b55359a639e1eb89257a9fd0b4
+=======
+import fr.epita.sigl.mepa.core.service.impl.InvestmentlServiceImpl;
+import fr.epita.sigl.mepa.core.service.impl.UserServiceImpl;
+>>>>>>> [MERGE][INVEST] Cosmetic commit
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +39,7 @@ public class InvestController {
     @RequestMapping(value = "/invest", method = RequestMethod.GET)
     public String invest(ModelMap model, HttpSession session) {
         ArrayList listinvestors = getallinvestors();
-        model.addAttribute("investorslist", listinvestors);
+        model.addAttribute("investorsList", listinvestors);
         return "/investment/investment";
     }
 
@@ -42,6 +47,8 @@ public class InvestController {
     public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request) {
         float moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
         model.addAttribute("amount", moneyAmount);
+        ArrayList listinvestors = getallinvestors();
+        model.addAttribute("investorsList", listinvestors);
         return "/investment/investment";
     }
 
