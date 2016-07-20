@@ -26,9 +26,23 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getById(Integer id) {
+    public User getById(Long id) {
         Query query = this.getSession().getNamedQuery("User.findById");
         query.setParameter("id", id);
+        return (User) query.uniqueResult();
+    }
+
+    @Override
+    public User getByFirstName(String firstName) {
+        Query query = this.getSession().getNamedQuery("User.findByFirstname");
+        query.setParameter("firstName", firstName);
+        return (User) query.uniqueResult();
+    }
+
+    @Override
+    public User getByLastName(String lastName) {
+        Query query = this.getSession().getNamedQuery("User.findByLastName");
+        query.setParameter("lastName", lastName);
         return (User) query.uniqueResult();
     }
 
