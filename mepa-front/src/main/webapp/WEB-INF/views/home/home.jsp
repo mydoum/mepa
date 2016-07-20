@@ -7,6 +7,7 @@
 
         <p class="alert alert-success">Seems to be working? Good!</p>
 
+
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget mauris a lacus commodo placerat.
             Pellentesque commodo, nisl mollis cursus ultrices, dui tellus molestie purus, ac lobortis lectus elit ac mi.
             Pellentesque tristique nisi nec massa auctor in interdum nisl mattis. Aenean convallis dignissim eleifend.
@@ -16,6 +17,11 @@
             Donec libero purus, aliquet et volutpat porta, bibendum vel enim. Proin tempus rutrum iaculis. Proin
             vulputate
             dignissim lobortis. Aenean ante elit, condimentum sed fringilla nec, sagittis in magna.</p>
+        <label> Leave a comment below: </label>
+        <form>
+            <textarea name="nom" rows=4 cols=40> </textarea>
+        </form>
+        <button type="submit" class="btn btn-default">Submit your comment</button>
 
         <p class="text-center">
             <c:url var="coreExampleUrl" value="/example/core/"/>
