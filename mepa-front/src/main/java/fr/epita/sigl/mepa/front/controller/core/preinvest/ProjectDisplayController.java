@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/preinvest") // The adress of the component
+@RequestMapping("/core/preinvest") // The adress of the component
 @SessionAttributes({})
 public class ProjectDisplayController {
 
@@ -31,10 +31,10 @@ public class ProjectDisplayController {
     @Autowired
     private ModelService modelService;
 
-    @RequestMapping(value = {"/projectDisplay"}) // The adress to call the function
+    @RequestMapping(value = {"/", "/projectDisplay"}) // The adress to call the function
     public String showForm(HttpServletRequest request, ModelMap modelMap) {
         /* Code your logic here */
 
-        return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
+        return "/core/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
     }
 }
