@@ -32,7 +32,7 @@ public class InvestmentlServiceImpl implements InvestmentService {
     public void deleteInvestment(Investment investment) {
         this.investmentDao.delete(investment);
     }
-
+/*
     @Override
     @Transactional(readOnly = true)
     public Investment getInvestmentById(Long id) {
@@ -49,5 +49,5 @@ public class InvestmentlServiceImpl implements InvestmentService {
     @Transactional(readOnly = true)
     public List<Investment> getAllInvestmentsByProjectId(Long id) {
         return this.investmentDao.getAllByProjectId(id);
-    }
+    }*/
 }

@@ -43,19 +43,19 @@ public class InvestController {
     }
 
     private ArrayList getallinvestors() {
-        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
+        //ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
         User tmpUser;
         String firstname;
         String lastname;
-
+/*
         ArrayList listOfInvestors = new ArrayList();
         for (Investment invest : investments) {
             Date created = invest.getCreated();
-            Integer amount = invest.getAmount();
+            float amount = invest.getAmount();
             Long projectId = invest.getProjectId();
             Long userId = invest.getUserId();
             tmpUser = userService.getUserById(userId);
-        }
-        return listOfInvestors;
+        }*/
+        return null;//listOfInvestors;
     }
 }

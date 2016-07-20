@@ -11,11 +11,11 @@ public interface InvestmentService {
     void updateInvestment(Investment investment);
 
     void deleteInvestment(Investment investment);
-
+/*
     Investment getInvestmentById(Long id);
 
     List<Investment> getAllInvestmentsByProjectId(Long id);
 
-    List<Investment> getAllInvestments();
+    List<Investment> getAllInvestments();*/
 
 }

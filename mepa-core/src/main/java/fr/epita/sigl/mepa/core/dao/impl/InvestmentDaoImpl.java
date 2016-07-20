@@ -34,7 +34,7 @@ public class InvestmentDaoImpl implements InvestmentDao {
     public void delete(Investment investment) {
         this.getSession().delete(investment);
     }
-
+/*
     @Override
     public Investment getById(Long id) {
         Query query = this.getSession().getNamedQuery("Investment.findById");
@@ -47,4 +47,11 @@ public class InvestmentDaoImpl implements InvestmentDao {
         Query query = this.getSession().getNamedQuery("Investment.findAll");
         return query.list();
     }
+
+    @Override
+    public List<Investment> getAllByProjectId(Long id){
+        Query query = this.getSession().getNamedQuery("Investment.findAllByProject_id");
+        query.setParameter("id", id);
+        return query.list();
+    }*/
 }
