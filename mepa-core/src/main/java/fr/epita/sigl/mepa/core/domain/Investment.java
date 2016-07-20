@@ -85,5 +85,4 @@ public class Investment {
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
-
 }
