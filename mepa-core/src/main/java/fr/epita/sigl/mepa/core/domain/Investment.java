@@ -9,8 +9,9 @@ import java.util.Date;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Investment.findById", query = "FROM Model o WHERE o.id=:id"),
-        @NamedQuery(name = "Investment.findAll", query = "FROM Model o")
+        @NamedQuery(name = "Investment.findById", query = "FROM Investment o WHERE o.id=:id"),
+        @NamedQuery(name = "Investment.findAll", query = "FROM Investment o"),
+        @NamedQuery(name = "Investment.findAllByProject", query = "FROM Investment o WHERE o.project_id=:project_id"),
         })
 public class Investment {
 
@@ -37,7 +38,7 @@ public class Investment {
     private Integer amount; //Amount invested on the project
 
     @NotNull
-    private Long project;
+    private Long project_id;
 
     public Long getUser_id (){ return this.user_id; }
     public void setUser_id (Long user_id){ this.user_id = user_id;}

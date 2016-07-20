@@ -47,4 +47,10 @@ public class InvestmentDaoImpl implements InvestmentDao {
         Query query = this.getSession().getNamedQuery("Investment.findAll");
         return query.list();
     }
+
+    @Override
+    public List<Investment> getAllByProject_id(){
+        Query query = this.getSession().getNamedQuery("Investment.findAllByProject_id");
+        return query.list();
+    }
 }
