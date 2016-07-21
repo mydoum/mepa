@@ -9,9 +9,10 @@ import java.util.Date;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Model.findById", query = "FROM Model o WHERE o.id=:id"),
-        @NamedQuery(name = "Model.findAll", query = "FROM Model o")})
-public class Model {
+  //      @NamedQuery(name = "Model.findById", query = "FROM Model o WHERE o.id=:id"),
+  //      @NamedQuery(name = "Model.findAll", query = "FROM Model o")
+        })
+public class Investment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,10 +27,26 @@ public class Model {
     @Column(name = "created", nullable = false)
     private Date created;
 
-
+    @NotNull
+    private Date date; //investment date
 
     @NotNull
-    private String data;
+    private Long user_id; //Id of the user who is investing
+
+    @NotNull
+    private Integer amount; //Amount invested on the project
+
+    @NotNull
+    private String project;
+
+    public Long getUser_id (){ return this.user_id; }
+    public void setUser_id (Long user_id){ this.user_id = user_id;}
+
+    public Integer getAmount() { return this.amount; }
+    public void setAmount (Integer amount) { this.amount = amount; }
+
+    public String getProject (){ return this.project; }
+    public void setProject ( String project ) { this.project = project; }
 
     public Long getId() {
         return this.id;
@@ -58,17 +75,17 @@ public class Model {
     /**
      * @return the data
      */
-    public String getData() {
+/*    public String getData() {
         return this.data;
     }
-
+*/
     /**
      * @param data the data to set
      */
-    public void setData(String data) {
+  /*  public void setData(String data) {
         this.data = data;
     }
-
+*/
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
