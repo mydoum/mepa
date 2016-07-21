@@ -17,6 +17,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+<<<<<<< 4b1f94df6508e3fb7b23b38e8d2fc5f1773f22ae
+=======
+import javax.jws.soap.SOAPBinding;
+>>>>>>> [UPDT][INVESTCONTROLLER] An investment is now saved
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,7 +50,7 @@ public class InvestController {
         float totalAmount = 0f;
         ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
         model.addAttribute("investorsList", listinvestors);
-        model.addAttribute("totaldontion", totalAmount);
+        model.addAttribute("totaldonation", totalAmount);
         return "/investment/investment";
     }
 
@@ -57,15 +61,18 @@ public class InvestController {
 
         float moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
         model.addAttribute("amount", moneyAmount);
+        Long userId = 2L;
+        Long projectId = 1L;
+
+        if (insertNewInvestor(moneyAmount, userId, projectId) == 0)
+            return "/investment/investment";
+
+        //Mail.sendSMTPMail("smtp.gmail.com", true);
+
         ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
         model.addAttribute("investorsList", listinvestors);
+        model.addAttribute("totaldonation", totalAmount);
 
-        System.out.println("hihi");
-        System.out.flush();
-
-        Mail.sendSMTPMail("smtp.gmail.com", true);
-
-        System.out.println("hoho");
         return "/investment/investment";
     }
 
@@ -91,6 +98,18 @@ public class InvestController {
         return listOfInvestors;
     }
 
+    private int insertNewInvestor (float moneyAmount, Long userId, Long projectId) {
+        Investment newInvestment = new Investment();
+        newInvestment.setAmount(moneyAmount);
+        newInvestment.setProjectId(projectId);
+        newInvestment.setUserId(userId);
+        Date date = new Date();
+        newInvestment.setDate(date);
+        investmentService.createInvestment(newInvestment);
+
+        return 1;
+    }
+
     @RequestMapping(value = "/invest/filltables", method = RequestMethod.GET)
     public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) {
         User user = new User();
@@ -99,16 +118,26 @@ public class InvestController {
         user.setLogin("simon.mace@epita.fr");
         user.setPassword("123");
         user.setData("toto");
+        user.setId(1L);
         userService.createUser(user);
+        User user2 = new User();
+        user2.setFirstName("Hugo");
+        user2.setLastName("CAPES");
+        user2.setLogin("hugo.capes@epita.fr");
+        user2.setPassword("123");
+        user2.setData("toto");
+        user2.setId(2L);
+        userService.createUser(user2);
         for (int i = 0; i < 30; i++) {
             Investment invest = new Investment();
             invest.setAmount(15.0f);
-            invest.setProjectId(1l);
-            invest.setUserId(1l);
+            invest.setProjectId(1L);
+            invest.setUserId(1L);
             Date date = new Date();
             invest.setDate(date);
             investmentService.createInvestment(invest);
         }
+
         return "/investment/investment";
     }
 
@@ -162,5 +191,14 @@ public class InvestController {
             }
         }
         return "/project/download";
+    }
+
+    private void printalluser() {
+        ArrayList<User> users = new ArrayList<User>(userService.getAllUsers());
+        for ( User user: users) {
+            System.out.println(user.getFirstName());
+            System.out.println(user.getLastName());
+            System.out.println(user.getId());
+        }
     }
 }
