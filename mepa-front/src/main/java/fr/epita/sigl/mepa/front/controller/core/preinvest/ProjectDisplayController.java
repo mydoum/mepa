@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping("/preinvest") // The adress of the component
+@RequestMapping("/core/preinvest") // The adress of the component
 @SessionAttributes({})
 public class ProjectDisplayController {
 

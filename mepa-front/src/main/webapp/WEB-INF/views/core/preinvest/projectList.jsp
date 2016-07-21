@@ -1,11 +1,9 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <div class="container">
-    <h2>Displaying a project</h2>
-    <div class="alert alert-warning">
-        Hello World ! :D
+        <c:url var="preinvestCoreUrl" value="/core/preinvest/projectCreate"/>
+        <a class="btn btn-lg btn-primary" href="${preinvestCoreUrl}" role="button">Create a new project</a>
 
-    </div>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
