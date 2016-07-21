@@ -39,10 +39,6 @@ public class InvestController {
     public String invest(ModelMap model, HttpSession session) {
         float totalAmount = 0f;
         ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
-        if (listinvestors.isEmpty())
-            System.out.println("toto");
-        else
-            printelements(listinvestors);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totaldontion", totalAmount);
         return "/investment/investment";
