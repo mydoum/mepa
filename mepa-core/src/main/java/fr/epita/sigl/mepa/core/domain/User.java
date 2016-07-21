@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @NamedQueries({
         @NamedQuery(name = "User.findById", query = "FROM User o WHERE o.id=:id"),
@@ -29,6 +30,10 @@ public class User {
 
     @Column(name = "lastName", nullable = false)
     private String lastName;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "birthDate", nullable = false)
+    private Date birthDate;
 
     public String getLogin() {
         return login;
@@ -60,6 +65,14 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     @NotNull
