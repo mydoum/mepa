@@ -24,6 +24,11 @@
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectDisplay.jsp"/>
     </definition>
 
+    <!-- Authentification -->
+    <definition name="/authentification/signup" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/authentification/signup.jsp"/>
+    </definition>
+
 
     <!-- Core example -->
     <definition name="/example/core/form" extends="base.definition">
