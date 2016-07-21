@@ -1,5 +1,6 @@
 package fr.epita.sigl.mepa.core.domain;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -7,6 +8,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -66,6 +69,12 @@ public class Project {
         this.name = projectName;
     }
 
+    public String dateFormat(String format, Date date)
+    {
+        DateFormat df = new SimpleDateFormat(format);
+        return df.format(date);
+    }
+
     public Long getId() {
         return id;
     }
@@ -82,17 +91,13 @@ public class Project {
         this.user_id = user_id;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
+    public Date getStartDate() { return startDate; }
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
-    }
+    public Date getEndDate() { return endDate; }
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;

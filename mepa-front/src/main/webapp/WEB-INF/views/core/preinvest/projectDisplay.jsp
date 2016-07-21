@@ -7,8 +7,8 @@
         <table>
             <tr>
                 <td><img src="http://www.gobadges.com/v/vspfiles/photos/CD0564-2.jpg" height="400" width="400"/></td>
-                <td><span>Date de début : </span></td>
-                <td><span>Date de fin : </span></td>
+                <td><span class="date">Date de début : ${project.dateFormat("dd/MM/yyyy", project.startDate)}</span></td>
+                <td><span class="date">Date de fin : ${project.dateFormat("dd/MM/yyyy", project.endDate)}</span></td>
             </tr>
             <tr>
                 <td>

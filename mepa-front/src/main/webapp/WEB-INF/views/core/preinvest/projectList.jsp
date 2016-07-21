@@ -18,7 +18,7 @@
             <c:forEach items="${project_list}" var="project" varStatus="loop">
                 <tr>
                     <td></td>
-                    <td>${project.name}</td>
+                    <td><a href="projectDisplay.jsp">${project.name}</a></td>
                     <td><fmt:formatDate value="${project.endDate}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
                     <td>${project.description}</td>
                 </tr>
