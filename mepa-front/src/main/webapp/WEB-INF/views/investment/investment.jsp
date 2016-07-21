@@ -58,7 +58,8 @@
     <br />
     <div class="download">
         <p align="center">
-            <a href="/invest/download"><span class="btn btn-primary">Download</span></a>
+            <c:url var="exportCsvUrl" value="/invest"/>
+            <a class="btn btn-lg btn-primary" href="${exportCsvUrl}" role="button">Export ${project.name} into CSV</a>
         </p>
 
     </div>
