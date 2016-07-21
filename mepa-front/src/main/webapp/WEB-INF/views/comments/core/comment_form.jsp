@@ -22,13 +22,13 @@
     </button>--%>
 
     <div class="container">
-        <c:url var="addCustomCommnentsModelFormActionUrl" value="/commnents/core/add"/>
-        <form:form role="comments_form" action="${addCustomCommentsModelFormActionUrl}" CommentsmodelAttribute="addCustomCommnentsModelFormBean"
+        <c:url var="addCustomCommnentsModelFormActionUrl" value="/commnents/core/add"></c:url>
+        <form:form role="comments_form" action="${addCustomCommentsModelFormActionUrl}" modelAttribute="addCustomCommentsModelFormBean"
                    method="post">
             <div class="form-group">
-                <label for="comment">Leave a comment below:</label>
+                <label for="data">Leave a comment below:</label>
                 <br/>
-                <form:input id="comment" path="comment" type="text" placeholder="Leave a comment"/>
+                <form:input id="data" path="data" type="text" placeholder="Leave a comment"/>
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form:form>

@@ -2,7 +2,7 @@ package fr.epita.sigl.mepa.front.controller.comments;
 
 import fr.epita.sigl.mepa.core.domain.CommentsModel;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
-import fr.epita.sigl.mepa.front.commentsmodel.AddCustomCommentsModelForBean;
+import fr.epita.sigl.mepa.front.commentsmodel.AddCustomCommentsModelFormBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class CommentsController
     private static final Logger LOG = LoggerFactory.getLogger(CommentsController.class);
 
     protected static final String COMMENTS_MODELS_MODEL_ATTRIBUTE = "commentsmodels";
-    private static final String ADD_CUSTOM_COMMENTS_MODEL_FORM_BEAN_MODEL_ATTRIBUTE = "initAddCustomCommentsModelFormBean";
+    private static final String ADD_CUSTOM_COMMENTS_MODEL_FORM_BEAN_MODEL_ATTRIBUTE = "addCustomCommentsModelFormBean";
 
     @Autowired
     private CommentsModelService commentsModelService;
@@ -62,11 +62,11 @@ public class CommentsController
      */
     @RequestMapping(value = {"/add"}, method = {RequestMethod.POST})
     public String processForm(HttpServletRequest request, ModelMap modelMap,
-                              @Valid AddCustomCommentsModelForBean addCustomCommentsModelFormBean/*, BindingResult result*/) {
-        /*if (result.hasErrors()) {
+                              @Valid AddCustomCommentsModelFormBean addCustomCommentsModelFormBean, BindingResult result) {
+        if (result.hasErrors()) {
             // Error(s) in form bean validation
             return "/comments/core/comment_form";
-        }*/
+        }
         CommentsModel newCommentsModel = new CommentsModel();
         newCommentsModel.setData(addCustomCommentsModelFormBean.getComment());
         this.commentsModelService.createCommentsModel(newCommentsModel);
@@ -101,7 +101,7 @@ public class CommentsController
      * @return a new AddCustomModelFormBean.
      */
     @ModelAttribute(ADD_CUSTOM_COMMENTS_MODEL_FORM_BEAN_MODEL_ATTRIBUTE)
-    public AddCustomCommentsModelForBean initAddCustomCommentsModelFormBean() {
-        return new AddCustomCommentsModelForBean();
+    public AddCustomCommentsModelFormBean initAddCustomCommentsModelFormBean() {
+        return new AddCustomCommentsModelFormBean();
     }
 }
