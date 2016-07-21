@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ModelServiceImpl implements ModelService {
+public class    ModelServiceImpl implements ModelService {
 
     @Autowired
     private ModelDao modelDao;

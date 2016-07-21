@@ -1,0 +1,5 @@
+fr\epita\sigl\mepa\front\commentsmodel\AddCustomCommentsModelForBean.class
+fr\epita\sigl\mepa\front\model\example\AddCustomModelFormBean.class
+fr\epita\sigl\mepa\front\controller\example\CoreExampleController.class
+fr\epita\sigl\mepa\front\controller\comments\CommentsController.class
+fr\epita\sigl\mepa\front\controller\home\HomeController.class

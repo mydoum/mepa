@@ -36,7 +36,11 @@ public class CoreExampleController {
     @RequestMapping(value = {"/", "/form"})
     public String showForm(HttpServletRequest request, ModelMap modelMap) {
 
-        this.createRandomModel();
+        try {
+            this.createRandomModel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Get models data from database
         List<Model> models = this.modelService.getAllModels();
