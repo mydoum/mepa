@@ -9,9 +9,11 @@ import java.util.Date;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Model.findById", query = "FROM Model o WHERE o.id=:id"),
-        @NamedQuery(name = "Model.findAll", query = "FROM Model o")})
-public class Model {
+        @NamedQuery(name = "Investment.findById", query = "FROM Investment o WHERE o.id=:id"),
+        @NamedQuery(name = "Investment.findAll", query = "FROM Investment o"),
+        @NamedQuery(name = "Investment.findAllByProject", query = "FROM Investment o WHERE o.projectId=:projectId"),
+        })
+public class Investment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,10 +28,35 @@ public class Model {
     @Column(name = "created", nullable = false)
     private Date created;
 
-
+    @NotNull
+    private Date date; //investment date
 
     @NotNull
-    private String data;
+    private Long userId; //Id of the user who is investing
+
+    @NotNull
+    private Float amount; //Amount invested on the project
+
+    @NotNull
+    private Long projectId;
+
+    public Long getUserId (){ return this.userId; }
+    public void setUserId (Long user_id){ this.userId = user_id;}
+
+    public Float getAmount() { return this.amount; }
+    public void setAmount (Float amount) { this.amount = amount; }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Long getProjectId (){ return this.projectId; }
+    public void setProjectId ( Long project ) { this.projectId = project; }
+
 
     public Long getId() {
         return this.id;
@@ -55,23 +82,8 @@ public class Model {
         this.created = created;
     }
 
-    /**
-     * @return the data
-     */
-    public String getData() {
-        return this.data;
-    }
-
-    /**
-     * @param data the data to set
-     */
-    public void setData(String data) {
-        this.data = data;
-    }
-
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
-
 }
