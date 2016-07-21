@@ -55,3 +55,5 @@ public class InvestmentDaoImpl implements InvestmentDao {
         return query.list();
     }
 }
+
+
