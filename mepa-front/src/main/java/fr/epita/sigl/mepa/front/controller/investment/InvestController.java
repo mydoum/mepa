@@ -7,6 +7,7 @@ import fr.epita.sigl.mepa.core.domain.User;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import fr.epita.sigl.mepa.core.service.UserService;
+import fr.epita.sigl.mepa.core.utils.Mail;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,7 @@ public class InvestController {
         return "/investment/investment";
     }
 
+
     @RequestMapping(value = "/invest/investMoney", method = RequestMethod.POST)
     public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request) {
         float totalAmount = 0f;
@@ -52,6 +54,13 @@ public class InvestController {
         model.addAttribute("amount", moneyAmount);
         ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
         model.addAttribute("investorsList", listinvestors);
+
+        System.out.println("hihi");
+        System.out.flush();
+
+        Mail.sendSMTPMail("smtp.gmail.com", true);
+
+        System.out.println("hoho");
         return "/investment/investment";
     }
 
