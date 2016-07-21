@@ -23,21 +23,4 @@ public class HomeController extends HttpServlet{
         return "/home/home";
     }
 
-    @RequestMapping(value = {"/project/download"})
-    public String investDownload(HttpServletResponse response) {
-        String fileWriter = CsvExporter.writeCsvFile();
-        response.setContentType("text/csv");
-        response.setHeader("Content-Disposition", "attachment; filename=\"toto.csv\"");
-        try
-        {
-            OutputStream outputStream = response.getOutputStream();
-            outputStream.write(fileWriter.getBytes());
-            outputStream.flush();
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "/project/download";
-    }
-
 }

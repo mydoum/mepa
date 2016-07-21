@@ -1,7 +1,11 @@
 package fr.epita.sigl.mepa.front.utilities;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletResponse;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
@@ -62,5 +66,23 @@ public class CsvExporter {
         }
         
         return fileWriter;
+    }
+
+    //controller
+    @RequestMapping(value = {"/project/download"})
+    public String investDownload(HttpServletResponse response) {
+        String fileWriter = CsvExporter.writeCsvFile();
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=\"toto.csv\"");
+        try
+        {
+            OutputStream outputStream = response.getOutputStream();
+            outputStream.write(fileWriter.getBytes());
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "/project/download";
     }
 }
