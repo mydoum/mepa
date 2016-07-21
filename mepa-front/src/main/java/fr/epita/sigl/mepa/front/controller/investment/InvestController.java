@@ -37,30 +37,35 @@ public class InvestController {
 
     @RequestMapping(value = "/invest", method = RequestMethod.GET)
     public String invest(ModelMap model, HttpSession session) {
-        ArrayList<Investor> listinvestors = getallinvestors();
+        float totalAmount = 0f;
+        ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
         if (listinvestors.isEmpty())
             System.out.println("toto");
         else
             printelements(listinvestors);
         model.addAttribute("investorsList", listinvestors);
+        model.addAttribute("totaldontion", totalAmount);
         return "/investment/investment";
     }
 
     @RequestMapping(value = "/invest/investMoney", method = RequestMethod.POST)
     public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request) {
+        float totalAmount = 0f;
+
         float moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
         model.addAttribute("amount", moneyAmount);
-        ArrayList<Investor> listinvestors = getallinvestors();
+        ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
         model.addAttribute("investorsList", listinvestors);
         return "/investment/investment";
     }
 
-    private ArrayList<Investor> getallinvestors() {
+    private ArrayList<Investor> getallinvestors(float totalAmount) {
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
         User tmpUser;
         String firstname;
         String lastname;
         ArrayList<Investor> listOfInvestors = new ArrayList<Investor>();
+
         for (Investment invest : investments) {
             Date created = invest.getCreated();
             Float amount = invest.getAmount();
@@ -70,6 +75,7 @@ public class InvestController {
             lastname = tmpUser.getLastName();
             Investor tmpInvestor = new Investor(firstname, lastname, amount, created);
             listOfInvestors.add(tmpInvestor);
+            totalAmount += amount;
 
         }
         Collections.sort(listOfInvestors);
