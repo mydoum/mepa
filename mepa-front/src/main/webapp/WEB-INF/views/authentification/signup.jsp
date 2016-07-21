@@ -16,10 +16,18 @@
                         <legend class="">Register</legend>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="username">Username</label>
+                        <label class="control-label" for="lastname">Nom</label>
                         <div class="controls">
-                            <input id="username" name="username" placeholder="" class="form-control input-lg" type="text">
-                            <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+                            <input id="lastname" name="lastname" placeholder="" class="form-control input-lg" type="text">
+                            <p class="help-block">Nom can contain any letters or numbers, without spaces</p>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">Prénom</label>
+                        <div class="controls">
+                            <input id="firstname" name="firstname" placeholder="" class="form-control input-lg" type="text">
+                            <p class="help-block">Prénom can contain any letters or numbers, without spaces</p>
                         </div>
                     </div>
 
