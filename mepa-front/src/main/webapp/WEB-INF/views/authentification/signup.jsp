@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+<script src="http://formvalidation.io/vendor/formvalidation/js/formValidation.min.js"></script>
+<script src="http://formvalidation.io/vendor/formvalidation/js/framework/bootstrap.min.js"></script>
 
 <style type="text/css">
     /**
@@ -23,11 +25,46 @@
 </style>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
+<script>
+    $(document).ready(function() {
+        $('#datePicker')
+                .datepicker({
+                    format: 'dd/mm/yyyy'
+                })
+                .on('changeDate', function(e) {
+                    // Revalidate the date field
+                    $('#eventForm').formValidation('revalidateField', 'date');
+                });
+
+        $('#eventForm').formValidation({
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                date: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The date is required'
+                        },
+                        date: {
+                            format: 'DD/MM/YYYY',
+                            message: 'The date is not a valid'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
 <div class="container">
     <div class="row">
         <div class="col-md-6">
 
-            <form class="form-horizontal" action="" method="POST">
+            <form id="eventForm" class="form-horizontal" action="" method="POST">
                 <fieldset>
                     <div id="legend">
                         <legend class="">Inscription</legend>
@@ -87,7 +124,7 @@
                     <div class="control-group">
                         <!-- Button -->
                         <div class="controls">
-                            <button class="btn btn-success">Inscription</button>
+                            <button type="submit" class="btn btn-default">Inscription</button>
                         </div>
                     </div>
 
@@ -97,45 +134,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $('#datePicker')
-                .datepicker({
-                    format: 'dd/mm/yyyy'
-                })
-                .on('changeDate', function(e) {
-                    // Revalidate the date field
-                    $('#eventForm').formValidation('revalidateField', 'date');
-                });
-
-        $('#eventForm').formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                name: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The name is required'
-                        }
-                    }
-                },
-                date: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The date is required'
-                        },
-                        date: {
-                            format: 'MM/DD/YYYY',
-                            message: 'The date is not a valid'
-                        }
-                    }
-                }
-            }
-        });
-    });
-</script>
