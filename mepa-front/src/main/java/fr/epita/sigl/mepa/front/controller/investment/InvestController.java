@@ -16,11 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-<<<<<<< 4b1f94df6508e3fb7b23b38e8d2fc5f1773f22ae
-=======
-import javax.jws.soap.SOAPBinding;
->>>>>>> [UPDT][INVESTCONTROLLER] An investment is now saved
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -141,15 +136,6 @@ public class InvestController {
         return "/investment/investment";
     }
 
-    private void printelements(ArrayList<Investor> listinvestors) {
-        for (Investor investor : listinvestors) {
-            System.out.println(investor.getFirstname());
-            System.out.println(investor.getLastname());
-            System.out.println(investor.getMoneyAmount());
-            System.out.println(investor.getDateOfInvestment());
-        }
-    }
-
     private ArrayList<Investor> getProjectinvestors() {
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
         User tmpUser;
@@ -191,6 +177,15 @@ public class InvestController {
             }
         }
         return "/project/download";
+    }
+
+    private void printelements(ArrayList<Investor> listinvestors) {
+        for (Investor investor : listinvestors) {
+            System.out.println(investor.getFirstname());
+            System.out.println(investor.getLastname());
+            System.out.println(investor.getMoneyAmount());
+            System.out.println(investor.getDateOfInvestment());
+        }
     }
 
     private void printalluser() {
