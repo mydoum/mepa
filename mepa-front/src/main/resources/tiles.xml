@@ -29,7 +29,6 @@
         <put-attribute name="body" value="/WEB-INF/views/authentification/signup.jsp"/>
     </definition>
 
-
     <!-- Core example -->
     <definition name="/example/core/form" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/example/core/form.jsp"/>

@@ -33,18 +33,24 @@ public class AuthController {
                               @Valid AddCustomUserFormBean addCustomUserFormBean, BindingResult result) {
         if (result.hasErrors()) {
             // Error(s) in form bean validation
-            return "/authentification/signup";
+            return "/example/core/form";
         }
         User newUser = new User();
         newUser.setFirstName(addCustomUserFormBean.getFirstName());
         newUser.setLastName(addCustomUserFormBean.getLastName());
         newUser.setLogin(addCustomUserFormBean.getEmail());
         newUser.setPassword(addCustomUserFormBean.getCfmpassword());
-        newUser.setBirthdate(addCustomUserFormBean.getBirthdate());
+        newUser.setBirthDate(addCustomUserFormBean.getBirthdate());
         this.userService.createUser(newUser);
+        System.out.println("New User created!");
+        System.out.println("User firstName : "+ newUser.getFirstName());
+        System.out.println("User lastName : "+ newUser.getLastName());
+        System.out.println("User login : "+ newUser.getLogin());
+        System.out.println("User password : "+ newUser.getPassword());
+        System.out.println("User birthdate : "+ newUser.getBirthDate().toString());
 
         modelMap.addAttribute("user", newUser);
 
-        return "/example/core/result";
+        return "/home/home";
     }
 }

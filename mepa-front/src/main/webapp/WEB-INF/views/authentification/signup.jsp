@@ -63,8 +63,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-
-            <form id="eventForm" class="form-horizontal" action="" method="POST">
+            <c:url var="addCustomUserFormActionUrl" value="/authentification/add"/>
+            <form id="eventForm" class="form-horizontal" action="${addCustomUserFormActionUrl}" modelAttribute="addCustomUserFormBean"
+                  method="POST">
                 <fieldset>
                     <div id="legend">
                         <legend class="">Inscription</legend>
@@ -111,7 +112,7 @@
 
 
                     <div class="control-group">
-                        <label class="control-label">Anniversaire</label>
+                        <label class="control-label">Date de naissance</label>
                         <div class="date">
                             <div class="input-group input-append date" id="datePicker">
                                 <input type="text" class="form-control" name="date" />
