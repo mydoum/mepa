@@ -16,12 +16,12 @@ public class AddCustomCommentsModelFormBean
     @NotBlank
     private String data;
 
-    public String getComment()
+    public String getData()
     {
         return this.data;
     }
 
-    public void setComment(String comment_) {
+    public void setData(String comment_) {
         this.data = comment_;
     }
 }

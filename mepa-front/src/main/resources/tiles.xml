@@ -20,7 +20,7 @@
     </definition>
 
     <definition name="/comments/core/comment_form" extends="base.definition">
-        <put-attribute name="body" value="/comments/core/comment_form.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/comments/core/comment_form.jsp"/>
     </definition>
 
     <!-- Core example -->

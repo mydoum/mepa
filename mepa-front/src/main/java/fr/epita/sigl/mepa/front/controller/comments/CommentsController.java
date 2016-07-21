@@ -24,7 +24,6 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping("/commnents/core")
 @SessionAttributes({CommentsController.COMMENTS_MODELS_MODEL_ATTRIBUTE})
 
 public class CommentsController
@@ -39,45 +38,42 @@ public class CommentsController
 
 
 
-    /*@RequestMapping(value = {"/", "/form"})
+    @RequestMapping(value = {"/comment"}, method = {RequestMethod.GET})
     public String showForm(HttpServletRequest request, ModelMap modelMap) {
         // Get models data from database
         List<CommentsModel> commentsmodels = this.commentsModelService.getAllCommentsModels();
-      /*  if (LOG.isDebugEnabled()) {
-            LOG.debug("There are {} models in database", models.size());
-        }*/
+       if (LOG.isDebugEnabled()) {
+            LOG.debug("There are {} models in database", commentsmodels.size());
+        }
 
         // Update model attribute "models", to use it in JSP
-        /*modelMap.addAttribute(COMMENTS_MODELS_MODEL_ATTRIBUTE, commentsmodels);
+        modelMap.addAttribute(COMMENTS_MODELS_MODEL_ATTRIBUTE, commentsmodels);
 
-       return "/comments/core/form";
-    }*/
+       return "/comments/core/comment_form";
+    }
 
     /**
      * @param request
      * @param modelMap
-     * @param addCustomCommentsModelFormBean
      * @param //result
      * @return
      */
-    @RequestMapping(value = {"/add"}, method = {RequestMethod.POST})
-    public String processForm(HttpServletRequest request, ModelMap modelMap,
-                              @Valid AddCustomCommentsModelFormBean addCustomCommentsModelFormBean, BindingResult result) {
-        if (result.hasErrors()) {
-            // Error(s) in form bean validation
-            return "/comments/core/comment_form";
-        }
+    @RequestMapping(value = {"/comment/submit"}, method = {RequestMethod.POST})
+    public String processForm(HttpServletRequest request, ModelMap modelMap) {
         CommentsModel newCommentsModel = new CommentsModel();
-        newCommentsModel.setData(addCustomCommentsModelFormBean.getComment());
+        String text = request.getParameter("userText");
+        newCommentsModel.setData(text);
         this.commentsModelService.createCommentsModel(newCommentsModel);
 
-        modelMap.addAttribute("commentsmodel", newCommentsModel);
+        List<CommentsModel> commentsmodels = this.commentsModelService.getAllCommentsModels();
+        modelMap.addAttribute("comment", commentsmodels);
 
-        return "/comments/core/comments_form";
+        return "/comments/core/comment_form";
     }
 
-    /**
-     * Create a random model and add it in database.
+    /**essaie avec @ModelAttribute("addCustomCommentsFormBean") CommentsModel comment
+     * Create a random model and add it in database.Après le @Valid
+     À la place de l'autre AddCustomCommentsFormBean
      */
    /* private void createRandomModel() {
         Model newModel = new Model();

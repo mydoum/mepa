@@ -31,5 +31,4 @@
             <img src="${wellDoneImgUrl}" alt=""/>
         </p>
     </div>
-    <%@ include file="/WEB-INF/views/comments/core/comment_form.jsp" %>
 </div>
