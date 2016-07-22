@@ -1,9 +1,9 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <div class="container">
-        <c:url var="preinvestCoreUrl" value="/core/preinvest/projectCreate"/>
-        <a class="btn btn-lg btn-primary" href="${preinvestCoreUrl}" role="button">Create a new project</a>
-
+<!--    <c:url var="preinvestCoreUrl" value="/core/preinvest/projectCreate"/>
+    <a class="btn btn-lg btn-primary" href="${preinvestCoreUrl}" role="button">Create a new project</a>
+-->
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>

@@ -15,7 +15,7 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "Project.findById", query = "FROM Project p WHERE p.id=:id"),
         @NamedQuery(name = "Project.findAll", query = "FROM Project p ORDER BY p.endDate ASC")
-        })
+})
 public class Project {
 
     @Id
