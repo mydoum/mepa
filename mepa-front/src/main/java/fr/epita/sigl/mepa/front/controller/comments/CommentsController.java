@@ -3,6 +3,7 @@ package fr.epita.sigl.mepa.front.controller.comments;
 import fr.epita.sigl.mepa.core.domain.CommentsModel;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
 import fr.epita.sigl.mepa.front.commentsmodel.AddCustomCommentsModelFormBean;
+import fr.epita.sigl.mepa.front.model.example.AddCustomModelFormBean;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,8 +67,34 @@ public class CommentsController
      * @param //result
      * @return
      */
+   /* @RequestMapping(value = {"/comment/submit"}, method = {RequestMethod.POST})
+    public String processForm(HttpServletRequest request, ModelMap modelMap,
+                              @Valid AddCustomCommentsModelFormBean addCustomModelFormBean, BindingResult result) {
+
+        if (result.hasErrors()) {
+            // Error(s) in form bean validation
+            return "/comments/core/comment_form";
+        }
+
+        CommentsModel newCommentsModel = new CommentsModel();
+        newCommentsModel.setData(addCustomModelFormBean.getData());
+        this.commentsModelService.createCommentsModel(newCommentsModel);
+        System.out.println("la data de mon model est : " + newCommentsModel.getData());
+
+
+        List<CommentsModel> new_c_models = this.commentsModelService.getAllCommentsModels();
+
+        modelMap.addAttribute("new_c_models",new_c_models);
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("HAHAHAHAHAHHA There are {} models in database", new_c_models.size());
+        }
+        return "/comments/core/comment_form";
+    }*/
     @RequestMapping(value = {"/comment/submit"}, method = {RequestMethod.POST})
     public String processForm(HttpServletRequest request, ModelMap modelMap) {
+
+
         CommentsModel newCommentsModel = new CommentsModel();
         String text = request.getParameter("userText");
         System.out.println(text);

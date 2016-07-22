@@ -11,8 +11,6 @@ import javax.validation.constraints.Size;
  */
 public class AddCustomCommentsModelFormBean
 {
-    @Email
-    @Size(max = 20)
     @NotBlank
     private String data;
 
