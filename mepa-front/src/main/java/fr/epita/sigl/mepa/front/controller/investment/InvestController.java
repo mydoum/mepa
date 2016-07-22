@@ -60,6 +60,7 @@ public class InvestController {
         ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totaldonation", totalAmount);
+
         return "/investment/investment";
     }
 
@@ -139,7 +140,7 @@ public class InvestController {
         generateMailMessage = new MimeMessage(getMailSession);
         generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(userMail));
         generateMailMessage.setSubject("Greetings " + userFirstName + " " + userLastName);
-        String emailBody = "Thank you for donating. " + amountMoney + "<br><br> Regards, <br>MEPA Team";
+        String emailBody = "Thank you for donating " + amountMoney + "€" + "<br><br> Regards, <br>MEPA Team";
         generateMailMessage.setContent(emailBody, "text/html");
 
         System.out.println("\n\n 3rd ===> Get Session and Send mail");
