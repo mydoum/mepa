@@ -10,10 +10,15 @@
         <put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp"/>
     </definition>
 
+    <definition name="include.definition" template="/WEB-INF/views/tiles/include.jsp">
+    </definition>
+
     <!-- Home -->
     <definition name="home.definition" extends="base.definition">
         <put-attribute name="title" value="home.title"/>
     </definition>
+
+
     <definition name="/home/home" extends="home.definition">
         <put-attribute name="body" value="/WEB-INF/views/home/home.jsp"/>
     </definition>
@@ -44,6 +49,11 @@
     <definition name="/preinvest/projectList" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectList.jsp"/>
     </definition>
+
+    <definition name="/preinvest/projectListInclude" extends="include.definition">
+        <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectList.jsp"/>
+    </definition>
+
     <definition name="/preinvest/projectCreate" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectCreate.jsp"/>
     </definition>

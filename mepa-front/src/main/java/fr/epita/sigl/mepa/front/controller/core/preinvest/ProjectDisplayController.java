@@ -57,4 +57,12 @@ public class ProjectDisplayController {
         modelMap.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
         return "/preinvest/projectList"; // The adress of the JSP coded in tiles.xml
     }
+
+    @RequestMapping(value = {"/projectListInclude"}) // The adress to call the function
+    public String projectListInclude(HttpServletRequest request, ModelMap modelMap) {
+        /* Code your logic here */
+
+        this.projectList(request, modelMap);
+        return "/preinvest/projectListInclude"; // The adress of the JSP coded in tiles.xml
+    }
 }
