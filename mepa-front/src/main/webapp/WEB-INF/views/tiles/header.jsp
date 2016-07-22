@@ -23,7 +23,7 @@
                         <li><a href="${signup}">Inscription</a></li>
                         <c:url var="signin" value="/authentification/signin"/>
                         <li><a href="${signin}">Connexion</a></li>
-                        <c:url var="preinvestCoreUrl" value="/core/preinvest/"/>
+                        <c:url var="preinvestCoreUrl" value="/core/preinvest/projectCreate"/>
                         <li><a href="${preinvestCoreUrl}">Create Project</a></li>
                         <c:url var="investUrl" value="/invest"/>
                         <li><a href="${investUrl}">Invest</a></li>

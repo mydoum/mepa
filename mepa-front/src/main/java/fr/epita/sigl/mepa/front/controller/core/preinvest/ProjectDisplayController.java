@@ -33,15 +33,6 @@ public class ProjectDisplayController {
     @RequestMapping(value = {"/projectDisplay/{projectId}"}) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
         /* Code your logic here */
-
-        /*
-        Project newProject = new Project((long) 0, "Yolo", new Date());
-        ArrayList<String> imageLinkList = new ArrayList<>();
-        imageLinkList.add("http://www.gobadges.com/v/vspfiles/photos/CD0564-2.jpg");
-        imageLinkList.add("http://www.nyan.cat/images/cat/4.gif");
-        newProject.setImagesLinks(imageLinkList);
-        this.projectService.createProject(newProject);*/
-
         Project project = this.projectService.getProjectById(projectId);
 
         modelMap.addAttribute(PROJECT_ATTRIBUTE, project);
