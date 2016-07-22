@@ -22,7 +22,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void createProject(Project project) {
-        project.setStartDate(new Date());
         this.projectDao.create(project);
     }
 
