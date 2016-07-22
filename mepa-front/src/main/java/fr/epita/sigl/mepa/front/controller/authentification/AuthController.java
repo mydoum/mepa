@@ -58,7 +58,8 @@ public class AuthController {
 
         this.userService.createUser(newUser);
         System.out.println("Create new user");
-
+        String msg = "Le compte a bien été crée";
+        modelMap.addAttribute("userIsCreated", msg);
         return "/home/home";
     }
 
