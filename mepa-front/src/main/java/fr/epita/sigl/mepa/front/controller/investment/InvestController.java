@@ -42,32 +42,35 @@ public class InvestController {
 
     @RequestMapping(value = "/invest", method = RequestMethod.GET)
     public String invest(ModelMap model, HttpSession session) {
-        float totalAmount = 0f;
+        float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
         model.addAttribute("investorsList", listinvestors);
-        model.addAttribute("totaldonation", totalAmount);
+        model.addAttribute("totalDonation", totalAmount);
         return "/investment/investment";
     }
 
 
     @RequestMapping(value = "/invest/investMoney", method = RequestMethod.POST)
     public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request) {
-        float totalAmount = 0f;
-
+        float totalAmount = 0.00f;
         float moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
         model.addAttribute("amount", moneyAmount);
         Long userId = 2L;
         Long projectId = 1L;
 
-        if (insertNewInvestor(moneyAmount, userId, projectId) == 0)
+        if (insertNewInvestor(moneyAmount, userId, projectId) == 0) {
+            float total = 0.00f;
+            ArrayList<Investor> listinvestors = getallinvestors(total);
+            model.addAttribute("investorsList", listinvestors);
+            model.addAttribute("totalDonation", total);
             return "/investment/investment";
+        }
 
         //Mail.sendSMTPMail("smtp.gmail.com", true);
 
         ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
         model.addAttribute("investorsList", listinvestors);
-        model.addAttribute("totaldonation", totalAmount);
-
+        model.addAttribute("totalDonation", totalAmount);
         return "/investment/investment";
     }
 
@@ -78,7 +81,6 @@ public class InvestController {
         String lastname;
         String email;
         ArrayList<Investor> listOfInvestors = new ArrayList<Investor>();
-
         for (Investment invest : investments) {
             Date created = invest.getCreated();
             Float amount = invest.getAmount();
@@ -134,16 +136,16 @@ public class InvestController {
             invest.setDate(date);
             investmentService.createInvestment(invest);
         }
-        float totalAmount = 0f;
+        float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
         model.addAttribute("investorsList", listinvestors);
-        model.addAttribute("totaldonation", totalAmount);
+        model.addAttribute("totalDonation", totalAmount);
         return "/investment/investment";
     }
 
     @RequestMapping(value = {"/invest/download"})
     public String investDownload(HttpServletResponse response, ModelMap model) {
-        float totalAmount = 0f;
+        float totalAmount = 0.00f;
         Date actual = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String date = dateFormat.format(actual);
