@@ -11,7 +11,7 @@
     </div>
 
     <div class="container">
-        <c:url var="addAmountUrl" value="/postinvest/admin/addAmount"/>
+        <c:url var="addAmountUrl" value="/admin/addAmount"/>
         <form:form role="form" controller="AdminController" method="post"
                    action="${addAmountUrl}">
             <!--

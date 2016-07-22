@@ -19,6 +19,13 @@
         <put-attribute name="title" value="home.title"/>
     </definition>
 
+    <!-- Postinvest -->
+    <definition name="/admin" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/admin/admin.jsp"/>
+    </definition>
+    <definition name="/invalid" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/invalid.jsp"/>
+    </definition>
 
     <definition name="/home/home" extends="home.definition">
         <put-attribute name="body" value="/WEB-INF/views/home/home.jsp"/>

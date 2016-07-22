@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/postinvest") // The adress of the component
 @SessionAttributes({})
 public class AdminController {
 
@@ -28,7 +27,7 @@ public class AdminController {
         /* Code your logic here */
         request.setAttribute("clicks", clicks);
         request.setAttribute("totalAmount", totalAmount);
-        return "/postinvest/admin"; // The address of the JSP coded in tiles.xml
+        return "/admin"; // The address of the JSP coded in tiles.xml
     }
 
     @RequestMapping(value = {"/admin/addAmount"}, method = {RequestMethod.POST})
@@ -39,26 +38,12 @@ public class AdminController {
         clicks++;
         try {
             adding = Integer.parseInt(amount);
-        }
-        catch (Exception e) {
-            String errorMessage = "Please enter a numerical number as donation amount.";
+        } catch (Exception e) {
             return "/invalid";
         }
-        if(adding > 0) {
+        if (adding > 0) {
             totalAmount += adding;
         }
-        System.out.println(clicks);
-        System.out.println(amount);
-        System.out.println(totalAmount);
         return "/invalid";
     }
-/*
-    @RequestMapping(value = {"/projectCreate"}, method = RequestMethod.GET) // The adress to call the function
-    public String projectCreate(ModelMap modelMap) {
-        /* Code your logic here /
-        Project p = new Project();
-        modelMap.addAttribute(NEWPROJECT, p);
-        return "/preinvest/projectCreate"; // The adress of the JSP coded in tiles.xml
-    }
-*/
 }
