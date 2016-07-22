@@ -29,6 +29,25 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
             integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
             crossorigin="anonymous"></script>
+
+    <%-- Investissement javascript --%>
+    <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
+    <script src="${investSliderJs}"></script>
+    <c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>
+    <script src="${investSliderPersoJs}"></script>
+
+    <%-- SDK Facebook --%>
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.7";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 </head>
 <body>
 <%-- Header --%>
