@@ -69,6 +69,7 @@ public class Project {
         this.name = projectName;
     }
 
+    //return Date with a specific format
     public String dateFormat(String format, Date date)
     {
         DateFormat df = new SimpleDateFormat(format);

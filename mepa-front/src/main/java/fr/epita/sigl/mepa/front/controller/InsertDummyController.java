@@ -62,6 +62,7 @@ public class InsertDummyController {
             imageLinkList.add("http://www.gobadges.com/v/vspfiles/photos/CD0564-2.jpg");
             imageLinkList.add("http://www.nyan.cat/images/cat/4.gif");
             newProject.setImagesLinks(imageLinkList);
+            newProject.setDescription("tototototototototototototototototototototo");
 
             this.projectService.createProject(newProject);
         }
