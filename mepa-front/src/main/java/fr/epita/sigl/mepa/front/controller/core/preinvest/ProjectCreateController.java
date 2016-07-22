@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -27,15 +28,25 @@ public class ProjectCreateController {
     private static final Logger LOG = LoggerFactory.getLogger(ProjectCreateController.class);
 
     protected static final String PROJECT_ATTRIBUTE = "project";
+    protected static final String NEWPROJECT= "newProject";
     protected static final String PROJECTS_LIST_ATTRIBUTE = "project_list";
 
     @Autowired
     private ProjectService projectService;
 
     @RequestMapping(value = {"/projectCreate"}) // The adress to call the function
-    public String projectCreate() {
+    public String projectCreate(HttpServletRequest request, ModelMap modelMap) {
         /* Code your logic here */
+        Project p = new Project();
+        modelMap.addAttribute(NEWPROJECT, p);
         return "/preinvest/projectCreate"; // The adress of the JSP coded in tiles.xml
+    }
+
+    @RequestMapping(value = {"/processCreation"}) // The adress to call the function
+    public String processCreation(@ModelAttribute("newProject") Project newProject)
+    {
+        projectService.createProject(newProject);
+        return "/preinvest/";
     }
 
 

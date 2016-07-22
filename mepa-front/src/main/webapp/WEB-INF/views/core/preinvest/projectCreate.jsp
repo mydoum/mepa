@@ -14,7 +14,7 @@
 <body>
 
     <div class="container">
-        <sf:form method="post" modelAttribute="New project">
+        <sf:form method="post" modelAttribute="newProject" action="processCreation">
                 <table>
                     <tr>
                         <td>Nom du projet : </td>
