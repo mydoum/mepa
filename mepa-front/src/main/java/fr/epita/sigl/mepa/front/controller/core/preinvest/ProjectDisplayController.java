@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,20 +30,20 @@ public class ProjectDisplayController {
     @Autowired
     private ProjectService projectService;
 
-    @RequestMapping(value = {"/projectDisplay"}) // The adress to call the function
-    public String projectDisplay(HttpServletRequest request, ModelMap modelMap) {
+    @RequestMapping(value = {"/projectDisplay/{projectId}"}) // The adress to call the function
+    public String projectDisplay(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
         /* Code your logic here */
+
+        /*
         Project newProject = new Project((long) 0, "Yolo", new Date());
         ArrayList<String> imageLinkList = new ArrayList<>();
         imageLinkList.add("http://www.gobadges.com/v/vspfiles/photos/CD0564-2.jpg");
         imageLinkList.add("http://www.nyan.cat/images/cat/4.gif");
         newProject.setImagesLinks(imageLinkList);
 
-        this.projectService.createProject(newProject);
+        this.projectService.createProject(newProject);*/
 
-
-
-        Project project = this.projectService.getProjectById((long) 1);
+        Project project = this.projectService.getProjectById(projectId);
 
         modelMap.addAttribute(PROJECT_ATTRIBUTE, project);
         return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml

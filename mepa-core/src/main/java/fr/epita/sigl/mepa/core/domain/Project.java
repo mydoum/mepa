@@ -56,13 +56,15 @@ public class Project {
 * Vidéos
 * */
     public Project() {
-        this.user_id = (long) 0;
+        this.user_id = (long) 1;
+        this.startDate = new Date();
         this.endDate = new Date();
         this.name = "Unnamed";
     }
 
     public Project(Long user_id, String projectName, Date endDate) {
         this.user_id = user_id;
+        this.startDate = new Date();
         this.endDate = endDate;
         this.name = projectName;
     }
