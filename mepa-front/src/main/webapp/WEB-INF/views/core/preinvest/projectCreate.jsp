@@ -30,7 +30,7 @@
             </div>
             <br/>
             <div class="control-group">
-                <label class="control-label">Date de fin</label>
+                <label class="control-label">Deadline</label>
                 <div class="controls">
                     <td><form:input path="endDate" class="form-control input-lg" placeholder="endDate"/></td>
                 </div>
