@@ -132,8 +132,7 @@ public class InvestController {
             Float amount = invest.getAmount();
             Long userId = invest.getUserId();
             //tmpUser = userService.getUserById(userId);
-            Long projectId = invest.getProjectId();
-            if (projectId == 1L) {
+            if (userId == 1L) {
                 firstname = "Simon"; //tmpUser.getFirstName();
                 lastname = "MACE"; //tmpUser.getLastName();
                 email = "simon.mace@epita.fr"; //tmpUser.getLogin();
