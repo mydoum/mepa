@@ -30,7 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,7 +71,36 @@ public class InvestController {
     @RequestMapping(value = "/invest/investMoney", method = RequestMethod.POST)
     public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request) {
         float totalAmount = 0.00f;
-        float moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
+        float moneyAmount = 0.00f;
+
+        /**
+         * Trying if the getted input is a number or not. If the input is not a number
+         * an exception is raised. Also a message is send to the user
+         */
+        try {
+            moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
+            moneyAmount = (float)((int)(moneyAmount * 100)) / 100;
+        }
+        catch (Exception e) {
+            String errorMessage = "Please enter a numerical number as donation amount.";
+            ArrayList<Investor> listinvestors = new ArrayList<Investor>();
+            totalAmount = getallinvestors(listinvestors, totalAmount);
+            model.addAttribute("investorsList", listinvestors);
+            model.addAttribute("totalDonation", totalAmount);
+            model.addAttribute("errorInvest", errorMessage);
+            return "/investment/investment";
+        }
+
+        if (moneyAmount <= 0) {
+            String errorMessage = "Please enter a positive number as donation amount.";
+            ArrayList<Investor> listinvestors = new ArrayList<Investor>();
+            totalAmount = getallinvestors(listinvestors, totalAmount);
+            model.addAttribute("investorsList", listinvestors);
+            model.addAttribute("totalDonation", totalAmount);
+            model.addAttribute("errorInvest", errorMessage);
+            return "/investment/investment";
+        }
+
         model.addAttribute("amount", moneyAmount);
         Long userId = 1L;
         Long projectId = 1L;
@@ -81,7 +113,6 @@ public class InvestController {
             model.addAttribute("totalDonation", total);
             return "/investment/investment";
         }
-
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
         totalAmount = getallinvestors(listinvestors, totalAmount);
         model.addAttribute("investorsList", listinvestors);
@@ -120,7 +151,6 @@ public class InvestController {
         Date date = new Date();
         newInvestment.setDate(date);
         investmentService.createInvestment(newInvestment);
-
         try {
             sendMail(userId, moneyAmount);
         } catch (MessagingException e) {

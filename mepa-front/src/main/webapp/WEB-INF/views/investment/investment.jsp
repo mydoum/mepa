@@ -11,7 +11,12 @@
     <div class="page-header col-md-12"><h1>Project Alpha</h1></div>
     <c:if test="${amount != null}">
         <div class="col-md-12 text-center alert alert-success investFormInside">
-            Merci d'avoir investi ${amount}€! Un email de notification a été envoyé.
+            Thank you for donating ${amount}€! An email to notify you has been sent.
+        </div>
+    </c:if>
+    <c:if test="${errorInvest != null and !empty errorInvest}">
+        <div class="col-md-12 text-center alert alert-danger investFormInside">
+            ${errorInvest}
         </div>
     </c:if>
     <div class="col-md-12 investFormInside">
@@ -47,7 +52,7 @@
                 <label class="investFormInside col-md-12">Amount (€):</label>
                 <div class="col-md-12 InvestFormInside">
                     <input name="investAmount" id="input-with-keypress"
-                           class="form-control" type="text" required="required"/>
+                           class="form-control" type="text" required="required" readonly/>
                 </div>
                 <br/>
                 <div class="col-md-4"></div>
