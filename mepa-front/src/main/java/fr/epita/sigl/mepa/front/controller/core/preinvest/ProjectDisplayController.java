@@ -2,6 +2,7 @@ package fr.epita.sigl.mepa.front.controller.core.preinvest;
 
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.ProjectService;
+import fr.epita.sigl.mepa.core.service.ModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
+
 @Controller
-@RequestMapping("/core/preinvest") // The adress of the component
+@RequestMapping("/preinvest") // The adress of the component
 @SessionAttributes({})
 public class ProjectDisplayController {
 

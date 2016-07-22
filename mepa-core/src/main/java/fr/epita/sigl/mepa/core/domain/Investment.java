@@ -57,7 +57,6 @@ public class Investment {
     public Long getProjectId (){ return this.projectId; }
     public void setProjectId ( Long project ) { this.projectId = project; }
 
-
     public Long getId() {
         return this.id;
     }
