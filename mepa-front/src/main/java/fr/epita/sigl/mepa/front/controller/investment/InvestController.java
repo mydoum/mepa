@@ -181,6 +181,7 @@ public class InvestController {
         ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totaldonation", totalAmount);
+
         return "/investment/investment";
     }
 
