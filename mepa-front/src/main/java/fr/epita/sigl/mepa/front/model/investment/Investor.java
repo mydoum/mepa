@@ -4,20 +4,24 @@ package fr.epita.sigl.mepa.front.model.investment;
 import java.util.Date;
 
 /**
- * Created by Valentin ZHENG on 20/07/2016.
+ * Created by Simon MACE on 20/07/2016.
  */
 public class Investor implements Comparable<Investor>{
     private String firstname;
     private String lastname;
+    private String email;
     private Float moneyAmount;
     private Date dateOfInvestment;
 
-    public Investor(String firstname, String lastname, Float moneyAmount, Date dateOfInvestment) {
+    public Investor(String email, String firstname, String lastname, Float moneyAmount, Date dateOfInvestment) {
+        this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
         this.moneyAmount = moneyAmount;
         this.dateOfInvestment = dateOfInvestment;
     }
+
+    public String getEmail() {return email; }
 
     public Float getMoneyAmount() {
         return moneyAmount;
@@ -34,6 +38,8 @@ public class Investor implements Comparable<Investor>{
     public Date getDateOfInvestment() {
         return dateOfInvestment;
     }
+
+    public void setEmail(String email) { this.email = email; }
 
     public void setMoneyAmount(Float moneyAmount) {
         this.moneyAmount = moneyAmount;

@@ -27,16 +27,16 @@ public class CsvExporter {
         fileWriter += NEW_LINE_SEPARATOR;
 
         for (Investor investor : investors) {
-                for (int i = 0; i < 1000; i++) {
-                    fileWriter += String.valueOf(investor.getLastname());
-                    fileWriter += COMMA_DELIMITER;
-                    fileWriter += investor.getFirstname();
-                    fileWriter += COMMA_DELIMITER;
-                    fileWriter += String.valueOf(investor.getMoneyAmount());
-                    fileWriter += NEW_LINE_SEPARATOR;
-                }
+            fileWriter += String.valueOf(investor.getLastname());
+            fileWriter += COMMA_DELIMITER;
+            fileWriter += investor.getFirstname();
+            fileWriter += COMMA_DELIMITER;
+            fileWriter += investor.getEmail();
+            fileWriter += COMMA_DELIMITER;
+            fileWriter += String.valueOf(investor.getMoneyAmount());
+            fileWriter += NEW_LINE_SEPARATOR;
         }
-        
+
         return fileWriter;
     }
 }

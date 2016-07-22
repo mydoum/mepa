@@ -76,6 +76,7 @@ public class InvestController {
         User tmpUser;
         String firstname;
         String lastname;
+        String email;
         ArrayList<Investor> listOfInvestors = new ArrayList<Investor>();
 
         for (Investment invest : investments) {
@@ -85,7 +86,8 @@ public class InvestController {
             tmpUser = userService.getUserById(userId);
             firstname = tmpUser.getFirstName();
             lastname = tmpUser.getLastName();
-            Investor tmpInvestor = new Investor(firstname, lastname, amount, created);
+            email = tmpUser.getLogin();
+            Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created);
             listOfInvestors.add(tmpInvestor);
             totalAmount += amount;
         }
@@ -136,33 +138,15 @@ public class InvestController {
         return "/investment/investment";
     }
 
-    private ArrayList<Investor> getProjectinvestors() {
-        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
-        User tmpUser;
-        String firstname;
-        String lastname;
-        ArrayList<Investor> listOfInvestors = new ArrayList<Investor>();
-        for (Investment invest : investments) {
-            Date created = invest.getCreated();
-            Float amount = invest.getAmount();
-            Long userId = invest.getUserId();
-            tmpUser = userService.getUserById(userId);
-            firstname = tmpUser.getFirstName();
-            lastname = tmpUser.getLastName();
-            Investor tmpInvestor = new Investor(firstname, lastname, amount, created);
-            listOfInvestors.add(tmpInvestor);
-        }
-        Collections.sort(listOfInvestors);
-        return listOfInvestors;
-    }
-
-    @RequestMapping(value = {"/invest"})
+    @RequestMapping(value = {"/invest/download"})
     public String investDownload(HttpServletResponse response) {
+        float totalAmount = 0f;
         Date actual = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String date = dateFormat.format(actual);
         date.replace("-", "_");
-        ArrayList<Investor> investors = getProjectinvestors();
+        ArrayList<Investor> investors = getallinvestors(totalAmount);
+        System.out.println("toto");
         if (investors != null && investors.size() > 0) {
             String fileWriter = CsvExporter.writeCsvFile(investors);
             response.setContentType("text/csv");
