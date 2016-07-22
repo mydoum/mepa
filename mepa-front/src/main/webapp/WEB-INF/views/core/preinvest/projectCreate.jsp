@@ -15,24 +15,37 @@
 <body>
     <div class="container">
         <sf:form method="post" modelAttribute="newProject" action="processCreation">
-            <div class="input-group">
-                <span class="input-group-addon" id="projectName">Nom du projet</span>
-                <td><form:input path="Name" class="form-control" placeholder="Nom du projet" aria-describedby="basic-addon1"/></td>
+            <div class="control-group">
+                <label class="control-label">Nom du projet</label>
+                <div class="controls">
+                    <td><form:input path="Name" class="form-control input-lg" placeholder="Définissez un nom"/></td>
+                </div>
             </div>
             <br/>
-            <div class="input-group">
-                <span class="input-group-addon" id="deadline">Date de fin</span>
-                <td><form:input path="endDate" class="form-control" placeholder="Date de fin" aria-describedby="basic-addon1"/></td>
+            <div class="control-group">
+                <label class="control-label">Date de début</label>
+                <div class="controls">
+                    <td><form:input path="startDate" class="form-control input-lg" placeholder="startDate"/></td>
+                </div>
             </div>
             <br/>
-            <div class="input-group">
-                <span class="input-group-addon" id="description">Description</span>
-                <td><form:input path="description" class="form-control" placeholder="Description" aria-describedby="basic-addon1"/></td>
+            <div class="control-group">
+                <label class="control-label">Deadline</label>
+                <div class="controls">
+                    <td><form:input path="endDate" class="form-control input-lg" placeholder="endDate"/></td>
+                </div>
             </div>
             <br/>
-           <td>
-               <span class="label label-primary"><input type="submit" value="Validate Project" style="background-color: transparent" style="border-color: transparent"/></span>
-           </td>
+            <div class="control-group">
+                <label class="control-label">Description</label>
+                <div class="controls">
+                    <td><form:textarea path="description" class="form-control input-lg" placeholder="Description" style="margin-top: 0px;"/></td>
+                </div>
+            </div>
+            <br/>
+            <div class="control-group">
+               <button type="submit" class="btn btn-default">Créer le projet</button>
+            </div>
         </sf:form>
     </div>
 </body>
