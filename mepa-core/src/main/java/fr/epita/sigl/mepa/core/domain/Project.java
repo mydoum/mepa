@@ -1,24 +1,20 @@
 package fr.epita.sigl.mepa.core.domain;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Project.findById", query = "FROM Project p WHERE p.id=:id"),
-        @NamedQuery(name = "Project.findAll", query = "FROM Project p")
+        @NamedQuery(name = "Project.findAll", query = "FROM Project p ORDER BY p.endDate ASC")
         })
 public class Project {
 
@@ -44,6 +40,8 @@ public class Project {
     private String description;
 
     private ArrayList<Image> images;
+
+    private ArrayList<String> imagesLinks;
 
 
 
@@ -127,9 +125,19 @@ public class Project {
         this.images = images;
     }
 
+    public ArrayList<String> getImagesLinks() {
+        return imagesLinks;
+    }
+
+    public void setImagesLinks(ArrayList<String> imagesLinks) {
+        this.imagesLinks = imagesLinks;
+    }
+
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
+
 
 }

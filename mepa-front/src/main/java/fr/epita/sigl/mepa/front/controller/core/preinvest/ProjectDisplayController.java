@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +32,13 @@ public class ProjectDisplayController {
     public String projectDisplay(HttpServletRequest request, ModelMap modelMap) {
         /* Code your logic here */
         Project newProject = new Project((long) 0, "Yolo", new Date());
+        ArrayList<String> imageLinkList = new ArrayList<>();
+        imageLinkList.add("http://www.gobadges.com/v/vspfiles/photos/CD0564-2.jpg");
+        imageLinkList.add("http://www.nyan.cat/images/cat/4.gif");
+        newProject.setImagesLinks(imageLinkList);
+
         this.projectService.createProject(newProject);
+
 
 
         Project project = this.projectService.getProjectById((long) 1);

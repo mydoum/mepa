@@ -8,7 +8,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th></th>
+                <th style="width: 100px"></th>
                 <th>Project Name</th>
                 <th>Ending date</th>
                 <th>Project Description</th>
@@ -17,8 +17,8 @@
             <tbody>
             <c:forEach items="${project_list}" var="project" varStatus="loop">
                 <tr>
-                    <td></td>
-                    <td><a href="projectDisplay.jsp">${project.name}</a></td>
+                    <td><img src="${project.imagesLinks.get(0)}" alt="Illustration" style="height: 80px;"></td>
+                    <td><a href="<c:url value='projectDisplay/${project.id}' />" >${project.name}</a></td>
                     <td><fmt:formatDate value="${project.endDate}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
                     <td>${project.description}</td>
                 </tr>
