@@ -186,7 +186,7 @@ public class InvestController {
 
     @RequestMapping(value = "/invest/filltables", method = RequestMethod.GET)
     public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) {
-        User user = new User();
+        /*User user = new User();
         user.setFirstName("Simon");
         user.setLastName("MACE");
         user.setLogin("simon.mace@epita.fr");
@@ -201,7 +201,7 @@ public class InvestController {
         user2.setPassword("123");
         user2.setData("toto");
         user2.setBirthDate(new Date(21/04/1994));
-        userService.createUser(user2);
+        userService.createUser(user2);*/
         for (int i = 0; i < 3000; i++) {
             Investment invest = new Investment();
             invest.setAmount(15.0f);
@@ -213,9 +213,9 @@ public class InvestController {
         }
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount= getallinvestors(listinvestors, totalAmount);
-        model.addAttribute("investorsList", listinvestors);
-        model.addAttribute("totalDonation", totalAmount);
+        //totalAmount= getallinvestors(listinvestors, totalAmount);
+        //model.addAttribute("investorsList", listinvestors);
+        //model.addAttribute("totalDonation", totalAmount);
         return "/investment/investment";
     }
 
