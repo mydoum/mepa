@@ -57,7 +57,8 @@ public class InvestController {
     @RequestMapping(value = "/invest", method = RequestMethod.GET)
     public String invest(ModelMap model, HttpSession session) {
         float totalAmount = 0.00f;
-        ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
+        ArrayList<Investor> listinvestors = new ArrayList<Investor>();
+        totalAmount = getallinvestors(listinvestors, totalAmount);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
         return "/investment/investment";
@@ -74,26 +75,27 @@ public class InvestController {
 
         if (insertNewInvestor(moneyAmount, userId, projectId) == 0) {
             float total = 0.00f;
-            ArrayList<Investor> listinvestors = getallinvestors(total);
+            ArrayList<Investor> listinvestors = new ArrayList<Investor>();
+            total = getallinvestors(listinvestors, total);
             model.addAttribute("investorsList", listinvestors);
             model.addAttribute("totalDonation", total);
             return "/investment/investment";
         }
 
-        ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
+        ArrayList<Investor> listinvestors = new ArrayList<Investor>();
+        totalAmount = getallinvestors(listinvestors, totalAmount);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
         return "/investment/investment";
     }
 
 
-    private ArrayList<Investor> getallinvestors(float totalAmount) {
+    private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount) {
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
         User tmpUser;
         String firstname;
         String lastname;
         String email;
-        ArrayList<Investor> listOfInvestors = new ArrayList<Investor>();
         for (Investment invest : investments) {
             Date created = invest.getCreated();
             Float amount = invest.getAmount();
@@ -107,7 +109,7 @@ public class InvestController {
             totalAmount += amount;
         }
         Collections.sort(listOfInvestors);
-        return listOfInvestors;
+        return totalAmount;
     }
 
     private int insertNewInvestor (float moneyAmount, Long userId, Long projectId) {
@@ -126,6 +128,7 @@ public class InvestController {
         }
         return 1;
     }
+
     private void sendMail (Long userId, float amountMoney) throws AddressException, MessagingException {
         User tmpUser = userService.getUserById(userId);
         String userMail = tmpUser.getLogin();
@@ -144,7 +147,6 @@ public class InvestController {
         String emailBody = "Thank you for donating " + amountMoney + "€" + "<br><br> Regards, <br>MEPA Team";
         generateMailMessage.setContent(emailBody, "text/html");
 
-        System.out.println("\n\n 3rd ===> Get Session and Send mail");
         Transport transport = getMailSession.getTransport("smtp");
 
         transport.connect("smtp.gmail.com", "mepa.epita@gmail.com", "sigl2017");
@@ -180,7 +182,8 @@ public class InvestController {
             investmentService.createInvestment(invest);
         }
         float totalAmount = 0.00f;
-        ArrayList<Investor> listinvestors = getallinvestors(totalAmount);
+        ArrayList<Investor> listinvestors = new ArrayList<Investor>();
+        totalAmount= getallinvestors(listinvestors, totalAmount);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
         return "/investment/investment";
@@ -193,7 +196,8 @@ public class InvestController {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String date = dateFormat.format(actual);
         date.replace("-", "_");
-        ArrayList<Investor> investors = getallinvestors(totalAmount);
+        ArrayList<Investor> investors = new ArrayList<Investor>();
+        totalAmount = getallinvestors(investors, totalAmount);
         if (investors != null && investors.size() > 0) {
             String fileWriter = CsvExporter.writeCsvFile(investors);
             response.setContentType("text/csv");
