@@ -38,10 +38,7 @@ public class InvestController {
     @RequestMapping(value = "/invest", method = RequestMethod.GET)
     public String invest(ModelMap model, HttpSession session) {
         ArrayList<Investor> listinvestors = getallinvestors();
-        if (listinvestors.isEmpty())
-            System.out.println("toto");
-        else
-            printelements(listinvestors);
+        printelements(listinvestors);
         model.addAttribute("investorsList", listinvestors);
         return "/investment/investment";
     }
@@ -94,6 +91,8 @@ public class InvestController {
             invest.setDate(date);
             investmentService.createInvestment(invest);
         }
+        ArrayList<Investor> listinvestors = getallinvestors();
+        model.addAttribute("investorsList", listinvestors);
         return "/investment/investment";
     }
 
