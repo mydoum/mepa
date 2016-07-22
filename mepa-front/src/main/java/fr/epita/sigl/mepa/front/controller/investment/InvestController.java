@@ -193,6 +193,7 @@ public class InvestController {
         user.setPassword("123");
         user.setData("toto");
         user.setBirthDate(new Date(21/04/1994));
+        user.setId(1L);
         userService.createUser(user);
         User user2 = new User();
         user2.setFirstName("Hugo");
