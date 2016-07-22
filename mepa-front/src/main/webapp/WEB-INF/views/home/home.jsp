@@ -29,6 +29,20 @@
                 form validation example</a>
         </p>
 
+        <%
+            Integer hitsCount =
+                    (Integer)application.getAttribute("hitCounter");
+            if( hitsCount ==null || hitsCount == 0 ){
+                hitsCount = 1;
+            }else{
+                hitsCount += 1;
+            }
+            application.setAttribute("hitCounter", hitsCount);
+        %>
+
+        <center>
+            <p>Total number of visits: <%= hitsCount%></p>
+        </center>
         <p class="text-center well-done">
             <c:url var="wellDoneImgUrl" value="/img/welldone.jpg"/>
             <img src="${wellDoneImgUrl}" alt=""/>
