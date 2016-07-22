@@ -12,6 +12,13 @@
     },  3000);
 </script>
 
+<%-- Facebook meta characters--%>
+<meta property="og:url"           content="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}" />
+<meta property="og:type"          content="projet" />
+<meta property="og:title"         content="${project.name}" />
+<meta property="og:description"   content="${project.description}" />
+<meta property="og:image"         content="${project.imagesLinks[0]}" />
+
 <div class="container">
     <h2>${project.name}</h2>
     <div>
@@ -46,6 +53,20 @@
                 </td>
             </tr>
         </table>
+
+        <%-- Facebook share button --%>
+        <div class="fb-share-button"
+             data-href="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}"
+             data-layout="button_count"
+             data-size="large"
+            <%-- Open the iframe --%>
+             data-mobile-iframe="true">
+
+            <a class="fb-xfbml-parse-ignore" target="_blank"
+               href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">
+                Partager
+            </a>
+        </div>
         <div class="panel panel-primary" id="description">
             <div class="panel-heading">Description</div>
             <div class="panel-body">
