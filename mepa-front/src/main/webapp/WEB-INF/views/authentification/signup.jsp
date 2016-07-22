@@ -6,12 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <!-- Include Bootstrap Datepicker -->
+<%@ include file="/WEB-INF/views/includes/common.jsp" %>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
-<script src="http://formvalidation.io/vendor/formvalidation/js/formValidation.min.js"></script>
-<script src="http://formvalidation.io/vendor/formvalidation/js/framework/bootstrap.min.js"></script>
 
 <style type="text/css">
     /**
@@ -23,7 +20,7 @@
         right: -15px;
     }
 </style>
-<%@ include file="/WEB-INF/views/includes/common.jsp" %>
+
 
 <script>
     $(document).ready(function() {
@@ -112,13 +109,10 @@
 
 
                     <div class="control-group">
-                        <label class="control-label">Date de naissance</label>
-                        <div class="date">
-                            <div class="input-group input-append date" id="datePicker">
-                                <input type="text" class="form-control" name="date" />
-                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
-                            <p class="help-block">Please provide your Birthday</p>
+                        <label class="control-label" for="firstname">Date de naissance</label>
+                        <div class="controls">
+                            <input id="birthdate" name="birthdate" placeholder="" class="form-control input-lg" type="text">
+                            <p class="help-block">Birthday</p>
                         </div>
                     </div>
 
@@ -135,3 +129,7 @@
         </div>
     </div>
 </div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+<script src="http://formvalidation.io/vendor/formvalidation/js/formValidation.min.js"></script>
+<script src="http://formvalidation.io/vendor/formvalidation/js/framework/bootstrap.min.js"></script>

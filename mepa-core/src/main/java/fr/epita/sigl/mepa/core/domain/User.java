@@ -33,7 +33,7 @@ public class User {
     private String lastName;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "birthDate", nullable = false)
+    @Column(name = "birthDate", nullable = true)
     private Date birthDate;
 
     public String getLogin() {
@@ -76,7 +76,7 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    @NotNull
+//    @NotNull
     private String data;
 
     public Long getId() {
