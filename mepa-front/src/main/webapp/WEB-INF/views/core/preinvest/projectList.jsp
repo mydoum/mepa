@@ -1,16 +1,14 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <div class="container">
-    <h2>Displaying a project</h2>
-    <div class="alert alert-warning">
-        Hello World ! :D
+    <c:url var="preinvestCoreUrl" value="/core/preinvest/projectCreate"/>
+    <a class="btn btn-lg btn-primary" href="${preinvestCoreUrl}" role="button">Create a new project</a>
 
-    </div>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
             <tr>
-                <th></th>
+                <th style="width: 100px"></th>
                 <th>Project Name</th>
                 <th>Ending date</th>
                 <th>Project Description</th>
@@ -19,9 +17,9 @@
             <tbody>
             <c:forEach items="${project_list}" var="project" varStatus="loop">
                 <tr>
-                    <td></td>
-                    <td>${project.name}</td>
-                    <td><fmt:formatDate value="${project.endDate}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
+                    <td><img src="${project.imagesLinks.get(0)}" alt="Illustration" style="height: 80px;"></td>
+                    <td><a href="<c:url value='projectDisplay/${project.id}'/>" >${project.name}</a></td>
+                    <td>${project.dateFormat("dd/MM/yyyy",project.endDate)}</td>
                     <td>${project.description}</td>
                 </tr>
             </c:forEach>

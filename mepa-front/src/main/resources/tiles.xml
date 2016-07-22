@@ -7,7 +7,6 @@
     <definition name="base.definition" template="/WEB-INF/views/tiles/layout.jsp">
         <put-attribute name="title" value="default.title"/>
         <put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp"/>
-        <put-attribute name="body" value=""/>
         <put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp"/>
     </definition>
 
@@ -29,10 +28,19 @@
 
     <!-- Preinvest -->
     <definition name="/core/preinvest/projectDisplay" extends="base.definition">
+    <definition name="/insertDummy" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/core/insertDummy.jsp"/>
+    </definition>
+
+    <definition name="/preinvest/projectDisplay" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectDisplay.jsp"/>
     </definition>
     <definition name="/preinvest/projectList" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectList.jsp"/>
+    </definition>
+
+    <definition name="/preinvest/projectCreate" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectCreate.jsp"/>
     </definition>
 
     <!-- Core example -->

@@ -14,6 +14,8 @@
     <%-- Application CSS --%>
     <c:url var="defaultCssUrl" value="/css/default.css"/>
     <link rel="stylesheet" href="${defaultCssUrl}" type="text/css"/>
+    <c:url var="projectDisplay" value="/css/project-display.css"/>
+    <link rel="stylesheet" href="${projectDisplay}" type="text/css"/>
 
     <%-- Investissement CSS --%>
     <c:url var="investDefaultCss" value="/css/investment/investment.css"/>
