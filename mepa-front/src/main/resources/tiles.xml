@@ -7,7 +7,6 @@
     <definition name="base.definition" template="/WEB-INF/views/tiles/layout.jsp">
         <put-attribute name="title" value="default.title"/>
         <put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp"/>
-        <put-attribute name="body" value=""/>
         <put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp"/>
     </definition>
 
@@ -19,14 +18,29 @@
         <put-attribute name="body" value="/WEB-INF/views/home/home.jsp"/>
     </definition>
 
-    <!-- Preinvest -->
-    <definition name="/preinvest/projectDisplay" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectDisplay.jsp"/>
-    </definition>
-
     <!-- Authentification -->
     <definition name="/authentification/signup" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/signup.jsp"/>
+    <!-- Invest -->
+    <definition name="invest.definition" extends="base.definition">
+        <put-attribute name="title" value="invest.title"/>
+    </definition>
+    <definition name="/investment/investment" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/investment/investment.jsp"/>
+    </definition>
+
+    <!-- Preinvest -->
+    <definition name="/insertDummy" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/core/insertDummy.jsp"/>
+    </definition>
+    <definition name="/preinvest/projectDisplay" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectDisplay.jsp"/>
+    </definition>
+    <definition name="/preinvest/projectList" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectList.jsp"/>
+    </definition>
+    <definition name="/preinvest/projectCreate" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectCreate.jsp"/>
     </definition>
 
     <!-- Core example -->

@@ -9,8 +9,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">MEPA</a>
+                    <a class="navbar-brand" href="/home">MEPA</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -20,6 +21,10 @@
                         <li><a href="${coreExampleUrl}">Core module example</a></li>
                         <c:url var="testAuth" value="/authentification/auth"/> <!-- URL -->
                         <li><a href="${testAuth}">Inscription</a></li>
+                        <c:url var="preinvestCoreUrl" value="/core/preinvest/"/>
+                        <li><a href="${preinvestCoreUrl}">Create Project</a></li>
+                        <c:url var="investUrl" value="/invest"/>
+                        <li><a href="${investUrl}">Invest</a></li>
                     </ul>
                 </div>
             </div>

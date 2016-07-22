@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@Entity
 @NamedQueries({
         @NamedQuery(name = "User.findById", query = "FROM User o WHERE o.id=:id"),
         @NamedQuery(name = "User.findAll", query = "FROM User o"),
