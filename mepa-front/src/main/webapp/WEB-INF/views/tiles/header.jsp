@@ -21,11 +21,8 @@
                         <li><a href="${coreExampleUrl}">Core module example</a></li>
                         <c:url var="preinvestCoreUrl" value="/core/preinvest/"/>
                         <li><a href="${preinvestCoreUrl}">Create Project</a></li>
-<<<<<<< HEAD
                         <c:url var="investUrl" value="/invest"/>
                         <li><a href="${investUrl}">Invest</a></li>
-=======
->>>>>>> 687e0c9b048c8a8ef38d6d565c0f50d221fe3ce0
                     </ul>
                 </div>
             </div>
