@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="data">Leave a comment below:</label>
             <br/>
-            <input id="data" name="userText" type="text" placeholder="Leave a comment"/>
+            <input id="data" name="userText" type="textarea" placeholder="Leave a comment"/>
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form:form>
@@ -25,6 +25,7 @@
                 <tbody>
                 <c:forEach items="${commentsmodels}" var="commentsmodel" varStatus="loop">
                     <tr>
+
                         <td><fmt:formatDate value="${commentsodel.created}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
                         <td>${commentsmodel.data}</td>
                     </tr>

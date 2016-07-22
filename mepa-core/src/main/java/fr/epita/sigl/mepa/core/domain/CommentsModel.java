@@ -22,7 +22,7 @@ public class CommentsModel
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private int id;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created", nullable = false)
@@ -32,12 +32,12 @@ public class CommentsModel
     private String data;
 
 
-    public Long getId()
+    public int getId()
     {
         return this.id;
     }
 
-    public void setId(Long id_)
+    public void setId(int id_)
     {
         this.id = id_;
     }

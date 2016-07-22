@@ -30,5 +30,6 @@
             <c:url var="wellDoneImgUrl" value="/img/welldone.jpg"/>
             <img src="${wellDoneImgUrl}" alt=""/>
         </p>
+
     </div>
 </div>
