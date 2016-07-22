@@ -34,19 +34,24 @@ public class ProjectCreateController {
     @Autowired
     private ProjectService projectService;
 
-    @RequestMapping(value = {"/projectCreate"}) // The adress to call the function
-    public String projectCreate(HttpServletRequest request, ModelMap modelMap) {
+    @RequestMapping(value = {"/projectCreate"}, method = RequestMethod.GET) // The adress to call the function
+    public String projectCreate(ModelMap modelMap) {
         /* Code your logic here */
         Project p = new Project();
         modelMap.addAttribute(NEWPROJECT, p);
         return "/preinvest/projectCreate"; // The adress of the JSP coded in tiles.xml
     }
 
-    @RequestMapping(value = {"/processCreation"}) // The adress to call the function
-    public String processCreation(@ModelAttribute("newProject") Project newProject)
+    @RequestMapping(value = {"/processCreation"}, method = RequestMethod.POST) // The adress to call the function
+    public String processCreation(@ModelAttribute(NEWPROJECT) Project newProject, ModelMap model)
     {
+        //model.addAttribute("Retour", newProject.getName() + newProject.getEndDate() + newProject.getDescription());
         projectService.createProject(newProject);
-        return "/preinvest/";
+
+        List<Project> projects = this.projectService.getAllProjects();
+
+        model.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
+        return "/preinvest/projectList";
     }
 
 

@@ -1,4 +1,5 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="from" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Xavier
@@ -21,12 +22,12 @@
                         <td><sf:input path="Name"/></td>
                     </tr>
                     <tr>
-                        <td>Date de fin : </td>
+                        <td>Deadline : </td>
                         <td><sf:input path="endDate"/></td>
                     </tr>
                     <tr>
                         <td>Description : </td>
-                        <td><sf:input path="description"/></td>
+                        <td><sf:textarea rows ="10" cols="40" path="description"/></td>
                     </tr>
                     <td><input type="submit" value="Validate Project"/></td>
                 </table>

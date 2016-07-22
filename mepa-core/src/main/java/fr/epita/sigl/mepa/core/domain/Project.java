@@ -57,7 +57,7 @@ public class Project {
     public Project() {
         this.user_id = (long) 0;
         this.endDate = new Date();
-        this.name = "Unnamed";
+        this.name = "Choose a name";
     }
 
     public Project(Long user_id, String projectName, Date endDate) {
