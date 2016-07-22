@@ -1,7 +1,30 @@
+<%@ page import="java.util.ArrayList" %>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <div class="container">
     <div class="jumbotron">
+        <%
+            Integer hitsCount = (Integer)application.getAttribute("hitCounter");
+            ArrayList<String> visits = (ArrayList<String>) application.getAttribute("visits");
+            if (visits == null)
+                visits = new ArrayList<>();
+            String id = request.getSession().getId();
+            if( hitsCount == null || hitsCount == 0 ){
+                hitsCount = 1;
+                visits.add(id);
+            }
+            else {
+                if (!visits.contains(id)) {
+                    visits.add(id);
+                    ++hitsCount;
+                }
+            }
+            application.setAttribute("hitCounter", hitsCount);
+            System.out.println(visits.size());
+            application.setAttribute("visits", visits);
+        %>
+
+            <p><%= hitsCount%> visits</p>
 
         <h1>Hello SIGL, this is the home page!</h1>
 
