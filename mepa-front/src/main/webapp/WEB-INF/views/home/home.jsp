@@ -2,6 +2,7 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <div class="container">
+
     <div class="jumbotron">
         <%
             Integer hitsCount = (Integer)application.getAttribute("hitCounter");
@@ -26,9 +27,18 @@
 
             <p><%= hitsCount%> visits</p>
 
+
+    <div class="jumbotron">
+        <div class="col-md-12">
+            <c:if test="${userIsCreated != null}">
+                <p class="alert alert-success">${userIsCreated}</p>
+            </c:if>
+        </div>
         <h1>Hello SIGL, this is the home page!</h1>
 
+
         <p class="alert alert-success">Seems to be working? Good!</p>
+
 
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget mauris a lacus commodo placerat.
             Pellentesque commodo, nisl mollis cursus ultrices, dui tellus molestie purus, ac lobortis lectus elit ac mi.
