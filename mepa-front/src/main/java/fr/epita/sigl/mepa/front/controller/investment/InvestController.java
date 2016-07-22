@@ -102,7 +102,7 @@ public class InvestController {
         }
 
         model.addAttribute("amount", moneyAmount);
-        Long userId = 1L;
+        Long userId = 2L;
         Long projectId = 1L;
 
         if (insertNewInvestor(moneyAmount, userId, projectId) == 0) {
@@ -132,9 +132,16 @@ public class InvestController {
             Float amount = invest.getAmount();
             Long userId = invest.getUserId();
             //tmpUser = userService.getUserById(userId);
-            firstname = "Simon"; //tmpUser.getFirstName();
-            lastname = "MACE"; //tmpUser.getLastName();
-            email = "simon.mace@epita.fr"; //tmpUser.getLogin();
+            Long projectId = invest.getProjectId();
+            if (projectId == 1) {
+                firstname = "Simon"; //tmpUser.getFirstName();
+                lastname = "MACE"; //tmpUser.getLastName();
+                email = "simon.mace@epita.fr"; //tmpUser.getLogin();
+            } else {
+                firstname = "Hugo"; //tmpUser.getFirstName();
+                lastname = "CAPES"; //tmpUser.getLastName();
+                email = "hugo.capes@gmail.com"; //tmpUser.getLogin();
+            }
             Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created);
             listOfInvestors.add(tmpInvestor);
             totalAmount += amount;
@@ -160,10 +167,10 @@ public class InvestController {
     }
 
     private void sendMail (Long userId, float amountMoney) throws AddressException, MessagingException {
-        User tmpUser = userService.getUserById(userId);
-        String userMail = tmpUser.getLogin();
-        String userFirstName = tmpUser.getFirstName();
-        String userLastName = tmpUser.getLastName();
+        //User tmpUser = userService.getUserById(userId);
+        String userMail = "hugo.capes@gmail.com";//tmpUser.getLogin();
+        String userFirstName = "Hugo"; //tmpUser.getFirstName();
+        String userLastName = "Capes"; //tmpUser.getLastName();
 
         mailServerProperties = System.getProperties();
         mailServerProperties.put("mail.smtp.port", "587");
