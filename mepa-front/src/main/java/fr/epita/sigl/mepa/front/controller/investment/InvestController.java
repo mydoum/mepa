@@ -133,7 +133,7 @@ public class InvestController {
             Long userId = invest.getUserId();
             //tmpUser = userService.getUserById(userId);
             Long projectId = invest.getProjectId();
-            if (projectId == 1) {
+            if (projectId == 1L) {
                 firstname = "Simon"; //tmpUser.getFirstName();
                 lastname = "MACE"; //tmpUser.getLastName();
                 email = "simon.mace@epita.fr"; //tmpUser.getLogin();
@@ -193,7 +193,7 @@ public class InvestController {
 
     @RequestMapping(value = "/invest/filltables", method = RequestMethod.GET)
     public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) {
-        for (int i = 0; i < 3000; i++) {
+        for (int i = 0; i < 300; i++) {
             Investment invest = new Investment();
             invest.setAmount(15.0f);
             invest.setProjectId(1L);
