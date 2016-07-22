@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
-
 <div class="container">
     <div class="page-header col-md-12"><h1>Project Alpha</h1></div>
     <c:if test="${amount != null}">
@@ -106,4 +105,9 @@
         </div>
     </div>
 </div>
+
+<c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
+<script src="${investSliderJs}"></script>
+<c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>
+<script src="${investSliderPersoJs}"></script>
 
