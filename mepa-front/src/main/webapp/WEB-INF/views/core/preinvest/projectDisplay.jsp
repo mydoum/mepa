@@ -19,13 +19,11 @@
             <tr>
                 <td>
                     <div id="slideshow">
-                        <div>
-                            <img src="http://www.thewrap.com/wp-content/uploads/2016/06/iron-throne.jpg" style="width:100%"/>
-                        </div>
-
-                        <div>
-                            <img src="http://static2.techinsider.io/image/56ce049a2e5265b6008b955a-2297-1696/game-of-thrones-season-6-posters.jpg" style="width:100%"/>
-                        </div>
+                        <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
+                            <div>
+                                <img src="${image}" style="width:100%"/>
+                            </div>
+                        </c:forEach>
                     </div>
                 </td>
                 <td>
