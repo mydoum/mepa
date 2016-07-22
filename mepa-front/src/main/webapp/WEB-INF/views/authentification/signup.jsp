@@ -107,12 +107,21 @@
                         </div>
                     </div>
 
-
                     <div class="control-group">
                         <label class="control-label" for="firstname">Date de naissance</label>
                         <div class="controls">
                             <input id="birthdate" name="birthdate" placeholder="" class="form-control input-lg" type="text">
                             <p class="help-block">Birthday</p>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="col-xs-3 control-label">Date</label>
+                        <div class="col-xs-5 date">
+                            <div class="input-group input-append date" id="datePicker">
+                                <input type="text" class="form-control" name="date" />
+                                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
                         </div>
                     </div>
 
