@@ -27,6 +27,8 @@
                         <li><a href="${preinvestCoreUrl}">Create Project</a></li>
                         <c:url var="investUrl" value="/invest"/>
                         <li><a href="${investUrl}">Invest</a></li>
+                        <c:url var="commentsUrl" value="/comment"/>
+                        <li><a href="${commentsUrl}">Comments</a></li>
                     </ul>
                 </div>
             </div>
