@@ -13,24 +13,26 @@
     <title>Create a new project</title>
 </head>
 <body>
-
     <div class="container">
         <sf:form method="post" modelAttribute="newProject" action="processCreation">
-                <table>
-                    <tr>
-                        <td>Nom du projet : </td>
-                        <td><sf:input path="Name"/></td>
-                    </tr>
-                    <tr>
-                        <td>Deadline : </td>
-                        <td><sf:input path="endDate"/></td>
-                    </tr>
-                    <tr>
-                        <td>Description : </td>
-                        <td><sf:textarea rows ="10" cols="40" path="description"/></td>
-                    </tr>
-                    <td><input type="submit" value="Validate Project"/></td>
-                </table>
+            <div class="input-group">
+                <span class="input-group-addon" id="projectName">Nom du projet</span>
+                <td><form:input path="Name" class="form-control" placeholder="Nom du projet" aria-describedby="basic-addon1"/></td>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon" id="deadline">Date de fin</span>
+                <td><form:input path="endDate" class="form-control" placeholder="Date de fin" aria-describedby="basic-addon1"/></td>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon" id="description">Description</span>
+                <td><form:input path="description" class="form-control" placeholder="Description" aria-describedby="basic-addon1"/></td>
+            </div>
+            <br/>
+           <td>
+               <span class="label label-primary"><input type="submit" value="Validate Project" style="background-color: transparent" style="border-color: transparent"/></span>
+           </td>
         </sf:form>
     </div>
 </body>
