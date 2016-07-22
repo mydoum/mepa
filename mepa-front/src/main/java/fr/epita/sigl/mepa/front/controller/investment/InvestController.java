@@ -140,7 +140,7 @@ public class InvestController {
             } else {
                 firstname = "Hugo"; //tmpUser.getFirstName();
                 lastname = "CAPES"; //tmpUser.getLastName();
-                email = "hugo.capes@gmail.com"; //tmpUser.getLogin();
+                email = "hugo.capes@hotmail.fr"; //tmpUser.getLogin();
             }
             Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created);
             listOfInvestors.add(tmpInvestor);
@@ -168,7 +168,7 @@ public class InvestController {
 
     private void sendMail (Long userId, float amountMoney) throws AddressException, MessagingException {
         //User tmpUser = userService.getUserById(userId);
-        String userMail = "hugo.capes@gmail.com";//tmpUser.getLogin();
+        String userMail = "hugo.capes@hotmail.fr";//tmpUser.getLogin();
         String userFirstName = "Hugo"; //tmpUser.getFirstName();
         String userLastName = "Capes"; //tmpUser.getLastName();
 
