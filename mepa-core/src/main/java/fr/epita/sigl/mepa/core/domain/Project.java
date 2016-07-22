@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @NamedQueries({
@@ -43,7 +44,8 @@ public class Project {
 
     private ArrayList<String> imagesLinks;
 
-
+    @OneToMany(mappedBy="id")
+    private Set<Reward> rewards;
 
     /*
 * ID
@@ -134,6 +136,14 @@ public class Project {
 
     public void setImagesLinks(ArrayList<String> imagesLinks) {
         this.imagesLinks = imagesLinks;
+    }
+
+    public Set<Reward> getRewards() {
+        return rewards;
+    }
+
+    public void setRewards(Set<Reward> rewards) {
+        this.rewards = rewards;
     }
 
     @Override

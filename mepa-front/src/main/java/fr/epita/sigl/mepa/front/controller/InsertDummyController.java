@@ -4,6 +4,7 @@ package fr.epita.sigl.mepa.front.controller;
  * Created by Xavier on 21/07/2016.
  */
 import fr.epita.sigl.mepa.core.domain.Project;
+import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 @Controller
 @RequestMapping("/insertDummy") // The adress of the component
@@ -57,12 +56,26 @@ public class InsertDummyController {
             while (d.after(newProject.getEndDate()))
                 d = getRandomDate();
 
+            Set<Reward> rewards = new HashSet<>();
+
+            for (int j = 0; j < 10; ++j) {
+                Reward r = new Reward();
+                r.setName("Coucou");
+                r.setDescription("This is a description");
+                r.setCostStart((long) 10);
+                rewards.add(r);
+            }
+
+            newProject.setRewards(rewards);
+
             newProject.setStartDate(d);
             ArrayList<String> imageLinkList = new ArrayList<>();
             imageLinkList.add("http://www.gobadges.com/v/vspfiles/photos/CD0564-2.jpg");
             imageLinkList.add("http://www.nyan.cat/images/cat/4.gif");
             newProject.setImagesLinks(imageLinkList);
             newProject.setDescription("tototototototototototototototototototototo");
+
+
 
             this.projectService.createProject(newProject);
         }
