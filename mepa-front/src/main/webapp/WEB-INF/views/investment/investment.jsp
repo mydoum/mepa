@@ -85,7 +85,7 @@
                         <tr>
                             <td>${investor.firstname}</td>
                             <td>${investor.lastname}</td>
-                            <td>${investor.moneyAmount}</td>
+                            <td>${investor.moneyAmount} €</td>
                             <td>${investor.dateOfInvestment}</td>
                         </tr>
                     </c:forEach>

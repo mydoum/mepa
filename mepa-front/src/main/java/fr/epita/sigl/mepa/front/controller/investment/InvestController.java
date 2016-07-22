@@ -170,7 +170,7 @@ public class InvestController {
         user2.setData("toto");
         user2.setId(2L);
         userService.createUser(user2);
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 3000; i++) {
             Investment invest = new Investment();
             invest.setAmount(15.0f);
             invest.setProjectId(1L);
@@ -208,8 +208,8 @@ public class InvestController {
             }
         }
         model.addAttribute("investorsList", investors);
-        model.addAttribute("totaldonation", totalAmount);
-        return "/invest/invest";
+        model.addAttribute("totalDonation", totalAmount);
+        return "/investment/investment";
     }
 
     private void printelements(ArrayList<Investor> listinvestors) {
