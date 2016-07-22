@@ -19,13 +19,15 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Created</th>
-                    <th>Data</th>
+                    <th>Created By</th>
+                    <th>Created At</th>
+                    <th>Comment</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${new_c_models}" var="c_model" varStatus="loop">
                     <tr>
+                        <td>Someone</td>
                         <td><fmt:formatDate value="${c_model.created}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
                         <td>${c_model.data}</td>
                     </tr>
