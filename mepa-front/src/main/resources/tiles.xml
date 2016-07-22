@@ -22,6 +22,10 @@
     <definition name="/authentification/signup" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/signup.jsp"/>
     </definition>
+    <definition name="/authentification/signin" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/authentification/signin.jsp"/>
+    </definition>
+
     <!-- Invest -->
     <definition name="invest.definition" extends="base.definition">
         <put-attribute name="title" value="invest.title"/>

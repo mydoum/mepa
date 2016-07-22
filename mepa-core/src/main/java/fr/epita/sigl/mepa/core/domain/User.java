@@ -32,7 +32,7 @@ public class User {
     @Column(name = "lastName", nullable = false)
     private String lastName;
 
-    @Temporal(TemporalType.DATE)
+//    @Temporal(TemporalType.DATE)
     @Column(name = "birthDate", nullable = true)
     private Date birthDate;
 

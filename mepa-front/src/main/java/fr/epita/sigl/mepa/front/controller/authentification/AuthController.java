@@ -37,63 +37,34 @@ public class AuthController {
     @RequestMapping(value = {"/add"}, method = {RequestMethod.GET})
     public String getForm(HttpServletRequest request, ModelMap modelMap,
                               @Valid AddCustomUserFormBean addCustomUserFormBean, BindingResult result) throws ParseException {
-//        if (result.hasErrors()) {
-//            // Error(s) in form bean validation
-//            return "/example/core/form";
-//        }
-        User newUser = new User();
-        newUser.setFirstName("toto");
-        newUser.setLastName("tata");
-        newUser.setLogin("test@test.com");
-        newUser.setPassword("123456");
-
-        DateFormat df = new SimpleDateFormat("dd MM yyyy HH:mm:ss");
-        String target = "27-09-1991 20:29:30";
-        Date res = new Date();
-        try {
-//            res = df.parse(target);
-//            newUser.setBirthDate(res);
-        } catch (Exception e) {
-
-        }
-//        System.out.println(result);
-        newUser.setBirthDate(res);
-//        System.out.println("User is : " + request.getParameter("lastname"));
-        this.userService.createUser(newUser);
-        System.out.println("New User created!");
-        System.out.println("User firstName : "+ newUser.getFirstName());
-        System.out.println("User lastName : "+ newUser.getLastName());
-        System.out.println("User login : "+ newUser.getLogin());
-        System.out.println("User password : "+ newUser.getPassword());
-//
-        System.out.println("User birthdate : "+ newUser.getBirthDate());
         return "/home/home";
 
-//        newUser.setPassword(addCustomUserFormBean.getCfmpassword());
-//        newUser.setBirthDate(addCustomUserFormBean.getBirthdate());
-//        this.userService.createUser(newUser);
-//        System.out.println("New User created!");
-//        System.out.println("User firstName : "+ newUser.getFirstName());
-//        System.out.println("User lastName : "+ newUser.getLastName());
-//        System.out.println("User login : "+ newUser.getLogin());
-//        System.out.println("User password : "+ newUser.getPassword());
-//        System.out.println("User birthdate : "+ newUser.getBirthDate().toString());
-//
-//        modelMap.addAttribute("user", newUser);
-//
-//        System.out.println("test");
-//
-//        return "/home/home";
     }
 
-    @RequestMapping(value = {"/add"}, method = {RequestMethod.POST})
+    @RequestMapping(value = {"/addUser"}, method = {RequestMethod.POST})
     public String processForm(HttpServletRequest request, ModelMap modelMap) {
-        String test = request.getParameter("birthdate");
-        System.out.println(test);
+        User newUser = new User();
+        String bithDate = request.getParameter("birthdate");
+        String firstName = request.getParameter("firstname");
+        String lastName = request.getParameter("lastname");
+        String login = request.getParameter("email");
+        String pwd = request.getParameter("password");
+
+        newUser.setBirthDate(new Date());
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setLogin(login);
+        newUser.setPassword(pwd);
+
+        this.userService.createUser(newUser);
+        System.out.println("Create new user");
 
         return "/home/home";
-
     }
 
+    @RequestMapping(value = {"/signin"}, method = {RequestMethod.GET})
+    public String getsignin(HttpServletRequest request, ModelMap modelMap) {
+        return "/authentification/signin";
+    }
 
 }

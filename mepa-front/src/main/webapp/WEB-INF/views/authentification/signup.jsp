@@ -60,7 +60,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <c:url var="addCustomUserFormActionUrl" value="/authentification/add"/>
+            <c:url var="addCustomUserFormActionUrl" value="/authentification/addUser"/>
             <form id="eventForm" class="form-horizontal" action="${addCustomUserFormActionUrl}" modelAttribute="addCustomUserFormBean"
                   method="POST">
                 <fieldset>

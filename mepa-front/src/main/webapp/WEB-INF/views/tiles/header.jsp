@@ -19,8 +19,10 @@
                         <li><a href="${homeUrl}">Home page</a></li>
                         <c:url var="coreExampleUrl" value="/example/core/"/>
                         <li><a href="${coreExampleUrl}">Core module example</a></li>
-                        <c:url var="testAuth" value="/authentification/auth"/> <!-- URL -->
-                        <li><a href="${testAuth}">Inscription</a></li>
+                        <c:url var="signup" value="/authentification/auth"/>
+                        <li><a href="${signup}">Inscription</a></li>
+                        <c:url var="signin" value="/authentification/signin"/>
+                        <li><a href="${signin}">Connexion</a></li>
                         <c:url var="preinvestCoreUrl" value="/core/preinvest/"/>
                         <li><a href="${preinvestCoreUrl}">Create Project</a></li>
                         <c:url var="investUrl" value="/invest"/>
