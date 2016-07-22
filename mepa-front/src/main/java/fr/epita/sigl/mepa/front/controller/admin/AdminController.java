@@ -1,4 +1,4 @@
-package fr.epita.sigl.mepa.front.controller.core.postinvest;
+package fr.epita.sigl.mepa.front.controller.admin;
 
 import fr.epita.sigl.mepa.core.service.ModelService;
 import org.slf4j.Logger;
