@@ -21,6 +21,7 @@ public class CommentsDaoImpl implements CommentsModelDao
     private SessionFactory sessionFactory;
 
     private Session getSession() {
+        System.out.println("JE SUIS DANS LE DAO");
         return this.sessionFactory.getCurrentSession();
     }
 
@@ -48,7 +49,7 @@ public class CommentsDaoImpl implements CommentsModelDao
 
     @Override
     public List<CommentsModel> getAll() {
-        Query query = this.getSession().getNamedQuery("Model.findAll");
+        Query query = this.getSession().getNamedQuery("CommentsModel.findAll");
         return query.list();
     }
 }

@@ -25,6 +25,9 @@ public class CommentsModelServiceImpl implements CommentsModelService
     @Override
     public void createCommentsModel(CommentsModel commentsmodel) {
         commentsmodel.setCreated(new Date());
+        System.out.println("JE SUIS DANS LE SERVICE");
+        System.out.println("la date de création de mon model est : " + commentsmodel.getCreated());
+        System.out.println("la data de mon model est : " + commentsmodel.getData());
         this.commentsmodelDao.create(commentsmodel);
     }
 
