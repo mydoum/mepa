@@ -7,6 +7,7 @@
             <label for="data">Leave a comment below:</label>
             <br/>
             <textarea id="data" name="userText" type="text" rows="6" cols="50" >Please comment...</textarea>
+
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form:form>

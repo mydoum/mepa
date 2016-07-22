@@ -18,6 +18,8 @@
                         <li><a href="${homeUrl}">Home page</a></li>
                         <c:url var="coreExampleUrl" value="/example/core/"/>
                         <li><a href="${coreExampleUrl}">Core module example</a></li>
+                        <c:url var="commentsUrl" value="/comment"/>
+                        <li><a href="${commentsUrl}">Comments</a></li>
                     </ul>
                 </div>
             </div>
