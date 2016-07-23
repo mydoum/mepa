@@ -3,6 +3,7 @@ package fr.epita.sigl.mepa.front.controller.investment;
 
 import com.sun.mail.smtp.SMTPTransport;
 import fr.epita.sigl.mepa.core.domain.Investment;
+import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.domain.User;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
@@ -155,21 +156,39 @@ public class InvestController {
         newInvestment.setUserId(userId);
         Date date = new Date();
         newInvestment.setDate(date);
-        /*PostInvest -> Delete Doublon with same userId on a same projectId and update the new invest*/
+
+        /*PostInvest -> Delete Doublon with same userId on a same projectId and update the new invest when a project is done*/
         Float oldAmount = 0.0f;
-        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
-        if (!investments.isEmpty())
+        Project projectSameId = new Project();
+        Date endDate;
+        ArrayList<Project> projects = new ArrayList<Project>(projectService.getAllProjects());
+        for (Project p : projects)
         {
-            oldAmount = newInvestment.getAmount();
-            for (Investment inv : investments) {
-                if (inv.getUserId() == userId && inv.getProjectId() == projectId) {
-                    oldAmount += inv.getAmount();
-                    newInvestment.setAmount(oldAmount);
-                    investmentService.deleteInvestment(inv);
+            if (p.getId() == projectId) {
+                projectSameId = p;
+                break;
+            }
+        }
+        if (projectSameId.getId() != null && projectSameId.getId() == projectId)
+        {
+            endDate = projectService.getProjectById(projectId).getEndDate();
+            if (endDate.before(date))
+            {
+                ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
+                if (!investments.isEmpty()) {
+                    oldAmount = newInvestment.getAmount();
+                    for (Investment inv : investments) {
+                        if (inv.getUserId() == userId && inv.getProjectId() == projectId) {
+                            oldAmount += inv.getAmount();
+                            newInvestment.setAmount(oldAmount);
+                            investmentService.deleteInvestment(inv);
+                        }
+                    }
                 }
             }
         }
         /*\PostInvest -> Delete Doublon with same userId on a same projectId and update the new invest*/
+
         investmentService.createInvestment(newInvestment);
         try {
             sendMail(userId, moneyAmount);

@@ -40,6 +40,7 @@ public class ProjectCreateController {
         /* Code your logic here */
         Project p = new Project();
         modelMap.addAttribute(NEWPROJECT, p);
+        projectService.getProjectById(1L).getEndDate();
         return "/preinvest/projectCreate"; // The adress of the JSP coded in tiles.xml
     }
 
