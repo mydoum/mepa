@@ -9,13 +9,13 @@ import java.util.Date;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "User.findById", query = "FROM User o WHERE o.id=:id"),
-        @NamedQuery(name = "User.findAll", query = "FROM User o"),
-        @NamedQuery(name = "User.findByFirstName", query = "FROM User o WHERE o.firstName=:firstName"),
-        @NamedQuery(name = "User.findByLastName", query = "FROM User o WHERE o.lastName=:lastName"),
-        @NamedQuery(name = "User.findByLogin", query = "FROM User o WHERE o.login=:login")
+        @NamedQuery(name = "AppUser.findById", query = "FROM AppUser o WHERE o.id=:id"),
+        @NamedQuery(name = "AppUser.findAll", query = "FROM AppUser o"),
+        @NamedQuery(name = "AppUser.findByFirstName", query = "FROM AppUser o WHERE o.firstName=:firstName"),
+        @NamedQuery(name = "AppUser.findByLastName", query = "FROM AppUser o WHERE o.lastName=:lastName"),
+        @NamedQuery(name = "AppUser.findByLogin", query = "FROM AppUser o WHERE o.login=:login")
 })
-public class User {
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

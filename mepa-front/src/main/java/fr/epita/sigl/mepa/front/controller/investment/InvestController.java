@@ -3,13 +3,12 @@ package fr.epita.sigl.mepa.front.controller.investment;
 
 import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Project;
-import fr.epita.sigl.mepa.core.domain.User;
+import fr.epita.sigl.mepa.core.domain.AppUser;
+import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
-import fr.epita.sigl.mepa.core.service.UserService;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
-import fr.epita.sigl.mepa.front.utilities.Mail;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +21,6 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DateFormat;
@@ -42,7 +40,7 @@ public class InvestController {
     @Autowired
     private InvestmentService investmentService;
     @Autowired
-    private UserService userService;
+    private AppUserService appUserService;
     @Autowired
     private ProjectService projectService;
 
@@ -99,7 +97,7 @@ public class InvestController {
 
     private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project) {
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(1L/*project.getId()*/));
-        User tmpUser;
+        AppUser tmpAppUser;
         String firstname;
         String lastname;
         String email;
@@ -109,28 +107,28 @@ public class InvestController {
             Float amount = invest.getAmount();
             Long userId = invest.getUserId();
             boolean anonymous = invest.isAnonymous();
-            //tmpUser = userService.getUserById(userId);
+            //tmpAppUser = appUserService.getUserById(userId);
             if (userId == 1L) {
                 if (!anonymous) {
                     //TODO vérifier si le nom est rempli, si non mettre le mail
-                    firstname = "Simon"; //tmpUser.getFirstName();
-                    lastname = "MACE"; //tmpUser.getLastName();
+                    firstname = "Simon"; //tmpAppUser.getFirstName();
+                    lastname = "MACE"; //tmpAppUser.getLastName();
                 } else {
                     firstname = "Anonyme";
                     lastname = "Anonyme";
                 }
-                email = "simon.mace@epita.fr"; //tmpUser.getLogin();
+                email = "simon.mace@epita.fr"; //tmpAppUser.getLogin();
 
             } else {
                 if (!anonymous) {
                     //TODO vérifier si le nom est rempli, si non mettre le mail
-                    firstname = "Hugo"; //tmpUser.getFirstName();
-                    lastname = "CAPES"; //tmpUser.getLastName();
+                    firstname = "Hugo"; //tmpAppUser.getFirstName();
+                    lastname = "CAPES"; //tmpAppUser.getLastName();
                 } else {
                     firstname = "Anonyme";
                     lastname = "Anonyme";
                 }
-                email = "hugo.capes@hotmail.fr"; //tmpUser.getLogin();
+                email = "hugo.capes@hotmail.fr"; //tmpAppUser.getLogin();
             }
             Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created, anonymous);
             listOfInvestors.add(tmpInvestor);
@@ -270,11 +268,11 @@ public class InvestController {
     }
 
     private void printalluser() {
-        ArrayList<User> users = new ArrayList<User>(userService.getAllUsers());
-        for (User user : users) {
-            System.out.println(user.getFirstName());
-            System.out.println(user.getLastName());
-            System.out.println(user.getId());
+        ArrayList<AppUser> appUsers = new ArrayList<AppUser>(appUserService.getAllUsers());
+        for (AppUser appUser : appUsers) {
+            System.out.println(appUser.getFirstName());
+            System.out.println(appUser.getLastName());
+            System.out.println(appUser.getId());
         }
     }
 }

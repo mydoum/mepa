@@ -155,11 +155,11 @@
                 </thead>
                 <tbody>
                 <c:if test="${usersList.size() > 0}">
-                    <c:forEach items="${usersList}" var="user" varStatus="status">
+                    <c:forEach items="${usersList}" var="appUser" varStatus="status">
                         <tr>
-                            <td>${user.firstName}</td>
-                            <td>${user.lastName}</td>
-                            <td>${user.login}</td>
+                            <td>${appUser.firstName}</td>
+                            <td>${appUser.lastName}</td>
+                            <td>${appUser.login}</td>
                         </tr>
                     </c:forEach>
                 </c:if>

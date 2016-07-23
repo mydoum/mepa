@@ -1,18 +1,14 @@
 package fr.epita.sigl.mepa.front.controller.authentification;
 
-import fr.epita.sigl.mepa.core.domain.Investment;
-import fr.epita.sigl.mepa.core.domain.User;
-import fr.epita.sigl.mepa.core.service.UserService;
-import fr.epita.sigl.mepa.front.model.investment.Investor;
+import fr.epita.sigl.mepa.core.domain.AppUser;
+import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.front.user.form.AddCustomUserFormBean;
 import fr.epita.sigl.mepa.front.user.form.LoginUserFormBean;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.SystemUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,14 +22,10 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicReference;
 
 
 @RequestMapping("/authentification")
@@ -41,7 +33,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class AuthController {
 
     @Autowired
-    private UserService userService;
+    private AppUserService appUserService;
 
     static private Properties mailServerProperties;
     static private Session getMailSession;
@@ -49,9 +41,9 @@ public class AuthController {
 
     @RequestMapping(value = {"/auth"}, method = {RequestMethod.GET})
     public String showAuth(HttpServletRequest request, ModelMap modelMap) {
-        List<User> users = this.userService.getUserByFirstName("lol");
-        if (users.size() > 0) {
-            modelMap.addAttribute("usersList", users);
+        List<AppUser> appUsers = this.appUserService.getUserByFirstName("lol");
+        if (appUsers.size() > 0) {
+            modelMap.addAttribute("usersList", appUsers);
         }
         return "/authentification/signup";
     }
@@ -65,40 +57,40 @@ public class AuthController {
 
     @RequestMapping(value = {"/addUser"}, method = {RequestMethod.POST})
     public String processForm(HttpServletRequest request, ModelMap modelMap) {
-        User newUser = new User();
+        AppUser newAppUser = new AppUser();
         String bithDate = request.getParameter("birthdate");
         String firstName = request.getParameter("firstname");
         String lastName = request.getParameter("lastname");
         String login = request.getParameter("email");
         String pwd = request.getParameter("password");
 
-        newUser.setBirthDate(new Date());
-        newUser.setFirstName(firstName);
-        newUser.setLastName(lastName);
-        newUser.setLogin(login);
-        newUser.setPassword(pwd);
+        newAppUser.setBirthDate(new Date());
+        newAppUser.setFirstName(firstName);
+        newAppUser.setLastName(lastName);
+        newAppUser.setLogin(login);
+        newAppUser.setPassword(pwd);
 
-        this.userService.createUser(newUser);
-        System.out.println("Created new user : " + newUser.getFirstName() + " " + newUser.getLastName());
+        this.appUserService.createUser(newAppUser);
+        System.out.println("Created new user : " + newAppUser.getFirstName() + " " + newAppUser.getLastName());
         String msg = "Le compte a bien été créé";
         modelMap.addAttribute("userIsCreated", msg);
-        List<User> users = this.userService.getAllUsers();
-        modelMap.addAttribute("usersList", users);
+        List<AppUser> appUsers = this.appUserService.getAllUsers();
+        modelMap.addAttribute("usersList", appUsers);
         return "/authentification/signup";
     }
 
     @RequestMapping(value = "/filltables", method = RequestMethod.GET)
     public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) {
-        User user = new User();
-        user.setFirstName("Tahar");
-        user.setLastName("Sayagh");
-        user.setLogin("tahar.sayagh@gmail.com");
-        user.setPassword("authent");
+        AppUser appUser = new AppUser();
+        appUser.setFirstName("Tahar");
+        appUser.setLastName("Sayagh");
+        appUser.setLogin("tahar.sayagh@gmail.com");
+        appUser.setPassword("authent");
         Date date = new Date();
-        user.setBirthDate(date);
-        this.userService.createUser(user);
-        List<User> users = this.userService.getAllUsers();
-        model.addAttribute("usersList", users);
+        appUser.setBirthDate(date);
+        this.appUserService.createUser(appUser);
+        List<AppUser> appUsers = this.appUserService.getAllUsers();
+        model.addAttribute("usersList", appUsers);
         return "/authentification/signup";
     }
 
@@ -111,7 +103,7 @@ public class AuthController {
     public String resendPwd(HttpServletRequest request, ModelMap modelMap) throws ParseException {
         Boolean isSent = false;
         String login = request.getParameter("email");
-        User recipient = this.userService.getUserByLogin(login);
+        AppUser recipient = this.appUserService.getUserByLogin(login);
         System.out.println(recipient.getFirstName());
         if (recipient != null && !recipient.getFirstName().equalsIgnoreCase("")) {
             try {
@@ -128,8 +120,8 @@ public class AuthController {
         return "/authentification/resendPwd";
     }
 
-    private void sendMail(User recipient) throws AddressException, MessagingException {
-        //User tmpUser = userService.getUserById(userId);
+    private void sendMail(AppUser recipient) throws AddressException, MessagingException {
+        //AppUser tmpUser = appUserService.getUserById(userId);
         String userMail = recipient.getLogin();//tmpUser.getLogin();
         String userFirstName = recipient.getFirstName(); //tmpUser.getFirstName();
         String userLastName = recipient.getLastName(); //tmpUser.getLastName();
@@ -167,10 +159,10 @@ public class AuthController {
             return "/example/core/form";
         }
         Boolean isCo = false;
-        if (this.userService.getUserByLogin(loginUserFormBean.getEmail()) != null) {
-            User newUser = this.userService.getUserById(this.userService.getUserByLogin(loginUserFormBean.getEmail()).getId());
-            if (StringUtils.equals(loginUserFormBean.getPassword(), newUser.getPassword())) {
-                request.getSession().setAttribute("userCo", newUser);
+        if (this.appUserService.getUserByLogin(loginUserFormBean.getEmail()) != null) {
+            AppUser newAppUser = this.appUserService.getUserById(this.appUserService.getUserByLogin(loginUserFormBean.getEmail()).getId());
+            if (StringUtils.equals(loginUserFormBean.getPassword(), newAppUser.getPassword())) {
+                request.getSession().setAttribute("userCo", newAppUser);
                 isCo = true;
                 modelMap.addAttribute("isCo", isCo);
                 return "/home";
