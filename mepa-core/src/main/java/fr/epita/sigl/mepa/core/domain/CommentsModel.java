@@ -35,6 +35,11 @@ public class CommentsModel
     private int projectId;
 
 
+
+    @NotNull
+    private int arriving;
+
+
     public int getId()
     {
         return this.id;
@@ -75,6 +80,13 @@ public class CommentsModel
     }
 
 
+    public int getArriving() {
+        return arriving;
+    }
+
+    public void setArriving(int arriving) {
+        this.arriving = arriving;
+    }
 
     @Override
     public String toString() {

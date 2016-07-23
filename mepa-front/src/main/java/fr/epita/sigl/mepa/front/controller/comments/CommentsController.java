@@ -25,6 +25,7 @@ import java.io.IOException;
 @RequestMapping("/comment/submit") // The address of the component
 public class CommentsController {
     private static final Logger LOG = LoggerFactory.getLogger(CommentsController.class);
+    private int ticket = 1;
 
     protected static final String COMMENTS_MODELS_MODEL_ATTRIBUTE = "c_models";
     // private static final String ADD_CUSTOM_COMMENTS_MODEL_FORM_BEAN_MODEL_ATTRIBUTE = "addCustomCommentsModelFormBean";
@@ -39,9 +40,15 @@ public class CommentsController {
         String text = request.getParameter("userText");
         newCommentsModel.setData(text);
         newCommentsModel.setProjectId(projectId);
-        this.commentsModelService.createCommentsModel(newCommentsModel);
 
+        /*Helps to sort the tickets */
+        newCommentsModel.setArriving(ticket);
+        ticket++;
+
+        this.commentsModelService.createCommentsModel(newCommentsModel);
+        
         response.sendRedirect("/core/preinvest/projectDisplay/" + Integer.toString(projectId));
+        System.out.println("AFTER TEH REDIRECTION");
         return "/preinvest/projectDisplay";
     }
 }

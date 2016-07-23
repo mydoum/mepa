@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 
 @Controller
 @RequestMapping("/core/preinvest") // The adress of the component
@@ -57,9 +58,17 @@ public class ProjectDisplayController {
         modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
         /*\PostInvest Total Amount invested on Project*/
 
-        List<CommentsModel> new_c_models = this.commentsModelService.getAllCommentsModels();
-        modelMap.addAttribute("new_c_models",new_c_models);
+        List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();
 
+        /*Sort of the comments by the arriving tickets*/
+        List<CommentsModel>new_c_models = new ArrayList<CommentsModel>();
+        ListIterator<CommentsModel> i= list.listIterator(list.size());
+        while(i.hasPrevious())
+        {
+            new_c_models.add(i.previous());
+        }
+
+        modelMap.addAttribute("new_c_models",new_c_models);
         return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
     }
 
