@@ -47,12 +47,6 @@
             integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
             crossorigin="anonymous"></script>
 
-    <%-- Investissement javascript --%>
-    <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
-    <script src="${investSliderJs}"></script>
-    <c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>
-    <script src="${investSliderPersoJs}"></script>
-
     <%-- SDK Facebook --%>
     <div id="fb-root"></div>
     <script>
