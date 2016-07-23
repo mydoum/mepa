@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,7 +48,6 @@ public class InvestController {
     private UserService userService;
     @Autowired
     private ProjectService projectService;
-
 
 
     private String displayList(ModelMap model, Project project) {
