@@ -49,4 +49,10 @@ public class ProjectDaoImpl implements ProjectDao {
         Query query = this.getSession().getNamedQuery("Project.findAll");
         return query.list();
     }
+
+    @Override
+    public List<Project> getAllUnfinished() {
+        Query query = this.getSession().getNamedQuery("Project.findAllUnfinished");
+        return query.list();
+    }
 }
