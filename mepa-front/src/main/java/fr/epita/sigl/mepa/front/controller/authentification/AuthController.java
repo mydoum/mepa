@@ -122,9 +122,8 @@ public class AuthController {
         getMailSession = Session.getDefaultInstance(mailServerProperties, null);
         generateMailMessage = new MimeMessage(getMailSession);
         generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(userMail));
-        generateMailMessage.setSubject("Greetings " + userFirstName + " " + userLastName);
-        String emailBody = "This information is strictly private." + "<br> Here is your password: \""
-                + recipient.getPassword() + "\". <br><br> Regards, <br>MEPA Team";
+        generateMailMessage.setSubject("Merci beaucoup " + userFirstName + " " + userLastName);
+        String emailBody = "Merci pour votre don de: Lolilol" + "<br><br> Cordialement, <br>La Team MEPA";
         generateMailMessage.setContent(emailBody, "text/html");
 
         Transport transport = getMailSession.getTransport("smtp");

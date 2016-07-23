@@ -85,13 +85,13 @@ public class InvestController {
             moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
             moneyAmount = (float) ((int) (moneyAmount * 100)) / 100;
         } catch (Exception e) {
-            String errorMessage = "Please enter a numerical number as donation amount.";
+            String errorMessage = "Veuillez entrer un nombre pour le montant du don.";
             model.addAttribute("errorInvest", errorMessage);
             return displayList(model, project);
         }
 
         if (moneyAmount <= 0) {
-            String errorMessage = "Please enter a positive number as donation amount.";
+            String errorMessage = "Veuillez entrer un nombre positif pour le montant du don.";
             model.addAttribute("errorInvest", errorMessage);
             return displayList(model, project);
         }
@@ -161,7 +161,7 @@ public class InvestController {
 
         String mail = "simon.mace@epita.fr";
         // String mail = "hugo.capes@hotmail.fr";
-        String subject = "Thanks for investing in the project alpha";
+        String subject = "Merci pour votre contribution au projet alpha";
         String message = "blop" + moneyAmount + " €";
 
         try {
