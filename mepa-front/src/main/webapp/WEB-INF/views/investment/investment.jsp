@@ -54,7 +54,10 @@
                            class="form-control" type="text" required="required" readonly/>
                 </div>
                 <br/>
-                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <label class="investFormInside col-md-12">Anonyme: </label>
+                    <input type="checkbox" id="anonymous_id" name="anonymous_id" value="anonymous_id_value"/>
+                </div>
                 <div class="col-md-4">
                     <p align="center"><input type="submit" class="btn btn-primary InvestFormInside" value="Donate"></p>
                 </div>

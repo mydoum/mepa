@@ -40,6 +40,9 @@ public class Investment {
     @NotNull
     private Long projectId;
 
+    @NotNull
+    private boolean anonymous;
+
     public Long getUserId (){ return this.userId; }
     public void setUserId (Long user_id){ this.userId = user_id;}
 
@@ -79,6 +82,14 @@ public class Investment {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public boolean isAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(boolean anonymous) {
+        this.anonymous = anonymous;
     }
 
     @Override

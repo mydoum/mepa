@@ -1,6 +1,9 @@
 package fr.epita.sigl.mepa.front.model.investment;
 
 
+import javax.swing.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -12,13 +15,16 @@ public class Investor implements Comparable<Investor>{
     private String email;
     private Float moneyAmount;
     private Date dateOfInvestment;
+    private boolean anonymous;
 
-    public Investor(String email, String firstname, String lastname, Float moneyAmount, Date dateOfInvestment) {
+    public Investor(String email, String firstname, String lastname, Float moneyAmount, Date dateOfInvestment,
+                    boolean anonymous) {
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
         this.moneyAmount = moneyAmount;
         this.dateOfInvestment = dateOfInvestment;
+        this.anonymous = anonymous;
     }
 
     public String getEmail() {return email; }
@@ -55,6 +61,14 @@ public class Investor implements Comparable<Investor>{
 
     public void setDateOfInvestment(Date dateOfInvestment) {
         this.dateOfInvestment = dateOfInvestment;
+    }
+
+    public boolean isAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(boolean anonymous) {
+        this.anonymous = anonymous;
     }
 
     public int compareTo(Investor investor)

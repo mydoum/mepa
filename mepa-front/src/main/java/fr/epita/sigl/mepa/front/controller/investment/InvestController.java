@@ -29,13 +29,11 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -70,7 +68,7 @@ public class InvestController {
 
 
     @RequestMapping(value = "/invest/investMoney", method = RequestMethod.POST)
-    public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request) {
+    public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request) throws ParseException {
         float totalAmount = 0.00f;
         float moneyAmount = 0.00f;
 
@@ -80,9 +78,8 @@ public class InvestController {
          */
         try {
             moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
-            moneyAmount = (float)((int)(moneyAmount * 100)) / 100;
-        }
-        catch (Exception e) {
+            moneyAmount = (float) ((int) (moneyAmount * 100)) / 100;
+        } catch (Exception e) {
             String errorMessage = "Please enter a numerical number as donation amount.";
             ArrayList<Investor> listinvestors = new ArrayList<Investor>();
             totalAmount = getallinvestors(listinvestors, totalAmount);
@@ -105,8 +102,9 @@ public class InvestController {
         model.addAttribute("amount", moneyAmount);
         Long userId = 2L;
         Long projectId = 1L;
+        boolean anonymous_id = request.getParameter("anonymous_id") != null;
 
-        if (insertNewInvestor(moneyAmount, userId, projectId) == 0) {
+        if (insertNewInvestor(moneyAmount, userId, projectId, anonymous_id) == 0) {
             float total = 0.00f;
             ArrayList<Investor> listinvestors = new ArrayList<Investor>();
             total = getallinvestors(listinvestors, total);
@@ -122,7 +120,7 @@ public class InvestController {
     }
 
     private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount) {
-        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
+        ArrayList<Investment> investments = new ArrayList<>(investmentService.getAllInvestments());
         User tmpUser;
         String firstname;
         String lastname;
@@ -131,17 +129,31 @@ public class InvestController {
             Date created = invest.getCreated();
             Float amount = invest.getAmount();
             Long userId = invest.getUserId();
+            boolean anonymous = invest.isAnonymous();
             //tmpUser = userService.getUserById(userId);
             if (userId == 1L) {
-                firstname = "Simon"; //tmpUser.getFirstName();
-                lastname = "MACE"; //tmpUser.getLastName();
+                if (!anonymous) {
+                    //vérifier si le nom est rempli, si non mettre le mail
+                    firstname = "Simon"; //tmpUser.getFirstName();
+                    lastname = "MACE"; //tmpUser.getLastName();
+                } else {
+                    firstname = "Anonyme";
+                    lastname = "Anonyme";
+                }
                 email = "simon.mace@epita.fr"; //tmpUser.getLogin();
+
             } else {
-                firstname = "Hugo"; //tmpUser.getFirstName();
-                lastname = "CAPES"; //tmpUser.getLastName();
+                if (!anonymous) {
+                    //vérifier si le nom est rempli, si non mettre le mail
+                    firstname = "Hugo"; //tmpUser.getFirstName();
+                    lastname = "CAPES"; //tmpUser.getLastName();
+                } else {
+                    firstname = "Anonyme";
+                    lastname = "Anonyme";
+                }
                 email = "hugo.capes@hotmail.fr"; //tmpUser.getLogin();
             }
-            Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created);
+            Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created, anonymous);
             listOfInvestors.add(tmpInvestor);
             totalAmount += amount;
         }
@@ -149,11 +161,12 @@ public class InvestController {
         return totalAmount;
     }
 
-    private int insertNewInvestor (float moneyAmount, Long userId, Long projectId) {
+    private int insertNewInvestor(float moneyAmount, Long userId, Long projectId, boolean anonymous) throws ParseException {
         Investment newInvestment = new Investment();
         newInvestment.setAmount(moneyAmount);
         newInvestment.setProjectId(projectId);
         newInvestment.setUserId(userId);
+        newInvestment.setAnonymous(anonymous);
         Date date = new Date();
         newInvestment.setDate(date);
 
@@ -198,7 +211,7 @@ public class InvestController {
         return 1;
     }
 
-    private void sendMail (Long userId, float amountMoney) throws AddressException, MessagingException {
+    private void sendMail(Long userId, float amountMoney) throws AddressException, MessagingException {
         //User tmpUser = userService.getUserById(userId);
         String userMail = "hugo.capes@hotmail.fr";//tmpUser.getLogin();
         String userFirstName = "Hugo"; //tmpUser.getFirstName();
@@ -224,19 +237,20 @@ public class InvestController {
     }
 
     @RequestMapping(value = "/invest/filltables", method = RequestMethod.GET)
-    public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) {
+    public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) throws ParseException {
         for (int i = 0; i < 300; i++) {
             Investment invest = new Investment();
             invest.setAmount(15.0f);
             invest.setProjectId(1L);
             invest.setUserId(1L);
+            invest.setAnonymous(true);
             Date date = new Date();
             invest.setDate(date);
             investmentService.createInvestment(invest);
         }
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount= getallinvestors(listinvestors, totalAmount);
+        totalAmount = getallinvestors(listinvestors, totalAmount);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
         return "/investment/investment";
@@ -248,7 +262,6 @@ public class InvestController {
         Date actual = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String date = dateFormat.format(actual);
-        date.replace("-", "_");
         ArrayList<Investor> investors = new ArrayList<Investor>();
         totalAmount = getallinvestors(investors, totalAmount);
         if (investors != null && investors.size() > 0) {
@@ -280,7 +293,7 @@ public class InvestController {
 
     private void printalluser() {
         ArrayList<User> users = new ArrayList<User>(userService.getAllUsers());
-        for ( User user: users) {
+        for (User user : users) {
             System.out.println(user.getFirstName());
             System.out.println(user.getLastName());
             System.out.println(user.getId());
