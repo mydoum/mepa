@@ -103,7 +103,7 @@ public class CommentsController
         if (LOG.isDebugEnabled()) {
             LOG.debug("HAHAHAHAHAHHA There are {} models in database", new_c_models.size());
         }
-        return "/comments/core/comment_form";
+        return "/preinvest/projectDisplay";
     }
 
     /**essaie avec @ModelAttribute("addCustomCommentsFormBean") CommentsModel comment
