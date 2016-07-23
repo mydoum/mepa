@@ -1,16 +1,16 @@
 package fr.epita.sigl.mepa.front.controller.investment;
 
 
-import com.sun.mail.smtp.SMTPTransport;
 import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.domain.User;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import fr.epita.sigl.mepa.core.service.UserService;
-import fr.epita.sigl.mepa.core.utils.Mail;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
+import fr.epita.sigl.mepa.front.utilities.Mail;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -37,7 +30,8 @@ import java.text.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Properties;
+
+import static fr.epita.sigl.mepa.front.utilities.Mail.sendMail;
 
 
 @Controller
@@ -52,9 +46,7 @@ public class InvestController {
     @Autowired
     private ProjectService projectService;
 
-    static private Properties mailServerProperties;
-    static private Session getMailSession;
-    static private MimeMessage generateMailMessage;
+
 
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
@@ -73,7 +65,6 @@ public class InvestController {
 
     @RequestMapping(value = "/invest/investMoney", method = RequestMethod.POST)
     public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request, Project project) {
-        float totalAmount = 0.00f;
         float moneyAmount = 0.00f;
 
         /**
@@ -192,47 +183,50 @@ public class InvestController {
         /*\PostInvest -> Delete Doublon with same userId on a same projectId and update the new invest*/
 
         investmentService.createInvestment(newInvestment);
+
+        // sendmail
+
+        String mail = "simon.mace@epita.fr";
+        // String mail = "hugo.capes@hotmail.fr";
+        String subject = "Thanks for investing in the project alpha";
+        String message = "blop" + moneyAmount + " €";
+
         try {
-            sendMail(userId, moneyAmount);
+            sendMail(mail, subject, message);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        return 1;
+
+        return 0;
     }
 
-    private void sendMail(Long userId, float amountMoney) throws AddressException, MessagingException {
-        //User tmpUser = userService.getUserById(userId);
-        String userMail = "hugo.capes@hotmail.fr";//tmpUser.getLogin();
-        String userFirstName = "Hugo"; //tmpUser.getFirstName();
-        String userLastName = "Capes"; //tmpUser.getLastName();
-
-        mailServerProperties = System.getProperties();
-        mailServerProperties.put("mail.smtp.port", "587");
-        mailServerProperties.put("mail.smtp.auth", "true");
-        mailServerProperties.put("mail.smtp.starttls.enable", "true");
-
-        getMailSession = Session.getDefaultInstance(mailServerProperties, null);
-        generateMailMessage = new MimeMessage(getMailSession);
-        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(userMail));
-        generateMailMessage.setSubject("Greetings " + userFirstName + " " + userLastName);
-        String emailBody = "Thank you for donating " + amountMoney + "€" + "<br><br> Regards, <br>MEPA Team";
-        generateMailMessage.setContent(emailBody, "text/html");
-
-        Transport transport = getMailSession.getTransport("smtp");
-
-        transport.connect("smtp.gmail.com", "mepa.epita@gmail.com", "sigl2017");
-        transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
-        transport.close();
-    }
 
     @RequestMapping(value = "/invest/filltables", method = RequestMethod.GET)
     public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request, Project project) {
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 100; i++) {
             Investment invest = new Investment();
-            invest.setAmount(15.0f);
+            invest.setAmount(10.0f);
             invest.setProjectId(1L);
             invest.setUserId(1L);
             invest.setAnonymous(false);
+            Date date = new Date();
+            invest.setDate(date);
+            investmentService.createInvestment(invest);
+        }
+        for (int i = 0; i < 100; i++) {
+            Investment invest = new Investment();
+            invest.setAmount(15.0f);
+            invest.setProjectId(2L);
+            invest.setUserId(1L);
+            Date date = new Date();
+            invest.setDate(date);
+            investmentService.createInvestment(invest);
+        }
+        for (int i = 0; i < 100; i++) {
+            Investment invest = new Investment();
+            invest.setAmount(20.0f);
+            invest.setProjectId(3L);
+            invest.setUserId(1L);
             Date date = new Date();
             invest.setDate(date);
             investmentService.createInvestment(invest);
