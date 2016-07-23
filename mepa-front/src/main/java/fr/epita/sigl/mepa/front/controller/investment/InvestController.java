@@ -243,7 +243,7 @@ public class InvestController {
             invest.setAmount(15.0f);
             invest.setProjectId(1L);
             invest.setUserId(1L);
-            invest.setAnonymous(true);
+            invest.setAnonymous(false);
             Date date = new Date();
             invest.setDate(date);
             investmentService.createInvestment(invest);
