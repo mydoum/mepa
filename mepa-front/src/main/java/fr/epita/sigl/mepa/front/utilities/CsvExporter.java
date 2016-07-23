@@ -48,7 +48,8 @@ public class CsvExporter {
             fileWriter += COMMA_DELIMITER;
             fileWriter += String.valueOf(investor.getMoneyAmount());
             fileWriter += COMMA_DELIMITER;
-            fileWriter += investor.getStringDate();
+            SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+            fileWriter += formater.format(investor.getDateOfInvestment());
             fileWriter += NEW_LINE_SEPARATOR;
         }
 
