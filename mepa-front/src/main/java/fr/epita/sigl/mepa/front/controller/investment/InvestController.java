@@ -195,6 +195,7 @@ public class InvestController {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+
         return 0;
     }
 
