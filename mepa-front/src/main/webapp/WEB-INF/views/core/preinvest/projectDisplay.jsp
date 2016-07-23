@@ -39,7 +39,7 @@
                     <div class="date">Date de fin:</div>
                     <div class="date">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
 
-                    <%-- PostInvest Check EndDate --%>
+                    <%-- PostInvest Check EndDate + Total Amount invested on Project --%>
                     <jsp:useBean id="todayDate" class="java.util.Date"/>
                     <c:choose>
                         <c:when test="${project.endDate <= todayDate}">
@@ -49,7 +49,9 @@
                             <div class="date">PostInvest -> Date de fin non atteinte.</div>
                         </c:otherwise>
                     </c:choose>
-                    <%-- /PostInvest Check EndDate --%>
+
+                    <div class="date">PostInvest -> Montant total investi par les contributeurs dans ce projet : ${totalProjectAmountInvested} €</div>
+                    <%-- \ PostInvest Check EndDate + Total Amount invested on Project --%>
                 </td>
             </tr>
         </table>

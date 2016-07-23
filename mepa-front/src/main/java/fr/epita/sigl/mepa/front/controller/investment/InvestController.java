@@ -120,7 +120,6 @@ public class InvestController {
         return "/investment/investment";
     }
 
-
     private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount) {
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
         User tmpUser;
