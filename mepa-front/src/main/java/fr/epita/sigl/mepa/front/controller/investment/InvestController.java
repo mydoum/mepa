@@ -6,7 +6,8 @@ import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
-import fr.epita.sigl.mepa.core.service.ProjectService;
+import fr.epita.sigl.mepa.core.service.RewardService;
+import fr.epita.sigl.mepa.core.service.UserService;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
 
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -43,7 +45,7 @@ public class InvestController {
     @Autowired
     private AppUserService appUserService;
     @Autowired
-    private ProjectService projectService;
+    private RewardService rewardService;
 
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
@@ -116,20 +118,15 @@ public class InvestController {
             Float amount = invest.getAmount();
             Long userId = invest.getUserId();
             boolean anonymous = invest.isAnonymous();
-            //tmpAppUser = appUserService.getUserById(userId);
-            if (userId == 1L) {
-                firstname = "Simon"; //tmpAppUser.getFirstName();
-                email = "simon.mace@epita.fr"; //tmpAppUser.getLogin();
-                lastname = "MACE"; //tmpAppUser.getLastName();
-                if (!downloadCsv && anonymous)
-                    firstname = email;
+            tmpUser = userService.getUserById(userId);
+            if (!anonymous) {
+                firstname = tmpUser.getFirstName();
+                lastname = tmpUser.getLastName();
             } else {
-                firstname = "Hugo"; //tmpAppUser.getFirstName();
-                email = "hugo.capes@hotmail.fr"; //tmpAppUser.getLogin();
-                lastname = "Capes"; //tmpAppUser.getLastName();
-                if (!downloadCsv && anonymous)
-                    firstname = email;
+                firstname = "Anonyme";
+                lastname = "Anonyme";
             }
+            email = tmpUser.getLogin();
             Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created, anonymous);
             listOfInvestors.add(tmpInvestor);
             totalAmount += amount;
@@ -147,38 +144,7 @@ public class InvestController {
         Date date = new Date();
         newInvestment.setDate(date);
 
-        /*PostInvest -> Delete Doublon with same userId on a same projectId and update the new invest when a project is done*/
-        Float oldAmount = 0.0f;
-        Project projectSameId = new Project();
-        Date endDate;
-        ArrayList<Project> projects = new ArrayList<Project>(projectService.getAllProjects());
-        for (Project p : projects) {
-            if (p.getId() == projectId) {
-                projectSameId = p;
-                break;
-            }
-        }
-        if (projectSameId.getId() != null && projectSameId.getId() == projectId) {
-            endDate = projectService.getProjectById(projectId).getEndDate();
-            if (endDate.before(date)) {
-                ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
-                if (!investments.isEmpty()) {
-                    oldAmount = newInvestment.getAmount();
-                    for (Investment inv : investments) {
-                        if (inv.getUserId() == userId && inv.getProjectId() == projectId) {
-                            oldAmount += inv.getAmount();
-                            newInvestment.setAmount(oldAmount);
-                            investmentService.deleteInvestment(inv);
-                        }
-                    }
-                }
-            }
-        }
-        /*\PostInvest -> Delete Doublon with same userId on a same projectId and update the new invest*/
-
         investmentService.createInvestment(newInvestment);
-
-        // sendmail
 
         String mail = "simon.mace@epita.fr";
         // String mail = "hugo.capes@hotmail.fr";
@@ -251,6 +217,21 @@ public class InvestController {
         model.addAttribute("investorsList", investors);
         model.addAttribute("totalDonation", totalAmount);
         return "/investment/investment";
+    }
+
+    @RequestMapping(value = {"/invest/rewardDisplay/{rewardId}"}) // The adress to call the function
+    public String projectDisplay(HttpServletRequest request, ModelMap model, @PathVariable long rewardId) {
+        /* Code your logic here */
+        Reward reward = rewardService.getRewardById(rewardId);
+        float rewardPrice = reward.getCostStart();
+        String description = reward.getDescription();
+        String rewardName = reward.getName();
+
+        model.addAttribute("rewardPrice", rewardPrice);
+        model.addAttribute("description", description);
+        model.addAttribute("rewardName", rewardName);
+
+        return "/invest/rewardpay"; // The adress of the JSP coded in tiles.xml
     }
 
     private void printelements(ArrayList<Investor> listinvestors) {
