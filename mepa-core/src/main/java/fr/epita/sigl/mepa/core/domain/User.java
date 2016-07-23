@@ -11,8 +11,8 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "User.findById", query = "FROM User o WHERE o.id=:id"),
         @NamedQuery(name = "User.findAll", query = "FROM User o"),
-        @NamedQuery(name  = "User.findByFirstName", query = "FROM User o WHERE o.firstName LIKE firstName"),
-        @NamedQuery(name  = "User.findByLastName", query = "FROM User o WHERE o.lastName LIKE lastName"),
+        @NamedQuery(name  = "User.findByFirstName", query = "FROM User o WHERE o.firstName=:firstName"),
+        @NamedQuery(name  = "User.findByLastName", query = "FROM User o WHERE o.lastName=:lastName"),
         @NamedQuery(name  = "User.findByLogin", query = "FROM User o WHERE o.login=:login")
 })
 public class User {

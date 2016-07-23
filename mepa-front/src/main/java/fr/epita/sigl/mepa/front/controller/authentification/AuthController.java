@@ -49,6 +49,10 @@ public class AuthController {
 
     @RequestMapping(value = {"/auth"}, method = {RequestMethod.GET})
     public String showAuth(HttpServletRequest request, ModelMap modelMap) {
+        List<User> users = this.userService.getUserByFirstName("lol");
+        if (users.size() > 0) {
+            modelMap.addAttribute("usersList", users);
+        }
         return "/authentification/signup";
     }
 

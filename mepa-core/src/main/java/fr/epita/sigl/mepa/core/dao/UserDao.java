@@ -11,9 +11,9 @@ public interface UserDao {
 
     User getById(Long id);
 
-    User getByFirstName(String firstName);
+    List<User> getByFirstName(String firstName);
 
-    User getByLastName(String lastName);
+    List<User> getByLastName(String lastName);
 
     User getByLogin(String login);
 

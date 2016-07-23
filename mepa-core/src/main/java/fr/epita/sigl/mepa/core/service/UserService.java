@@ -10,9 +10,9 @@ public interface UserService {
 
     User getUserById(Long id);
 
-    User getUserByFirstName(String firstName);
+    List<User> getUserByFirstName(String firstName);
 
-    User getUserByLastName(String lastName);
+    List<User> getUserByLastName(String lastName);
 
     User getUserByLogin(String login);
 
