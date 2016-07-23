@@ -3,7 +3,24 @@
 <head>
     <%-- Page title --%>
     <c:set var="titleKey"><tiles:insertAttribute name="title"/></c:set>
-    <title><fmt:message key="${titleKey}"/></title>
+    <fmt:message key="${titleKey}" var="titleVar"/>
+    <c:choose>
+        <c:when test="${titleVar=='This is a project!'}">
+            <title>${project.name}</title>
+        </c:when>
+        <c:otherwise>
+            <title>${titleVar}</title>
+        </c:otherwise>
+    </c:choose>
+
+
+    <%-- Facebook meta characters--%>
+    <meta property="og:url"           content="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}" />
+    <meta property="og:type"          content="projet" />
+    <meta property="og:title"         content="${project.name}" />
+    <meta name="description"          content="${project.description}" />
+    <meta name="og:description"       content="${project.description}" />
+    <meta property="og:image"         content="${project.imagesLinks[0]}" />
 
     <%-- Bootstrap CSS --%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
