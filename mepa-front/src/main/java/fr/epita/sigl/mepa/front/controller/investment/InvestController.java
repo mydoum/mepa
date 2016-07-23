@@ -133,7 +133,7 @@ public class InvestController {
             //tmpUser = userService.getUserById(userId);
             if (userId == 1L) {
                 if (!anonymous) {
-                    //vérifier si le nom est rempli, si non mettre le mail
+                    //TODO vérifier si le nom est rempli, si non mettre le mail
                     firstname = "Simon"; //tmpUser.getFirstName();
                     lastname = "MACE"; //tmpUser.getLastName();
                 } else {
@@ -144,7 +144,7 @@ public class InvestController {
 
             } else {
                 if (!anonymous) {
-                    //vérifier si le nom est rempli, si non mettre le mail
+                    //TODO vérifier si le nom est rempli, si non mettre le mail
                     firstname = "Hugo"; //tmpUser.getFirstName();
                     lastname = "CAPES"; //tmpUser.getLastName();
                 } else {

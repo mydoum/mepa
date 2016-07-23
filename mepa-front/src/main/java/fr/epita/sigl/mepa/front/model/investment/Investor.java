@@ -15,6 +15,7 @@ public class Investor implements Comparable<Investor>{
     private String email;
     private Float moneyAmount;
     private Date dateOfInvestment;
+    private String stringDate;
     private boolean anonymous;
 
     public Investor(String email, String firstname, String lastname, Float moneyAmount, Date dateOfInvestment,
@@ -24,6 +25,8 @@ public class Investor implements Comparable<Investor>{
         this.lastname = lastname;
         this.moneyAmount = moneyAmount;
         this.dateOfInvestment = dateOfInvestment;
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+        this.stringDate = formater.format(dateOfInvestment);
         this.anonymous = anonymous;
     }
 
@@ -61,6 +64,8 @@ public class Investor implements Comparable<Investor>{
 
     public void setDateOfInvestment(Date dateOfInvestment) {
         this.dateOfInvestment = dateOfInvestment;
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+        this.stringDate = formater.format(dateOfInvestment);
     }
 
     public boolean isAnonymous() {
@@ -69,6 +74,14 @@ public class Investor implements Comparable<Investor>{
 
     public void setAnonymous(boolean anonymous) {
         this.anonymous = anonymous;
+    }
+
+    public String getStringDate() {
+        return stringDate;
+    }
+
+    public void setStringDate(String stringDate) {
+        this.stringDate = stringDate;
     }
 
     public int compareTo(Investor investor)
