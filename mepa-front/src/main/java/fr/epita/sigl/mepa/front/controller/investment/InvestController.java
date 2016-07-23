@@ -90,7 +90,7 @@ public class InvestController {
         Long projectId = 1L;
         boolean anonymous_id = request.getParameter("anonymous_id") != null;
 
-        if (insertNewInvestor(moneyAmount, userId, projectId) != 0) {
+        if (insertNewInvestor(moneyAmount, userId, projectId, anonymous_id) != 0L) {
             String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
             model.addAttribute("errorInvest", errorMessage);
         }
@@ -140,7 +140,7 @@ public class InvestController {
         return totalAmount;
     }
 
-    private int insertNewInvestor(float moneyAmount, Long userId, Long projectId, boolean anonymous) throws ParseException {
+    private int insertNewInvestor(float moneyAmount, Long userId, Long projectId, boolean anonymous) {
         Investment newInvestment = new Investment();
         newInvestment.setAmount(moneyAmount);
         newInvestment.setProjectId(projectId);
