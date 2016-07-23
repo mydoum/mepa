@@ -1,6 +1,7 @@
 package fr.epita.sigl.mepa.core.service.impl;
 
 
+import fr.epita.sigl.mepa.core.dao.InvestmentDao;
 import fr.epita.sigl.mepa.core.dao.ModelDao;
 import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Model;
@@ -16,38 +17,38 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ModelServiceImplUTests {
+public class InvestmentServiceImplUTests {
 
     @Mock
-    ModelDao mockedModelDao;
+    InvestmentDao mockedInvestDao;
 
     @InjectMocks
-    ModelServiceImpl modelService;
+    InvestmentServiceImpl investmentService;
 
     @Test
-    public void createModel_ShouldCreateANewModel_WithDateVeryCloseToNow() {
+    public void createInvestment_ShouldCreateANewInvestment_WithDateVeryCloseToNow() {
         // Given
-        Model modelToCreate = new Model();
+        Investment investToCreate = new Investment();
         Date now = new Date();
         long deltaInMilliseconds = 500;
 
         // When
-        modelService.createModel(modelToCreate);
+        investmentService.createInvestment(investToCreate);
 
         // Then
-        assertThat(modelToCreate.getCreated()).isCloseTo(now, deltaInMilliseconds);
+        assertThat(investToCreate.getCreated()).isCloseTo(now, deltaInMilliseconds);
     }
 
     @Test
-    public void createModel_ShouldCreateANewModel_UsingModelDao() {
+    public void createInvestment_ShouldCreateANewInvestment_UsingInvestmentDao() {
         // Given
-        Model modelToCreate = new Model();
+        Investment investToCreate = new Investment();
 
         // When
-        modelService.createModel(modelToCreate);
+        investmentService.createInvestment(investToCreate);
 
         // Then
-        verify(mockedModelDao).create(modelToCreate);
+        verify(mockedInvestDao).create(investToCreate);
     }
 
 

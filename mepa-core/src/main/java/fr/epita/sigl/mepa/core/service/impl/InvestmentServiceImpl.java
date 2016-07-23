@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class InvestmentlServiceImpl implements InvestmentService {
+public class InvestmentServiceImpl implements InvestmentService {
 
     @Autowired
     private InvestmentDao investmentDao;
