@@ -33,15 +33,16 @@ public class CommentsController {
     private CommentsModelService commentsModelService;
 
     @RequestMapping(value = {"/", "/{projectId}"}, method = {RequestMethod.POST})
-    public String processForm(HttpServletRequest request, ModelMap modelMap, HttpServletResponse response, @PathVariable String projectId) throws IOException {
+    public String processForm(HttpServletRequest request, ModelMap modelMap, HttpServletResponse response, @PathVariable int projectId) throws IOException {
 
 
         CommentsModel newCommentsModel = new CommentsModel();
         String text = request.getParameter("userText");
         newCommentsModel.setData(text);
+        newCommentsModel.setProjectId(projectId);
         this.commentsModelService.createCommentsModel(newCommentsModel);
-        System.out.println("INSIDE");
-        response.sendRedirect("/core/preinvest/projectDisplay/" + projectId);
+
+        response.sendRedirect("/core/preinvest/projectDisplay/" + Integer.toString(projectId));
         return "/preinvest/projectDisplay";
     }
 }
