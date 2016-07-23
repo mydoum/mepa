@@ -3,6 +3,11 @@ package fr.epita.sigl.mepa.front.controller.core.preinvest;
 import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
+
+import fr.epita.sigl.mepa.core.domain.CommentsModel;
+import fr.epita.sigl.mepa.core.domain.Project;
+import fr.epita.sigl.mepa.core.service.CommentsModelService;
+
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import org.slf4j.Logger;
@@ -37,6 +42,10 @@ public class ProjectDisplayController {
     @Autowired
     private InvestmentService investmentService;
 
+    @Autowired
+    private CommentsModelService commentsModelService;
+
+
     @RequestMapping(value = {"/projectDisplay/{projectId}"}) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
         /* Code your logic here */
@@ -48,13 +57,14 @@ public class ProjectDisplayController {
         modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
         /*\PostInvest Total Amount invested on Project*/
 
+        List<CommentsModel> new_c_models = this.commentsModelService.getAllCommentsModels();
+        modelMap.addAttribute("new_c_models",new_c_models);
+
         return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
     }
 
     @RequestMapping(value = {"/", "/projectList"}) // The adress to call the function
     public String projectList(HttpServletRequest request, ModelMap modelMap) {
-        /* Code your logic here */
-
         List<Project> projects = this.projectService.getAllProjects();
 
         modelMap.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);

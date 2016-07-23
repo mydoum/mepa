@@ -12,13 +12,6 @@
     },  3000);
 </script>
 
-<%-- Facebook meta characters--%>
-<meta property="og:url"           content="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}" />
-<meta property="og:type"          content="projet" />
-<meta property="og:title"         content="${project.name}" />
-<meta property="og:description"   content="${project.description}" />
-<meta property="og:image"         content="${project.imagesLinks[0]}" />
-
 <div class="container">
     <h2>${project.name}</h2>
     <div>
@@ -65,7 +58,7 @@
              data-mobile-iframe="true">
 
             <a class="fb-xfbml-parse-ignore" target="_blank"
-               href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">
+               href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmepa.herokuapp.com%2Fcore%2Fpreinvest%2F${project.id}&amp;src=sdkpreparse">
                 Partager
             </a>
         </div>

@@ -31,6 +31,9 @@ public class CommentsModel
     @NotNull
     private String data;
 
+    @NotNull
+    private int projectId;
+
 
     public int getId()
     {
@@ -61,6 +64,14 @@ public class CommentsModel
     public void setData(String data_)
     {
         this.data = data_;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
 
