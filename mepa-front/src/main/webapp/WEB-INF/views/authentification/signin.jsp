@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: patrickear
-  Date: 22/7/2016
-  Time: 4:06 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <%--<nav class="navbar navbar-default">--%>
@@ -47,8 +40,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <c:url var="addCustomUserFormActionUrl" value="/authentification/addUser"/>
-            <form id="eventForm" class="form-horizontal" action="${addCustomUserFormActionUrl}" modelAttribute="addCustomUserFormBean"
+            <c:url var="addCustomUserFormActionUrl" value="/authentification/signin"/>
+            <form id="eventForm" class="form-horizontal" action="${addCustomUserFormActionUrl}" modelAttribute="loginUserFormBean"
                   method="POST">
                 <fieldset>
                     <div id="legend">
@@ -58,7 +51,6 @@
                         <label class="control-label" for="email">Adresse e-mail</label>
                         <div class="controls">
                             <input id="email" name="email" placeholder="" class="form-control input-lg" type="email">
-                            <p class="help-block">Please provide your e-mail</p>
                         </div>
                     </div>
 
@@ -66,7 +58,6 @@
                         <label class="control-label" for="password">Mot de passe</label>
                         <div class="controls">
                             <input id="password" name="password" placeholder="" class="form-control input-lg" type="password">
-                            <p class="help-block">Password should be at least 6 characters</p>
                         </div>
                     </div>
 

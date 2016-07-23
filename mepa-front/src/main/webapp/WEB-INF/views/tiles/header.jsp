@@ -17,8 +17,6 @@
                     <ul class="nav navbar-nav">
                         <c:url var="homeUrl" value="/home"/>
                         <li><a href="${homeUrl}">Home page</a></li>
-                        <c:url var="coreExampleUrl" value="/example/core/"/>
-                        <li><a href="${coreExampleUrl}">Core module example</a></li>
                         <c:url var="signup" value="/authentification/auth"/>
                         <li><a href="${signup}">Inscription</a></li>
                         <c:url var="signin" value="/authentification/signin"/>

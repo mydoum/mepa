@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -43,6 +44,13 @@ public class UserDaoImpl implements UserDao {
     public User getByLastName(String lastName) {
         Query query = this.getSession().getNamedQuery("User.findByLastName");
         query.setParameter("lastName", lastName);
+        return (User) query.uniqueResult();
+    }
+
+    @Override
+    public User getByLogin(String login) {
+        Query query = this.getSession().getNamedQuery("User.findByLogin");
+        query.setParameter("login", login);
         return (User) query.uniqueResult();
     }
 

@@ -38,6 +38,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByLogin(String login) {
+        return this.userDao.getByLastName(login);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         return this.userDao.getAll();

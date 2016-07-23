@@ -2,6 +2,7 @@ package fr.epita.sigl.mepa.core.dao;
 
 import fr.epita.sigl.mepa.core.domain.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface UserDao {
@@ -13,6 +14,8 @@ public interface UserDao {
     User getByFirstName(String firstName);
 
     User getByLastName(String lastName);
+
+    User getByLogin(String login);
 
     List<User> getAll();
 

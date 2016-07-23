@@ -11,8 +11,9 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "User.findById", query = "FROM User o WHERE o.id=:id"),
         @NamedQuery(name = "User.findAll", query = "FROM User o"),
-        @NamedQuery(name  = "User.findByFirstName", query = "FROM User o WHERE o.firstName=:firstName"),
-        @NamedQuery(name  = "User.findByLastName", query = "FROM User o WHERE o.lastName=:lastName")})
+        @NamedQuery(name  = "User.findByFirstName", query = "FROM User o WHERE o.firstName LIKE firstName"),
+        @NamedQuery(name  = "User.findByLastName", query = "FROM User o WHERE o.lastName LIKE lastName"),
+        @NamedQuery(name  = "User.findByLogin", query = "FROM User o WHERE o.login LIKE login")})
 public class User {
 
     @Id
@@ -76,29 +77,12 @@ public class User {
         this.birthDate = birthDate;
     }
 
-//    @NotNull
-    private String data;
-
     public Long getId() {
         return this.id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    /**
-     * @return the data
-     */
-    public String getData() {
-        return this.data;
-    }
-
-    /**
-     * @param data the data to set
-     */
-    public void setData(String data) {
-        this.data = data;
     }
 
     @Override
