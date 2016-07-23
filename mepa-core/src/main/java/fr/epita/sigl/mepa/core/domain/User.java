@@ -38,52 +38,52 @@ public class User {
     @Column(name = "birthDate", nullable = true)
     private Date birthDate;
 
-    public String getLogin() {
-        return login;
+    public Long getId() {
+        return id;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public String getLogin() {
+        return login;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String surName) {
-        this.firstName = surName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     @Override

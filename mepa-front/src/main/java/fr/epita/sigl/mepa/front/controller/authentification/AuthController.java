@@ -35,9 +35,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
 
-/**
- * Created by patrickear on 21/7/2016.
- */
+
 @RequestMapping("/authentification")
 @Controller
 public class AuthController {
