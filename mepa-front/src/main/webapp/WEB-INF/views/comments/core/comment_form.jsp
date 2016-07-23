@@ -1,5 +1,10 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
+
+<form action="/authentification/signin/">
+   <text>               </text> <input type="submit" value="Se Connecter">
+</form>
+
 <div class="container">
     <h2>Commentaires</h2>
     <div class="table-responsive">
