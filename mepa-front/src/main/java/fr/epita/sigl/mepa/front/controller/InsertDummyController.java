@@ -3,9 +3,12 @@ package fr.epita.sigl.mepa.front.controller;
 /**
  * Created by Xavier on 21/07/2016.
  */
+import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.domain.Reward;
+import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
+import fr.epita.sigl.mepa.core.service.RewardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,12 @@ public class InsertDummyController {
     @Autowired
     private ProjectService projectService;
 
+    @Autowired
+    private InvestmentService investmentService;
+
+    @Autowired
+    private RewardService rewardService;
+
     private Random rand = new Random();
 
     private Date getRandomDate()
@@ -50,6 +59,15 @@ public class InsertDummyController {
 
         /* PREINVEST*/
 
+        for (int j = 0; j < 10; ++j) {
+            System.out.println("tiutirt");
+            Reward r = new Reward();
+            r.setName("Coucou");
+            r.setDescription("This is a description");
+            r.setCostStart((long) 10);
+            rewardService.createReward(r);
+        }
+
         for (int i = 0; i < 20; ++i) {
             rand.nextLong();
             Project newProject = new Project((long) 1, "Yolo", getRandomDate());
@@ -63,11 +81,11 @@ public class InsertDummyController {
                 Reward r = new Reward();
                 r.setName("Coucou");
                 r.setDescription("This is a description");
-                r.setCostStart((long) 10);
+                r.setCostStart(10l);
                 rewards.add(r);
             }
 
-            newProject.setRewards(rewards);
+            //newProject.setRewards(rewards);
 
             newProject.setStartDate(d);
             ArrayList<String> imageLinkList = new ArrayList<>();
@@ -80,13 +98,53 @@ public class InsertDummyController {
 
             this.projectService.createProject(newProject);
         }
+
         /* INVEST*/
+        for (int i = 0; i < 100; i++) {
+            Investment invest = new Investment();
+            invest.setAmount(10.0f);
+            invest.setProjectId(1L);
+            invest.setUserId(1L);
+            invest.setAnonymous(false);
+            Date date = new Date();
+            invest.setDate(date);
+            investmentService.createInvestment(invest);
+        }
+        for (int i = 0; i < 100; i++) {
+            Investment invest = new Investment();
+            invest.setAmount(15.0f);
+            invest.setProjectId(2L);
+            invest.setUserId(1L);
+            Date date = new Date();
+            invest.setDate(date);
+            investmentService.createInvestment(invest);
+        }
+        for (int i = 0; i < 100; i++) {
+            Investment invest = new Investment();
+            invest.setAmount(20.0f);
+            invest.setProjectId(3L);
+            invest.setUserId(1L);
+            Date date = new Date();
+            invest.setDate(date);
+            investmentService.createInvestment(invest);
+        }
 
 
         /* POSTINVEST*/
 
-
         return "/insertDummy"; // The adress of the JSP coded in tiles.xml
     }
 
+    private void printAllRewards() {
+        System.out.println("tiutirt");
+        ArrayList<Reward> rewards = new ArrayList<Reward>(rewardService.getAllRewards());
+        for (Reward reward : rewards) {
+            System.out.println("toto");
+            System.out.println(reward.getId());
+            System.out.println(reward.getCostStart());
+            System.out.println(reward.getName());
+            System.out.println(reward.getDescription());
+        }
+        System.out.println("tiutirt");
+    }
 }

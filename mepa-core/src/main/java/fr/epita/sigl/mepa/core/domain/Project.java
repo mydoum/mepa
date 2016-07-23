@@ -45,8 +45,8 @@ public class Project {
 
     private ArrayList<String> imagesLinks;
 
-    @OneToMany(mappedBy="id")
-    private Set<Reward> rewards;
+    /*@OneToMany(mappedBy="id")
+    private Set<Reward> rewards;*/
 
     /*
 * ID
@@ -139,13 +139,13 @@ public class Project {
         this.imagesLinks = imagesLinks;
     }
 
-    public Set<Reward> getRewards() {
+   /* public Set<Reward> getRewards() {
         return rewards;
     }
 
     public void setRewards(Set<Reward> rewards) {
         this.rewards = rewards;
-    }
+    }*/
 
     @Override
     public String toString() {
