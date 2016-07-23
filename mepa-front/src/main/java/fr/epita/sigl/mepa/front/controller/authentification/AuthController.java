@@ -179,6 +179,7 @@ public class AuthController {
             modelMap.addAttribute("isCo", isCo);
             return "authentification/signin";
         }
+        return "authentification/signin";
     }
 
 }
