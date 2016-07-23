@@ -56,19 +56,23 @@ public class InvestController {
     static private Session getMailSession;
     static private MimeMessage generateMailMessage;
 
-    @RequestMapping(value = "/invest", method = RequestMethod.GET)
-    public String invest(ModelMap model, HttpSession session) {
+    private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(listinvestors, totalAmount);
+        totalAmount = getallinvestors(listinvestors, totalAmount, project);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
         return "/investment/investment";
     }
 
+    @RequestMapping(value = "/invest", method = RequestMethod.GET)
+    public String invest(ModelMap model, HttpSession session, Project project) {
+        return displayList(model, project);
+    }
+
 
     @RequestMapping(value = "/invest/investMoney", method = RequestMethod.POST)
-    public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request) throws ParseException {
+    public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request, Project project) {
         float totalAmount = 0.00f;
         float moneyAmount = 0.00f;
 
@@ -81,22 +85,14 @@ public class InvestController {
             moneyAmount = (float) ((int) (moneyAmount * 100)) / 100;
         } catch (Exception e) {
             String errorMessage = "Please enter a numerical number as donation amount.";
-            ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-            totalAmount = getallinvestors(listinvestors, totalAmount);
-            model.addAttribute("investorsList", listinvestors);
-            model.addAttribute("totalDonation", totalAmount);
             model.addAttribute("errorInvest", errorMessage);
-            return "/investment/investment";
+            return displayList(model, project);
         }
 
         if (moneyAmount <= 0) {
             String errorMessage = "Please enter a positive number as donation amount.";
-            ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-            totalAmount = getallinvestors(listinvestors, totalAmount);
-            model.addAttribute("investorsList", listinvestors);
-            model.addAttribute("totalDonation", totalAmount);
             model.addAttribute("errorInvest", errorMessage);
-            return "/investment/investment";
+            return displayList(model, project);
         }
 
         model.addAttribute("amount", moneyAmount);
@@ -104,27 +100,20 @@ public class InvestController {
         Long projectId = 1L;
         boolean anonymous_id = request.getParameter("anonymous_id") != null;
 
-        if (insertNewInvestor(moneyAmount, userId, projectId, anonymous_id) == 0) {
-            float total = 0.00f;
-            ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-            total = getallinvestors(listinvestors, total);
-            model.addAttribute("investorsList", listinvestors);
-            model.addAttribute("totalDonation", total);
-            return "/investment/investment";
+        if (insertNewInvestor(moneyAmount, userId, projectId) != 0) {
+            String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
+            model.addAttribute("errorInvest", errorMessage);
         }
-        ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(listinvestors, totalAmount);
-        model.addAttribute("investorsList", listinvestors);
-        model.addAttribute("totalDonation", totalAmount);
-        return "/investment/investment";
+        return displayList(model, project);
     }
 
-    private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount) {
-        ArrayList<Investment> investments = new ArrayList<>(investmentService.getAllInvestments());
+    private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project) {
+        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(1L/*project.getId()*/));
         User tmpUser;
         String firstname;
         String lastname;
         String email;
+
         for (Investment invest : investments) {
             Date created = invest.getCreated();
             Float amount = invest.getAmount();
@@ -237,7 +226,7 @@ public class InvestController {
     }
 
     @RequestMapping(value = "/invest/filltables", method = RequestMethod.GET)
-    public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) throws ParseException {
+    public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request, Project project) {
         for (int i = 0; i < 300; i++) {
             Investment invest = new Investment();
             invest.setAmount(15.0f);
@@ -248,23 +237,19 @@ public class InvestController {
             invest.setDate(date);
             investmentService.createInvestment(invest);
         }
-        float totalAmount = 0.00f;
-        ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(listinvestors, totalAmount);
-        model.addAttribute("investorsList", listinvestors);
-        model.addAttribute("totalDonation", totalAmount);
-        return "/investment/investment";
+
+        return displayList(model, project);
     }
 
     @RequestMapping(value = {"/invest/download"})
-    public String investDownload(HttpServletResponse response, ModelMap model) {
+    public String investDownload(HttpServletResponse response, ModelMap model, Project project) {
         float totalAmount = 0.00f;
         Date actual = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String date = dateFormat.format(actual);
         ArrayList<Investor> investors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(investors, totalAmount);
-        if (investors != null && investors.size() > 0) {
+        totalAmount = getallinvestors(investors, totalAmount, project);
+        if (investors.size() > 0) {
             String fileWriter = CsvExporter.writeCsvFile(investors);
             response.setContentType("text/csv");
             response.setHeader("Content-Disposition", "attachment; filename=\"Investors_export_" + date + ".csv\"");
