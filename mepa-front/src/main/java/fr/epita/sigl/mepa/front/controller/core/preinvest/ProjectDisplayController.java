@@ -1,6 +1,8 @@
 package fr.epita.sigl.mepa.front.controller.core.preinvest;
 
+import fr.epita.sigl.mepa.core.domain.CommentsModel;
 import fr.epita.sigl.mepa.core.domain.Project;
+import fr.epita.sigl.mepa.core.service.CommentsModelService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,12 +32,18 @@ public class ProjectDisplayController {
     @Autowired
     private ProjectService projectService;
 
+    @Autowired
+    private CommentsModelService commentsModelService;
+
     @RequestMapping(value = {"/projectDisplay/{projectId}"}) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
         /* Code your logic here */
         Project project = this.projectService.getProjectById(projectId);
-
         modelMap.addAttribute(PROJECT_ATTRIBUTE, project);
+
+        List<CommentsModel> new_c_models = this.commentsModelService.getAllCommentsModels();
+        modelMap.addAttribute("new_c_models",new_c_models);
+
         return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
     }
 

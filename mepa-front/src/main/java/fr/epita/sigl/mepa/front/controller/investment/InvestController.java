@@ -156,6 +156,21 @@ public class InvestController {
         newInvestment.setUserId(userId);
         Date date = new Date();
         newInvestment.setDate(date);
+        /*PostInvest -> Delete Doublon with same userId on a same projectId and update the new invest*/
+        Float oldAmount = 0.0f;
+        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
+        if (!investments.isEmpty())
+        {
+            oldAmount = newInvestment.getAmount();
+            for (Investment inv : investments) {
+                if (inv.getUserId() == userId && inv.getProjectId() == projectId) {
+                    oldAmount += inv.getAmount();
+                    newInvestment.setAmount(oldAmount);
+                    investmentService.deleteInvestment(inv);
+                }
+            }
+        }
+        /*\PostInvest -> Delete Doublon with same userId on a same projectId and update the new invest*/
         investmentService.createInvestment(newInvestment);
         try {
             sendMail(userId, moneyAmount);

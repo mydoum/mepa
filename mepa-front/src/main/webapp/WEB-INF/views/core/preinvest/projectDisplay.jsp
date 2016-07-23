@@ -66,5 +66,6 @@
                 ${project.description}
             </div>
         </div>
+        <%@ include file="/WEB-INF/views/comments/core/comment_form.jsp" %>
     </div>
 </div>
