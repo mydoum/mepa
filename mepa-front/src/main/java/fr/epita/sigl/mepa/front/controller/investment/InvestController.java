@@ -78,6 +78,12 @@ public class InvestController {
         Project project = this.projectService.getProjectById(projectId);
 
         /**
+         * Check is the user is signed-in
+         */
+        if (session.getAttribute("userCo")==null)
+            return "/authentification/signin";
+
+        /**
          * Trying if the getted input is a number or not. If the input is not a number
          * an exception is raised. Also a message is send to the user
          */
