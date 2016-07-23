@@ -84,14 +84,6 @@ public class Investor implements Comparable<Investor>{
         this.stringDate = stringDate;
     }
 
-    public boolean isAnonymous() {
-        return anonymous;
-    }
-
-    public void setAnonymous(boolean anonymous) {
-        this.anonymous = anonymous;
-    }
-
     public int compareTo(Investor investor)
     {
         // Comparaison sur l'auteur

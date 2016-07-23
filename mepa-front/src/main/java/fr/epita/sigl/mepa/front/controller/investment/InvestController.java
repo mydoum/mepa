@@ -195,34 +195,7 @@ public class InvestController {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-==== BASE ====
-        return 1;
-    }
-
-    private void sendMail(Long userId, float amountMoney) throws AddressException, MessagingException {
-        //User tmpUser = userService.getUserById(userId);
-        String userMail = "hugo.capes@hotmail.fr";//tmpUser.getLogin();
-        String userFirstName = "Hugo"; //tmpUser.getFirstName();
-        String userLastName = "Capes"; //tmpUser.getLastName();
-
-        mailServerProperties = System.getProperties();
-        mailServerProperties.put("mail.smtp.port", "587");
-        mailServerProperties.put("mail.smtp.auth", "true");
-        mailServerProperties.put("mail.smtp.starttls.enable", "true");
-
-        getMailSession = Session.getDefaultInstance(mailServerProperties, null);
-        generateMailMessage = new MimeMessage(getMailSession);
-        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(userMail));
-        generateMailMessage.setSubject("Greetings " + userFirstName + " " + userLastName);
-        String emailBody = "Thank you for donating " + amountMoney + "€" + "<br><br> Regards, <br>MEPA Team";
-        generateMailMessage.setContent(emailBody, "text/html");
-
-        Transport transport = getMailSession.getTransport("smtp");
-
-        transport.connect("smtp.gmail.com", "mepa.epita@gmail.com", "sigl2017");
-        transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
-        transport.close();
-==== BASE ====
+        return 0;
     }
 
 
