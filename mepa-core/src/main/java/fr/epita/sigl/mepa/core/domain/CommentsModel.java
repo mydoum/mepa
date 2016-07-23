@@ -31,6 +31,14 @@ public class CommentsModel
     @NotNull
     private String data;
 
+    @NotNull
+    private int projectId;
+
+
+
+    @NotNull
+    private int arriving;
+
 
     public int getId()
     {
@@ -63,7 +71,22 @@ public class CommentsModel
         this.data = data_;
     }
 
+    public int getProjectId() {
+        return projectId;
+    }
 
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+
+    public int getArriving() {
+        return arriving;
+    }
+
+    public void setArriving(int arriving) {
+        this.arriving = arriving;
+    }
 
     @Override
     public String toString() {

@@ -35,7 +35,8 @@ public class InsertDummyController {
 
     private Date getRandomDate()
     {
-        long ms = -946771200000L + (Math.abs(rand.nextLong()) % (70L * 365 * 24 * 60 * 60 * 1000));
+        long min_date = new Date("01/01/2016").getTime();
+        long ms = min_date + (Math.abs(rand.nextLong()) % (365 * 24 * 60 * 60 * 1000 * 70L));
 
         // Construct a date
         return new Date(ms);
@@ -49,7 +50,7 @@ public class InsertDummyController {
 
         /* PREINVEST*/
 
-        for (int i = 0; i < 10; ++i) {
+        for (int i = 0; i < 20; ++i) {
             rand.nextLong();
             Project newProject = new Project((long) 1, "Yolo", getRandomDate());
             Date d = getRandomDate();

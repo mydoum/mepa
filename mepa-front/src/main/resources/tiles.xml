@@ -52,6 +52,7 @@
     </definition>
     <definition name="/preinvest/projectDisplay" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectDisplay.jsp"/>
+        <put-attribute name="title" value="project.title"/>
     </definition>
     <definition name="/preinvest/projectList" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectList.jsp"/>
