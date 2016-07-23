@@ -159,40 +159,6 @@ public class InvestController {
         return 0;
     }
 
-    @RequestMapping(value = "/invest/filltables", method = RequestMethod.GET)
-    public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request, Project project) {
-        for (int i = 0; i < 100; i++) {
-            Investment invest = new Investment();
-            invest.setAmount(10.0f);
-            invest.setProjectId(1L);
-            invest.setUserId(1L);
-            invest.setAnonymous(false);
-            Date date = new Date();
-            invest.setDate(date);
-            investmentService.createInvestment(invest);
-        }
-        for (int i = 0; i < 100; i++) {
-            Investment invest = new Investment();
-            invest.setAmount(15.0f);
-            invest.setProjectId(2L);
-            invest.setUserId(1L);
-            Date date = new Date();
-            invest.setDate(date);
-            investmentService.createInvestment(invest);
-        }
-        for (int i = 0; i < 100; i++) {
-            Investment invest = new Investment();
-            invest.setAmount(20.0f);
-            invest.setProjectId(3L);
-            invest.setUserId(1L);
-            Date date = new Date();
-            invest.setDate(date);
-            investmentService.createInvestment(invest);
-        }
-
-        return displayList(model, project);
-    }
-
     @RequestMapping(value = {"/invest/download"})
     public String investDownload(HttpServletResponse response, ModelMap model, Project project) {
         float totalAmount = 0.00f;
@@ -219,19 +185,31 @@ public class InvestController {
         return "/investment/investment";
     }
 
-    @RequestMapping(value = {"/invest/rewardDisplay/{rewardId}"}) // The adress to call the function
-    public String projectDisplay(HttpServletRequest request, ModelMap model, @PathVariable long rewardId) {
+    @RequestMapping(value = {"/invest/{projectId}/rewardDisplay/{rewardId}"}, method = RequestMethod.GET) // The adress to call the function
+    public String projectDisplay(HttpServletRequest request, ModelMap model, @PathVariable long projectId, @PathVariable long rewardId) {
         /* Code your logic here */
         Reward reward = rewardService.getRewardById(rewardId);
-        float rewardPrice = reward.getCostStart();
+        if (reward == null) {
+            return "/home/home";
+        }
+        long rewardPrice = reward.getCostStart();
         String description = reward.getDescription();
         String rewardName = reward.getName();
 
         model.addAttribute("rewardPrice", rewardPrice);
         model.addAttribute("description", description);
         model.addAttribute("rewardName", rewardName);
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("rewardId", rewardId);
 
-        return "/invest/rewardpay"; // The adress of the JSP coded in tiles.xml
+        String return_string = "/invest/rewardpay";
+        return return_string; // The adress of the JSP coded in tiles.xml
+    }
+
+    @RequestMapping(value = "/invest/{projectId}/rewardDPay/{rewardId}", method = RequestMethod.POST)
+    public String payReward(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId, @PathVariable long rewardId) {
+        
+        return "/core/preinvest/projectDisplay/" + projectId;
     }
 
     private void printelements(ArrayList<Investor> listinvestors) {

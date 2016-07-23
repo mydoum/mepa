@@ -142,7 +142,7 @@ public class Project implements Serializable {
         this.imagesLinks = imagesLinks;
     }
 
-    public Set<Reward> getRewards() {
+   /* public Set<Reward> getRewards() {
         return rewards;
     }
 
@@ -156,7 +156,7 @@ public class Project implements Serializable {
 
 
         this.rewards = rewards;
-    }
+    }*/
 
     @Override
     public String toString() {
