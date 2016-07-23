@@ -59,6 +59,9 @@
     <definition name="/invest/rewardpay" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/investment/rewardpay.jsp"/>
     </definition>
+    <definition name="/invest/rewardpay" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/investment/rewardpay.jsp"/>
+    </definition>
 
     <!-- Preinvest -->
     <definition name="/insertDummy" extends="base.definition">
