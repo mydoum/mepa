@@ -38,6 +38,11 @@
 <%--</nav>--%>
 
 <div class="container">
+    <c:if test="${isCo == false}">
+        <div class="col-md-12 text-center alert alert-failure investFormInside">
+            La connexion a échouée : Mot de passe ou Identifiant incorrect.
+        </div>
+    </c:if>
     <div class="row">
         <div class="col-md-6">
             <c:url var="addCustomUserFormActionUrl" value="/authentification/signin"/>
@@ -60,11 +65,13 @@
                             <input id="password" name="password" placeholder="" class="form-control input-lg" type="password">
                         </div>
                     </div>
-
+                    <br/>
+                    <br/>
                     <div class="control-group">
-                        <!-- Button -->
+                        <!-- Buttons -->
                         <div class="controls">
                             <button type="submit" class="btn btn-default">Connexion</button>
+                            <a class="btn" href="/authentification/resendPwd">Mot de passe oublié ?</a>
                         </div>
                     </div>
 

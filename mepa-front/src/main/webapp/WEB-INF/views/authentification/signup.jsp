@@ -66,7 +66,6 @@
                         <div class="controls">
                             <input id="lastname" name="lastname" placeholder="" class="form-control input-lg"
                                    type="text">
-                            <p class="help-block">Nom can contain any letters or numbers, without spaces</p>
                         </div>
                     </div>
 
@@ -75,7 +74,6 @@
                         <div class="controls">
                             <input id="firstname" name="firstname" placeholder="" class="form-control input-lg"
                                    type="text">
-                            <p class="help-block">Prénom can contain any letters or numbers, without spaces</p>
                         </div>
                     </div>
 
@@ -83,7 +81,6 @@
                         <label class="control-label" for="email">Adresse e-mail</label>
                         <div class="controls">
                             <input id="email" name="email" placeholder="" class="form-control input-lg" type="email">
-                            <p class="help-block">Please provide your e-mail</p>
                         </div>
                     </div>
 
@@ -92,16 +89,14 @@
                         <div class="controls">
                             <input id="password" name="password" placeholder="" class="form-control input-lg"
                                    type="password">
-                            <p class="help-block">Password should be at least 6 characters</p>
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="password_confirm">Mot de passe (Confirmation)</label>
+                        <label class="control-label" for="password_confirm">Confirmation du mot de passe</label>
                         <div class="controls">
                             <input id="password_confirm" name="password_confirm" placeholder=""
                                    class="form-control input-lg" type="password">
-                            <p class="help-block">Please confirm password</p>
                         </div>
                     </div>
 
@@ -124,7 +119,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <br/>
                     <div class="control-group">
                         <!-- Button -->
                         <div class="controls">
@@ -149,6 +144,7 @@
                     <div class="col-md-3"></div>
                 </div>
             </div>
+            <br/>
             <table class="col-md-12 table table-striped">
                 <thead>
                 <tr>

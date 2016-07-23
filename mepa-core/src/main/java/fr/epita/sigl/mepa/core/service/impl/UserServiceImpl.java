@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByLogin(String login) {
-        return this.userDao.getByLastName(login);
+        return this.userDao.getByLogin(login);
     }
 
     @Override

@@ -19,14 +19,14 @@
                         <li><a href="${homeUrl}">Home page</a></li>
                         <c:url var="signup" value="/authentification/auth"/>
                         <li><a href="${signup}">Inscription</a></li>
-                        <c:url var="signin" value="/authentification/signin"/>
-                        <li><a href="${signin}">Connexion</a></li>
                         <c:url var="preinvestCoreUrl" value="/core/preinvest/projectCreate"/>
                         <li><a href="${preinvestCoreUrl}">Create Project</a></li>
                         <c:url var="investUrl" value="/invest"/>
                         <li><a href="${investUrl}">Invest</a></li>
                         <c:url var="commentsUrl" value="/comment"/>
                         <li><a href="${commentsUrl}">Comments</a></li>
+                        <c:url var="signin" value="/authentification/signin"/>
+                        <li><a href="${signin}">Connexion</a></li>
                     </ul>
                 </div>
             </div>

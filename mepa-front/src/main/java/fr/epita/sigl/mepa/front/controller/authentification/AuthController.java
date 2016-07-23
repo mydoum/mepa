@@ -7,6 +7,7 @@ import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.user.form.AddCustomUserFormBean;
 import fr.epita.sigl.mepa.front.user.form.LoginUserFormBean;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -90,8 +91,8 @@ public class AuthController {
     public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) {
         User user = new User();
         user.setFirstName("Tahar");
-        user.setLastName("Le Roi du 92i");
-        user.setLogin("fupis@gmail.fr");
+        user.setLastName("Sayagh");
+        user.setLogin("tahar.sayagh@gmail.com");
         user.setPassword("authent");
         Date date = new Date();
         user.setBirthDate(date);
@@ -102,10 +103,30 @@ public class AuthController {
     }
 
     @RequestMapping(value = {"/resendPwd"}, method = {RequestMethod.GET})
-    public String resendPwd(HttpServletRequest request, ModelMap modelMap) throws ParseException {
+    public String showPwd(HttpServletRequest request, ModelMap modelMap) throws ParseException {
         return "/authentification/resendPwd";
     }
 
+    @RequestMapping(value = {"/resendPwd"}, method = {RequestMethod.POST})
+    public String resendPwd(HttpServletRequest request, ModelMap modelMap) throws ParseException {
+        Boolean isSent = false;
+        String login = request.getParameter("email");
+        User recipient = this.userService.getUserByLogin(login);
+        System.out.println(recipient.getFirstName());
+        if (recipient != null && !recipient.getFirstName().equalsIgnoreCase("")) {
+            try {
+                sendMail(recipient);
+                isSent = true;
+                modelMap.addAttribute("isSent", isSent);
+                modelMap.addAttribute("email", recipient.getLogin());
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+        }
+        else
+            modelMap.addAttribute("isSent", isSent);
+        return "/authentification/resendPwd";
+    }
 
     private void sendMail(User recipient) throws AddressException, MessagingException {
         //User tmpUser = userService.getUserById(userId);
@@ -122,7 +143,8 @@ public class AuthController {
         generateMailMessage = new MimeMessage(getMailSession);
         generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(userMail));
         generateMailMessage.setSubject("Greetings " + userFirstName + " " + userLastName);
-        String emailBody = "Thank you for donating: Lolilol" + "<br><br> Regards, <br>MEPA Team";
+        String emailBody = "This information is strictly private." + "<br> Here is your password: \""
+                + recipient.getPassword() + "\". <br><br> Regards, <br>MEPA Team";
         generateMailMessage.setContent(emailBody, "text/html");
 
         Transport transport = getMailSession.getTransport("smtp");
@@ -144,17 +166,19 @@ public class AuthController {
             // Error(s) in form bean validation
             return "/example/core/form";
         }
-
+        Boolean isCo = false;
         if (this.userService.getUserByLogin(loginUserFormBean.getEmail()) != null) {
             User newUser = this.userService.getUserById(this.userService.getUserByLogin(loginUserFormBean.getEmail()).getId());
             if (StringUtils.equals(loginUserFormBean.getPassword(), newUser.getPassword())) {
                 request.getSession().setAttribute("userCo", newUser);
-                return /* FIXME : Page OK */ "/example/core/form";
+                isCo = true;
+                modelMap.addAttribute("isCo", isCo);
+                return "/home";
             }
-        } else
-            return /* FIXME : Page KO */ "/example/core/form";
-
-        return "/home/home";
+        } else {
+            modelMap.addAttribute("isCo", isCo);
+            return "authentification/signin";
+        }
     }
 
 }
