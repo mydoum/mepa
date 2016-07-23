@@ -65,6 +65,11 @@
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectCreate.jsp"/>
     </definition>
 
+    <!-- Comments -->
+    <definition name="/comments/core/comment_form" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/comments/core/comment_form.jsp"/>
+    </definition>
+
     <!-- Core example -->
     <definition name="/example/core/form" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/example/core/form.jsp"/>
