@@ -105,10 +105,16 @@
                         <div class="controls">
                             <input id="birthdate" name="birthdate" placeholder="" class="form-control input-lg"
                                    type="text">
-                            <p class="help-block">Birthday</p>
                         </div>
                     </div>
-
+                    <br/>
+                    <br/>
+                    <div class="control-group">
+                        <!-- Button -->
+                        <div class="controls">
+                            <button type="submit" class="btn btn-default">Inscription</button>
+                        </div>
+                    </div>
                     <div class="control-group">
                         <label class="col-xs-3 control-label">Date</label>
                         <div class="col-xs-5 date">
@@ -117,13 +123,6 @@
                                 <span class="input-group-addon add-on"><span
                                         class="glyphicon glyphicon-calendar"></span></span>
                             </div>
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="control-group">
-                        <!-- Button -->
-                        <div class="controls">
-                            <button type="submit" class="btn btn-default">Inscription</button>
                         </div>
                     </div>
 
@@ -137,11 +136,7 @@
             <div class="col-md-12 investFormInside">
                 <div class="col-md-8"><h2>Utilisateurs</h2></div>
                 <div class="col-md-3">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-3">
-                        <a href="/authentification/filltables"><span class="btn btn-primary">Ajouter Utilisateurs</span></a>
-                    </div>
-                    <div class="col-md-3"></div>
+                        <a href="/authentification/filltables" style="text-align: center;"><span class="btn btn-primary">Ajouter Utilisateurs</span></a>
                 </div>
             </div>
             <br/>

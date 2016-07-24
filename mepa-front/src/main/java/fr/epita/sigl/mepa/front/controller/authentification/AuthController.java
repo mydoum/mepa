@@ -41,7 +41,7 @@ public class AuthController {
 
     @RequestMapping(value = {"/auth"}, method = {RequestMethod.GET})
     public String showAuth(HttpServletRequest request, ModelMap modelMap) {
-        List<AppUser> appUsers = this.appUserService.getUserByFirstName("lol");
+        List<AppUser> appUsers = this.appUserService.getAllUsers();
         if (appUsers.size() > 0) {
             modelMap.addAttribute("usersList", appUsers);
         }
@@ -81,14 +81,18 @@ public class AuthController {
 
     @RequestMapping(value = "/filltables", method = RequestMethod.GET)
     public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) {
-        AppUser appUser = new AppUser();
-        appUser.setFirstName("Tahar");
-        appUser.setLastName("Sayagh");
-        appUser.setLogin("tahar.sayagh@gmail.com");
-        appUser.setPassword("authent");
-        Date date = new Date();
-        appUser.setBirthDate(date);
-        this.appUserService.createUser(appUser);
+        String a = "";
+        for (int i = 0; i < 10; i++) {
+            a += "0";
+            AppUser appUser = new AppUser();
+            appUser.setFirstName("Tahar");
+            appUser.setLastName("Sayagh");
+            appUser.setLogin("tahar.sayagh" + a + "@gmail.com");
+            appUser.setPassword("authent");
+            Date date = new Date();
+            appUser.setBirthDate(date);
+            this.appUserService.createUser(appUser);
+        }
         List<AppUser> appUsers = this.appUserService.getAllUsers();
         model.addAttribute("usersList", appUsers);
         return "/authentification/signup";
