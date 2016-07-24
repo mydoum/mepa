@@ -8,9 +8,9 @@
             <thead>
             <tr>
                 <th style="width: 100px"></th>
-                <th>Project Name</th>
-                <th>Ending date</th>
-                <th>Project Description</th>
+                <th>Nom du projet</th>
+                <th>Date de fin</th>
+                <th>Description</th>
             </tr>
             </thead>
             <tbody>
