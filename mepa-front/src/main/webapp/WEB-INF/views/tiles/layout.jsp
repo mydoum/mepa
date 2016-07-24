@@ -3,7 +3,24 @@
 <head>
     <%-- Page title --%>
     <c:set var="titleKey"><tiles:insertAttribute name="title"/></c:set>
-    <title><fmt:message key="${titleKey}"/></title>
+    <fmt:message key="${titleKey}" var="titleVar"/>
+    <c:choose>
+        <c:when test="${titleVar=='This is a project!'}">
+            <title>${project.name}</title>
+        </c:when>
+        <c:otherwise>
+            <title>${titleVar}</title>
+        </c:otherwise>
+    </c:choose>
+
+
+    <%-- Facebook meta characters--%>
+    <meta property="og:url"           content="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}" />
+    <meta property="og:type"          content="projet" />
+    <meta property="og:title"         content="${project.name}" />
+    <meta name="description"          content="${project.description}" />
+    <meta name="og:description"       content="${project.description}" />
+    <meta property="og:image"         content="${project.imagesLinks[0]}" />
 
     <%-- Bootstrap CSS --%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -14,6 +31,14 @@
     <%-- Application CSS --%>
     <c:url var="defaultCssUrl" value="/css/default.css"/>
     <link rel="stylesheet" href="${defaultCssUrl}" type="text/css"/>
+    <c:url var="projectDisplay" value="/css/project-display.css"/>
+    <link rel="stylesheet" href="${projectDisplay}" type="text/css"/>
+
+    <%-- Investissement CSS --%>
+    <c:url var="investDefaultCss" value="/css/investment/investment.css"/>
+    <link rel="stylesheet" href="${investDefaultCss}" type="text/css"/>
+    <c:url var="investSliderCss" value="/css/investment/nouislider.min.css"/>
+    <link rel="stylesheet" href="${investSliderCss}" type="text/css"/>
 
     <%-- jQuery --%>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -22,12 +47,15 @@
             integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
             crossorigin="anonymous"></script>
 
+
     <%-- Facebook meta characters--%>
     <meta property="og:url"           content="https://mepa.herokuapp.com/home" />
     <meta property="og:type"          content="website" />
     <meta property="og:title"         content="LISG crowdfounding 2.0" />
     <meta property="og:description"   content="Description d'un projet" />
     <meta property="og:image"         content="/img/welldone.jpg" />
+
+
 
     <%-- SDK Facebook --%>
     <div id="fb-root"></div>
@@ -41,6 +69,7 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
+
 
     <%-- Google analytics async --%>
     <script>

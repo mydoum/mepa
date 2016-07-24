@@ -1,11 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 <footer>
-    <div class="container">
-        <div id="footer-alert" class="alert alert-info">
-            <div class="col-md-6">LGIS</div>
-            <div class="col-md-6">
-                <%@ include file="/WEB-INF/views/social/facebook_button.jsp" %>
-            </div>
+       <div class="container">
+            <div class="alert alert-info" style="text-align:center">MEPA - made with ❤ by SIGL 2017</div>
         </div>
-    </div>
 </footer>

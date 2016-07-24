@@ -1,3 +1,4 @@
+<%@ page import="java.util.ArrayList" %>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <div class="container">
@@ -47,5 +48,10 @@
             <c:url var="wellDoneImgUrl" value="/img/welldone.jpg"/>
             <img src="${wellDoneImgUrl}" alt=""/>
         </p>
+<c:if test="${isCo == true}">
+    <div class="col-md-12 text-center alert alert-success investFormInside">
+        Bienvenue ${userCo.firstname} ${userCo.lastname}! :)
     </div>
-</div>
+</c:if>
+
+<c:import url="/core/preinvest/projectListInclude"/>
