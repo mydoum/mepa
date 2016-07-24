@@ -168,6 +168,7 @@ public class AuthController {
             if (StringUtils.equals(pwd, newAppUser.getPassword())) {
                 request.getSession().setAttribute("userCo", newAppUser);
                 isCo = true;
+                request.getSession().setAttribute("isCo", isCo);
                 modelMap.addAttribute("isCo", isCo);
                 return "/home/home";
             }
@@ -179,6 +180,19 @@ public class AuthController {
         }
 
         return "/authentification/signin";
+    }
+
+    @RequestMapping(value = {"/deconnexion"}, method = {RequestMethod.POST})
+    public String deconnect(HttpServletRequest request, ModelMap modelMap) {
+
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if (userCo != null && isCo) {
+            System.out.println("User deconnexion : " + userCo.getFirstName() + " " + userCo.getLastName());
+            request.getSession().removeAttribute("userCo");
+            request.getSession().removeAttribute("isCo");
+        }
+        return "/home/home";
     }
 
 }
