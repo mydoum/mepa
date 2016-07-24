@@ -47,6 +47,8 @@ public class Investment {
     @NotNull
     private String stringDate;
 
+    private Long rewardId;
+
     public Long getUserId (){ return this.userId; }
     public void setUserId (Long user_id){ this.userId = user_id;}
 
@@ -104,6 +106,14 @@ public class Investment {
 
     public void setStringDate(String stringDate) {
         this.stringDate = stringDate;
+    }
+
+    public Long getRewardId() {
+        return rewardId;
+    }
+
+    public void setRewardId(Long rewardId) {
+        this.rewardId = rewardId;
     }
 
     @Override
