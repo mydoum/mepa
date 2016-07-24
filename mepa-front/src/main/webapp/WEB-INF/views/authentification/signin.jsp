@@ -45,8 +45,8 @@
     </c:if>
     <div class="row">
         <div class="col-md-6">
-            <c:url var="addCustomUserFormActionUrl" value="/authentification/signin"/>
-            <form id="eventForm" class="form-horizontal" action="${addCustomUserFormActionUrl}" modelAttribute="loginUserFormBean"
+            <c:url var="loginUserFormActionUrl" value="/authentification/signin"/>
+            <form id="eventForm" class="form-horizontal" action="${loginUserFormActionUrl}" modelAttribute="loginUserFormBean"
                   method="POST">
                 <fieldset>
                     <div id="legend">

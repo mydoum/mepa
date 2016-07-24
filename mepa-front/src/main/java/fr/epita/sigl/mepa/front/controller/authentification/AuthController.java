@@ -41,7 +41,7 @@ public class AuthController {
 
     @RequestMapping(value = {"/auth"}, method = {RequestMethod.GET})
     public String showAuth(HttpServletRequest request, ModelMap modelMap) {
-        List<AppUser> appUsers = this.appUserService.getUserByFirstName("lol");
+        List<AppUser> appUsers = this.appUserService.getAllUsers();
         if (appUsers.size() > 0) {
             modelMap.addAttribute("usersList", appUsers);
         }
@@ -81,14 +81,18 @@ public class AuthController {
 
     @RequestMapping(value = "/filltables", method = RequestMethod.GET)
     public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) {
-        AppUser appUser = new AppUser();
-        appUser.setFirstName("Tahar");
-        appUser.setLastName("Sayagh");
-        appUser.setLogin("tahar.sayagh@gmail.com");
-        appUser.setPassword("authent");
-        Date date = new Date();
-        appUser.setBirthDate(date);
-        this.appUserService.createUser(appUser);
+        String a = "";
+        for (int i = 0; i < 10; i++) {
+            a += "0";
+            AppUser appUser = new AppUser();
+            appUser.setFirstName("Tahar");
+            appUser.setLastName("Sayagh");
+            appUser.setLogin("tahar.sayagh" + a + "@gmail.com");
+            appUser.setPassword("authent");
+            Date date = new Date();
+            appUser.setBirthDate(date);
+            this.appUserService.createUser(appUser);
+        }
         List<AppUser> appUsers = this.appUserService.getAllUsers();
         model.addAttribute("usersList", appUsers);
         return "/authentification/signup";
@@ -152,26 +156,29 @@ public class AuthController {
     }
 
     @RequestMapping(value = {"/signin"}, method = {RequestMethod.POST})
-    public String signIn(HttpServletRequest request, ModelMap modelMap,
-                         @Valid LoginUserFormBean loginUserFormBean, BindingResult result) {
-        if (result.hasErrors()) {
-            // Error(s) in form bean validation
-            return "/example/core/form";
-        }
+    public String signIn(HttpServletRequest request, ModelMap modelMap) {
+
+        String login = request.getParameter("email");
+        String pwd = request.getParameter("password");
+
         Boolean isCo = false;
-        if (this.appUserService.getUserByLogin(loginUserFormBean.getEmail()) != null) {
-            AppUser newAppUser = this.appUserService.getUserById(this.appUserService.getUserByLogin(loginUserFormBean.getEmail()).getId());
-            if (StringUtils.equals(loginUserFormBean.getPassword(), newAppUser.getPassword())) {
+        AppUser userCo = this.appUserService.getUserByLogin(login);
+        if (userCo != null) {
+            AppUser newAppUser = this.appUserService.getUserById(userCo.getId());
+            if (StringUtils.equals(pwd, newAppUser.getPassword())) {
                 request.getSession().setAttribute("userCo", newAppUser);
                 isCo = true;
                 modelMap.addAttribute("isCo", isCo);
-                return "/home";
+                return "/home/home";
             }
-        } else {
-            modelMap.addAttribute("isCo", isCo);
-            return "authentification/signin";
         }
-        return "authentification/signin";
+        else {
+            modelMap.addAttribute("isCo", isCo);
+            System.out.println("Identifiant / mdp incorrect");
+            return "/authentification/signin";
+        }
+
+        return "/authentification/signin";
     }
 
 }

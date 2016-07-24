@@ -6,6 +6,7 @@ package fr.epita.sigl.mepa.front.controller;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.core.service.ProjectService;
+import fr.epita.sigl.mepa.core.service.RewardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class InsertDummyController {
 
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private RewardService rewardService;
 
     private Random rand = new Random();
 
@@ -57,17 +60,6 @@ public class InsertDummyController {
             while (d.after(newProject.getEndDate()))
                 d = getRandomDate();
 
-            Set<Reward> rewards = new HashSet<>();
-
-            for (int j = 0; j < 10; ++j) {
-                Reward r = new Reward();
-                r.setName("Coucou");
-                r.setDescription("This is a description");
-                r.setCostStart((long) 10);
-                rewards.add(r);
-            }
-
-            newProject.setRewards(rewards);
 
             newProject.setStartDate(d);
             ArrayList<String> imageLinkList = new ArrayList<>();
@@ -79,6 +71,21 @@ public class InsertDummyController {
 
 
             this.projectService.createProject(newProject);
+
+            Set<Reward> rewards = new HashSet<>();
+
+            for (int j = 0; j < 10; ++j) {
+                Reward r = new Reward();
+                r.setName("Coucou");
+                r.setDescription("This is a description");
+                r.setCostStart((long) 10);
+                this.rewardService.createReward(r);
+                rewards.add(r);
+            }
+
+            newProject.setRewards(rewards);
+            this.projectService.updateProject(newProject);
+
         }
         /* INVEST*/
 

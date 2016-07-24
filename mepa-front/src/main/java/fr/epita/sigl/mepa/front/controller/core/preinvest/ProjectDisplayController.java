@@ -1,15 +1,14 @@
 package fr.epita.sigl.mepa.front.controller.core.preinvest;
 
-import fr.epita.sigl.mepa.core.domain.Investment;
-import fr.epita.sigl.mepa.core.domain.Project;
+import fr.epita.sigl.mepa.core.domain.*;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
 
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +57,13 @@ public class ProjectDisplayController {
         modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
         /*\PostInvest Total Amount invested on Project*/
 
+         /*Get the current user in the session in order to know if he is
+        * connected */
+        AppUser userco = new AppUser();
+        userco = (AppUser) request.getSession().getAttribute("userCo");
+        modelMap.addAttribute("userco", userco);
+
+
         List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();
 
         /*Sort of the comments by the arriving tickets*/
@@ -76,7 +82,8 @@ public class ProjectDisplayController {
     public String projectList(HttpServletRequest request, ModelMap modelMap) {
         List<Project> projects = this.projectService.getAllUnfinishedProjects();
 
-
+        for (Project p: projects)
+            Hibernate.initialize(p.getRewards());
         modelMap.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
         return "/preinvest/projectList"; // The adress of the JSP coded in tiles.xml
     }

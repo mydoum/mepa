@@ -16,17 +16,15 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <c:url var="homeUrl" value="/home"/>
-                        <li><a href="${homeUrl}">Home page</a></li>
+                        <li><a href="${homeUrl}">Accueil</a></li>
                         <c:url var="signup" value="/authentification/auth"/>
                         <li><a href="${signup}">Inscription</a></li>
                         <c:url var="preinvestCoreUrl" value="/core/preinvest/projectCreate"/>
-                        <li><a href="${preinvestCoreUrl}">Create Project</a></li>
+                        <li><a href="${preinvestCoreUrl}">Créer un projet</a></li>
                         <c:url var="investUrl" value="/invest"/>
-                        <li><a href="${investUrl}">Invest</a></li>
-                        <c:url var="commentsUrl" value="/comment"/>
-                        <li><a href="${commentsUrl}">Comments</a></li>
+                        <li><a href="${investUrl}">Investissements</a></li>
                         <c:url var="signin" value="/authentification/signin"/>
-                        <li><a href="${signin}">Connexion</a></li>
+                        <li><a href="${signin}">Se connecter</a></li>
                     </ul>
                 </div>
             </div>

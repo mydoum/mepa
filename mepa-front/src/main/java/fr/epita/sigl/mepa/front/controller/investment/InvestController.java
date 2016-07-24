@@ -59,6 +59,15 @@ public class InvestController {
         return displayList(model, project);
     }
 
+    @RequestMapping(value = "/invest/comment", method = RequestMethod.GET)
+    public String comment(ModelMap model, HttpSession session, Project project) {
+        float totalAmount = 0.00f;
+        ArrayList<Investor> listinvestors = new ArrayList<Investor>();
+        totalAmount = getallinvestors(listinvestors, totalAmount, project);
+        model.addAttribute("totalDonation", totalAmount);
+        model.addAttribute("isConnected", true);
+        return "/investment/comment";
+    }
 
     @RequestMapping(value = "/invest/investMoney", method = RequestMethod.POST)
     public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request, Project project) {
