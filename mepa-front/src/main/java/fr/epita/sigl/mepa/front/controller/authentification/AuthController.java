@@ -162,10 +162,13 @@ public class AuthController {
             // Error(s) in form bean validation
             return "/example/core/form";
         }
+        String login = request.getParameter("email");
+        String pwd = request.getParameter("password");
         Boolean isCo = false;
-        if (this.appUserService.getUserByLogin(loginUserFormBean.getEmail()) != null) {
-            AppUser newAppUser = this.appUserService.getUserById(this.appUserService.getUserByLogin(loginUserFormBean.getEmail()).getId());
-            if (StringUtils.equals(loginUserFormBean.getPassword(), newAppUser.getPassword())) {
+        AppUser userCo = this.appUserService.getUserByLogin(login);
+        if (userCo != null) {
+            AppUser newAppUser = this.appUserService.getUserById(userCo.getId());
+            if (StringUtils.equals(pwd, newAppUser.getPassword())) {
                 request.getSession().setAttribute("userCo", newAppUser);
                 isCo = true;
                 modelMap.addAttribute("isCo", isCo);
