@@ -57,15 +57,12 @@ public class ProjectDisplayController {
         modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
         /*\PostInvest Total Amount invested on Project*/
 
-        /*AppUser userco = new AppUser();
-        if ((AppUser) request.getSession().getAttribute("userCo") != null) {
-            userco = (AppUser) request.getSession().getAttribute("userCo");
-        }
-        modelMap.addAttribute("userco", userco);*/
-
+         /*Get the current user in the session in order to know if he is
+        * connected */
         AppUser userco = new AppUser();
         userco = (AppUser) request.getSession().getAttribute("userCo");
         modelMap.addAttribute("userco", userco);
+
 
         List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();
 
