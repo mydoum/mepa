@@ -5,9 +5,7 @@ import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.Reward;
-import fr.epita.sigl.mepa.core.service.AppUserService;
-import fr.epita.sigl.mepa.core.service.InvestmentService;
-import fr.epita.sigl.mepa.core.service.RewardService;
+import fr.epita.sigl.mepa.core.service.*;
 import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
@@ -47,6 +45,8 @@ public class InvestController {
     private AppUserService appUserService;
     @Autowired
     private RewardService rewardService;
+    @Autowired
+    private ProjectService projectService;
 
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
@@ -72,7 +72,7 @@ public class InvestController {
         return "/investment/comment";
     }
 
-    @RequestMapping(value = "/invest/investMoney", method = RequestMethod.POST)
+    // @RequestMapping(value = "/invest/investMoney", method = RequestMethod.POST)
     public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request, Project project) {
         float moneyAmount = 0.00f;
 
@@ -203,14 +203,15 @@ public class InvestController {
         model.addAttribute("projectId", projectId);
         model.addAttribute("rewardId", rewardId);
 
-        String return_string = "/invest/rewardpay";
-        return return_string; // The adress of the JSP coded in tiles.xml
+        return "/invest/rewardpay"; // The adress of the JSP coded in tiles.xml
     }
 
-    @RequestMapping(value = "/invest/{projectId}/rewardpay/{rewardId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/invest/{projectId}/rewardpay/{rewardId}/invest", method = RequestMethod.POST)
     public String payReward(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId, @PathVariable long rewardId) {
-        
-        return "/preinvest/projectDisplay/";
+        Project project = this.projectService.getProjectById(projectId);
+
+        investMoney(model, session, request, project);
+        return "/preinvest/projectDisplay";
     }
 
     private void printelements(ArrayList<Investor> listinvestors) {

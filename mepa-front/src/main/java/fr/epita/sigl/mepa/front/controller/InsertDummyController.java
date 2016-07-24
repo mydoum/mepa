@@ -3,9 +3,11 @@ package fr.epita.sigl.mepa.front.controller;
 /**
  * Created by Xavier on 21/07/2016.
  */
+import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.domain.Reward;
+import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import fr.epita.sigl.mepa.core.service.RewardService;
@@ -42,6 +44,9 @@ public class InsertDummyController {
     @Autowired
     private RewardService rewardService;
 
+    @Autowired
+    private AppUserService appUserService;
+
     private Random rand = new Random();
 
     private Date getRandomDate()
@@ -57,7 +62,18 @@ public class InsertDummyController {
     public String insertDummy(HttpServletRequest request, ModelMap modelMap) {
 
         /*AUTH */
-
+        String a = "";
+        for (int i = 0; i < 10; i++) {
+            a += "0";
+            AppUser appUser = new AppUser();
+            appUser.setFirstName("Tahar");
+            appUser.setLastName("Sayagh");
+            appUser.setLogin("tahar.sayagh" + a + "@gmail.com");
+            appUser.setPassword("password");
+            Date date = new Date();
+            appUser.setBirthDate(date);
+            this.appUserService.createUser(appUser);
+        }
 
         /* PREINVEST*/
 
@@ -136,6 +152,7 @@ public class InsertDummyController {
         }
 
 
+        printAllRewards();
         /* POSTINVEST*/
 
         return "/insertDummy"; // The adress of the JSP coded in tiles.xml

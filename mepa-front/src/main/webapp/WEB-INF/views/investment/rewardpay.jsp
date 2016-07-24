@@ -25,12 +25,12 @@
             <div class="col-md-2"></div>
         </div>
         <div class="col-md-12 investForm">
-            <c:url var="payReward" value="/invest/${projectId}/rewardpay/${rewardId}"/>
+            <c:url var="payReward" value="/invest/${projectId}/rewardpay/${rewardId}/invest"/>
             <form:form role="form" action="${payReward}" method="post" modelAttribute="User">
                 <label class="investFormInside col-md-12">Amount (€):</label>
                 <div class="col-md-12 InvestFormInside">
                     <input name="investAmount" id="input-with-keypress"
-                           class="form-control" type="keypress" required="required"/>
+                           class="form-control" type="number" required="required" value="${rewardPrice}"/>
                 </div>
                 <br/>
                 <label class="investFormInside col-md-12">Anonyme: </label>
