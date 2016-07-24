@@ -50,9 +50,11 @@
     </definition>
     <definition name="/investment/investment" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/investment/project.jsp"/>
+        <put-attribute name="title" value="invest.title"/>
     </definition>
     <definition name="/investment/comment" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/investment/projectComments.jsp"/>
+        <put-attribute name="title" value="invest.title"/>
     </definition>
 
     <!-- Preinvest -->
@@ -73,6 +75,7 @@
 
     <definition name="/preinvest/projectCreate" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectCreate.jsp"/>
+        <put-attribute name="title" value="createProject.title"/>
     </definition>
 
     <!-- Comments -->
