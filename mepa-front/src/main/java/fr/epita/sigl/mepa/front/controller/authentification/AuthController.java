@@ -182,7 +182,7 @@ public class AuthController {
         return "/authentification/signin";
     }
 
-    @RequestMapping(value = {"/deconnexion"}, method = {RequestMethod.POST})
+    @RequestMapping(value = {"/deconnexion"}, method = {RequestMethod.GET})
     public String deconnect(HttpServletRequest request, ModelMap modelMap) {
 
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
