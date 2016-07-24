@@ -1,10 +1,8 @@
 package fr.epita.sigl.mepa.front.controller.core.preinvest;
 
-import fr.epita.sigl.mepa.core.domain.Investment;
-import fr.epita.sigl.mepa.core.domain.Project;
+import fr.epita.sigl.mepa.core.domain.*;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
 
@@ -57,6 +55,12 @@ public class ProjectDisplayController {
         Float totalProjectAmountInvested = getProjectMoneyInvested(projectId);
         modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
         /*\PostInvest Total Amount invested on Project*/
+
+        AppUser userco = new AppUser();
+        if ((AppUser) request.getSession().getAttribute("userCo") != null) {
+            userco = (AppUser) request.getSession().getAttribute("userCo");
+        }
+        modelMap.addAttribute("userco", userco);
 
         List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();
 

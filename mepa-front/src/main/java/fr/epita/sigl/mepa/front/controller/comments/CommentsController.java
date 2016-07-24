@@ -1,5 +1,6 @@
 package fr.epita.sigl.mepa.front.controller.comments;
 
+import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.CommentsModel;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
 import org.slf4j.Logger;
@@ -36,18 +37,18 @@ public class CommentsController {
     @RequestMapping(value = {"/", "/{projectId}"}, method = {RequestMethod.POST})
     public String processForm(HttpServletRequest request, ModelMap modelMap, HttpServletResponse response, @PathVariable int projectId) throws IOException {
 
-        String text = request.getParameter("userText");
-        if (text != "") {
-            CommentsModel newCommentsModel = new CommentsModel();
-            newCommentsModel.setData(text);
-            newCommentsModel.setProjectId(projectId);
-            this.commentsModelService.createCommentsModel(newCommentsModel);
+            String text = request.getParameter("userText");
+            if (text != "") {
+                CommentsModel newCommentsModel = new CommentsModel();
+                newCommentsModel.setData(text);
+                newCommentsModel.setProjectId(projectId);
+                this.commentsModelService.createCommentsModel(newCommentsModel);
 
-        /*Helps to sort the tickets */
-            newCommentsModel.setArriving(ticket);
-            ticket++;
+                /*Helps to sort the tickets */
+                newCommentsModel.setArriving(ticket);
+                ticket++;
+            }
 
-        }
 
         response.sendRedirect("/core/preinvest/projectDisplay/" + Integer.toString(projectId));
         return "/preinvest/projectDisplay";
