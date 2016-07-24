@@ -58,7 +58,7 @@ public class InvestController {
     }
 
     @RequestMapping(value = "/invest", method = RequestMethod.GET)
-    public String invest(ModelMap model, HttpSession session, Project project) {
+    public String investorsList(ModelMap model, HttpServletRequest request, Project project) {
         return displayList(model, project);
     }
 
@@ -72,9 +72,10 @@ public class InvestController {
         return "/investment/comment";
     }
 
-    // @RequestMapping(value = "/invest/investMoney", method = RequestMethod.POST)
-    public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request, Project project) {
+    @RequestMapping(value = "/invest/{projectId}/investMoney", method = RequestMethod.POST)
+    public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId) {
         float moneyAmount = 0.00f;
+        Project project = this.projectService.getProjectById(projectId);
 
         /**
          * Trying if the getted input is a number or not. If the input is not a number
@@ -97,14 +98,13 @@ public class InvestController {
 
         model.addAttribute("amount", moneyAmount);
         Long userId = 2L;
-        Long projectId = 1L;
         boolean anonymous_id = request.getParameter("anonymous_id") != null;
 
         if (insertNewInvestor(moneyAmount, userId, projectId, anonymous_id) != 0L) {
             String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
             model.addAttribute("errorInvest", errorMessage);
         }
-        return displayList(model, project);
+        return "/projectDisplay";
     }
 
     private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
@@ -221,9 +221,7 @@ public class InvestController {
 
     @RequestMapping(value = "/invest/{projectId}/rewardpay/{rewardId}/invest", method = RequestMethod.POST)
     public String payReward(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId, @PathVariable long rewardId) {
-        Project project = this.projectService.getProjectById(projectId);
-
-        investMoney(model, session, request, project);
+        investMoney(model, session, request, projectId);
         return "/preinvest/projectDisplay";
     }
 
