@@ -14,6 +14,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.util.SocketUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,7 +58,7 @@ public class InvestmentServiceImplUTests {
 
 
     @Test
-    public void investmentTest() {
+    public void investmentTest() throws ParseException {
         /**
          * Create a user, a project, an investment, set the variables
          * and get them to test that they been recorded properly
@@ -72,14 +74,20 @@ public class InvestmentServiceImplUTests {
         testUser.setFirstName(prenom);
         String nom = "capes";
         testUser.setLastName(nom);
-        Date naissance = new Date("15-08-1990");
-        testUser.setBirthDate(naissance);
+
+
         Long monId = 888888888L;
         testUser.setId(monId);
 
-        Date stopDate = new Date("12-05-2017");
+
+
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
+        String d = "2016-02-21";
+        String e = "2017-05-12";
+        Date debutDate = sdfDate.parse(d);
+        Date stopDate = sdfDate.parse(e);
+        System.out.println(debutDate.toString());
         Project testProject = new Project(monId, "projet de test", stopDate);
-        Date debutDate = new Date("23-07-2016");
         testProject.setStartDate(debutDate);
         String testDescription = "description du projet de test";
         testProject.setDescription(testDescription);
@@ -88,14 +96,16 @@ public class InvestmentServiceImplUTests {
         testInvest.setId(monId);
         Float testAmount = 12345F;
         testInvest.setAmount(testAmount);
-        Date investDate = new Date("02/02/2002");
+        String f = "2002-02-02";
+        Date investDate = sdfDate.parse(f);
         testInvest.setDate(investDate);
         Long testProjectId = 77777L;
         testInvest.setProjectId(testProjectId);
         testInvest.setId(monId);
         Integer testVersion = 14;
         testInvest.setVersion(testVersion);
-        Date testCreated = new Date("01-01-2001");
+        String g = "2001-01-01";
+        Date testCreated = sdfDate.parse(g);
         testInvest.setCreated(testCreated);
         boolean testAnonymous = false;
         testInvest.setAnonymous(testAnonymous);
@@ -111,7 +121,6 @@ public class InvestmentServiceImplUTests {
         assertThat(testUser.getPassword().equals("monpassword"));
         assertThat(testUser.getFirstName().equals(prenom));
         assertThat(testUser.getLastName().equals(nom));
-        assertThat(testUser.getBirthDate().equals(naissance));
         assertThat(testUser.getId().equals(monId));
 
         assertThat(testProject.getId().equals(monId));
