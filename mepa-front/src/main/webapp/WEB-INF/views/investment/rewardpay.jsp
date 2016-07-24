@@ -7,33 +7,30 @@
 --%>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 <div class="container">
-    <div class="page-header col-md-12"><h1>${rewardName}</h1></div>
+    <div class="page-header col-md-12"><h1 align="center">Paiement de ${rewardName}</h1></div>
     <div class="col-md-12 investFormInside">
-        <div class="col-md-8">
-            <div class="col-md-4">
-                <img src="https://i.ytimg.com/vi/7q33LWAjVcU/maxresdefault.jpg"
-                     class="projectImageInvest img-responsive img-rounded"/>
-            </div>
-            <div class="panel panel-primary projectDescriptionInvest col-md-8">
-                <!-- Default panel contents -->
-                <div class="panel-heading">Description</div>
-                <div class="panel-body">
-                    <p>
-                        ${description}
-                    </p>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="panel panel-primary projectDescriptionInvest">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Description</div>
+                    <div class="panel-body">
+                        <p>
+                            ${description}
+                        </p>
+                    </div>
                 </div>
             </div>
+            <div class="col-md-2"></div>
         </div>
-        <div class="col-md-4 investForm">
-            <c:url var="investMoney" value="/invest/investMoney"/>
-            <form:form role="form" action="${investMoney}" method="post" modelAttribute="User">
-                <div id="keypress"
-                     class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12">
-                </div>
+        <div class="col-md-12 investForm">
+            <c:url var="payReward" value="/invest/${projectId}/rewardpay/${rewardId}"/>
+            <form:form role="form" action="${payReward}" method="post" modelAttribute="User">
                 <label class="investFormInside col-md-12">Amount (€):</label>
                 <div class="col-md-12 InvestFormInside">
                     <input name="investAmount" id="input-with-keypress"
-                           class="form-control" type="text" required="required" readonly/>
+                           class="form-control" type="keypress" required="required"/>
                 </div>
                 <br/>
                 <label class="investFormInside col-md-12">Anonyme: </label>

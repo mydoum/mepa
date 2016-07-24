@@ -207,10 +207,10 @@ public class InvestController {
         return return_string; // The adress of the JSP coded in tiles.xml
     }
 
-    @RequestMapping(value = "/invest/{projectId}/rewardDPay/{rewardId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/invest/{projectId}/rewardpay/{rewardId}", method = RequestMethod.POST)
     public String payReward(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId, @PathVariable long rewardId) {
         
-        return "/core/preinvest/projectDisplay/" + projectId;
+        return "/preinvest/projectDisplay/";
     }
 
     private void printelements(ArrayList<Investor> listinvestors) {
