@@ -25,14 +25,14 @@
             <div class="control-group">
                 <label class="control-label">Date de début</label>
                 <div class="controls">
-                    <td><form:input path="startDate" class="form-control input-lg" placeholder="mm/jj/aaaa"/></td>
+                    <td><form:input path="startDate" class="form-control input-lg" placeholder="startDate"/></td>
                 </div>
             </div>
             <br/>
             <div class="control-group">
-                <label class="control-label">Deadline</label>
+                <label class="control-label">Date de fin</label>
                 <div class="controls">
-                    <td><form:input path="endDate" class="form-control input-lg" placeholder="mm/jj/aaaa"/></td>
+                    <td><form:input path="endDate" class="form-control input-lg" placeholder="endDate"/></td>
                 </div>
             </div>
             <br/>

@@ -4,6 +4,7 @@ package fr.epita.sigl.mepa.front.controller;
  * Created by Xavier on 21/07/2016.
  */
 import fr.epita.sigl.mepa.core.domain.Project;
+import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 @Controller
 @RequestMapping("/insertDummy") // The adress of the component
@@ -36,7 +35,8 @@ public class InsertDummyController {
 
     private Date getRandomDate()
     {
-        long ms = -946771200000L + (Math.abs(rand.nextLong()) % (70L * 365 * 24 * 60 * 60 * 1000));
+        long min_date = new Date("01/01/2016").getTime();
+        long ms = min_date + (Math.abs(rand.nextLong()) % (365 * 24 * 60 * 60 * 1000 * 70L));
 
         // Construct a date
         return new Date(ms);
@@ -50,12 +50,24 @@ public class InsertDummyController {
 
         /* PREINVEST*/
 
-        for (int i = 0; i < 10; ++i) {
+        for (int i = 0; i < 20; ++i) {
             rand.nextLong();
             Project newProject = new Project((long) 1, "Yolo", getRandomDate());
             Date d = getRandomDate();
             while (d.after(newProject.getEndDate()))
                 d = getRandomDate();
+
+            Set<Reward> rewards = new HashSet<>();
+
+            for (int j = 0; j < 10; ++j) {
+                Reward r = new Reward();
+                r.setName("Coucou");
+                r.setDescription("This is a description");
+                r.setCostStart((long) 10);
+                rewards.add(r);
+            }
+
+            newProject.setRewards(rewards);
 
             newProject.setStartDate(d);
             ArrayList<String> imageLinkList = new ArrayList<>();
@@ -63,6 +75,8 @@ public class InsertDummyController {
             imageLinkList.add("http://www.nyan.cat/images/cat/4.gif");
             newProject.setImagesLinks(imageLinkList);
             newProject.setDescription("tototototototototototototototototototototo");
+
+
 
             this.projectService.createProject(newProject);
         }

@@ -7,11 +7,55 @@
 .investForm{
     border: 1px solid darkgray;
     border-radius: 10px;
+    margin-bottom: 5px;
 }
 
 .investFormInside{
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.projectHeader {
+    font-family: "Brevia", "Helvetica", "Arial", sans-serif;
+    height: 150px;
+    text-align: center;
+}
+
+.projectNav {
+    list-style: none;
+    border-top: 1px solid #DDD;
+    height: 45px;
+    position: relative;
+}
+
+.rewardSection{
+    border: 1px solid darkgray;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.rewardHeader {
+    background-color: darkgray;
+    border: 1px solid gray;
+}
+
+.rewardTitle {
+
+}
+
+.rewardDescription {
+
+}
+
+.loginButton {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+}
+
+h1.short {
+    font-size: 3em;
 }
 
 @media (min-width: 768px) {

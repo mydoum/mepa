@@ -7,6 +7,7 @@
     <definition name="base.definition" template="/WEB-INF/views/tiles/layout.jsp">
         <put-attribute name="title" value="default.title"/>
         <put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp"/>
+        <put-attribute name="body" value=""/>
         <put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp"/>
     </definition>
 
@@ -17,18 +18,30 @@
     <definition name="home.definition" extends="base.definition">
         <put-attribute name="title" value="home.title"/>
     </definition>
-
-
     <definition name="/home/home" extends="home.definition">
         <put-attribute name="body" value="/WEB-INF/views/home/home.jsp"/>
+    </definition>
+
+    <!-- Postinvest -->
+    <definition name="/admin" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/admin/admin.jsp"/>
+    </definition>
+    <definition name="/invalid" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/invalid.jsp"/>
     </definition>
 
     <!-- Authentification -->
     <definition name="/authentification/signup" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/signup.jsp"/>
+        <put-attribute name="title" value="authent.title"/>
     </definition>
     <definition name="/authentification/signin" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/signin.jsp"/>
+        <put-attribute name="title" value="signin.title"/>
+    </definition>
+    <definition name="/authentification/resendPwd" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/authentification/resendPwd.jsp"/>
+        <put-attribute name="title" value="resendPwd.title"/>
     </definition>
 
     <!-- Invest -->
@@ -36,7 +49,12 @@
         <put-attribute name="title" value="invest.title"/>
     </definition>
     <definition name="/investment/investment" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/views/investment/investment.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/investment/project.jsp"/>
+        <put-attribute name="title" value="invest.title"/>
+    </definition>
+    <definition name="/investment/comment" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/investment/projectComments.jsp"/>
+        <put-attribute name="title" value="invest.title"/>
     </definition>
 
     <!-- Preinvest -->
@@ -45,6 +63,7 @@
     </definition>
     <definition name="/preinvest/projectDisplay" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectDisplay.jsp"/>
+        <put-attribute name="title" value="project.title"/>
     </definition>
     <definition name="/preinvest/projectList" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectList.jsp"/>
@@ -56,14 +75,12 @@
 
     <definition name="/preinvest/projectCreate" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectCreate.jsp"/>
+        <put-attribute name="title" value="createProject.title"/>
     </definition>
 
-    <!-- Core example -->
-    <definition name="/example/core/form" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/views/example/core/form.jsp"/>
-    </definition>
-    <definition name="/example/core/result" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/views/example/core/result.jsp"/>
+    <!-- Comments -->
+    <definition name="/comments/core/comment_form" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/comments/core/comment_form.jsp"/>
     </definition>
 
 </tiles-definitions>

@@ -3,7 +3,24 @@
 <head>
     <%-- Page title --%>
     <c:set var="titleKey"><tiles:insertAttribute name="title"/></c:set>
-    <title><fmt:message key="${titleKey}"/></title>
+    <fmt:message key="${titleKey}" var="titleVar"/>
+    <c:choose>
+        <c:when test="${titleVar=='This is a project!'}">
+            <title>${project.name}</title>
+        </c:when>
+        <c:otherwise>
+            <title>${titleVar}</title>
+        </c:otherwise>
+    </c:choose>
+
+
+    <%-- Facebook meta characters--%>
+    <meta property="og:url"           content="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}" />
+    <meta property="og:type"          content="projet" />
+    <meta property="og:title"         content="${project.name}" />
+    <meta name="description"          content="${project.description}" />
+    <meta name="og:description"       content="${project.description}" />
+    <meta property="og:image"         content="${project.imagesLinks[0]}" />
 
     <%-- Bootstrap CSS --%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -30,11 +47,18 @@
             integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
             crossorigin="anonymous"></script>
 
-    <%-- Investissement javascript --%>
-    <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
-    <script src="${investSliderJs}"></script>
-    <c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>
-    <script src="${investSliderPersoJs}"></script>
+    <%-- SDK Facebook --%>
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.7";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 </head>
 <body>
 <%-- Header --%>

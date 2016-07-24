@@ -1,15 +1,15 @@
 package fr.epita.sigl.mepa.front.controller.investment;
 
 
-import com.sun.mail.smtp.SMTPTransport;
 import fr.epita.sigl.mepa.core.domain.Investment;
-import fr.epita.sigl.mepa.core.domain.User;
+import fr.epita.sigl.mepa.core.domain.Project;
+import fr.epita.sigl.mepa.core.domain.AppUser;
+import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
-import fr.epita.sigl.mepa.core.service.UserService;
-import fr.epita.sigl.mepa.core.utils.Mail;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,28 +17,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Properties;
+
+import static fr.epita.sigl.mepa.front.utilities.Mail.sendMail;
 
 
 @Controller
@@ -49,28 +40,37 @@ public class InvestController {
     @Autowired
     private InvestmentService investmentService;
     @Autowired
-    private UserService userService;
+    private AppUserService appUserService;
     @Autowired
     private ProjectService projectService;
 
-    static private Properties mailServerProperties;
-    static private Session getMailSession;
-    static private MimeMessage generateMailMessage;
 
-    @RequestMapping(value = "/invest", method = RequestMethod.GET)
-    public String invest(ModelMap model, HttpSession session) {
+    private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(listinvestors, totalAmount);
+        totalAmount = getallinvestors(listinvestors, totalAmount, project);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
         return "/investment/investment";
     }
 
+    @RequestMapping(value = "/invest", method = RequestMethod.GET)
+    public String invest(ModelMap model, HttpSession session, Project project) {
+        return displayList(model, project);
+    }
+
+    @RequestMapping(value = "/invest/comment", method = RequestMethod.GET)
+    public String comment(ModelMap model, HttpSession session, Project project) {
+        float totalAmount = 0.00f;
+        ArrayList<Investor> listinvestors = new ArrayList<Investor>();
+        totalAmount = getallinvestors(listinvestors, totalAmount, project);
+        model.addAttribute("totalDonation", totalAmount);
+        model.addAttribute("isConnected", true);
+        return "/investment/comment";
+    }
 
     @RequestMapping(value = "/invest/investMoney", method = RequestMethod.POST)
-    public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request) {
-        float totalAmount = 0.00f;
+    public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request, Project project) {
         float moneyAmount = 0.00f;
 
         /**
@@ -79,69 +79,67 @@ public class InvestController {
          */
         try {
             moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
-            moneyAmount = (float)((int)(moneyAmount * 100)) / 100;
-        }
-        catch (Exception e) {
+            moneyAmount = (float) ((int) (moneyAmount * 100)) / 100;
+        } catch (Exception e) {
             String errorMessage = "Please enter a numerical number as donation amount.";
-            ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-            totalAmount = getallinvestors(listinvestors, totalAmount);
-            model.addAttribute("investorsList", listinvestors);
-            model.addAttribute("totalDonation", totalAmount);
             model.addAttribute("errorInvest", errorMessage);
-            return "/investment/investment";
+            return displayList(model, project);
         }
 
         if (moneyAmount <= 0) {
             String errorMessage = "Please enter a positive number as donation amount.";
-            ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-            totalAmount = getallinvestors(listinvestors, totalAmount);
-            model.addAttribute("investorsList", listinvestors);
-            model.addAttribute("totalDonation", totalAmount);
             model.addAttribute("errorInvest", errorMessage);
-            return "/investment/investment";
+            return displayList(model, project);
         }
 
         model.addAttribute("amount", moneyAmount);
         Long userId = 2L;
         Long projectId = 1L;
+        boolean anonymous_id = request.getParameter("anonymous_id") != null;
 
-        if (insertNewInvestor(moneyAmount, userId, projectId) == 0) {
-            float total = 0.00f;
-            ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-            total = getallinvestors(listinvestors, total);
-            model.addAttribute("investorsList", listinvestors);
-            model.addAttribute("totalDonation", total);
-            return "/investment/investment";
+        if (insertNewInvestor(moneyAmount, userId, projectId, anonymous_id) != 0L) {
+            String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
+            model.addAttribute("errorInvest", errorMessage);
         }
-        ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(listinvestors, totalAmount);
-        model.addAttribute("investorsList", listinvestors);
-        model.addAttribute("totalDonation", totalAmount);
-        return "/investment/investment";
+        return displayList(model, project);
     }
 
-
-    private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount) {
-        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
-        User tmpUser;
+    private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project) {
+        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(1L/*project.getId()*/));
+        AppUser tmpAppUser;
         String firstname;
         String lastname;
         String email;
+
         for (Investment invest : investments) {
             Date created = invest.getCreated();
             Float amount = invest.getAmount();
             Long userId = invest.getUserId();
-            //tmpUser = userService.getUserById(userId);
+            boolean anonymous = invest.isAnonymous();
+            //tmpAppUser = appUserService.getUserById(userId);
             if (userId == 1L) {
-                firstname = "Simon"; //tmpUser.getFirstName();
-                lastname = "MACE"; //tmpUser.getLastName();
-                email = "simon.mace@epita.fr"; //tmpUser.getLogin();
+                if (!anonymous) {
+                    //TODO vérifier si le nom est rempli, si non mettre le mail
+                    firstname = "Simon"; //tmpAppUser.getFirstName();
+                    lastname = "MACE"; //tmpAppUser.getLastName();
+                } else {
+                    firstname = "Anonyme";
+                    lastname = "Anonyme";
+                }
+                email = "simon.mace@epita.fr"; //tmpAppUser.getLogin();
+
             } else {
-                firstname = "Hugo"; //tmpUser.getFirstName();
-                lastname = "CAPES"; //tmpUser.getLastName();
-                email = "hugo.capes@hotmail.fr"; //tmpUser.getLogin();
+                if (!anonymous) {
+                    //TODO vérifier si le nom est rempli, si non mettre le mail
+                    firstname = "Hugo"; //tmpAppUser.getFirstName();
+                    lastname = "CAPES"; //tmpAppUser.getLastName();
+                } else {
+                    firstname = "Anonyme";
+                    lastname = "Anonyme";
+                }
+                email = "hugo.capes@hotmail.fr"; //tmpAppUser.getLogin();
             }
-            Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created);
+            Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created, anonymous);
             listOfInvestors.add(tmpInvestor);
             totalAmount += amount;
         }
@@ -149,76 +147,109 @@ public class InvestController {
         return totalAmount;
     }
 
-    private int insertNewInvestor (float moneyAmount, Long userId, Long projectId) {
+    private int insertNewInvestor(float moneyAmount, Long userId, Long projectId, boolean anonymous) {
         Investment newInvestment = new Investment();
         newInvestment.setAmount(moneyAmount);
         newInvestment.setProjectId(projectId);
         newInvestment.setUserId(userId);
+        newInvestment.setAnonymous(anonymous);
         Date date = new Date();
         newInvestment.setDate(date);
+
+        /*PostInvest -> Delete Doublon with same userId on a same projectId and update the new invest when a project is done*/
+        Float oldAmount = 0.0f;
+        Project projectSameId = new Project();
+        Date endDate;
+        ArrayList<Project> projects = new ArrayList<Project>(projectService.getAllProjects());
+        for (Project p : projects)
+        {
+            if (p.getId() == projectId) {
+                projectSameId = p;
+                break;
+            }
+        }
+        if (projectSameId.getId() != null && projectSameId.getId() == projectId)
+        {
+            endDate = projectService.getProjectById(projectId).getEndDate();
+            if (endDate.before(date))
+            {
+                ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
+                if (!investments.isEmpty()) {
+                    oldAmount = newInvestment.getAmount();
+                    for (Investment inv : investments) {
+                        if (inv.getUserId() == userId && inv.getProjectId() == projectId) {
+                            oldAmount += inv.getAmount();
+                            newInvestment.setAmount(oldAmount);
+                            investmentService.deleteInvestment(inv);
+                        }
+                    }
+                }
+            }
+        }
+        /*\PostInvest -> Delete Doublon with same userId on a same projectId and update the new invest*/
+
         investmentService.createInvestment(newInvestment);
+
+        // sendmail
+
+        String mail = "simon.mace@epita.fr";
+        // String mail = "hugo.capes@hotmail.fr";
+        String subject = "Thanks for investing in the project alpha";
+        String message = "blop" + moneyAmount + " €";
+
         try {
-            sendMail(userId, moneyAmount);
+            sendMail(mail, subject, message);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        return 1;
+
+        return 0;
     }
 
-    private void sendMail (Long userId, float amountMoney) throws AddressException, MessagingException {
-        //User tmpUser = userService.getUserById(userId);
-        String userMail = "hugo.capes@hotmail.fr";//tmpUser.getLogin();
-        String userFirstName = "Hugo"; //tmpUser.getFirstName();
-        String userLastName = "Capes"; //tmpUser.getLastName();
-
-        mailServerProperties = System.getProperties();
-        mailServerProperties.put("mail.smtp.port", "587");
-        mailServerProperties.put("mail.smtp.auth", "true");
-        mailServerProperties.put("mail.smtp.starttls.enable", "true");
-
-        getMailSession = Session.getDefaultInstance(mailServerProperties, null);
-        generateMailMessage = new MimeMessage(getMailSession);
-        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(userMail));
-        generateMailMessage.setSubject("Greetings " + userFirstName + " " + userLastName);
-        String emailBody = "Thank you for donating " + amountMoney + "€" + "<br><br> Regards, <br>MEPA Team";
-        generateMailMessage.setContent(emailBody, "text/html");
-
-        Transport transport = getMailSession.getTransport("smtp");
-
-        transport.connect("smtp.gmail.com", "mepa.epita@gmail.com", "sigl2017");
-        transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
-        transport.close();
-    }
 
     @RequestMapping(value = "/invest/filltables", method = RequestMethod.GET)
-    public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) {
-        for (int i = 0; i < 300; i++) {
+    public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request, Project project) {
+        for (int i = 0; i < 100; i++) {
+            Investment invest = new Investment();
+            invest.setAmount(10.0f);
+            invest.setProjectId(1L);
+            invest.setUserId(1L);
+            invest.setAnonymous(false);
+            Date date = new Date();
+            invest.setDate(date);
+            investmentService.createInvestment(invest);
+        }
+        for (int i = 0; i < 100; i++) {
             Investment invest = new Investment();
             invest.setAmount(15.0f);
-            invest.setProjectId(1L);
+            invest.setProjectId(2L);
             invest.setUserId(1L);
             Date date = new Date();
             invest.setDate(date);
             investmentService.createInvestment(invest);
         }
-        float totalAmount = 0.00f;
-        ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount= getallinvestors(listinvestors, totalAmount);
-        model.addAttribute("investorsList", listinvestors);
-        model.addAttribute("totalDonation", totalAmount);
-        return "/investment/investment";
+        for (int i = 0; i < 100; i++) {
+            Investment invest = new Investment();
+            invest.setAmount(20.0f);
+            invest.setProjectId(3L);
+            invest.setUserId(1L);
+            Date date = new Date();
+            invest.setDate(date);
+            investmentService.createInvestment(invest);
+        }
+
+        return displayList(model, project);
     }
 
     @RequestMapping(value = {"/invest/download"})
-    public String investDownload(HttpServletResponse response, ModelMap model) {
+    public String investDownload(HttpServletResponse response, ModelMap model, Project project) {
         float totalAmount = 0.00f;
         Date actual = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String date = dateFormat.format(actual);
-        date.replace("-", "_");
         ArrayList<Investor> investors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(investors, totalAmount);
-        if (investors != null && investors.size() > 0) {
+        totalAmount = getallinvestors(investors, totalAmount, project);
+        if (investors.size() > 0) {
             String fileWriter = CsvExporter.writeCsvFile(investors);
             response.setContentType("text/csv");
             response.setHeader("Content-Disposition", "attachment; filename=\"Investors_export_" + date + ".csv\"");
@@ -246,11 +277,11 @@ public class InvestController {
     }
 
     private void printalluser() {
-        ArrayList<User> users = new ArrayList<User>(userService.getAllUsers());
-        for ( User user: users) {
-            System.out.println(user.getFirstName());
-            System.out.println(user.getLastName());
-            System.out.println(user.getId());
+        ArrayList<AppUser> appUsers = new ArrayList<AppUser>(appUserService.getAllUsers());
+        for (AppUser appUser : appUsers) {
+            System.out.println(appUser.getFirstName());
+            System.out.println(appUser.getLastName());
+            System.out.println(appUser.getId());
         }
     }
 }

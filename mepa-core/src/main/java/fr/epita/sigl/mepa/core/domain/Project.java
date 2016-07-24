@@ -10,11 +10,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Project.findById", query = "FROM Project p WHERE p.id=:id"),
-        @NamedQuery(name = "Project.findAll", query = "FROM Project p ORDER BY p.endDate ASC")
+        @NamedQuery(name = "Project.findAll", query = "FROM Project p ORDER BY p.endDate ASC"),
+        @NamedQuery(name = "Project.findAllUnfinished", query = "FROM Project p WHERE p.endDate > CURRENT_DATE ORDER BY p.endDate ASC")
 })
 public class Project {
 
@@ -43,7 +45,8 @@ public class Project {
 
     private ArrayList<String> imagesLinks;
 
-
+    @OneToMany(mappedBy="id")
+    private Set<Reward> rewards;
 
     /*
 * ID
@@ -137,6 +140,14 @@ public class Project {
 
     public void setImagesLinks(ArrayList<String> imagesLinks) {
         this.imagesLinks = imagesLinks;
+    }
+
+    public Set<Reward> getRewards() {
+        return rewards;
+    }
+
+    public void setRewards(Set<Reward> rewards) {
+        this.rewards = rewards;
     }
 
     @Override

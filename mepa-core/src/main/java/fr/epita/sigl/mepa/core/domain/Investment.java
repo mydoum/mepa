@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -40,6 +41,12 @@ public class Investment {
     @NotNull
     private Long projectId;
 
+    @NotNull
+    private boolean anonymous;
+
+    @NotNull
+    private String stringDate;
+
     public Long getUserId (){ return this.userId; }
     public void setUserId (Long user_id){ this.userId = user_id;}
 
@@ -52,6 +59,8 @@ public class Investment {
 
     public void setDate(Date date) {
         this.date = date;
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+        this.stringDate = formater.format(date);
     }
 
     public Long getProjectId (){ return this.projectId; }
@@ -79,6 +88,22 @@ public class Investment {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public boolean isAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(boolean anonymous) {
+        this.anonymous = anonymous;
+    }
+
+    public String getStringDate() {
+        return stringDate;
+    }
+
+    public void setStringDate(String stringDate) {
+        this.stringDate = stringDate;
     }
 
     @Override
