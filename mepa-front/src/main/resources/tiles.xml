@@ -49,7 +49,10 @@
         <put-attribute name="title" value="invest.title"/>
     </definition>
     <definition name="/investment/investment" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/views/investment/investment.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/investment/ulul.jsp"/>
+    </definition>
+    <definition name="/investment/comment" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/investment/ululComment.jsp"/>
     </definition>
 
     <!-- Preinvest -->

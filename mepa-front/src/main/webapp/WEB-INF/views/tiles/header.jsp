@@ -23,7 +23,7 @@
                         <li><a href="${preinvestCoreUrl}">Create Project</a></li>
                         <c:url var="investUrl" value="/invest"/>
                         <li><a href="${investUrl}">Invest</a></li>
-                        <c:url var="commentsUrl" value="/comment"/>
+                        <c:url var="commentsUrl" value="/invest/comment"/>
                         <li><a href="${commentsUrl}">Comments</a></li>
                         <c:url var="signin" value="/authentification/signin"/>
                         <li><a href="${signin}">Connexion</a></li>
