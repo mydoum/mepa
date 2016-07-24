@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
+@Table(name="REWARD")
 @NamedQueries({
         @NamedQuery(name = "Reward.findById", query = "FROM Reward p WHERE p.id=:id"),
         @NamedQuery(name = "Reward.findAll", query = "FROM Reward p")
@@ -22,8 +23,11 @@ public class Reward implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "reward_id", nullable = false)
-    private Long id;
+    private Long reward_id;
 
+/*    @ManyToOne
+    @JoinColumn(name="project_id")
+    private Project project;*/
     @NotNull
     private String name;
 
@@ -56,11 +60,11 @@ public class Reward implements Serializable{
     }
 
     public Long getId() {
-        return id;
+        return reward_id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.reward_id = id;
     }
 
     public String getName() {

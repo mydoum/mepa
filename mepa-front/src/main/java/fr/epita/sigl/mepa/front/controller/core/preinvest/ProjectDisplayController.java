@@ -8,6 +8,7 @@ import fr.epita.sigl.mepa.core.service.CommentsModelService;
 
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +81,8 @@ public class ProjectDisplayController {
     public String projectList(HttpServletRequest request, ModelMap modelMap) {
         List<Project> projects = this.projectService.getAllUnfinishedProjects();
 
-
+        for (Project p: projects)
+            Hibernate.initialize(p.getRewards());
         modelMap.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
         return "/preinvest/projectList"; // The adress of the JSP coded in tiles.xml
     }

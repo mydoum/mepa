@@ -4,8 +4,10 @@ import fr.epita.sigl.mepa.core.dao.ModelDao;
 import fr.epita.sigl.mepa.core.dao.ProjectDao;
 import fr.epita.sigl.mepa.core.domain.Model;
 import fr.epita.sigl.mepa.core.domain.Project;
+import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.core.service.ModelService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +46,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional(readOnly = true)
     public List<Project> getAllProjects() {
+
         return this.projectDao.getAll();
     }
 

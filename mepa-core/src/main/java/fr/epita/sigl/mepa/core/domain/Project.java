@@ -1,28 +1,30 @@
 package fr.epita.sigl.mepa.core.domain;
 
+import fr.epita.sigl.mepa.core.service.RewardService;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.awt.*;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Entity
+@Table(name="PROJECT")
 @NamedQueries({
         @NamedQuery(name = "Project.findById", query = "FROM Project p WHERE p.id=:id"),
         @NamedQuery(name = "Project.findAll", query = "FROM Project p ORDER BY p.endDate ASC"),
         @NamedQuery(name = "Project.findAllUnfinished", query = "FROM Project p WHERE p.endDate > CURRENT_DATE ORDER BY p.endDate ASC")
 })
-public class Project {
+public class Project implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "reward_id", nullable = false)
     private Long id;
 
     @NotNull
@@ -45,7 +47,8 @@ public class Project {
 
     private ArrayList<String> imagesLinks;
 
-    @OneToMany(mappedBy="id")
+    @OneToMany(fetch = FetchType.EAGER) //, mappedBy="project"
+    @JoinColumn(name="project_id")
     private Set<Reward> rewards;
 
     /*
@@ -143,7 +146,15 @@ public class Project {
         return rewards;
     }
 
+    /*@Autowired
+    RewardService rewardService;*/
+    public void addReward(Reward r) {
+        /*rewards.add(r);
+        rewardService.createReward(r);*/
+    }
     public void setRewards(Set<Reward> rewards) {
+
+
         this.rewards = rewards;
     }
 
