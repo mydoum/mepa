@@ -158,6 +158,10 @@ public class Project implements Serializable {
         this.rewards = rewards;
     }*/
 
+    public Boolean isFinished() {
+        return this.endDate.after(new Date());
+    }
+
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
