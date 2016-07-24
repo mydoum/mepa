@@ -35,8 +35,6 @@ public class InsertDummyController {
 
     @Autowired
     private ProjectService projectService;
-    @Autowired
-    private RewardService rewardService;
 
     @Autowired
     private InvestmentService investmentService;
