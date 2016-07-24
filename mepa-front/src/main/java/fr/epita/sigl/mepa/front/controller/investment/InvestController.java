@@ -120,13 +120,10 @@ public class InvestController {
             Long userId = invest.getUserId();
             boolean anonymous = invest.isAnonymous();
             tmpUser = appUserService.getUserById(userId);
-            if (!anonymous) {
-                firstname = tmpUser.getFirstName();
-                lastname = tmpUser.getLastName();
-            } else {
-                firstname = "Anonyme";
-                lastname = "Anonyme";
-            }
+            firstname = tmpUser.getFirstName();
+            lastname = tmpUser.getLastName();
+            if (!downloadCsv && anonymous)
+                firstname = tmpUser.getLogin();
             email = tmpUser.getLogin();
             Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created, anonymous);
             listOfInvestors.add(tmpInvestor);
