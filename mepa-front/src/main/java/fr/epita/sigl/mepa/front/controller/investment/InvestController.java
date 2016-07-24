@@ -4,10 +4,11 @@ package fr.epita.sigl.mepa.front.controller.investment;
 import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.domain.AppUser;
+import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.RewardService;
-import fr.epita.sigl.mepa.core.service.UserService;
+import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
 
@@ -108,7 +109,7 @@ public class InvestController {
 
     private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(1L/*project.getId()*/));
-        AppUser tmpAppUser;
+        AppUser tmpUser;
         String firstname;
         String lastname;
         String email;
@@ -118,7 +119,7 @@ public class InvestController {
             Float amount = invest.getAmount();
             Long userId = invest.getUserId();
             boolean anonymous = invest.isAnonymous();
-            tmpUser = userService.getUserById(userId);
+            tmpUser = appUserService.getUserById(userId);
             if (!anonymous) {
                 firstname = tmpUser.getFirstName();
                 lastname = tmpUser.getLastName();
