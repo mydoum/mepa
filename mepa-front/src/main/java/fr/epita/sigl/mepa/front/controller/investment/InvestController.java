@@ -109,24 +109,39 @@ public class InvestController {
 
     private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(1L/*project.getId()*/));
+        ArrayList<String> listmailinvestor = new ArrayList<String>();
         AppUser tmpUser;
         String firstname;
         String lastname;
         String email;
+        boolean investorIsPresent = false;
 
         for (Investment invest : investments) {
+            investorIsPresent = true;
             Date created = invest.getCreated();
             Float amount = invest.getAmount();
             Long userId = invest.getUserId();
             boolean anonymous = invest.isAnonymous();
             tmpUser = appUserService.getUserById(userId);
-            firstname = tmpUser.getFirstName();
-            lastname = tmpUser.getLastName();
-            if (!downloadCsv && anonymous)
-                firstname = tmpUser.getLogin();
+            if (!anonymous) {
+                firstname = tmpUser.getFirstName();
+                lastname = tmpUser.getLastName();
+                if (listmailinvestor.indexOf(tmpUser.getLogin()) == -1) {
+                    listmailinvestor.add(tmpUser.getLogin());
+                    investorIsPresent = false;
+                }
+            } else {
+                firstname = "Anonyme";
+                lastname = "Anonyme";
+                listmailinvestor.add("anonyme");
+            }
             email = tmpUser.getLogin();
             Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created, anonymous);
-            listOfInvestors.add(tmpInvestor);
+            /*if (project.isfinished && investorIsPresent) {
+                insertinto(listOfInvestors, tmpInvestor);
+            } else {*/
+                listOfInvestors.add(tmpInvestor);
+            //}
             totalAmount += amount;
         }
         Collections.sort(listOfInvestors);
