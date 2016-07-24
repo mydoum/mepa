@@ -135,9 +135,6 @@
             <tr/>
             <div class="col-md-12 investFormInside">
                 <div class="col-md-8"><h2>Utilisateurs</h2></div>
-                <div class="col-md-3">
-                        <a href="/authentification/filltables" style="text-align: center;"><span class="btn btn-primary">Ajouter Utilisateurs</span></a>
-                </div>
             </div>
             <br/>
             <table class="col-md-12 table table-striped">
