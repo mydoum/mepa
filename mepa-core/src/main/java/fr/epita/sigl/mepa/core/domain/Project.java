@@ -62,6 +62,9 @@ public class Project {
         this.name = "Nom du projet";
     }
 
+    public Project(int nb) {
+    }
+
     public Project(Long user_id, String projectName, Date endDate) {
         this.user_id = user_id;
         this.startDate = new Date();

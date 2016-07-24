@@ -38,7 +38,7 @@ public class ProjectCreateController {
     @RequestMapping(value = {"/projectCreate"}, method = RequestMethod.GET) // The adress to call the function
     public String projectCreate(ModelMap modelMap) {
         /* Code your logic here */
-        Project p = new Project();
+        Project p = new Project(1);
         modelMap.addAttribute(NEWPROJECT, p);
         return "/preinvest/projectCreate"; // The adress of the JSP coded in tiles.xml
     }
