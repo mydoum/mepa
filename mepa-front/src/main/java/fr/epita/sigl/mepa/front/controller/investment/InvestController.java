@@ -65,7 +65,7 @@ public class InvestController {
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
         totalAmount = getallinvestors(listinvestors, totalAmount, project);
         model.addAttribute("totalDonation", totalAmount);
-        model.addAttribute("isConnected", true);
+        model.addAttribute("isConnected", false);
         return "/investment/comment";
     }
 
