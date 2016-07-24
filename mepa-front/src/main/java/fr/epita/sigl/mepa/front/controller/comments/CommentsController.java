@@ -36,19 +36,20 @@ public class CommentsController {
     @RequestMapping(value = {"/", "/{projectId}"}, method = {RequestMethod.POST})
     public String processForm(HttpServletRequest request, ModelMap modelMap, HttpServletResponse response, @PathVariable int projectId) throws IOException {
 
-        CommentsModel newCommentsModel = new CommentsModel();
         String text = request.getParameter("userText");
-        newCommentsModel.setData(text);
-        newCommentsModel.setProjectId(projectId);
+        if (text != "") {
+            CommentsModel newCommentsModel = new CommentsModel();
+            newCommentsModel.setData(text);
+            newCommentsModel.setProjectId(projectId);
+            this.commentsModelService.createCommentsModel(newCommentsModel);
 
         /*Helps to sort the tickets */
-        newCommentsModel.setArriving(ticket);
-        ticket++;
+            newCommentsModel.setArriving(ticket);
+            ticket++;
 
-        this.commentsModelService.createCommentsModel(newCommentsModel);
-        
+        }
+
         response.sendRedirect("/core/preinvest/projectDisplay/" + Integer.toString(projectId));
-        System.out.println("AFTER TEH REDIRECTION");
         return "/preinvest/projectDisplay";
     }
 }
