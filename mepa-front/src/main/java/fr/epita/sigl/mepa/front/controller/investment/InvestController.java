@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,11 +45,10 @@ public class InvestController {
     @Autowired
     private ProjectService projectService;
 
-
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(listinvestors, totalAmount, project);
+        totalAmount = getallinvestors(listinvestors, totalAmount, project, false);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
         return "/investment/investment";
@@ -63,7 +63,7 @@ public class InvestController {
     public String comment(ModelMap model, HttpSession session, Project project) {
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(listinvestors, totalAmount, project);
+        totalAmount = getallinvestors(listinvestors, totalAmount, project, false);
         model.addAttribute("totalDonation", totalAmount);
         model.addAttribute("isConnected", false);
         return "/investment/comment";
@@ -104,7 +104,7 @@ public class InvestController {
         return displayList(model, project);
     }
 
-    private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project) {
+    private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(1L/*project.getId()*/));
         AppUser tmpAppUser;
         String firstname;
@@ -118,26 +118,17 @@ public class InvestController {
             boolean anonymous = invest.isAnonymous();
             //tmpAppUser = appUserService.getUserById(userId);
             if (userId == 1L) {
-                if (!anonymous) {
-                    //TODO vérifier si le nom est rempli, si non mettre le mail
-                    firstname = "Simon"; //tmpAppUser.getFirstName();
-                    lastname = "MACE"; //tmpAppUser.getLastName();
-                } else {
-                    firstname = "Anonyme";
-                    lastname = "Anonyme";
-                }
+                firstname = "Simon"; //tmpAppUser.getFirstName();
                 email = "simon.mace@epita.fr"; //tmpAppUser.getLogin();
-
+                lastname = "MACE"; //tmpAppUser.getLastName();
+                if (!downloadCsv && anonymous)
+                    firstname = email;
             } else {
-                if (!anonymous) {
-                    //TODO vérifier si le nom est rempli, si non mettre le mail
-                    firstname = "Hugo"; //tmpAppUser.getFirstName();
-                    lastname = "CAPES"; //tmpAppUser.getLastName();
-                } else {
-                    firstname = "Anonyme";
-                    lastname = "Anonyme";
-                }
+                firstname = "Hugo"; //tmpAppUser.getFirstName();
                 email = "hugo.capes@hotmail.fr"; //tmpAppUser.getLogin();
+                lastname = "Capes"; //tmpAppUser.getLastName();
+                if (!downloadCsv && anonymous)
+                    firstname = email;
             }
             Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created, anonymous);
             listOfInvestors.add(tmpInvestor);
@@ -161,18 +152,15 @@ public class InvestController {
         Project projectSameId = new Project();
         Date endDate;
         ArrayList<Project> projects = new ArrayList<Project>(projectService.getAllProjects());
-        for (Project p : projects)
-        {
+        for (Project p : projects) {
             if (p.getId() == projectId) {
                 projectSameId = p;
                 break;
             }
         }
-        if (projectSameId.getId() != null && projectSameId.getId() == projectId)
-        {
+        if (projectSameId.getId() != null && projectSameId.getId() == projectId) {
             endDate = projectService.getProjectById(projectId).getEndDate();
-            if (endDate.before(date))
-            {
+            if (endDate.before(date)) {
                 ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
                 if (!investments.isEmpty()) {
                     oldAmount = newInvestment.getAmount();
@@ -205,7 +193,6 @@ public class InvestController {
 
         return 0;
     }
-
 
     @RequestMapping(value = "/invest/filltables", method = RequestMethod.GET)
     public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request, Project project) {
@@ -248,7 +235,7 @@ public class InvestController {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String date = dateFormat.format(actual);
         ArrayList<Investor> investors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(investors, totalAmount, project);
+        totalAmount = getallinvestors(investors, totalAmount, project, true);
         if (investors.size() > 0) {
             String fileWriter = CsvExporter.writeCsvFile(investors);
             response.setContentType("text/csv");
