@@ -156,14 +156,11 @@ public class AuthController {
     }
 
     @RequestMapping(value = {"/signin"}, method = {RequestMethod.POST})
-    public String signIn(HttpServletRequest request, ModelMap modelMap,
-                         @Valid LoginUserFormBean loginUserFormBean, BindingResult result) {
-        if (result.hasErrors()) {
-            // Error(s) in form bean validation
-            return "/example/core/form";
-        }
+    public String signIn(HttpServletRequest request, ModelMap modelMap) {
+
         String login = request.getParameter("email");
         String pwd = request.getParameter("password");
+
         Boolean isCo = false;
         AppUser userCo = this.appUserService.getUserByLogin(login);
         if (userCo != null) {
@@ -172,13 +169,16 @@ public class AuthController {
                 request.getSession().setAttribute("userCo", newAppUser);
                 isCo = true;
                 modelMap.addAttribute("isCo", isCo);
-                return "/home";
+                return "/home/home";
             }
-        } else {
-            modelMap.addAttribute("isCo", isCo);
-            return "authentification/signin";
         }
-        return "authentification/signin";
+        else {
+            modelMap.addAttribute("isCo", isCo);
+            System.out.println("Identifiant / mdp incorrect");
+            return "/authentification/signin";
+        }
+
+        return "/authentification/signin";
     }
 
 }
