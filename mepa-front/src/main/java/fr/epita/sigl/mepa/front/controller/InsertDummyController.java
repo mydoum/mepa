@@ -35,8 +35,6 @@ public class InsertDummyController {
 
     @Autowired
     private ProjectService projectService;
-    @Autowired
-    private RewardService rewardService;
 
     @Autowired
     private InvestmentService investmentService;
@@ -78,7 +76,6 @@ public class InsertDummyController {
         /* PREINVEST*/
 
         for (int j = 0; j < 10; ++j) {
-            System.out.println("tiutirt");
             Reward r = new Reward();
             r.setName("Coucou");
             r.setDescription("This is a description");
@@ -152,17 +149,15 @@ public class InsertDummyController {
         }
 
 
-        printAllRewards();
         /* POSTINVEST*/
 
         return "/insertDummy"; // The adress of the JSP coded in tiles.xml
     }
 
     private void printAllRewards() {
-        System.out.println("tiutirt");
         ArrayList<Reward> rewards = new ArrayList<Reward>(rewardService.getAllRewards());
         for (Reward reward : rewards) {
-            System.out.println("toto");
+            System.out.println("Reward");
             System.out.println(reward.getId());
             System.out.println(reward.getCostStart());
             System.out.println(reward.getName());
