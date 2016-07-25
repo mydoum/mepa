@@ -9,11 +9,13 @@ import java.util.Date;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "User.findById", query = "FROM User o WHERE o.id=:id"),
-        @NamedQuery(name = "User.findAll", query = "FROM User o"),
-        @NamedQuery(name  = "User.findByFirstName", query = "FROM User o WHERE o.firstName=:firstName"),
-        @NamedQuery(name  = "User.findByLastName", query = "FROM User o WHERE o.lastName=:lastName")})
-public class User {
+        @NamedQuery(name = "AppUser.findById", query = "FROM AppUser o WHERE o.id=:id"),
+        @NamedQuery(name = "AppUser.findAll", query = "FROM AppUser o"),
+        @NamedQuery(name = "AppUser.findByFirstName", query = "FROM AppUser o WHERE o.firstName=:firstName"),
+        @NamedQuery(name = "AppUser.findByLastName", query = "FROM AppUser o WHERE o.lastName=:lastName"),
+        @NamedQuery(name = "AppUser.findByLogin", query = "FROM AppUser o WHERE o.login=:login")
+})
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,69 +38,52 @@ public class User {
     @Column(name = "birthDate", nullable = true)
     private Date birthDate;
 
-    public String getLogin() {
-        return login;
+    public Long getId() {
+        return id;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public String getLogin() {
+        return login;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String surName) {
-        this.firstName = surName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public Date getBirthDate() {
         return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-//    @NotNull
-    private String data;
-
-    public Long getId() {
-        return this.id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * @return the data
-     */
-    public String getData() {
-        return this.data;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    /**
-     * @param data the data to set
-     */
-    public void setData(String data) {
-        this.data = data;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     @Override

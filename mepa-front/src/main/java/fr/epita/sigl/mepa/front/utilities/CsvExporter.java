@@ -2,6 +2,7 @@ package fr.epita.sigl.mepa.front.utilities;
 
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,7 @@ public class CsvExporter {
     private static final String NEW_LINE_SEPARATOR = "\n";
 
     //CSV file header
-    private static final String FILE_HEADER = "Nom;Prénom;Mail;Montant";
+    private static final String FILE_HEADER = "Nom;Prénom;Montant;Date;Email";
 
     public static String writeCsvFile(ArrayList<Investor> investors) {
 
@@ -27,13 +28,16 @@ public class CsvExporter {
         fileWriter += NEW_LINE_SEPARATOR;
 
         for (Investor investor : investors) {
-            fileWriter += String.valueOf(investor.getLastname());
+            fileWriter += investor.getLastname();
             fileWriter += COMMA_DELIMITER;
             fileWriter += investor.getFirstname();
             fileWriter += COMMA_DELIMITER;
-            fileWriter += investor.getEmail();
-            fileWriter += COMMA_DELIMITER;
             fileWriter += String.valueOf(investor.getMoneyAmount());
+            fileWriter += COMMA_DELIMITER;
+            SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+            fileWriter += formater.format(investor.getDateOfInvestment());
+            fileWriter += COMMA_DELIMITER;
+            fileWriter += investor.getEmail();
             fileWriter += NEW_LINE_SEPARATOR;
         }
 

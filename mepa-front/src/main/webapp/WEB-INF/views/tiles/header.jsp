@@ -16,17 +16,19 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <c:url var="homeUrl" value="/home"/>
-                        <li><a href="${homeUrl}">Home page</a></li>
-                        <c:url var="coreExampleUrl" value="/example/core/"/>
-                        <li><a href="${coreExampleUrl}">Core module example</a></li>
+                        <li><a href="${homeUrl}">Accueil</a></li>
                         <c:url var="signup" value="/authentification/auth"/>
                         <li><a href="${signup}">Inscription</a></li>
-                        <c:url var="signin" value="/authentification/signin"/>
-                        <li><a href="${signin}">Connexion</a></li>
                         <c:url var="preinvestCoreUrl" value="/core/preinvest/projectCreate"/>
-                        <li><a href="${preinvestCoreUrl}">Create Project</a></li>
+                        <li><a href="${preinvestCoreUrl}">Créer un projet</a></li>
                         <c:url var="investUrl" value="/invest"/>
-                        <li><a href="${investUrl}">Invest</a></li>
+                        <li><a href="${investUrl}">Investissements</a></li>
+                        <c:url var="signin" value="/authentification/signin"/>
+                        <li><a href="${signin}">Se connecter</a></li>
+                        <c:if test="${isCo == true}">
+                            <c:url var="deconnexion" value="/authentification/deconnexion"/>
+                            <li><a href="${deconnexion}">Déconnexion</a></li>
+                        </c:if>
                     </ul>
                 </div>
             </div>

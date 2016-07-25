@@ -33,7 +33,7 @@ public class CoreExampleController {
     @Autowired
     private ModelService modelService;
 
-    @RequestMapping(value = {"/", "/form"})
+    @RequestMapping(value = {"/form"})
     public String showForm(HttpServletRequest request, ModelMap modelMap) {
 
         this.createRandomModel();

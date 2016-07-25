@@ -187,7 +187,7 @@
                         <h4>Temps restant : ${projectLeftTime} jour(s)</h4>
                     </div>
                 </div>
-                <c:url var="investMoney" value="/invest/${project.id}/investMoney"/>
+                <c:url var="investMoney" value="/invest/investMoney"/>
                 <form:form role="form" action="${investMoney}" method="post" modelAttribute="User">
                     <div id="keypress"
                          class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12"></div>
