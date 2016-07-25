@@ -25,21 +25,6 @@
                     <div id="legend">
                         <legend class="">Inscription</legend>
                     </div>
-                    <div class="control-group">
-                        <label class="control-label" for="lastname">Nom</label>
-                        <div class="controls">
-                            <input id="lastname" name="lastname" placeholder="" class="form-control input-lg"
-                                   type="text">
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label" for="firstname">Prénom</label>
-                        <div class="controls">
-                            <input id="firstname" name="firstname" placeholder="" class="form-control input-lg"
-                                   type="text">
-                        </div>
-                    </div>
 
                     <div class="control-group">
                         <label class="control-label" for="email">Adresse e-mail</label>
@@ -65,6 +50,24 @@
                     </div>
 
                     <div class="control-group">
+                        <label class="control-label" for="lastname">Nom</label>
+                        <div class="controls">
+                            <input id="lastname" name="lastname" placeholder="" class="form-control input-lg"
+                                   type="text">
+                        </div>
+                        <i class="help-block">(Facultatif)</i>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">Prénom</label>
+                        <div class="controls">
+                            <input id="firstname" name="firstname" placeholder="" class="form-control input-lg"
+                                   type="text">
+                        </div>
+                        <i class="help-block">(Facultatif)</i>
+                    </div>
+
+                    <div class="control-group">
                         <label class="control-label">Date de naissance</label>
                         <div class="input-group input-append date" id="datePicker">
                             <input type="text" class="form-control input-lg" name="date"/>
@@ -72,6 +75,7 @@
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                         </div>
+                        <i class="help-block">(Facultatif)</i>
                         <div class="controls">
 
                         </div>

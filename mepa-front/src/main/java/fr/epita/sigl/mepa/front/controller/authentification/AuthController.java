@@ -20,8 +20,10 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -216,7 +218,6 @@ public class AuthController {
         pwds.add("password");
 
 
-        System.out.println("l 1 = " + firstNames.get(0) + " " + lastNames.get(0)+ " " + logins.get(0));
         for (int i = 0; i < firstNames.size(); ++i) {
             newAppUser.setBirthDate(new Date());
             newAppUser.setFirstName(firstNames.get(i));
@@ -225,6 +226,7 @@ public class AuthController {
             newAppUser.setPassword(pwds.get(i));
             this.appUserService.createUser(newAppUser);
         }
+
         return "/authentification/signup";
     }
 }
