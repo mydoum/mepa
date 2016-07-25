@@ -64,11 +64,9 @@ public class ProjectCreateController {
     public String processCreation(@ModelAttribute(NEWPROJECT) Project newProject, ModelMap model, HttpServletRequest request)
     {
         //model.addAttribute("Retour", newProject.getName() + newProject.getEndDate() + newProject.getDescription());
-
-        AppUser connectedUser = (AppUser) request.getSession().getAttribute("userCo");
-        newProject.setUser_id(connectedUser.getId());
-
+==== BASE ====
         projectService.createProject(newProject);
+
         List<Project> projects = this.projectService.getAllProjects();
         if (newProject.getEndDate().before(newProject.getStartDate()))
         {
