@@ -110,7 +110,7 @@ public class InvestController {
         return "/projectDisplay";
     }
 
-    private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
+    public float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(1L/*project.getId()*/));
         ArrayList<String> listmailinvestor = new ArrayList<String>();
         AppUser tmpUser;
