@@ -84,8 +84,10 @@ public class InvestController {
          * Check is the user is signed-in
          */
         String errorCo = "Veuillez vous identifier pour investir dans un projet";
-        if ((boolean) request.getSession().getAttribute("isCo")==false)
+        if ((boolean) request.getSession().getAttribute("isCo")==false) {
+            model.addAttribute("messageRedirect", errorCo);
             return "/authentification/signin";
+        }
 
 
         /**
