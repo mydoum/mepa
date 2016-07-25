@@ -59,7 +59,7 @@ public class Project implements Serializable {
 
     private boolean isFacebookAllowed;
 
-/*
+    /*
 * ID
 * Name
 * UserID
