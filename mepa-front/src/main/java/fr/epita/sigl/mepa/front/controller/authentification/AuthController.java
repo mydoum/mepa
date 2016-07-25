@@ -204,10 +204,10 @@ public class AuthController {
     public String addFakeUser() {
         AppUser newAppUser = new AppUser();
 
-        ArrayList<String> firstNames = new ArrayList<String>();
-        ArrayList<String> lastNames = new ArrayList<String>();
-        ArrayList<String> logins = new ArrayList<String>();
-        ArrayList<String> pwds = new ArrayList<String>();
+        ArrayList<String> firstNames = new ArrayList<>();
+        ArrayList<String> lastNames = new ArrayList<>();
+        ArrayList<String> logins = new ArrayList<>();
+        ArrayList<String> pwds = new ArrayList<>();
         firstNames.add("Patrick");
         firstNames.add("test");
         firstNames.add("toto");
