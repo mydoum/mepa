@@ -122,7 +122,7 @@ public class InvestController {
     }
 
     private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
-        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(1L/*project.getId()*/));
+        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(project.getId()));
         ArrayList<String> listmailinvestor = new ArrayList<String>();
         AppUser tmpUser;
         String firstname;
@@ -157,6 +157,7 @@ public class InvestController {
                 listOfInvestors.add(tmpInvestor);
             //}
             totalAmount += amount;
+            System.out.println(totalAmount);
         }
         Collections.sort(listOfInvestors);
         return totalAmount;
@@ -172,17 +173,20 @@ public class InvestController {
         newInvestment.setDate(date);
 
         investmentService.createInvestment(newInvestment);
+        Project tmpProject = projectService.getProjectById(projectId);
 
         //String mail = "simon.mace@epita.fr";
         String mail = "hugo.capes@hotmail.fr";
-        String subject = "Merci pour votre contribution au projet alpha";
-        String message = "Votre contribution s'élève à" + moneyAmount + " euros";
+        String subject = "Merci pour votre contribution au projet " + tmpProject.getName();
+        String message = "Votre contribution est de" + moneyAmount + " euros";
 
         try {
             sendMail(mail, subject, message);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+
+        investmentService.dumpAllInvestmentsByProject(projectId);
         return 0;
     }
 
