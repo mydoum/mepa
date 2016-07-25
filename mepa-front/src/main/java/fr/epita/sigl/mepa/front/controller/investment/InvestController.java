@@ -216,10 +216,25 @@ public class InvestController {
 
     @RequestMapping(value = {"/invest/{projectId}/rewardDisplay/{rewardId}"}, method = RequestMethod.GET) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap model, @PathVariable long projectId, @PathVariable long rewardId) {
-        /* Code your logic here */
+
+        /**
+         * Check is the user is signed-in
+         */
+        if ((boolean) request.getSession().getAttribute("isCo") == false) {
+            String errorCo = "Veuillez vous identifier pour investir dans un projet";
+            model.addAttribute("messageRedirect", errorCo);
+            return "/authentification/signin";
+        }
+
+        /**
+         * We check that the selected reward exist
+         * If it does not, we print an error message on the project page
+         */
         Reward reward = rewardService.getRewardById(rewardId);
         if (reward == null) {
-            return "/home/home";
+            String errorMessage = "Votre donation n'a pu être prise en compte. La contrepartie sélectionnée n'existe pas. Veuillez rééssayer ultérieurement.";
+            model.addAttribute("errorInvest", errorMessage);
+            return projectDisplayController.projectDisplay(request, model, projectId);
         }
         long rewardPrice = reward.getCostStart();
         String description = reward.getDescription();
@@ -231,23 +246,13 @@ public class InvestController {
         model.addAttribute("projectId", projectId);
         model.addAttribute("rewardId", rewardId);
 
-        String return_string = "/invest/rewardpay";
-        return return_string; // The adress of the JSP coded in tiles.xml
+        return "/invest/rewardpay"; // The adress of the JSP coded in tiles.xml
     }
 
     @RequestMapping(value = "/invest/{projectId}/rewardpay/{rewardId}/invest", method = RequestMethod.POST)
     public String payReward(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId, @PathVariable long rewardId) {
         investMoney(model, session, request, projectId);
         return "/preinvest/projectDisplay";
-    }
-
-    private void printelements(ArrayList<Investor> listinvestors) {
-        for (Investor investor : listinvestors) {
-            System.out.println(investor.getFirstname());
-            System.out.println(investor.getLastname());
-            System.out.println(investor.getMoneyAmount());
-            System.out.println(investor.getDateOfInvestment());
-        }
     }
 
     private void printalluser() {
