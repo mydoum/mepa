@@ -17,7 +17,7 @@
                     <ul class="nav navbar-nav">
                         <c:url var="homeUrl" value="/home"/>
                         <li><a href="${homeUrl}">Accueil</a></li>
-                        <c:url var="signup" value="/authentification/auth"/>
+                        <c:url var="signup" value="/authentification/signup"/>
                         <li><a href="${preinvestCoreUrl}">Créer un projet</a></li>
                         <c:url var="investUrl" value="/invest"/>
                         <li><a href="${investUrl}">Investissements</a></li>
