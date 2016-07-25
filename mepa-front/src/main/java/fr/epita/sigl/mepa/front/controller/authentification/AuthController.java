@@ -3,7 +3,7 @@ package fr.epita.sigl.mepa.front.controller.authentification;
 import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.front.user.form.AddCustomUserFormBean;
-import fr.epita.sigl.mepa.front.user.form.LoginUserFormBean;
+import fr.epita.sigl.mepa.front.utilities.Mail;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,15 +20,14 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+
+import static fr.epita.sigl.mepa.front.utilities.Mail.sendMail;
 
 
 @RequestMapping("/authentification")
@@ -91,46 +90,24 @@ public class AuthController {
     public String resendPwd(HttpServletRequest request, ModelMap modelMap) throws ParseException {
         Boolean isSent = false;
         String login = request.getParameter("email");
-        AppUser recipient = this.appUserService.getUserByLogin(login);
-        System.out.println(recipient.getFirstName());
-        if (recipient != null && !recipient.getFirstName().equalsIgnoreCase("")) {
+        AppUser recipient = new AppUser();
+        if (this.appUserService.getUserByLogin(login) != null)
+            recipient = this.appUserService.getUserByLogin(login);
+        if (recipient != null) {
             try {
-                sendMail(recipient);
-                isSent = true;
+                String obj = "Récupération de votre mot de passe";
+                String text = "This information is strictly private." + "<br> Here is your password: \""
+                        + recipient.getPassword() + "\". <br><br> Regards, <br>MEPA Team";
+                isSent = sendMail(recipient.getLogin(), obj, text);
                 modelMap.addAttribute("isSent", isSent);
                 modelMap.addAttribute("email", recipient.getLogin());
-            } catch (MessagingException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                modelMap.addAttribute("isSent", isSent);
             }
         }
         else
             modelMap.addAttribute("isSent", isSent);
         return "/authentification/resendPwd";
-    }
-
-    private void sendMail(AppUser recipient) throws AddressException, MessagingException {
-        //AppUser tmpUser = appUserService.getUserById(userId);
-        String userMail = recipient.getLogin();//tmpUser.getLogin();
-        String userFirstName = recipient.getFirstName(); //tmpUser.getFirstName();
-        String userLastName = recipient.getLastName(); //tmpUser.getLastName();
-
-        mailServerProperties = System.getProperties();
-        mailServerProperties.put("mail.smtp.port", "587");
-        mailServerProperties.put("mail.smtp.auth", "true");
-        mailServerProperties.put("mail.smtp.starttls.enable", "true");
-
-        getMailSession = Session.getDefaultInstance(mailServerProperties, null);
-        generateMailMessage = new MimeMessage(getMailSession);
-        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(userMail));
-        generateMailMessage.setSubject("Merci beaucoup " + userFirstName + " " + userLastName);
-        String emailBody = "Merci pour votre don de: Lolilol" + "<br><br> Cordialement, <br>La Team MEPA";
-        generateMailMessage.setContent(emailBody, "text/html");
-
-        Transport transport = getMailSession.getTransport("smtp");
-
-        transport.connect("smtp.gmail.com", "mepa.epita@gmail.com", "sigl2017");
-        transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
-        transport.close();
     }
 
     @RequestMapping(value = {"/signin"}, method = {RequestMethod.GET})
