@@ -77,6 +77,7 @@ public class ProjectDisplayController {
 
         List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();
 
+
         /*Sort of the comments by the arriving tickets*/
         List<CommentsModel>new_c_models = new ArrayList<CommentsModel>();
         ListIterator<CommentsModel> i= list.listIterator(list.size());
