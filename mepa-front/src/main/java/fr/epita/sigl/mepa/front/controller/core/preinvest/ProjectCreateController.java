@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +37,9 @@ public class ProjectCreateController {
     @Autowired
     private ProjectService projectService;
 
+    @Autowired
+    private ProjectDisplayController projectDisplayController;
+
     @RequestMapping(value = {"/projectCreate"}, method = RequestMethod.GET) // The adress to call the function
     public String projectCreate(ModelMap modelMap) {
         /* Code your logic here */
@@ -44,15 +49,25 @@ public class ProjectCreateController {
     }
 
     @RequestMapping(value = {"/processCreation"}, method = RequestMethod.POST) // The adress to call the function
-    public String processCreation(@ModelAttribute(NEWPROJECT) Project newProject, ModelMap model)
+    public String processCreation(@ModelAttribute(NEWPROJECT) Project newProject, ModelMap model, HttpServletRequest request)
     {
         //model.addAttribute("Retour", newProject.getName() + newProject.getEndDate() + newProject.getDescription());
         projectService.createProject(newProject);
-
         List<Project> projects = this.projectService.getAllProjects();
-
-        model.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
-        return "/preinvest/projectList";
+        if (newProject.getEndDate().before(newProject.getStartDate()))
+        {
+            projectService.deleteProject(newProject);
+            return this.projectCreate(model);
+        }
+        for (int i = 0; i < projects.size() - 1; i++)
+        {
+            if (projects.get(i).getName().equals(newProject.getName()))
+            {
+                projectService.deleteProject(newProject);
+                return this.projectCreate(model);
+            }
+        }
+        return projectDisplayController.projectList(model);
     }
 
 
