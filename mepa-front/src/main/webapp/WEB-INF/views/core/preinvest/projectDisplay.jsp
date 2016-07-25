@@ -71,8 +71,9 @@
 
                     </div>
                 </div>
-                <!-- www.webtutoriaux.com Compteur de visiteurs -->
-                <script type='text/javascript' src='http://www.webtutoriaux.com/services/compteur-visiteurs/index.php?client=154860'></script>
+                <!--  Compteur de visiteurs -->
+                [html]<div style="text-align:center;"><script type="text/javascript" src="http://services.supportduweb.com/cpt_visiteurs/8134-12-9.js"></script></div>[/html]
+
                 <!-- End Compteur de visiteurs -->
                 <%-- Part of the page for Social buttons --%>
                 <div class="col-md-12">
