@@ -29,7 +29,14 @@
                         </c:if>
                         <c:if test="${isCo == true}">
                             <c:url var="editUser" value="/authentification/editUser"/>
-                            <li><a href="${editUser}">${userCo.firstName} ${userCo.lastName}</a></li>
+                            <c:choose>
+                                <c:when test='${not empty userCo.firstName}'>
+                                    <li><a href="${editUser}">${userCo.firstName} ${userCo.lastName}</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="${editUser}">${userCo.login}</a></li>
+                                </c:otherwise>
+                            </c:choose>
                             <c:url var="deconnexion" value="/authentification/deconnexion"/>
                             <li><a href="${deconnexion}">Déconnexion</a></li>
                         </c:if>
