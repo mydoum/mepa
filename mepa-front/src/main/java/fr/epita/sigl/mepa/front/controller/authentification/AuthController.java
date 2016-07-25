@@ -50,18 +50,18 @@ public class AuthController {
 
     @RequestMapping(value = {"/auth"}, method = {RequestMethod.GET})
     public String showAuth(HttpServletRequest request, ModelMap modelMap) {
+        // Checking if user is login need to handle this in the model
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if (userCo != null || isCo == true) { // The user in already log in
+            return "/home/home";
+        }
+        
         List<AppUser> appUsers = this.appUserService.getAllUsers();
         if (appUsers.size() > 0) {
             modelMap.addAttribute("usersList", appUsers);
         }
         return "/authentification/signup";
-    }
-
-    @RequestMapping(value = {"/add"}, method = {RequestMethod.GET})
-    public String getForm(HttpServletRequest request, ModelMap modelMap,
-                          @Valid AddCustomUserFormBean addCustomUserFormBean, BindingResult result) throws ParseException {
-        return "/home/home";
-
     }
 
     @RequestMapping(value = {"/createUser"}, method = {RequestMethod.POST})
