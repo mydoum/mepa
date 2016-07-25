@@ -21,7 +21,7 @@
         left: -83px;
     }
 
-    .margin-date-bottom {
+    .margin-bottom-date {
         margin-top: -25px;
     }
 
@@ -81,7 +81,7 @@
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                             </div>
-                            <i class="help-block margin-date-bottom">(Facultatif)</i>
+                            <i class="help-block margin-bottom-date">(Facultatif)</i>
                         </div>
                     </div>
 
@@ -147,14 +147,25 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                date: {
+                email: {
                     validators: {
                         notEmpty: {
-                            message: 'The date is required'
+                            message: "L'email est obligatoire"
                         },
-                        date: {
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: "Le mot de passe est obligatoire"
+                        },
+                    }
+                },
+                birthdate: {
+                    validators: {
+                        birthdate: {
                             format: 'DD/MM/YYYY',
-                            message: 'The date is not a valid'
+                            message: "La date n'est pas valide"
                         }
                     }
                 }
