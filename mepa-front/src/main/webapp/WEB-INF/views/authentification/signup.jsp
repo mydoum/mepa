@@ -132,7 +132,9 @@
     $(document).ready(function () {
         $('#datePicker')
                 .datepicker({
-                    format: 'dd/mm/yyyy'
+                    format: 'dd/mm/yyyy',
+                    startDate: '01/01/1900',
+                    maxDate: 'today'
                 })
                 .on('changeDate', function (e) {
                     // Revalidate the date field
@@ -159,12 +161,23 @@
                         notEmpty: {
                             message: "Le mot de passe est obligatoire"
                         },
+                        regexp: {
+                            regexp: /^[a-z\s]+$/i,
+                            message: 'Le mot de passe ne peut être constituer que de caractère alphanumérique'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 20,
+                            message: 'Le mot de passe doit être entre 6 et 20 caractère'
+                        }
                     }
                 },
                 birthdate: {
                     validators: {
                         birthdate: {
                             format: 'DD/MM/YYYY',
+                            min: '01/01/1900',
+                            max: 'today',
                             message: "La date n'est pas valide"
                         }
                     }
