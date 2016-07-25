@@ -87,8 +87,6 @@ public class InvestController {
         if ((boolean) request.getSession().getAttribute("isCo")==false) {
             model.addAttribute("messageRedirect", errorCo);
             return "/authentification/signin";
-        }
-
 
         /**
          * Trying if the getted input is a number or not. If the input is not a number
@@ -157,7 +155,6 @@ public class InvestController {
                 listOfInvestors.add(tmpInvestor);
             //}
             totalAmount += amount;
-            System.out.println(totalAmount);
         }
         Collections.sort(listOfInvestors);
         return totalAmount;
