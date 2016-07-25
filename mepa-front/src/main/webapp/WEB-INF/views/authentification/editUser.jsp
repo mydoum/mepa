@@ -22,7 +22,7 @@
                         <legend class="">Modification du profil</legend>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="lastname">Nom</label>
+                        <label class="control-label" for="lastname">Prénom</label>
                         <div class="controls">
                             <input id="lastname" name="lastname" placeholder="" class="form-control input-lg"
                                    type="text" value="${userCo.firstName}">
@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="firstname">Prénom</label>
+                        <label class="control-label" for="firstname">Nom</label>
                         <div class="controls">
                             <input id="firstname" name="firstname" placeholder="" class="form-control input-lg"
                                    type="text" value="${userCo.lastName}">
