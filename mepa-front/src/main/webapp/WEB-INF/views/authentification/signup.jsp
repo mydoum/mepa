@@ -14,42 +14,6 @@
     }
 </style>
 
-
-<script>
-    $(document).ready(function () {
-        $('#datePicker')
-                .datepicker({
-                    format: 'dd/mm/yyyy'
-                })
-                .on('changeDate', function (e) {
-                    // Revalidate the date field
-                    $('#eventForm').formValidation('revalidateField', 'date');
-                });
-
-        $('#eventForm').formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                date: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The date is required'
-                        },
-                        date: {
-                            format: 'DD/MM/YYYY',
-                            message: 'The date is not a valid'
-                        }
-                    }
-                }
-            }
-        });
-    });
-</script>
-
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -101,28 +65,22 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="firstname">Date de naissance</label>
+                        <label class="control-label">Date de naissance</label>
+                        <div class="input-group input-append date" id="datePicker">
+                            <input type="text" class="form-control input-lg" name="date"/>
+                            <span class="input-group-addon add-on">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                        </div>
                         <div class="controls">
-                            <input id="birthdate" name="birthdate" placeholder="" class="form-control input-lg"
-                                   type="text">
+
                         </div>
                     </div>
-                    <br/>
-                    <br/>
+
                     <div class="control-group">
                         <!-- Button -->
                         <div class="controls">
                             <button type="submit" class="btn btn-default">Inscription</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="col-xs-3 control-label">Date</label>
-                        <div class="col-xs-5 date">
-                            <div class="input-group input-append date" id="datePicker">
-                                <input type="text" class="form-control" name="date"/>
-                                <span class="input-group-addon add-on"><span
-                                        class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
                         </div>
                     </div>
 
@@ -165,3 +123,38 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 <script src="http://formvalidation.io/vendor/formvalidation/js/formValidation.min.js"></script>
 <script src="http://formvalidation.io/vendor/formvalidation/js/framework/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#datePicker')
+                .datepicker({
+                    format: 'dd/mm/yyyy'
+                })
+                .on('changeDate', function (e) {
+                    // Revalidate the date field
+                    $('#eventForm').formValidation('revalidateField', 'date');
+                });
+
+        $('#eventForm').formValidation({
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                date: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The date is required'
+                        },
+                        date: {
+                            format: 'DD/MM/YYYY',
+                            message: 'The date is not a valid'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
