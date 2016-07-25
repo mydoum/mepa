@@ -4,10 +4,12 @@ import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayControll
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileWriter;
@@ -20,7 +22,10 @@ public class HomeController extends HttpServlet{
     private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
 
     @RequestMapping(value = {"/", "/home"})
-    public String home() {
+    public String home(HttpServletRequest request) {
+        if (null == request.getSession().getAttribute("isCo")){
+            request.getSession().setAttribute("isCo", false);
+        }
         return "/home/home";
     }
 

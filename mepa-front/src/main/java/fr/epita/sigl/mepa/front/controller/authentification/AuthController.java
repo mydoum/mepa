@@ -145,14 +145,14 @@ public class AuthController {
         String login = request.getParameter("email");
         String pwd = request.getParameter("password");
 
-        Boolean isCo = false;
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
         AppUser userCo = this.appUserService.getUserByLogin(login);
         if (userCo != null) {
             AppUser newAppUser = this.appUserService.getUserById(userCo.getId());
             if (StringUtils.equals(pwd, newAppUser.getPassword())) {
                 request.getSession().setAttribute("userCo", newAppUser);
                 isCo = true;
-                request.getSession().setAttribute("isCo", isCo);
+                request.getSession().setAttribute("isCo", true);
                 modelMap.addAttribute("isCo", isCo);
                 return "/home/home";
             }

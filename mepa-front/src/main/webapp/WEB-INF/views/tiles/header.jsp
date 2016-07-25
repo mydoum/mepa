@@ -23,13 +23,15 @@
                         <li><a href="${preinvestCoreUrl}">Créer un projet</a></li>
                         <c:url var="investUrl" value="/invest"/>
                         <li><a href="${investUrl}">Investissements</a></li>
-                        <c:url var="signin" value="/authentification/signin"/>
-                        <li><a href="${signin}">Se connecter</a></li>
+                        <c:if test="${!isCo}">
+                            <c:url var="signin" value="/authentification/signin"/>
+                            <li><a href="${signin}">Se connecter</a></li>
+                        </c:if>
                         <c:if test="${isCo == true}">
+                            <c:url var="editUser" value="/authentification/editUser"/>
+                            <li><a href="${editUser}">${userCo.firstName} ${userCo.lastName}</a></li>
                             <c:url var="deconnexion" value="/authentification/deconnexion"/>
                             <li><a href="${deconnexion}">Déconnexion</a></li>
-                            <c:url var="editUser" value="/authentification/editUser"/>
-                            <li><a href="${editUser}">Profil</a></li>
                         </c:if>
                     </ul>
                 </div>
