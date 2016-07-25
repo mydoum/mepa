@@ -99,6 +99,11 @@ public class AuthController {
 
     @RequestMapping(value = {"/resendPwd"}, method = {RequestMethod.GET})
     public String showPwd(HttpServletRequest request, ModelMap modelMap) throws ParseException {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if (userCo != null || isCo == true) { // The user in already log in
+            return "/home/home";
+        }
         return "/authentification/resendPwd";
     }
 
