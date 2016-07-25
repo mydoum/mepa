@@ -38,6 +38,9 @@ public class ProjectCreateController {
     protected static final String NEWPROJECT= "newProject";
     protected static final String PROJECTS_LIST_ATTRIBUTE = "project_list";
     protected static final String IS_CONNECTED_ATTRIBUTE = "is_connected";
+    protected static final String IS_UNIQUE_ATTRIBUTE = "is_unique";
+    protected static final String IS_NULL_ATTRIBUTE = "is_null";
+    protected static final String IS_DATE_ATTRIBUTE = "is_date";
 
     @Autowired
     private ProjectService projectService;
@@ -66,16 +69,21 @@ public class ProjectCreateController {
     {
         //model.addAttribute("Retour", newProject.getName() + newProject.getEndDate() + newProject.getDescription());
 
+        boolean is_unique = false;
+        boolean is_null = false;
+        boolean is_date = false;
         AppUser connectedUser = (AppUser) request.getSession().getAttribute("userCo");
         projectService.createProject(newProject);
         newProject.setUser_id(connectedUser.getId());
-
         List<Project> projects = this.projectService.getAllProjects();
 
+        if (newProject.getName().equals(""))
+        {
+            is_null = true;
+        }
         if (newProject.getEndDate().before(newProject.getStartDate()))
         {
-            projectService.deleteProject(newProject);
-            return this.projectCreate(request, model);
+            is_date =  true;
         }
         int project_name = 0;
         for (int i = 0; i < projects.size() - 1; i++)
@@ -84,13 +92,19 @@ public class ProjectCreateController {
             {
                 project_name++;
                 if (project_name > 1) {
-                    projectService.deleteProject(newProject);
-                    return this.projectCreate(request, model);
+                    is_unique = true;
                 }
             }
         }
+        model.addAttribute(IS_UNIQUE_ATTRIBUTE, is_unique);
+        model.addAttribute(IS_NULL_ATTRIBUTE, is_null);
+        model.addAttribute(IS_DATE_ATTRIBUTE, is_date);
+        if (is_date || is_null || is_unique)
+        {
+            projectService.deleteProject(newProject);
+            return this.projectCreate(request, model);
+        }
         return projectDisplayController.projectList(model);
     }
-
 
 }
