@@ -3,7 +3,7 @@ package fr.epita.sigl.mepa.front.controller.authentification;
 import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.front.user.form.AddCustomUserFormBean;
-import fr.epita.sigl.mepa.front.user.form.LoginUserFormBean;
+import fr.epita.sigl.mepa.front.utilities.Mail;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,12 +20,17 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+import static fr.epita.sigl.mepa.front.utilities.Mail.sendMail;
 
 
 @RequestMapping("/authentification")
@@ -58,13 +63,22 @@ public class AuthController {
     @RequestMapping(value = {"/addUser"}, method = {RequestMethod.POST})
     public String processForm(HttpServletRequest request, ModelMap modelMap) {
         AppUser newAppUser = new AppUser();
-        String bithDate = request.getParameter("birthdate");
+        String birthdate = request.getParameter("birthdate");
         String firstName = request.getParameter("firstname");
         String lastName = request.getParameter("lastname");
         String login = request.getParameter("email");
         String pwd = request.getParameter("password");
 
-        newAppUser.setBirthDate(new Date());
+        // Change string to date
+        DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date birthdateDate = new Date();
+        try {
+            birthdateDate = sourceFormat.parse(birthdate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        newAppUser.setBirthDate(birthdateDate);
         newAppUser.setFirstName(firstName);
         newAppUser.setLastName(lastName);
         newAppUser.setLogin(login);
@@ -72,8 +86,8 @@ public class AuthController {
 
         this.appUserService.createUser(newAppUser);
         System.out.println("Created new user : " + newAppUser.getFirstName() + " " + newAppUser.getLastName());
-        String msg = "Le compte a bien été créé";
-        modelMap.addAttribute("userIsCreated", msg);
+//        String msg = "Le compte a bien été créé";
+//        modelMap.addAttribute("userIsCreated", msg);
         List<AppUser> appUsers = this.appUserService.getAllUsers();
         modelMap.addAttribute("usersList", appUsers);
         return "/authentification/signup";
@@ -88,47 +102,25 @@ public class AuthController {
     public String resendPwd(HttpServletRequest request, ModelMap modelMap) throws ParseException {
         Boolean isSent = false;
         String login = request.getParameter("email");
-        AppUser recipient = this.appUserService.getUserByLogin(login);
-        System.out.println(recipient.getFirstName());
-        if (recipient != null && !recipient.getFirstName().equalsIgnoreCase("")) {
+        AppUser recipient = new AppUser();
+        if (this.appUserService.getUserByLogin(login) != null)
+            recipient = this.appUserService.getUserByLogin(login);
+        if (recipient != null) {
             try {
-                sendMail(recipient);
-                isSent = true;
+                String obj = "Récupération de votre mot de passe";
+                String text = "This information is strictly private." + "<br> Here is your password: \""
+                        + recipient.getPassword() + "\". <br><br> Regards, <br>MEPA Team";
+                isSent = sendMail(recipient.getLogin(), obj, text);
                 modelMap.addAttribute("isSent", isSent);
                 modelMap.addAttribute("email", recipient.getLogin());
-            } catch (MessagingException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                modelMap.addAttribute("isNotSent", true);
             }
         }
-        else
-            modelMap.addAttribute("isSent", isSent);
+        else {
+            modelMap.addAttribute("isNotSent", true);
+        }
         return "/authentification/resendPwd";
-    }
-
-    private void sendMail(AppUser recipient) throws AddressException, MessagingException {
-        //AppUser tmpUser = appUserService.getUserById(userId);
-        String userMail = recipient.getLogin();//tmpUser.getLogin();
-        String userFirstName = recipient.getFirstName(); //tmpUser.getFirstName();
-        String userLastName = recipient.getLastName(); //tmpUser.getLastName();
-
-        mailServerProperties = System.getProperties();
-        mailServerProperties.put("mail.smtp.port", "587");
-        mailServerProperties.put("mail.smtp.auth", "true");
-        mailServerProperties.put("mail.smtp.starttls.enable", "true");
-
-        getMailSession = Session.getDefaultInstance(mailServerProperties, null);
-        generateMailMessage = new MimeMessage(getMailSession);
-        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(userMail));
-        generateMailMessage.setSubject("Greetings " + userFirstName + " " + userLastName);
-        String emailBody = "This information is strictly private." + "<br> Here is your password: \""
-                + recipient.getPassword() + "\". <br><br> Regards, <br>MEPA Team";
-        generateMailMessage.setContent(emailBody, "text/html");
-
-        Transport transport = getMailSession.getTransport("smtp");
-
-        transport.connect("smtp.gmail.com", "mepa.epita@gmail.com", "sigl2017");
-        transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
-        transport.close();
     }
 
     @RequestMapping(value = {"/signin"}, method = {RequestMethod.GET})
@@ -142,20 +134,20 @@ public class AuthController {
         String login = request.getParameter("email");
         String pwd = request.getParameter("password");
 
-        Boolean isCo = false;
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
         AppUser userCo = this.appUserService.getUserByLogin(login);
         if (userCo != null) {
             AppUser newAppUser = this.appUserService.getUserById(userCo.getId());
             if (StringUtils.equals(pwd, newAppUser.getPassword())) {
                 request.getSession().setAttribute("userCo", newAppUser);
                 isCo = true;
-                request.getSession().setAttribute("isCo", isCo);
+                request.getSession().setAttribute("isCo", true);
                 modelMap.addAttribute("isCo", isCo);
                 return "/home/home";
             }
         }
         else {
-            modelMap.addAttribute("isCo", isCo);
+            modelMap.addAttribute("pwdFalse", true);
             System.out.println("Identifiant / mdp incorrect");
             return "/authentification/signin";
         }
@@ -176,4 +168,84 @@ public class AuthController {
         return "/home/home";
     }
 
+    @RequestMapping(value = {"/editUser"}, method = {RequestMethod.GET})
+    public String showEditUserPage(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        System.out.println("inside showEditUserPage");
+        if (userCo != null && isCo) {
+            // tu peux afficher les données user
+
+            return "/authentification/editUser";
+        }
+        return "/home/home";
+//        return "redirect:/home/home"; A tester pour plus tard
+    }
+
+    @RequestMapping(value = {"/editUser"}, method = {RequestMethod.POST})
+    public String editUser(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        System.out.println("inside editUser");
+
+        System.out.println("user pwd = " + userCo.getPassword());
+        if (userCo != null && isCo) {
+            AppUser user = this.appUserService.getUserByLogin(userCo.getLogin());
+            if (user != null) { // the user really exist, it's not a fake
+                String bithDate = request.getParameter("birthdate");
+                String firstName = request.getParameter("firstname");
+                String lastName = request.getParameter("lastname");
+                String login = request.getParameter("email");
+//                String pwd = request.getParameter("password");
+
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setBirthDate(user.getBirthDate());
+                user.setLogin(login);
+
+                this.appUserService.updateUser(user);
+                request.getSession().setAttribute("userCo", user);
+            }
+            return "/authentification/editUser";
+        }
+        return "/home/home";
+
+    }
+
+    @RequestMapping(value = {"/addFakeUser"}, method = {RequestMethod.GET})
+    public String addFakeUser() {
+        AppUser newAppUser = new AppUser();
+
+        ArrayList<String> firstNames = new ArrayList<>();
+        ArrayList<String> lastNames = new ArrayList<>();
+        ArrayList<String> logins = new ArrayList<>();
+        ArrayList<String> pwds = new ArrayList<>();
+        firstNames.add("Patrick");
+        firstNames.add("test");
+        firstNames.add("toto");
+
+        lastNames.add("Ear");
+        lastNames.add("test");
+        lastNames.add("tata");
+
+        logins.add("patrick.ear@epita.fr");
+        logins.add("test@test.fr");
+        logins.add("toto.tata@tutu.fr");
+
+        pwds.add("123456789");
+        pwds.add("1234567");
+        pwds.add("password");
+
+
+        for (int i = 0; i < firstNames.size(); ++i) {
+            newAppUser.setBirthDate(new Date());
+            newAppUser.setFirstName(firstNames.get(i));
+            newAppUser.setLastName(lastNames.get(i));
+            newAppUser.setLogin(logins.get(i));
+            newAppUser.setPassword(pwds.get(i));
+            this.appUserService.createUser(newAppUser);
+        }
+
+        return "/authentification/signup";
+    }
 }

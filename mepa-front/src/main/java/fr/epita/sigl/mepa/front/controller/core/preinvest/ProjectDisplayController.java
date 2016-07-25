@@ -67,6 +67,12 @@ public class ProjectDisplayController {
         userco = (AppUser) request.getSession().getAttribute("userCo");
         modelMap.addAttribute("userco", userco);
 
+        /* Check if the user connected is the administrator of the projet */
+        if (userco != null && userco.getId() == project.getUser_id())
+            request.getSession().setAttribute("isAdmin", "true");
+        else
+            request.getSession().setAttribute("isAdmin", "false");
+
         investController.investorsList(modelMap, request, project);
 
         List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();

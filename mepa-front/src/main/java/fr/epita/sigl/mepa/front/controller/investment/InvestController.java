@@ -7,6 +7,7 @@ import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.core.service.*;
 import fr.epita.sigl.mepa.core.service.AppUserService;
+import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayController;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
 
@@ -47,6 +48,8 @@ public class InvestController {
     private RewardService rewardService;
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private ProjectDisplayController projectDisplayController;
 
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
@@ -78,6 +81,12 @@ public class InvestController {
         Project project = this.projectService.getProjectById(projectId);
 
         /**
+         * Check is the user is signed-in
+         */
+        if (session.getAttribute("userCo")==null)
+            return "/authentification/signin";
+
+        /**
          * Trying if the getted input is a number or not. If the input is not a number
          * an exception is raised. Also a message is send to the user
          */
@@ -85,13 +94,13 @@ public class InvestController {
             moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
             moneyAmount = (float) ((int) (moneyAmount * 100)) / 100;
         } catch (Exception e) {
-            String errorMessage = "Please enter a numerical number as donation amount.";
+            String errorMessage = "Veuillez entrer un nombre pour le montant du don.";
             model.addAttribute("errorInvest", errorMessage);
             return displayList(model, project);
         }
 
         if (moneyAmount <= 0) {
-            String errorMessage = "Please enter a positive number as donation amount.";
+            String errorMessage = "Veuillez entrer un nombre positif pour le montant du don.";
             model.addAttribute("errorInvest", errorMessage);
             return displayList(model, project);
         }
@@ -104,7 +113,8 @@ public class InvestController {
             String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
             model.addAttribute("errorInvest", errorMessage);
         }
-        return "/projectDisplay";
+
+        return projectDisplayController.projectDisplay(request, model, projectId);
     }
 
     private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
@@ -159,10 +169,10 @@ public class InvestController {
 
         investmentService.createInvestment(newInvestment);
 
-        String mail = "simon.mace@epita.fr";
-        // String mail = "hugo.capes@hotmail.fr";
-        String subject = "Thanks for investing in the project alpha";
-        String message = "blop" + moneyAmount + " €";
+        //String mail = "simon.mace@epita.fr";
+        String mail = "hugo.capes@hotmail.fr";
+        String subject = "Merci pour votre contribution au projet alpha";
+        String message = "Votre don s'élève à" + moneyAmount + " euros";
 
         try {
             sendMail(mail, subject, message);

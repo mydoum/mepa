@@ -7,6 +7,7 @@ import java.util.List;
 public interface AppUserService {
 
     void createUser(AppUser appUser);
+    void updateUser(AppUser appUser);
 
     AppUser getUserById(Long id);
 

@@ -3,7 +3,7 @@
 
 <c:if test="${isCo == true}">
     <div class="col-md-12 text-center alert alert-success investFormInside">
-        Bienvenue ${userCo.firstName} ${userCo.lastName}! :)
+        Bienvenue ${userCo.firstName} ${userCo.lastName} :)
     </div>
 </c:if>
 

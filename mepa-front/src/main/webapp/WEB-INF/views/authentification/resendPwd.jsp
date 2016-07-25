@@ -30,10 +30,21 @@
 
             </form>
         </div>
-        <c:if test="${isSent == true}">
-            <div class="col-md-12 text-center alert alert-success investFormInside">
-                An email has been sent to ${email}!
-            </div>
-        </c:if>
+        <c:choose>
+            <c:when test="${isSent == true}">
+                <div class="col-md-12 text-center alert alert-success investFormInside">
+                    Un mail a été envoyé à ${email}!
+                </div>
+                <br/>
+            </c:when>
+            <c:when test="${isNotSent == true}">
+                <div class="col-md-12 text-center alert alert-danger investFormInside">
+                    Email incorrect. Veuillez sélectionner l'email affilié à votre compte.
+                </div>
+                <br/>
+            </c:when>
+            <c:otherwise>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
