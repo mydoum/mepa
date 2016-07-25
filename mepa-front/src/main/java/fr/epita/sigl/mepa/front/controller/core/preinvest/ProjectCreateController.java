@@ -72,7 +72,6 @@ public class ProjectCreateController {
         projectService.createProject(newProject);
         List<Project> projects = this.projectService.getAllProjects();
 
-        List<Project> projects = this.projectService.getAllProjects();
         if (newProject.getEndDate().before(newProject.getStartDate()))
         {
             projectService.deleteProject(newProject);
