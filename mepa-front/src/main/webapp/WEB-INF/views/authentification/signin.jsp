@@ -43,6 +43,11 @@
             La connexion a échouée : Mot de passe ou Identifiant incorrect.
         </div>
     </c:if>
+    <c:if test="${not empty messageRedirect}">
+        <div class="col-md-12 text-center alert alert-danger investFormInside">
+            ${messageRedirect}
+        </div>
+    </c:if>
     <div class="row">
         <div class="col-md-6">
             <c:url var="loginUserFormActionUrl" value="/authentification/signin"/>
