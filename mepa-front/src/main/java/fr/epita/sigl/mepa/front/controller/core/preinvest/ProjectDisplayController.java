@@ -7,6 +7,7 @@ import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
 
 import fr.epita.sigl.mepa.core.service.ProjectService;
+import fr.epita.sigl.mepa.front.controller.investment.InvestController;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -45,6 +46,9 @@ public class ProjectDisplayController {
     @Autowired
     private CommentsModelService commentsModelService;
 
+    @Autowired
+    private InvestController investController;
+
 
     @RequestMapping(value = {"/projectDisplay/{projectId}"}) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
@@ -63,6 +67,7 @@ public class ProjectDisplayController {
         userco = (AppUser) request.getSession().getAttribute("userCo");
         modelMap.addAttribute("userco", userco);
 
+        investController.investorsList(modelMap, request, project);
 
         List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();
 

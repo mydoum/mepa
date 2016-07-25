@@ -1,10 +1,11 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
-
-<form action="/authentification/signin/">
-    <text></text>
-    <input type="submit" value="Se Connecter">
-</form>
+<c:if test="${userco == null}">
+    <form action="/authentification/signin/">
+        <text></text>
+        <input type="submit" value="Se Connecter">
+    </form>
+</c:if>
 <div class="row">
         <div class="col-md-12">
             <h2>Commentaires</h2>

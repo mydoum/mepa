@@ -79,25 +79,6 @@ public class AuthController {
         return "/authentification/signup";
     }
 
-    @RequestMapping(value = "/filltables", method = RequestMethod.GET)
-    public String fillTables(ModelMap model, HttpSession session, HttpServletRequest request) {
-        String a = "";
-        for (int i = 0; i < 10; i++) {
-            a += "0";
-            AppUser appUser = new AppUser();
-            appUser.setFirstName("Tahar");
-            appUser.setLastName("Sayagh");
-            appUser.setLogin("tahar.sayagh" + a + "@gmail.com");
-            appUser.setPassword("authent");
-            Date date = new Date();
-            appUser.setBirthDate(date);
-            this.appUserService.createUser(appUser);
-        }
-        List<AppUser> appUsers = this.appUserService.getAllUsers();
-        model.addAttribute("usersList", appUsers);
-        return "/authentification/signup";
-    }
-
     @RequestMapping(value = {"/resendPwd"}, method = {RequestMethod.GET})
     public String showPwd(HttpServletRequest request, ModelMap modelMap) throws ParseException {
         return "/authentification/resendPwd";
@@ -168,6 +149,7 @@ public class AuthController {
             if (StringUtils.equals(pwd, newAppUser.getPassword())) {
                 request.getSession().setAttribute("userCo", newAppUser);
                 isCo = true;
+                request.getSession().setAttribute("isCo", isCo);
                 modelMap.addAttribute("isCo", isCo);
                 return "/home/home";
             }
@@ -179,6 +161,19 @@ public class AuthController {
         }
 
         return "/authentification/signin";
+    }
+
+    @RequestMapping(value = {"/deconnexion"}, method = {RequestMethod.GET})
+    public String deconnect(HttpServletRequest request, ModelMap modelMap) {
+
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if (userCo != null && isCo) {
+            System.out.println("User deconnexion : " + userCo.getFirstName() + " " + userCo.getLastName());
+            request.getSession().removeAttribute("userCo");
+            request.getSession().removeAttribute("isCo");
+        }
+        return "/home/home";
     }
 
 }

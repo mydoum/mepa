@@ -56,6 +56,9 @@
         <put-attribute name="body" value="/WEB-INF/views/investment/projectComments.jsp"/>
         <put-attribute name="title" value="invest.title"/>
     </definition>
+    <definition name="/invest/rewardpay" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/investment/rewardpay.jsp"/>
+    </definition>
 
     <!-- Preinvest -->
     <definition name="/insertDummy" extends="base.definition">
