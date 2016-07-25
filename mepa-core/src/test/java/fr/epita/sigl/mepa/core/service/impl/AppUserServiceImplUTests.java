@@ -70,6 +70,19 @@ public class AppUserServiceImplUTests {
         Long monId = 27L;
         userToTest.setId(monId);
 
+        AppUser userToTest1 = new AppUser();
+        String testLogin1 = "tahar.sayagh0@gmail.com";
+        userToTest1.setLogin(testLogin1);
+
+        String testPwd = "password";
+        userToTest1.setPassword(testPwd);
+        String firstname = "Simon";
+        userToTest1.setFirstName(firstname);
+        String lastname = "Mace";
+        userToTest1.setLastName(lastname);
+        Long idUser = 27L;
+        userToTest1.setId(idUser);
+
 
 
         /**
