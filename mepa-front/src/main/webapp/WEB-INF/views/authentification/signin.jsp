@@ -8,13 +8,14 @@
     </c:if>
     <c:if test="${not empty messageRedirect}">
         <div class="col-md-12 text-center alert alert-danger investFormInside">
-            ${messageRedirect}
+                ${messageRedirect}
         </div>
     </c:if>
     <div class="row">
         <div class="col-md-6">
             <c:url var="loginUserFormActionUrl" value="/authentification/signin"/>
-            <form id="eventForm" class="form-horizontal" action="${loginUserFormActionUrl}" modelAttribute="loginUserFormBean"
+            <form id="eventForm" class="form-horizontal" action="${loginUserFormActionUrl}"
+                  modelAttribute="loginUserFormBean"
                   method="POST">
                 <fieldset>
                     <div id="legend">
@@ -26,11 +27,11 @@
                             <input id="email" name="email" placeholder="" class="form-control input-lg" type="email">
                         </div>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label" for="password">Mot de passe</label>
                         <div class="controls">
-                            <input id="password" name="password" placeholder="" class="form-control input-lg" type="password">
+                            <input id="password" name="password" placeholder="" class="form-control input-lg"
+                                   type="password">
                         </div>
                     </div>
                     <br/>
