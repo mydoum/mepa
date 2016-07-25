@@ -14,39 +14,45 @@
 </head>
 <body>
     <div class="container">
-        <sf:form method="post" modelAttribute="newProject" action="processCreation">
-            <div class="control-group">
-                <label class="control-label">Nom du projet</label>
-                <div class="controls">
-                    <td><form:input path="Name" class="form-control input-lg" placeholder="Définissez un nom"/></td>
+        <c:if test="${is_connected}">
+            <sf:form method="post" modelAttribute="newProject" action="processCreation">
+                <div class="control-group">
+                    <label class="control-label">Nom du projet</label>
+                    <div class="controls">
+                        <td><form:input path="Name" class="form-control input-lg" placeholder="Définissez un nom"/></td>
+                    </div>
                 </div>
-            </div>
-            <br/>
-            <div class="control-group">
-                <label class="control-label">Date de début</label>
-                <div class="controls">
-                    <td><form:input path="startDate" class="form-control input-lg" placeholder="startDate"/></td>
+                <br/>
+                <div class="control-group">
+                    <label class="control-label">Date de début</label>
+                    <div class="controls">
+                        <td><form:input path="startDate" class="form-control input-lg" placeholder="startDate"/></td>
+                    </div>
                 </div>
-            </div>
-            <br/>
-            <div class="control-group">
-                <label class="control-label">Deadline</label>
-                <div class="controls">
-                    <td><form:input path="endDate" class="form-control input-lg" placeholder="endDate"/></td>
+                <br/>
+                <div class="control-group">
+                    <label class="control-label">Deadline</label>
+                    <div class="controls">
+                        <td><form:input path="endDate" class="form-control input-lg" placeholder="endDate"/></td>
+                    </div>
                 </div>
-            </div>
-            <br/>
-            <div class="control-group">
-                <label class="control-label">Description</label>
-                <div class="controls">
-                    <td><form:textarea path="description" class="form-control input-lg" placeholder="Description" style="margin-top: 0px;"/></td>
+                <br/>
+                <div class="control-group">
+                    <label class="control-label">Description</label>
+                    <div class="controls">
+                        <td><form:textarea path="description" class="form-control input-lg" placeholder="Description" style="margin-top: 0px;"/></td>
+                    </div>
                 </div>
-            </div>
-            <br/>
-            <div class="control-group">
-               <button type="submit" class="btn btn-default">Créer le projet</button>
-            </div>
-        </sf:form>
+                <br/>
+                <div class="control-group">
+                   <button type="submit" class="btn btn-default">Créer le projet</button>
+                </div>
+            </sf:form>
+
+        </c:if>
+        <c:if test="${!is_connected}">
+            <h1> Vous devez être connecté pour ajouter un projet.</h1>
+        </c:if>
     </div>
 </body>
 </html>
