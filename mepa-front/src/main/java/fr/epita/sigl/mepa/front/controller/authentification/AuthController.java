@@ -102,11 +102,12 @@ public class AuthController {
                 modelMap.addAttribute("isSent", isSent);
                 modelMap.addAttribute("email", recipient.getLogin());
             } catch (Exception e) {
-                modelMap.addAttribute("isSent", isSent);
+                modelMap.addAttribute("isNotSent", true);
             }
         }
-        else
-            modelMap.addAttribute("isSent", isSent);
+        else {
+            modelMap.addAttribute("isNotSent", true);
+        }
         return "/authentification/resendPwd";
     }
 
