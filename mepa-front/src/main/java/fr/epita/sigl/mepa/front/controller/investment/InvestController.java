@@ -84,14 +84,14 @@ public class InvestController {
          * Check is the user is signed-in
          */
         String errorCo = "Veuillez vous identifier pour investir dans un projet";
-        if ((boolean) request.getSession().getAttribute("isCo")==false) {
+        if ((boolean) request.getSession().getAttribute("isCo") == false) {
             model.addAttribute("messageRedirect", errorCo);
             return "/authentification/signin";
-
-        /**
-         * Trying if the getted input is a number or not. If the input is not a number
-         * an exception is raised. Also a message is send to the user
-         */
+        }
+            /**
+             * Trying if the getted input is a number or not. If the input is not a number
+             * an exception is raised. Also a message is send to the user
+             */
         try {
             moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
             moneyAmount = (float) ((int) (moneyAmount * 100)) / 100;
@@ -115,8 +115,8 @@ public class InvestController {
             String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
             model.addAttribute("errorInvest", errorMessage);
         }
-
         return projectDisplayController.projectDisplay(request, model, projectId);
+
     }
 
     private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
