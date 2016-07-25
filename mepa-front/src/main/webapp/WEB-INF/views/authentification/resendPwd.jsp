@@ -25,7 +25,6 @@
                             <center><button type="submit" class="btn btn-default">Valider</button></center>
                         </div>
                     </div>
-
                 </fieldset>
             </form>
         </div>
