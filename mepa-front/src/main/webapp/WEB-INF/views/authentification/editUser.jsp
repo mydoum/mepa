@@ -31,6 +31,7 @@
                     <div id="legend">
                         <legend class="">Modification du profil</legend>
                     </div>
+
                     <div class="control-group">
                         <label class="control-label" for="firstname">Prénom</label>
                         <div class="controls">
