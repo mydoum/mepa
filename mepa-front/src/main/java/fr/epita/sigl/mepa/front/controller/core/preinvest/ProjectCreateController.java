@@ -67,22 +67,26 @@ public class ProjectCreateController {
         //model.addAttribute("Retour", newProject.getName() + newProject.getEndDate() + newProject.getDescription());
 
         AppUser connectedUser = (AppUser) request.getSession().getAttribute("userCo");
+        projectService.createProject(newProject);
         newProject.setUser_id(connectedUser.getId());
 
-        projectService.createProject(newProject);
         List<Project> projects = this.projectService.getAllProjects();
 
         if (newProject.getEndDate().before(newProject.getStartDate()))
         {
             projectService.deleteProject(newProject);
-            return this.projectCreate(model);
+            return this.projectCreate(request, model);
         }
+        int project_name = 0;
         for (int i = 0; i < projects.size() - 1; i++)
         {
             if (projects.get(i).getName().equals(newProject.getName()))
             {
-                projectService.deleteProject(newProject);
-                return this.projectCreate(model);
+                project_name++;
+                if (project_name > 1) {
+                    projectService.deleteProject(newProject);
+                    return this.projectCreate(request, model);
+                }
             }
         }
         return projectDisplayController.projectList(model);
