@@ -35,7 +35,7 @@ public class AppUser {
     private String lastName;
 
 //    @Temporal(TemporalType.DATE)
-    @Column(name = "birthDate", nullable = true)
+    @Column(name = "birthDate")
     private Date birthDate;
 
     public Long getId() {
