@@ -3,10 +3,11 @@ package fr.epita.sigl.mepa.core.service.impl;
 
 import fr.epita.sigl.mepa.core.dao.InvestmentDao;
 import fr.epita.sigl.mepa.core.dao.ModelDao;
+import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Model;
 import fr.epita.sigl.mepa.core.domain.Project;
-import fr.epita.sigl.mepa.core.domain.User;
+import fr.epita.sigl.mepa.core.domain.AppUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -65,7 +66,7 @@ public class InvestmentServiceImplUTests {
          */
 
 
-        User testUser = new User();
+        AppUser testUser = new AppUser();
         String testLogin = "monlogin";
         testUser.setLogin(testLogin);
         String testPassword = "monpassword";
@@ -91,6 +92,7 @@ public class InvestmentServiceImplUTests {
         testProject.setStartDate(debutDate);
         String testDescription = "description du projet de test";
         testProject.setDescription(testDescription);
+        testProject.setId(monId);
 
         Investment testInvest = new Investment();
         testInvest.setId(monId);
