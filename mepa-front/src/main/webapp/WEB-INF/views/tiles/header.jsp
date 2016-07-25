@@ -18,8 +18,6 @@
                         <c:url var="homeUrl" value="/home"/>
                         <li><a href="${homeUrl}">Accueil</a></li>
                         <c:url var="signup" value="/authentification/auth"/>
-                        <li><a href="${signup}">Inscription</a></li>
-                        <c:url var="preinvestCoreUrl" value="/core/preinvest/projectCreate"/>
                         <li><a href="${preinvestCoreUrl}">Créer un projet</a></li>
                         <c:url var="investUrl" value="/invest"/>
                         <li><a href="${investUrl}">Investissements</a></li>
@@ -39,6 +37,10 @@
                             </c:choose>
                             <c:url var="deconnexion" value="/authentification/deconnexion"/>
                             <li><a href="${deconnexion}">Déconnexion</a></li>
+                        </c:if>
+                        <c:if test="${isCo == false}">
+                            <li><a href="${signup}">S'inscrire</a></li>
+                            <c:url var="preinvestCoreUrl" value="/core/preinvest/projectCreate"/>
                         </c:if>
                     </ul>
                 </div>
