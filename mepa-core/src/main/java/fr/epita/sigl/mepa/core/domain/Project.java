@@ -150,7 +150,6 @@ public class Project implements Serializable {
         this.imagesLinks = imagesLinks;
     }
 
-<<<<<<< HEAD
     public Long getGoalAmount() {
         return goalAmount;
     }
@@ -185,26 +184,18 @@ public class Project implements Serializable {
 
     public void setFacebookAllowed(boolean displayAllowed) {
         isFacebookAllowed = displayAllowed;
-=======
+    }
+
     public Set<Reward> getRewards() {
         return rewards;
     }
 
-    /*@Autowired
-    RewardService rewardService;*/
-    public void addReward(Reward r) {
-        /*rewards.add(r);
-        rewardService.createReward(r);*/
-    }
     public void setRewards(Set<Reward> rewards) {
-
-
         this.rewards = rewards;
     }
 
     public Boolean isFinished() {
         return this.endDate.after(new Date());
->>>>>>> 3d08ba74ae193b03cb707498cf0f82f9829dfa5e
     }
 
     @Override
