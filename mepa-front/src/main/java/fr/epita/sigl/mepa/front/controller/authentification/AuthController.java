@@ -176,4 +176,16 @@ public class AuthController {
         return "/home/home";
     }
 
+    @RequestMapping(value = {"/editUser"}, method = {RequestMethod.GET})
+    public String editUser(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        System.out.println("inside editUsers");
+        if (userCo != null && isCo) {
+            // tu peux afficher les données user
+
+            return "/authentification/editUser";
+        }
+        return "/home/home";
+    }
 }

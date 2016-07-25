@@ -28,6 +28,8 @@
                         <c:if test="${isCo == true}">
                             <c:url var="deconnexion" value="/authentification/deconnexion"/>
                             <li><a href="${deconnexion}">Déconnexion</a></li>
+                            <c:url var="editUser" value="/authentification/editUser"/>
+                            <li><a href="${editUser}">Profile</a></li>
                         </c:if>
                     </ul>
                 </div>
