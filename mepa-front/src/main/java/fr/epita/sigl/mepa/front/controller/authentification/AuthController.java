@@ -53,10 +53,10 @@ public class AuthController {
         // Checking if user is login need to handle this in the model
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        if (userCo != null || isCo) { // The user in already log in
+        if (userCo != null && isCo) { // The user in already log in
             return home.home(request);
         }
-        
+
         List<AppUser> appUsers = this.appUserService.getAllUsers();
         if (appUsers.size() > 0) {
             modelMap.addAttribute("usersList", appUsers);
@@ -99,11 +99,11 @@ public class AuthController {
 
     @RequestMapping(value = {"/resendPwd"}, method = {RequestMethod.GET})
     public String showPwd(HttpServletRequest request, ModelMap modelMap) throws ParseException {
-        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
-        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        if (userCo != null || isCo) { // The user in already log in
-            return home.home(request);
-        }
+//        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+//        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+//        if (userCo != null && isCo) { // The user in already log in
+//            return home.home(request);
+//        }
         return "/authentification/resendPwd";
     }
 
@@ -134,11 +134,11 @@ public class AuthController {
 
     @RequestMapping(value = {"/signin"}, method = {RequestMethod.GET})
     public String getsignin(HttpServletRequest request, ModelMap modelMap) {
-        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
-        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        if (userCo != null || isCo) { // The user in already log in
-            return home.home(request);
-        }
+//        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+//        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+//        if (userCo != null && isCo) { // The user in already log in
+//            return home.home(request);
+//        }
         return "/authentification/signin";
     }
 
@@ -177,7 +177,7 @@ public class AuthController {
 
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        if (userCo != null || isCo) {
+        if (userCo != null && isCo) {
             System.out.println("User deconnexion : " + userCo.getFirstName() + " " + userCo.getLastName());
             request.getSession().removeAttribute("userCo");
             request.getSession().removeAttribute("isCo");
