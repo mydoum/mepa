@@ -64,7 +64,7 @@ public class AuthController {
 
     }
 
-    @RequestMapping(value = {"/addUser"}, method = {RequestMethod.POST})
+    @RequestMapping(value = {"/createUser"}, method = {RequestMethod.POST})
     public String processForm(HttpServletRequest request, ModelMap modelMap) {
         AppUser newAppUser = new AppUser();
         String birthdate = request.getParameter("birthdate");
