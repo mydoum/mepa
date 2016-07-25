@@ -195,7 +195,7 @@ public class Project implements Serializable {
 
     public void setRewards(Set<Reward> rewards) {
         this.rewards = rewards;
-    }*/
+    }
 
     public Boolean isFinished() {
         return this.endDate.after(new Date());

@@ -51,8 +51,6 @@ public class InvestController {
     @Autowired
     private ProjectDisplayController projectDisplayController;
 
-
-==== BASE ====
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
