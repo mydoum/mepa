@@ -38,8 +38,8 @@
 <%--</nav>--%>
 
 <div class="container">
-    <c:if test="${isCo == false}">
-        <div class="col-md-12 text-center alert alert-failure investFormInside">
+    <c:if test="${pwdFalse == true}">
+        <div class="col-md-12 text-center alert alert-danger investFormInside">
             La connexion a échouée : Mot de passe ou Identifiant incorrect.
         </div>
     </c:if>
