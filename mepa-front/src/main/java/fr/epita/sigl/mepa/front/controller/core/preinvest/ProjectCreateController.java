@@ -69,7 +69,6 @@ public class ProjectCreateController {
         projectService.createProject(newProject);
         newProject.setUser_id(connectedUser.getId());
 
-        projectService.createProject(newProject);
         List<Project> projects = this.projectService.getAllProjects();
 
         if (newProject.getEndDate().before(newProject.getStartDate()))
