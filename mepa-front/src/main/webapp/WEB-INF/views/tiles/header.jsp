@@ -23,23 +23,35 @@
                         <li><a href="${investUrl}">Investissements</a></li>
                         <c:if test="${!isCo}">
                             <c:url var="signin" value="/authentification/signin"/>
-                            <li><a href="${signin}">Se connecter</a></li>
+                            <div class="nav navbar-nav navbar-right">
+                                <li><a href="${signin}">Se connecter</a></li>
+                            <div class="nav navbar-nav navbar-right">
                         </c:if>
                         <c:if test="${isCo == true}">
-                            <c:url var="editUser" value="/authentification/editUser"/>
+                            <div class="nav navbar-nav navbar-right">
+                                <c:url var="editUser" value="/authentification/editUser"/>
+                            </div>
                             <c:choose>
                                 <c:when test='${not empty userCo.firstName}'>
-                                    <li><a href="${editUser}">${userCo.firstName} ${userCo.lastName}</a></li>
+                                    <div class="nav navbar-nav navbar-right">
+                                        <li><a href="${editUser}">${userCo.firstName} ${userCo.lastName}</a></li>
+                                    </div>
                                 </c:when>
                                 <c:otherwise>
-                                    <li><a href="${editUser}">${userCo.login}</a></li>
+                                    <div class="nav navbar-nav navbar-right">
+                                        <li><a href="${editUser}">${userCo.login}</a></li>
+                                    </div>
                                 </c:otherwise>
                             </c:choose>
                             <c:url var="deconnexion" value="/authentification/deconnexion"/>
-                            <li><a href="${deconnexion}">Déconnexion</a></li>
+                            <div class="nav navbar-nav navbar-right">
+                                <li><a href="${deconnexion}">Déconnexion</a></li>
+                            </div>
                         </c:if>
                         <c:if test="${isCo == false}">
-                            <li><a href="${signup}">S'inscrire</a></li>
+                            <div class="nav navbar-nav navbar-right">
+                                <li><a href="${signup}">S'inscrire</a></li>
+                            </div>
                             <c:url var="preinvestCoreUrl" value="/core/preinvest/projectCreate"/>
                         </c:if>
                     </ul>
