@@ -18,7 +18,8 @@ import java.util.*;
 @NamedQueries({
         @NamedQuery(name = "Project.findById", query = "FROM Project p WHERE p.id=:id"),
         @NamedQuery(name = "Project.findAll", query = "FROM Project p ORDER BY p.endDate ASC"),
-        @NamedQuery(name = "Project.findAllUnfinished", query = "FROM Project p WHERE p.endDate > CURRENT_DATE ORDER BY p.endDate ASC")
+        @NamedQuery(name = "Project.findAllUnfinished", query = "FROM Project p WHERE p.endDate > CURRENT_DATE ORDER BY p.endDate ASC"),
+        @NamedQuery(name = "Project.findAllFinished", query = "FROM Project p WHERE p.endDate <= CURRENT_DATE ORDER BY p.endDate ASC")
 })
 public class Project implements Serializable {
 

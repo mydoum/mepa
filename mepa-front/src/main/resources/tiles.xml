@@ -29,6 +29,12 @@
     <definition name="/invalid" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/invalid.jsp"/>
     </definition>
+    <definition name="/project-end-list" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/postinvestment/endedProjectList.jsp"/>
+    </definition>
+    <definition name="/project-end" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/postinvestment/endedProjectList.jsp"/>
+    </definition>
 
     <!-- Authentification -->
     <definition name="/authentification/signup" extends="base.definition">

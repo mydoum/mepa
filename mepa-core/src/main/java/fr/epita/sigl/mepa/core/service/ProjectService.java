@@ -19,4 +19,6 @@ public interface ProjectService {
 
     public List<Project> getAllUnfinishedProjects();
 
+    public List<Project> getAllFinishedProjects();
+
 }
