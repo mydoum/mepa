@@ -91,7 +91,7 @@ public class ProjectDisplayController {
     }
 
     @RequestMapping(value = {"/", "/projectList"}) // The adress to call the function
-    public String projectList(HttpServletRequest request, ModelMap modelMap) {
+    public String projectList(ModelMap modelMap) {
         List<Project> projects = this.projectService.getAllUnfinishedProjects();
 
         for (Project p: projects)
@@ -104,7 +104,7 @@ public class ProjectDisplayController {
     public String projectListInclude(HttpServletRequest request, ModelMap modelMap) {
         /* Code your logic here */
 
-        this.projectList(request, modelMap);
+        this.projectList(modelMap);
         return "/preinvest/projectListInclude"; // The adress of the JSP coded in tiles.xml
     }
 
