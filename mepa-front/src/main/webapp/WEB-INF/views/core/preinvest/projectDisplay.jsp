@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: Valentin ZHENG
   Date: 24/07/2016
@@ -19,7 +19,30 @@
                 .appendTo('#slideshow');
     }, 3000);
 </script>
+<%
+    Integer hitsCount = (Integer)application.getAttribute("hitCounter");
+    ArrayList<String> visits = (ArrayList<String>) application.getAttribute("visits");
+    if (visits == null)
+        visits = new ArrayList<>();
+    String id = request.getSession().getId();
+    if( hitsCount == null || hitsCount == 0 ){
+        hitsCount = 1;
+        visits.add(id);
+    }
+    else {
+        if (!visits.contains(id)) {
+            visits.add(id);
+            ++hitsCount;
+        }
+    }
+    application.setAttribute("hitCounter", hitsCount);
+    System.out.println(visits.size());
+    application.setAttribute("visits", visits);
+%>
 
+<center>
+    <p>Nombre de visiteurs: <%= hitsCount%></p>
+</center>
 <div class="container">
     <header class="title projectHeader">
         <h1 class="short">${project.name}</h1>
