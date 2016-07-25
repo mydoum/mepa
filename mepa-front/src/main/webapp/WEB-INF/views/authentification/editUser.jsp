@@ -42,7 +42,6 @@
                                    value="${userCo.login}">
                         </div>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label">Date de naissance</label>
                         <div class="input-group input-append date" id="datePicker">
@@ -52,17 +51,14 @@
                                 </span>
                         </div>
                         <div class="controls">
-
                         </div>
                     </div>
-
                     <div class="control-group">
                         <!-- Button -->
                         <div class="controls">
                             <button type="submit" class="btn btn-default">Enregistrer</button>
                         </div>
                     </div>
-
                 </fieldset>
 
             </form>
