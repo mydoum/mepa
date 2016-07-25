@@ -1,5 +1,6 @@
 package fr.epita.sigl.mepa.front.controller.postinvestment;
 
+import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,9 @@ import fr.epita.sigl.mepa.front.model.investment.Investor;
 @Controller
 @SessionAttributes({})
 public class PostInvestmentController {
+
+    @Autowired
+    private InvestmentService investmentService;
 
     private static final Logger LOG = LoggerFactory.getLogger(PostInvestmentController.class);
 
