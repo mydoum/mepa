@@ -110,7 +110,7 @@ public class InvestController {
             String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
             model.addAttribute("errorInvest", errorMessage);
         }
-        return "/projectDisplay";
+        return "/preinvest/projectDisplay";
     }
 
     private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
