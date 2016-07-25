@@ -71,7 +71,7 @@ public class AppUserServiceImplUTests {
         userToTest.setId(monId);
 
         AppUser userToTest1 = new AppUser();
-        String testLogin1 = "tahar.sayagh0@gmail.com";
+        String testLogin1 = "tahar.sayagh1@gmail.com";
         userToTest1.setLogin(testLogin1);
 
         String testPwd = "password";
@@ -84,7 +84,6 @@ public class AppUserServiceImplUTests {
         userToTest1.setId(idUser);
 
 
-
         /**
          * Displaying all the variables
          */
@@ -94,9 +93,11 @@ public class AppUserServiceImplUTests {
         assertThat(userToTest.getLastName().equals(nom));
         assertThat(userToTest.getId().equals(monId));
 
+        assertThat(userToTest1.getLogin().equals("tahar.sayagh1@gmail.com"));
+        assertThat(userToTest1.getPassword().equals("password"));
+        assertThat(userToTest1.getFirstName().equals("Simon"));
+        assertThat(userToTest1.getLastName().equals("Mace"));
+        assertThat(userToTest1.getId().equals(idUser));
+
     }
 }
-
-
-
-
