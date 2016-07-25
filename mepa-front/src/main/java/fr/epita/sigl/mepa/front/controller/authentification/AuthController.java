@@ -53,8 +53,8 @@ public class AuthController {
         // Checking if user is login need to handle this in the model
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        if (userCo != null || isCo == true) { // The user in already log in
-            return "/home/home";
+        if (userCo != null || isCo) { // The user in already log in
+            return home.home(request);
         }
         
         List<AppUser> appUsers = this.appUserService.getAllUsers();
@@ -101,8 +101,8 @@ public class AuthController {
     public String showPwd(HttpServletRequest request, ModelMap modelMap) throws ParseException {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        if (userCo != null || isCo == true) { // The user in already log in
-            return "/home/home";
+        if (userCo != null || isCo) { // The user in already log in
+            return home.home(request);
         }
         return "/authentification/resendPwd";
     }
@@ -134,19 +134,27 @@ public class AuthController {
 
     @RequestMapping(value = {"/signin"}, method = {RequestMethod.GET})
     public String getsignin(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if (userCo != null || isCo) { // The user in already log in
+            return home.home(request);
+        }
         return "/authentification/signin";
     }
 
     @RequestMapping(value = {"/signin"}, method = {RequestMethod.POST})
     public String signIn(HttpServletRequest request, ModelMap modelMap) {
-
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if (userCo != null || isCo) { // The user in already log in
+            return home.home(request);
+        }
         String login = request.getParameter("email");
         String pwd = request.getParameter("password");
 
-        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        AppUser userCo = this.appUserService.getUserByLogin(login);
-        if (userCo != null) {
-            AppUser newAppUser = this.appUserService.getUserById(userCo.getId());
+        AppUser signinUser = this.appUserService.getUserByLogin(login);
+        if (signinUser != null) { // the user exist
+            AppUser newAppUser = this.appUserService.getUserById(signinUser.getId());
             if (StringUtils.equals(pwd, newAppUser.getPassword())) {
                 request.getSession().setAttribute("userCo", newAppUser);
                 isCo = true;
@@ -169,26 +177,23 @@ public class AuthController {
 
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        if (userCo != null && isCo) {
+        if (userCo != null || isCo) {
             System.out.println("User deconnexion : " + userCo.getFirstName() + " " + userCo.getLastName());
             request.getSession().removeAttribute("userCo");
             request.getSession().removeAttribute("isCo");
         }
-        return "/home/home";
+        return home.home(request);
     }
 
     @RequestMapping(value = {"/editUser"}, method = {RequestMethod.GET})
     public String showEditUserPage(HttpServletRequest request, ModelMap modelMap) {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        System.out.println("inside showEditUserPage");
         if (userCo != null && isCo) {
             // tu peux afficher les données user
-
             return "/authentification/editUser";
         }
-        return "/home/home";
-//        return "redirect:/home/home"; A tester pour plus tard
+        return home.home(request);
     }
 
     @RequestMapping(value = {"/editUser"}, method = {RequestMethod.POST})
@@ -217,8 +222,7 @@ public class AuthController {
             }
             return "/authentification/editUser";
         }
-        return "/home/home";
-
+        return home.home(request);
     }
 
     @RequestMapping(value = {"/addFakeUser"}, method = {RequestMethod.GET})
