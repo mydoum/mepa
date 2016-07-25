@@ -7,6 +7,7 @@ import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.core.service.*;
 import fr.epita.sigl.mepa.core.service.AppUserService;
+import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayController;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
 
@@ -47,6 +48,8 @@ public class InvestController {
     private RewardService rewardService;
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private ProjectDisplayController projectDisplayController;
 
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
@@ -110,7 +113,8 @@ public class InvestController {
             String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
             model.addAttribute("errorInvest", errorMessage);
         }
-        return "/preinvest/projectDisplay";
+
+        return projectDisplayController.projectDisplay(request, model, projectId);
     }
 
     private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
