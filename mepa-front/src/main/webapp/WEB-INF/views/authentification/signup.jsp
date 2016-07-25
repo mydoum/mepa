@@ -51,7 +51,6 @@
                                    type="password">
                         </div>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label" for="lastname">Nom</label>
                         <div class="controls">

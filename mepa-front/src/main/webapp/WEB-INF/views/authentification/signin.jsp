@@ -26,7 +26,6 @@
                             <input id="email" name="email" placeholder="" class="form-control input-lg" type="email">
                         </div>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label" for="password">Mot de passe</label>
                         <div class="controls">
