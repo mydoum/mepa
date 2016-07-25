@@ -76,7 +76,7 @@
                         <div class="controls">
                             <label class="control-label">Date de naissance</label>
                             <div class="input-group input-append date pad-left-date" id="datePicker">
-                                <input type="text" class="form-control input-lg" name="date"/>
+                                <input type="text" class="form-control input-lg" name="birthdate"/>
                                 <span class="input-group-addon add-on">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
