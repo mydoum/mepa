@@ -175,7 +175,7 @@ public class InvestController {
         //String mail = "simon.mace@epita.fr";
         String mail = "hugo.capes@hotmail.fr";
         String subject = "Merci pour votre contribution au projet alpha";
-        String message = "Votre don s'élève à" + moneyAmount + " euros";
+        String message = "Votre contribution s'élève à" + moneyAmount + " euros";
 
         try {
             sendMail(mail, subject, message);
