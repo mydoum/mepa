@@ -180,10 +180,10 @@ public class AuthController {
     }
 
     @RequestMapping(value = {"/editUser"}, method = {RequestMethod.GET})
-    public String editUser(HttpServletRequest request, ModelMap modelMap) {
+    public String showEditUserPage(HttpServletRequest request, ModelMap modelMap) {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        System.out.println("inside editUsers");
+        System.out.println("inside showEditUserPage");
         if (userCo != null && isCo) {
             // tu peux afficher les données user
 
@@ -191,6 +191,36 @@ public class AuthController {
         }
         return "/home/home";
 //        return "redirect:/home/home"; A tester pour plus tard
+    }
+
+    @RequestMapping(value = {"/editUser"}, method = {RequestMethod.POST})
+    public String editUser(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        System.out.println("inside editUser");
+
+        System.out.println("user pwd = " + userCo.getPassword());
+        if (userCo != null && isCo) {
+            AppUser user = this.appUserService.getUserByLogin(userCo.getLogin());
+            if (user != null) { // the user really exist, it's not a fake
+                String bithDate = request.getParameter("birthdate");
+                String firstName = request.getParameter("firstname");
+                String lastName = request.getParameter("lastname");
+                String login = request.getParameter("email");
+//                String pwd = request.getParameter("password");
+
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setBirthDate(user.getBirthDate());
+                user.setLogin(login);
+
+                this.appUserService.updateUser(user);
+                request.getSession().setAttribute("userCo", user);
+            }
+            return "/authentification/editUser";
+        }
+        return "/home/home";
+
     }
 
     @RequestMapping(value = {"/addFakeUser"}, method = {RequestMethod.GET})

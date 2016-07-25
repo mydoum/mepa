@@ -13,7 +13,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <c:url var="addCustomUserFormActionUrl" value="/authentification/addUser"/>
+            <c:url var="addCustomUserFormActionUrl" value="/authentification/editUser"/>
             <form id="eventForm" class="form-horizontal" action="${addCustomUserFormActionUrl}"
                   modelAttribute="addCustomUserFormBean"
                   method="POST">
@@ -22,17 +22,17 @@
                         <legend class="">Modification du profil</legend>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="lastname">Prénom</label>
+                        <label class="control-label" for="firstname">Prénom</label>
                         <div class="controls">
-                            <input id="lastname" name="lastname" placeholder="" class="form-control input-lg"
+                            <input id="firstname" name="firstname" placeholder="" class="form-control input-lg"
                                    type="text" value="${userCo.firstName}">
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="firstname">Nom</label>
+                        <label class="control-label" for="lastname">Nom</label>
                         <div class="controls">
-                            <input id="firstname" name="firstname" placeholder="" class="form-control input-lg"
+                            <input id="lastname" name="lastname" placeholder="" class="form-control input-lg"
                                    type="text" value="${userCo.lastName}">
                         </div>
                     </div>
