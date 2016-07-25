@@ -19,13 +19,13 @@
                   method="POST">
                 <fieldset>
                     <div id="legend">
-                        <legend class="">Inscription</legend>
+                        <legend class="">Modification de compte</legend>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="lastname">Nom</label>
                         <div class="controls">
                             <input id="lastname" name="lastname" placeholder="" class="form-control input-lg"
-                                   type="text">
+                                   type="text" value="${userCo.firstName}">
                         </div>
                     </div>
 

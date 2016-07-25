@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -187,5 +188,43 @@ public class AuthController {
             return "/authentification/editUser";
         }
         return "/home/home";
+//        return "redirect:/home/home"; A tester pour plus tard
+    }
+
+    @RequestMapping(value = {"/addFakeUser"}, method = {RequestMethod.GET})
+    public String addFakeUser() {
+        AppUser newAppUser = new AppUser();
+
+        ArrayList<String> firstNames = new ArrayList<String>();
+        ArrayList<String> lastNames = new ArrayList<String>();
+        ArrayList<String> logins = new ArrayList<String>();
+        ArrayList<String> pwds = new ArrayList<String>();
+        firstNames.add("Patrick");
+        firstNames.add("test");
+        firstNames.add("toto");
+
+        lastNames.add("Ear");
+        lastNames.add("test");
+        lastNames.add("tata");
+
+        logins.add("patrick.ear@epita.fr");
+        logins.add("test@test.fr");
+        logins.add("toto.tata@tutu.fr");
+
+        pwds.add("123456789");
+        pwds.add("1234567");
+        pwds.add("password");
+
+
+        System.out.println("l 1 = " + firstNames.get(0) + " " + lastNames.get(0)+ " " + logins.get(0));
+        for (int i = 0; i < firstNames.size(); ++i) {
+            newAppUser.setBirthDate(new Date());
+            newAppUser.setFirstName(firstNames.get(i));
+            newAppUser.setLastName(lastNames.get(i));
+            newAppUser.setLogin(logins.get(i));
+            newAppUser.setPassword(pwds.get(i));
+            this.appUserService.createUser(newAppUser);
+        }
+        return "/authentification/signup";
     }
 }
