@@ -25,6 +25,10 @@
                         <li><a href="${investUrl}">Investissements</a></li>
                         <c:url var="signin" value="/authentification/signin"/>
                         <li><a href="${signin}">Se connecter</a></li>
+                        <c:if test="${isCo == true}">
+                            <c:url var="deconnexion" value="/authentification/deconnexion"/>
+                            <li><a href="${deconnexion}">Déconnexion</a></li>
+                        </c:if>
                     </ul>
                 </div>
             </div>

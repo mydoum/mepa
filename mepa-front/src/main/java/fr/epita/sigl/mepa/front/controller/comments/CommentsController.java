@@ -37,7 +37,7 @@ public class CommentsController {
     @RequestMapping(value = {"/", "/{projectId}"}, method = {RequestMethod.POST})
     public String processForm(HttpServletRequest request, ModelMap modelMap, HttpServletResponse response, @PathVariable int projectId) throws IOException {
 
-            String text = request.getParameter("userText");
+        String text = request.getParameter("userText");
             if (text != "") {
                 CommentsModel newCommentsModel = new CommentsModel();
                 newCommentsModel.setData(text);

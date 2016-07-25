@@ -11,6 +11,7 @@
                 <th>Nom du projet</th>
                 <th>Date de fin</th>
                 <th>Description</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -20,6 +21,12 @@
                     <td><a href="<c:url value='/core/preinvest/projectDisplay/${project.id}'/>" >${project.name}</a></td>
                     <td>${project.dateFormat("dd/MM/yyyy",project.endDate)}</td>
                     <td>${project.description}</td>
+                    <!--<td>
+                        Rewards:
+                        <c:forEach items="${project.rewards}" var="reward" varStatus="loop">
+                            - ${reward.name} :${reward.description} <br />
+                        </c:forEach>
+                    </td>--> 
                 </tr>
             </c:forEach>
             </tbody>

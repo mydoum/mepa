@@ -7,7 +7,9 @@ import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
 
 import fr.epita.sigl.mepa.core.service.ProjectService;
+import fr.epita.sigl.mepa.front.controller.investment.InvestController;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,9 @@ public class ProjectDisplayController {
     @Autowired
     private CommentsModelService commentsModelService;
 
+    @Autowired
+    private InvestController investController;
+
 
     @RequestMapping(value = {"/projectDisplay/{projectId}"}) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
@@ -56,11 +61,13 @@ public class ProjectDisplayController {
         modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
         /*\PostInvest Total Amount invested on Project*/
 
+         /*Get the current user in the session in order to know if he is
+        * connected */
         AppUser userco = new AppUser();
-        if ((AppUser) request.getSession().getAttribute("userCo") != null) {
-            userco = (AppUser) request.getSession().getAttribute("userCo");
-        }
+        userco = (AppUser) request.getSession().getAttribute("userCo");
         modelMap.addAttribute("userco", userco);
+
+        investController.investorsList(modelMap, request, project);
 
         List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();
 
@@ -80,7 +87,8 @@ public class ProjectDisplayController {
     public String projectList(ModelMap modelMap) {
         List<Project> projects = this.projectService.getAllUnfinishedProjects();
 
-
+        for (Project p: projects)
+            Hibernate.initialize(p.getRewards());
         modelMap.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
         return "/preinvest/projectList"; // The adress of the JSP coded in tiles.xml
     }
