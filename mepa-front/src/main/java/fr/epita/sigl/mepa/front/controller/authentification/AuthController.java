@@ -2,6 +2,7 @@ package fr.epita.sigl.mepa.front.controller.authentification;
 
 import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.service.AppUserService;
+import fr.epita.sigl.mepa.front.controller.home.HomeController;
 import fr.epita.sigl.mepa.front.user.form.AddCustomUserFormBean;
 import fr.epita.sigl.mepa.front.utilities.Mail;
 import org.apache.commons.lang3.StringUtils;
@@ -39,6 +40,9 @@ public class AuthController {
 
     @Autowired
     private AppUserService appUserService;
+
+    @Autowired
+    private HomeController home;
 
     static private Properties mailServerProperties;
     static private Session getMailSession;
@@ -143,7 +147,7 @@ public class AuthController {
                 isCo = true;
                 request.getSession().setAttribute("isCo", true);
                 modelMap.addAttribute("isCo", isCo);
-                return "/home/home";
+                return home.home(request);
             }
         }
         else {
