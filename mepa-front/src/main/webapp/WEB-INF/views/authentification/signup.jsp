@@ -38,7 +38,6 @@
                     <div id="legend">
                         <legend class="">Inscription</legend>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label" for="email">Adresse e-mail</label>
                         <div class="controls">
