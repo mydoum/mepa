@@ -8,6 +8,7 @@ import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.core.service.*;
 import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayController;
+import fr.epita.sigl.mepa.front.controller.postinvestment.PostInvestmentController;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
 
@@ -50,6 +51,8 @@ public class InvestController {
     private ProjectService projectService;
     @Autowired
     private ProjectDisplayController projectDisplayController;
+    @Autowired
+    private PostInvestmentController postInvestmentController;
 
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
@@ -155,7 +158,6 @@ public class InvestController {
                 listOfInvestors.add(tmpInvestor);
             //}
             totalAmount += amount;
-            System.out.println(totalAmount);
         }
         Collections.sort(listOfInvestors);
         return totalAmount;

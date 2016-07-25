@@ -19,9 +19,6 @@ public class AdminController {
     private Integer clicks = 0;
     private Integer totalAmount = 0;
 
-    @Autowired
-    private ModelService modelService;
-
     @RequestMapping(value = {"/admin"}) // The address to call the function
     public String showForm(HttpServletRequest request, ModelMap modelMap) {
         /* Code your logic here */

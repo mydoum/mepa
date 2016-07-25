@@ -1,4 +1,4 @@
-package fr.epita.sigl.mepa.front.controller.admin;
+package fr.epita.sigl.mepa.front.controller.postinvestment;
 
 import fr.epita.sigl.mepa.core.service.ModelService;
 import org.slf4j.Logger;
@@ -17,10 +17,6 @@ import fr.epita.sigl.mepa.front.model.investment.Investor;
 public class PostInvestmentController {
 
     private static final Logger LOG = LoggerFactory.getLogger(PostInvestmentController.class);
-
-
-    @Autowired
-    private ModelService modelService;
 
     public void groupInvestors(ArrayList<Investor> listOfInvestors, Investor investor) {
 
