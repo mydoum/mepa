@@ -19,7 +19,7 @@
                   method="POST">
                 <fieldset>
                     <div id="legend">
-                        <legend class="">Modification de compte</legend>
+                        <legend class="">Modification du profil</legend>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="lastname">Nom</label>
@@ -33,30 +33,15 @@
                         <label class="control-label" for="firstname">Prénom</label>
                         <div class="controls">
                             <input id="firstname" name="firstname" placeholder="" class="form-control input-lg"
-                                   type="text">
+                                   type="text" value="${userCo.lastName}">
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label class="control-label" for="email">Adresse e-mail</label>
                         <div class="controls">
-                            <input id="email" name="email" placeholder="" class="form-control input-lg" type="email">
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label" for="password">Mot de passe</label>
-                        <div class="controls">
-                            <input id="password" name="password" placeholder="" class="form-control input-lg"
-                                   type="password">
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label" for="password_confirm">Confirmation du mot de passe</label>
-                        <div class="controls">
-                            <input id="password_confirm" name="password_confirm" placeholder=""
-                                   class="form-control input-lg" type="password">
+                            <input id="email" name="email" placeholder="" class="form-control input-lg" type="email"
+                                   value="${userCo.login}">
                         </div>
                     </div>
 
@@ -76,7 +61,7 @@
                     <div class="control-group">
                         <!-- Button -->
                         <div class="controls">
-                            <button type="submit" class="btn btn-default">Inscription</button>
+                            <button type="submit" class="btn btn-default">Enregistrer</button>
                         </div>
                     </div>
 
@@ -84,35 +69,6 @@
 
             </form>
         </div>
-        <br/>
-        <div class="col-md-12 investFormInside">
-            <tr/>
-            <div class="col-md-12 investFormInside">
-                <div class="col-md-8"><h2>Utilisateurs</h2></div>
-            </div>
-            <br/>
-            <table class="col-md-12 table table-striped">
-                <thead>
-                <tr>
-                    <th>Prénom</th>
-                    <th>Nom</th>
-                    <th>Email</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:if test="${usersList.size() > 0}">
-                    <c:forEach items="${usersList}" var="appUser" varStatus="status">
-                        <tr>
-                            <td>${appUser.firstName}</td>
-                            <td>${appUser.lastName}</td>
-                            <td>${appUser.login}</td>
-                        </tr>
-                    </c:forEach>
-                </c:if>
-                </tbody>
-            </table>
-        </div>
-        <br/>
     </div>
 </div>
 
