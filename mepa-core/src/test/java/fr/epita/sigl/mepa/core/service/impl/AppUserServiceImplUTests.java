@@ -50,7 +50,7 @@ public class AppUserServiceImplUTests {
 
 
     @Test
-    public void investmentTest() throws ParseException {
+    public void userTest() throws ParseException {
         /**
          * Create a user, set the variables
          * and get them to test that they been recorded properly
@@ -69,6 +69,8 @@ public class AppUserServiceImplUTests {
         userToTest.setLastName(nom);
         Long monId = 27L;
         userToTest.setId(monId);
+
+
 
         /**
          * Displaying all the variables
