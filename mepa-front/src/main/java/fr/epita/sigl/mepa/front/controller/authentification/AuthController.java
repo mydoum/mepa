@@ -21,11 +21,14 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import static fr.epita.sigl.mepa.front.utilities.Mail.sendMail;
 
@@ -60,13 +63,22 @@ public class AuthController {
     @RequestMapping(value = {"/addUser"}, method = {RequestMethod.POST})
     public String processForm(HttpServletRequest request, ModelMap modelMap) {
         AppUser newAppUser = new AppUser();
-        String bithDate = request.getParameter("birthdate");
+        String birthdate = request.getParameter("birthdate");
         String firstName = request.getParameter("firstname");
         String lastName = request.getParameter("lastname");
         String login = request.getParameter("email");
         String pwd = request.getParameter("password");
 
-        newAppUser.setBirthDate(new Date());
+        // Change string to date
+        DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date birthdateDate = new Date();
+        try {
+            birthdateDate = sourceFormat.parse(birthdate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        newAppUser.setBirthDate(birthdateDate);
         newAppUser.setFirstName(firstName);
         newAppUser.setLastName(lastName);
         newAppUser.setLogin(login);
@@ -74,8 +86,8 @@ public class AuthController {
 
         this.appUserService.createUser(newAppUser);
         System.out.println("Created new user : " + newAppUser.getFirstName() + " " + newAppUser.getLastName());
-        String msg = "Le compte a bien été créé";
-        modelMap.addAttribute("userIsCreated", msg);
+//        String msg = "Le compte a bien été créé";
+//        modelMap.addAttribute("userIsCreated", msg);
         List<AppUser> appUsers = this.appUserService.getAllUsers();
         modelMap.addAttribute("usersList", appUsers);
         return "/authentification/signup";
