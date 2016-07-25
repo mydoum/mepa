@@ -3,6 +3,10 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css"/>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css"/>
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+<script src="http://formvalidation.io/vendor/formvalidation/js/formValidation.min.js"></script>
+<script src="http://formvalidation.io/vendor/formvalidation/js/framework/bootstrap.min.js"></script>
+
 <style type="text/css">
     /**
      * Override feedback icon position
@@ -12,6 +16,15 @@
         top: 0;
         right: -15px;
     }
+
+    .pad-left-date {
+        left: -83px;
+    }
+
+    .margin-date-bottom {
+        margin-top: -25px;
+    }
+
 </style>
 
 <div class="container">
@@ -68,16 +81,15 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">Date de naissance</label>
-                        <div class="input-group input-append date" id="datePicker">
-                            <input type="text" class="form-control input-lg" name="date"/>
-                            <span class="input-group-addon add-on">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                        </div>
-                        <i class="help-block">(Facultatif)</i>
                         <div class="controls">
-
+                            <label class="control-label">Date de naissance</label>
+                            <div class="input-group input-append date pad-left-date" id="datePicker">
+                                <input type="text" class="form-control input-lg" name="date"/>
+                                <span class="input-group-addon add-on">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                            </div>
+                            <i class="help-block margin-date-bottom">(Facultatif)</i>
                         </div>
                     </div>
 
@@ -123,10 +135,6 @@
         <br/>
     </div>
 </div>
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
-<script src="http://formvalidation.io/vendor/formvalidation/js/formValidation.min.js"></script>
-<script src="http://formvalidation.io/vendor/formvalidation/js/framework/bootstrap.min.js"></script>
 
 <script>
     $(document).ready(function () {
