@@ -80,6 +80,7 @@ public class ProjectDisplayController {
         }
 
         modelMap.addAttribute("new_c_models",new_c_models);
+
         return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
     }
 
