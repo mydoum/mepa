@@ -59,7 +59,6 @@
                         </div>
                         <i class="help-block">(Facultatif)</i>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label" for="firstname">Prénom</label>
                         <div class="controls">

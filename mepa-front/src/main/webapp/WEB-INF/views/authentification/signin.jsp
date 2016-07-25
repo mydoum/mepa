@@ -43,7 +43,6 @@
                             <a class="btn" href="/authentification/resendPwd">Mot de passe oublié ?</a>
                         </div>
                     </div>
-
                 </fieldset>
 
             </form>

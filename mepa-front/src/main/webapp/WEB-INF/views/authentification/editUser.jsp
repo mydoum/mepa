@@ -35,7 +35,6 @@
                                    type="text" value="${userCo.lastName}">
                         </div>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label" for="email">Adresse e-mail</label>
                         <div class="controls">
