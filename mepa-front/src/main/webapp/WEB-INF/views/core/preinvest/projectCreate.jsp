@@ -15,6 +15,21 @@
 <body>
     <div class="container">
         <c:if test="${is_connected}">
+            <c:if test="${is_unique}">
+                <div class="alert alert-warning">
+                    Ce nom de projet est déjà pris : veuillez choisir un autre nom
+                </div>
+            </c:if>
+            <c:if test="${is_null}">
+                <div class="alert alert-warning">
+                    Vous devez rentrez un nom de projet pour créer le projet
+                </div>
+            </c:if>
+            <c:if test="${is_date}">
+                <div class="alert alert-warning">
+                    La date de fin ne peut être antérieur à la date de début
+                </div>
+            </c:if>
             <sf:form method="post" modelAttribute="newProject" action="processCreation">
                 <div class="control-group">
                     <label class="control-label">Nom du projet</label>
