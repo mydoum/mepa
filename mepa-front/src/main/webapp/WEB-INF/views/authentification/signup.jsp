@@ -55,14 +55,6 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="password_confirm">Confirmation du mot de passe</label>
-                        <div class="controls">
-                            <input id="password_confirm" name="password_confirm" placeholder=""
-                                   class="form-control input-lg" type="password">
-                        </div>
-                    </div>
-
-                    <div class="control-group">
                         <label class="control-label" for="lastname">Nom</label>
                         <div class="controls">
                             <input id="lastname" name="lastname" placeholder="" class="form-control input-lg"
