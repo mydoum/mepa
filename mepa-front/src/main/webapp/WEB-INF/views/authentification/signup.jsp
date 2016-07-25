@@ -130,11 +130,12 @@
 
 <script>
     $(document).ready(function () {
+
         $('#datePicker')
                 .datepicker({
                     format: 'dd/mm/yyyy',
                     startDate: '01/01/1900',
-                    maxDate: 'today'
+                    endDate: '26/07/2016'
                 })
                 .on('changeDate', function (e) {
                     // Revalidate the date field
@@ -177,7 +178,7 @@
                         birthdate: {
                             format: 'DD/MM/YYYY',
                             min: '01/01/1900',
-                            max: 'today',
+                            max: '26/07/2016',
                             message: "La date n'est pas valide"
                         }
                     }
