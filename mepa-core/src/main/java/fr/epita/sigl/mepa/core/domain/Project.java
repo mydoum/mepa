@@ -51,7 +51,15 @@ public class Project implements Serializable {
     @JoinColumn(name="project_id")
     private Set<Reward> rewards;
 
-    /*
+    private Long goalAmount;
+
+    private Long visitNumber;
+
+    private boolean isTwitterAllowed;
+
+    private boolean isFacebookAllowed;
+
+/*
 * ID
 * Name
 * UserID
@@ -160,6 +168,42 @@ public class Project implements Serializable {
 
     public Boolean isFinished() {
         return this.endDate.after(new Date());
+    }
+
+    public Long getGoalAmount() {
+        return goalAmount;
+    }
+
+    public void setGoalAmount(Long goalAmount) {
+        this.goalAmount = Math.abs(goalAmount);
+    }
+
+    public Long getVisitNumber() {
+        return visitNumber;
+    }
+
+    public void setVisitNumber(Long visitNumber) {
+        this.visitNumber = visitNumber;
+    }
+
+    public void increaseVisits() {
+        ++this.visitNumber;
+    }
+
+    public boolean isTwitterAllowed() {
+        return isTwitterAllowed;
+    }
+
+    public void setTwitterAllowed(boolean twitterAllowed) {
+        isTwitterAllowed = twitterAllowed;
+    }
+
+    public boolean isFacebookAllowed() {
+        return isFacebookAllowed;
+    }
+
+    public void setFacebookAllowed(boolean displayAllowed) {
+        isFacebookAllowed = displayAllowed;
     }
 
     @Override
