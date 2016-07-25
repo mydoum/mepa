@@ -155,6 +155,7 @@ public class InvestController {
                 listOfInvestors.add(tmpInvestor);
             //}
             totalAmount += amount;
+            System.out.println(totalAmount);
         }
         Collections.sort(listOfInvestors);
         return totalAmount;
@@ -174,8 +175,8 @@ public class InvestController {
 
         //String mail = "simon.mace@epita.fr";
         String mail = "hugo.capes@hotmail.fr";
-        String subject = "Merci pour votre contribution au projet alpha";
-        String message = "Votre contribution s'élève à" + moneyAmount + " euros";
+        String subject = "Merci pour votre contribution au projet " + tmpProject.getName();
+        String message = "Votre contribution est de" + moneyAmount + " euros";
 
         try {
             sendMail(mail, subject, message);
