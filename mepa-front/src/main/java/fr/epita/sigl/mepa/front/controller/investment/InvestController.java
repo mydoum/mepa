@@ -83,8 +83,10 @@ public class InvestController {
         /**
          * Check is the user is signed-in
          */
-        if (session.getAttribute("userCo")==null)
+        String errorCo = "Veuillez vous identifier pour investir dans un projet";
+        if ((boolean) request.getSession().getAttribute("isCo")==false)
             return "/authentification/signin";
+
 
         /**
          * Trying if the getted input is a number or not. If the input is not a number
