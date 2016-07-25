@@ -56,6 +56,15 @@ public class InsertDummyController {
         return new Date(ms);
     }
 
+    private Date getRandomDateFinishedDate()
+    {
+        long min_date = new Date("01/01/2016").getTime();
+        long ms = min_date - (Math.abs(rand.nextLong()) % (365 * 24 * 60 * 60 * 1000 * 70L));
+
+        // Construct a date
+        return new Date(ms);
+    }
+
     @RequestMapping(value = {"/"}) // The adress to call the function
     public String insertDummy(HttpServletRequest request, ModelMap modelMap) {
 
@@ -118,6 +127,40 @@ public class InsertDummyController {
 
         }
 
+        for (int i = 0; i < 20; ++i) {
+            rand.nextLong();
+            Project newProject = new Project((long) 1, "YoloSwag", getRandomDateFinishedDate());
+            Date d = getRandomDateFinishedDate();
+            while (d.after(newProject.getEndDate()))
+                d = getRandomDateFinishedDate();
+
+
+            newProject.setStartDate(d);
+            ArrayList<String> imageLinkList = new ArrayList<>();
+            imageLinkList.add("http://www.gobadges.com/v/vspfiles/photos/CD0564-2.jpg");
+            imageLinkList.add("http://www.nyan.cat/images/cat/4.gif");
+            newProject.setImagesLinks(imageLinkList);
+            newProject.setDescription("Gildas est trop beau");
+
+
+
+            this.projectService.createProject(newProject);
+
+            Set<Reward> rewards = new HashSet<>();
+
+            for (int j = 0; j < 10; ++j) {
+                Reward r = new Reward();
+                r.setName("Gildas est beau" + j);
+                r.setDescription("This is a description");
+                r.setCostStart((long) 10);
+                this.rewardService.createReward(r);
+                rewards.add(r);
+            }
+
+            newProject.setRewards(rewards);
+            this.projectService.updateProject(newProject);
+
+        }
         /* INVEST*/
         for (int i = 0; i < 100; i++) {
             Investment invest = new Investment();

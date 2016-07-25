@@ -7,6 +7,7 @@ import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.core.service.*;
 import fr.epita.sigl.mepa.core.service.AppUserService;
+import fr.epita.sigl.mepa.front.controller.postinvestment.PostInvestmentController;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
 
@@ -47,6 +48,8 @@ public class InvestController {
     private RewardService rewardService;
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private PostInvestmentController postInvestmentController;
 
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
@@ -137,11 +140,11 @@ public class InvestController {
             }
             email = tmpUser.getLogin();
             Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created, anonymous);
-            /*if (project.isfinished && investorIsPresent) {
-                insertinto(listOfInvestors, tmpInvestor);
-            } else {*/
+            if (project.isFinished() && investorIsPresent) {
+                postInvestmentController.groupInvestors(listOfInvestors, tmpInvestor);
+            } else {
                 listOfInvestors.add(tmpInvestor);
-            //}
+            }
             totalAmount += amount;
         }
         Collections.sort(listOfInvestors);
@@ -215,8 +218,7 @@ public class InvestController {
         model.addAttribute("projectId", projectId);
         model.addAttribute("rewardId", rewardId);
 
-        String return_string = "/invest/rewardpay";
-        return return_string; // The adress of the JSP coded in tiles.xml
+        return "/invest/rewardpay"; // The adress of the JSP coded in tiles.xml
     }
 
     @RequestMapping(value = "/invest/{projectId}/rewardpay/{rewardId}/invest", method = RequestMethod.POST)
