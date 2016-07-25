@@ -27,7 +27,6 @@
                     </div>
 
                 </fieldset>
-
             </form>
         </div>
         <c:choose>
