@@ -48,8 +48,8 @@ public class AuthController {
     static private Session getMailSession;
     static private MimeMessage generateMailMessage;
 
-    @RequestMapping(value = {"/auth"}, method = {RequestMethod.GET})
-    public String showAuth(HttpServletRequest request, ModelMap modelMap) {
+    @RequestMapping(value = {"/signup"}, method = {RequestMethod.GET})
+    public String showSignUpPage(HttpServletRequest request, ModelMap modelMap) {
         // Checking if user is login need to handle this in the model
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
