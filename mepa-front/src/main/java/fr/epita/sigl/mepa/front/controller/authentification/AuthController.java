@@ -157,6 +157,7 @@ public class AuthController {
                 request.getSession().setAttribute("userCo", newAppUser);
                 isCo = true;
                 request.getSession().setAttribute("isCo", true);
+                request.getSession().setAttribute("oneTime", true);
                 modelMap.addAttribute("isCo", isCo);
                 return home.home(request);
             }
@@ -178,6 +179,9 @@ public class AuthController {
             request.getSession().removeAttribute("userCo");
             request.getSession().removeAttribute("isCo");
         }
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
+            request.getSession().removeAttribute("oneTime");
+        }
         return home.home(request);
     }
 
@@ -188,6 +192,9 @@ public class AuthController {
         if (userCo != null && isCo) {
             // tu peux afficher les données user
             return "/authentification/editUser";
+        }
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
+            request.getSession().removeAttribute("oneTime");
         }
         return home.home(request);
     }
@@ -216,6 +223,9 @@ public class AuthController {
                 request.getSession().setAttribute("userCo", user);
             }
             return "/authentification/editUser";
+        }
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
+            request.getSession().removeAttribute("oneTime");
         }
         return home.home(request);
     }
