@@ -40,8 +40,7 @@
                 <nav class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active">
-                            <a href="/core/preinvest/projectDisplay/${project.id}">Accueil de la page du projet
-                                : ${project.name}</a>
+                            <a href="/core/preinvest/projectDisplay/${project.id}">${project.name}</a>
                         </li>
                         <li>
                             <a href="/core/preinvest/projectDisplay/${project.id}/comment">Commentaires</a>

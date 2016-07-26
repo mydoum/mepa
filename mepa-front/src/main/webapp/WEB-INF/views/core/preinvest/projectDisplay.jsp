@@ -7,9 +7,6 @@
 --%>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
-
-<script>
-</script>
 <%
     Integer hitsCount = (Integer)application.getAttribute("hitCounter");
     ArrayList<String> visits = (ArrayList<String>) application.getAttribute("visits");
@@ -31,9 +28,6 @@
     application.setAttribute("visits", visits);
 %>
 
-<center>
-
-</center>
 <div class="container">
     <header class="title projectHeader">
         <h1 class="short">${project.name}</h1>
@@ -58,8 +52,7 @@
                 <nav class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active">
-                            <a href="/core/preinvest/projectDisplay/${project.id}">Accueil de la page du projet
-                                : ${project.name}</a>
+                            <a href="/core/preinvest/projectDisplay/${project.id}">${project.name}</a>
                         </li>
                         <li>
                             <a href="/core/preinvest/projectDisplay/${project.id}/comment">Commentaires</a>
@@ -81,8 +74,7 @@
                         <div class="date">${project.dateFormat("dd/MM/yyyy", project.startDate)}</div>
                         <div class="date">Date de fin:</div>
                         <div class="date">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
-
-
+                        <div class="date">Nombre de contributeurs : ${nbrContributos}</div>
                     </div>
                 </div>
                 <%-- Part of the page for Social buttons --%>
@@ -139,7 +131,7 @@
                 <table class="col-md-12 table table-striped">
                     <thead>
                     <tr>
-                        <th>Prénom ou email</th>
+                        <th>Investisseurs</th>
                         <th>Contribution</th>
                     </tr>
                     </thead>
@@ -265,6 +257,12 @@
         </div>
     </aside>
 </div>
+
+<script>
+    var stepSlider = ${project.goalAmount} * 0.1;
+    stepSlider = stepSlider.toFixed();
+    var maxSlider = ${project.goalAmount};
+</script>
 
 <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
 <script src="${investSliderJs}"></script>
