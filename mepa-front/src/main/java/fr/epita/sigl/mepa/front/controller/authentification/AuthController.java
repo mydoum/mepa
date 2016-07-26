@@ -71,6 +71,14 @@ public class AuthController {
         newAppUser.setBirthDate(birthdateDate);
         newAppUser.setFirstName(firstName);
         newAppUser.setLastName(lastName);
+        AppUser userTest = new AppUser();
+        userTest = this.appUserService.getUserByLogin(login);
+        if (userTest.toString() == "")
+            newAppUser.setLogin(login);
+        if (userTest != null){
+            modelMap.addAttribute("isNotCreated", true);
+            return home.home(request);
+        }
         newAppUser.setLogin(login);
         newAppUser.setPassword(pwd);
 
