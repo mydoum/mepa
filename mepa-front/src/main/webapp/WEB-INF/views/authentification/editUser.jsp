@@ -28,7 +28,6 @@
                                    type="text" value="${userCo.firstName}">
                         </div>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label" for="lastname">Nom</label>
                         <div class="controls">
@@ -36,7 +35,6 @@
                                    type="text" value="${userCo.lastName}">
                         </div>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label" for="email">Adresse e-mail</label>
                         <div class="controls">
@@ -44,7 +42,6 @@
                                    value="${userCo.login}">
                         </div>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label">Date de naissance</label>
                         <div class="input-group input-append date" id="datePicker">
@@ -54,17 +51,14 @@
                                 </span>
                         </div>
                         <div class="controls">
-
                         </div>
                     </div>
-
                     <div class="control-group">
                         <!-- Button -->
                         <div class="controls">
                             <button type="submit" class="btn btn-default">Enregistrer</button>
                         </div>
                     </div>
-
                 </fieldset>
 
             </form>

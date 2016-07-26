@@ -70,6 +70,18 @@ public class AppUserServiceImplUTests {
         Long monId = 27L;
         userToTest.setId(monId);
 
+        AppUser userToTest1 = new AppUser();
+        String testLogin1 = "tahar.sayagh1@gmail.com";
+        userToTest1.setLogin(testLogin1);
+
+        String testPwd = "password";
+        userToTest1.setPassword(testPwd);
+        String firstname = "Simon";
+        userToTest1.setFirstName(firstname);
+        String lastname = "Mace";
+        userToTest1.setLastName(lastname);
+        Long idUser = 27L;
+        userToTest1.setId(idUser);
 
 
         /**
@@ -81,9 +93,11 @@ public class AppUserServiceImplUTests {
         assertThat(userToTest.getLastName().equals(nom));
         assertThat(userToTest.getId().equals(monId));
 
+        assertThat(userToTest1.getLogin().equals("tahar.sayagh1@gmail.com"));
+        assertThat(userToTest1.getPassword().equals("password"));
+        assertThat(userToTest1.getFirstName().equals("Simon"));
+        assertThat(userToTest1.getLastName().equals("Mace"));
+        assertThat(userToTest1.getId().equals(idUser));
+
     }
 }
-
-
-
-

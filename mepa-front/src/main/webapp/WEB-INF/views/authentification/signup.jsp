@@ -44,7 +44,6 @@
                             <input id="email" name="email" placeholder="" class="form-control input-lg" type="email">
                         </div>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label" for="password">Mot de passe</label>
                         <div class="controls">
@@ -52,7 +51,6 @@
                                    type="password">
                         </div>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label" for="lastname">Nom</label>
                         <div class="controls">
@@ -61,7 +59,6 @@
                         </div>
                         <i class="help-block">(Facultatif)</i>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label" for="firstname">Prénom</label>
                         <div class="controls">
