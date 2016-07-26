@@ -23,9 +23,9 @@
                     <ul class="nav navbar-nav navbar-right">
                         <c:if test="${!isCo}">
                             <c:url var="signin" value="/authentification/signin"/>
-                            <c:url var="signup" value="/authentification/signup"/>
+                            <%-- <c:url var="signup" value="/authentification/signup"/>--%>
                             <li><a href="${signin}"><span class="glyphicon glyphicon-log-in"></span>  Se connecter</a></li>
-                            <li><a href="${signup}"><span class="glyphicon glyphicon-user"></span>  S'inscrire</a></li>
+                            <%--<li><a href="${signup}"><span class="glyphicon glyphicon-user"></span>  S'inscrire</a></li>--%>
                         </c:if>
                         <c:if test="${isCo == true}">
                             <c:url var="editUser" value="/authentification/editUser"/>
