@@ -3,12 +3,9 @@ package fr.epita.sigl.mepa.front.controller.core.preinvest;
 /**
  * Created by Xavier on 21/07/2016.
  */
-import fr.epita.sigl.mepa.core.dao.impl.ProjectDaoImpl;
 import fr.epita.sigl.mepa.core.domain.AppUser;
-import fr.epita.sigl.mepa.core.domain.Model;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.ProjectService;
-import org.hibernate.annotations.SourceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Null;
-import java.io.Console;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -42,7 +34,7 @@ public class ProjectCreateController {
     private ProjectService projectService;
 
     @Autowired
-    private ProjectDisplayController projectDisplayController;
+    private RewardAddController rewardAddController;
 
     @RequestMapping(value = {"/projectCreate"}, method = RequestMethod.GET) // The adress to call the function
     public String projectCreate(HttpServletRequest request, ModelMap modelMap) {
@@ -66,10 +58,9 @@ public class ProjectCreateController {
         //model.addAttribute("Retour", newProject.getName() + newProject.getEndDate() + newProject.getDescription());
 
         AppUser connectedUser = (AppUser) request.getSession().getAttribute("userCo");
-        projectService.createProject(newProject);
         newProject.setUser_id(connectedUser.getId());
-
         projectService.createProject(newProject);
+
         List<Project> projects = this.projectService.getAllProjects();
 
         if (newProject.getEndDate().before(newProject.getStartDate()))
@@ -89,7 +80,7 @@ public class ProjectCreateController {
                 }
             }
         }
-        return projectDisplayController.projectList(model);
+        return this.rewardAddController.display(newProject.getId(), model);
     }
 
 

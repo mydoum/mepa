@@ -1,26 +1,25 @@
 package fr.epita.sigl.mepa.front.controller.core.preinvest;
 
-import fr.epita.sigl.mepa.core.domain.*;
-import fr.epita.sigl.mepa.core.service.InvestmentService;
-
+import fr.epita.sigl.mepa.core.domain.AppUser;
+import fr.epita.sigl.mepa.core.domain.CommentsModel;
+import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
-
+import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import fr.epita.sigl.mepa.front.controller.investment.InvestController;
-import fr.epita.sigl.mepa.front.model.investment.Investor;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -93,7 +92,7 @@ public class ProjectDisplayController {
         else
         {
             modelMap.addAttribute("new_c_models",new_c_models);
-        return "/preinvest/projectDisplay-noAdmin";
+        return "/preinvest/projectDisplay";
         }     // The adress of the JSP coded in tiles.xml
     }
 

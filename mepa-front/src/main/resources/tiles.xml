@@ -84,6 +84,13 @@
         <put-attribute name="title" value="createProject.title"/>
     </definition>
 
+    <definition name="/preinvest/rewardAdd" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/core/preinvest/rewardAdd.jsp"/>
+    </definition>
+
+    <definition name="/preinvest/rewardCreate" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/core/preinvest/rewardCreate.jsp"/>
+    </definition>
     <!-- Comments -->
     <definition name="/comments/core/comment_form" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/comments/core/comment_form.jsp"/>
