@@ -22,7 +22,7 @@
                 <c:forEach items="${new_c_models}" var="c_model" varStatus="loop">
                         <c:if test="${c_model.projectId == project.id}">
                             <tr>
-                                <td>${userco.firstName} ${userco.lastName}</td>
+                                <td>${c_model.user}</td>
                                 <td><fmt:formatDate value="${c_model.created}" pattern="HH:mm:ss"/></td>
                                 <td>${c_model.data}</td>
                             </tr>

@@ -21,7 +21,6 @@ public class CommentsDaoImpl implements CommentsModelDao
     private SessionFactory sessionFactory;
 
     private Session getSession() {
-        System.out.println("JE SUIS DANS LE DAO");
         return this.sessionFactory.getCurrentSession();
     }
 
