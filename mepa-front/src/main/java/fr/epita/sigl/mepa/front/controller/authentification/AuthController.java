@@ -34,10 +34,6 @@ public class AuthController {
     @Autowired
     private HomeController home;
 
-    static private Properties mailServerProperties;
-    static private Session getMailSession;
-    static private MimeMessage generateMailMessage;
-
     @RequestMapping(value = {"/signup"}, method = {RequestMethod.GET})
     public String showSignUpPage(HttpServletRequest request, ModelMap modelMap) {
         // Checking if user is login need to handle this in the model
@@ -75,7 +71,13 @@ public class AuthController {
         newAppUser.setBirthDate(birthdateDate);
         newAppUser.setFirstName(firstName);
         newAppUser.setLastName(lastName);
-        newAppUser.setLogin(login);
+        AppUser userTest = new AppUser();
+        if (this.appUserService.getUserByLogin(login) == null)
+            newAppUser.setLogin(login);
+        else {
+            modelMap.addAttribute("isNotCreated", true);
+            return "/authentification/signup";
+        }
         newAppUser.setPassword(pwd);
 
         this.appUserService.createUser(newAppUser);
@@ -83,7 +85,11 @@ public class AuthController {
 //        modelMap.addAttribute("userIsCreated", msg);
         List<AppUser> appUsers = this.appUserService.getAllUsers();
         modelMap.addAttribute("usersList", appUsers);
-        return "/authentification/signin";
+        request.getSession().setAttribute("userCo", newAppUser);
+        request.getSession().setAttribute("isCo", true);
+        request.getSession().setAttribute("oneTime", true);
+        modelMap.addAttribute("isCo", true);
+        return home.home(request);
     }
 
     @RequestMapping(value = {"/resendPwd"}, method = {RequestMethod.GET})
@@ -109,7 +115,7 @@ public class AuthController {
                 String text = "Cette information est strictement privée." + "<br> Voici votre mot de passe: \""
                         + recipient.getPassword() + "\". <br><br> Cordialement, <br>l'équipe MEPA";
                 isSent = sendMail(recipient.getLogin(), obj, text);
-                modelMap.addAttribute("isSent", isSent);
+                modelMap.addAttribute("isNotSent", false);
                 modelMap.addAttribute("email", recipient.getLogin());
             } catch (Exception e) {
                 modelMap.addAttribute("isNotSent", true);
@@ -157,16 +163,19 @@ public class AuthController {
                 request.getSession().setAttribute("userCo", newAppUser);
                 isCo = true;
                 request.getSession().setAttribute("isCo", true);
+                request.getSession().setAttribute("oneTime", true);
                 modelMap.addAttribute("isCo", isCo);
                 return home.home(request);
+            }
+            else {
+                modelMap.addAttribute("pwdFalse", true);
+                return "/authentification/signin";
             }
         }
         else {
             modelMap.addAttribute("pwdFalse", true);
             return "/authentification/signin";
         }
-
-        return "/authentification/signin";
     }
 
     @RequestMapping(value = {"/deconnexion"}, method = {RequestMethod.GET})
@@ -177,6 +186,9 @@ public class AuthController {
         if (userCo != null && isCo) {
             request.getSession().removeAttribute("userCo");
             request.getSession().removeAttribute("isCo");
+        }
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
+            request.getSession().removeAttribute("oneTime");
         }
         return home.home(request);
     }
@@ -189,6 +201,9 @@ public class AuthController {
             // tu peux afficher les données user
             return "/authentification/editUser";
         }
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
+            request.getSession().removeAttribute("oneTime");
+        }
         return home.home(request);
     }
 
@@ -197,25 +212,35 @@ public class AuthController {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
 
-        System.out.println("user pwd = " + userCo.getPassword());
         if (userCo != null && isCo) {
             AppUser user = this.appUserService.getUserByLogin(userCo.getLogin());
             if (user != null) { // the user really exist, it's not a fake
-                String bithDate = request.getParameter("birthdate");
                 String firstName = request.getParameter("firstname");
                 String lastName = request.getParameter("lastname");
                 String login = request.getParameter("email");
-//                String pwd = request.getParameter("password");
-
+                String description = request.getParameter("description");
+                String address = request.getParameter("address");
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
-                user.setBirthDate(user.getBirthDate());
-                user.setLogin(login);
+                AppUser userTest = new AppUser();
+                userTest = this.appUserService.getUserByLogin(login);
+                if (userTest.toString() == "")
+                    user.setLogin(login);
+                if (userTest != null){
+                    modelMap.addAttribute("isNotEdited", true);
+                    return "/authentification/editUser";
+                }
+                user.setDescription(description);
+                user.setAddress(address);
 
                 this.appUserService.updateUser(user);
                 request.getSession().setAttribute("userCo", user);
             }
+            modelMap.addAttribute("isEdited", true);
             return "/authentification/editUser";
+        }
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
+            request.getSession().removeAttribute("oneTime");
         }
         return home.home(request);
     }

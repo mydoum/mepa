@@ -55,4 +55,10 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getAllUnfinishedProjects() {
         return this.projectDao.getAllUnfinished();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Project> getAllFinishedProjects() {
+        return this.projectDao.getAllFinished();
+    }
 }

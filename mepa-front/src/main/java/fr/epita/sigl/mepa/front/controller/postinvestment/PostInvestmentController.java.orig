@@ -2,7 +2,10 @@ package fr.epita.sigl.mepa.front.controller.postinvestment;
 
 import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.CommentsModel;
+<<<<<<< 87e83ea814ecb7cfdae833f46431b26ca3138045
 import fr.epita.sigl.mepa.core.domain.Investment;
+=======
+>>>>>>> [POSTINVEST] Added Finished Project List
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ModelService;
@@ -30,6 +33,7 @@ public class PostInvestmentController {
 
     protected static final String PROJECT_ATTRIBUTE = "project";
     protected static final String PROJECTS_LIST_ATTRIBUTE = "project_list";
+<<<<<<< 87e83ea814ecb7cfdae833f46431b26ca3138045
     /*PostInvest Total Amount invested on Project*/
     protected static final String PROJECT_TOTAL_AMOUNT = "totalProjectAmountInvested";
 
@@ -38,9 +42,14 @@ public class PostInvestmentController {
 
     @Autowired
     private InvestController investController;
+=======
+>>>>>>> [POSTINVEST] Added Finished Project List
 
     @Autowired
-    private InvestmentService investmentService;
+    private ProjectService projectService;
+
+    @Autowired
+    private InvestController investController;
 
     private static final Logger LOG = LoggerFactory.getLogger(PostInvestmentController.class);
 
@@ -49,11 +58,19 @@ public class PostInvestmentController {
         List<Project> projects = this.projectService.getAllFinishedProjects();
         for (Project p: projects)
                 Hibernate.initialize(p.getRewards());
+<<<<<<< 87e83ea814ecb7cfdae833f46431b26ca3138045
         model.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
 
         return "/project-end-list";
     }
 
+=======
+        model.addAttribute("project_list", projects);
+
+        return "/project-end-list";
+    }
+/*
+>>>>>>> [POSTINVEST] Added Finished Project List
     @RequestMapping(value = "/project", method = RequestMethod.GET)
     public String displayEndedProject(ModelMap model, HttpServletRequest request, Project project) {
         float totalAmount = 0.00f;
@@ -67,6 +84,7 @@ public class PostInvestmentController {
 
     @RequestMapping(value = {"/projectDisplay/{projectId}"}) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
+<<<<<<< 87e83ea814ecb7cfdae833f46431b26ca3138045
         /* Code your logic here */
         Project project = this.projectService.getProjectById(projectId);
         modelMap.addAttribute(PROJECT_ATTRIBUTE, project);
@@ -78,12 +96,29 @@ public class PostInvestmentController {
 
          /*Get the current user in the session in order to know if he is
         * connected */
+=======
+        /* Code your logic here *
+        Project project = this.projectService.getProjectById(projectId);
+        modelMap.addAttribute(PROJECT_ATTRIBUTE, project);
+
+        /*PostInvest Total Amount invested on Project*
+        Float totalProjectAmountInvested = getProjectMoneyInvested(projectId);
+        modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
+        /*\PostInvest Total Amount invested on Project*
+
+         /*Get the current user in the session in order to know if he is
+        * connected *
+>>>>>>> [POSTINVEST] Added Finished Project List
         AppUser userco = new AppUser();
         userco = (AppUser) request.getSession().getAttribute("userCo");
         modelMap.addAttribute("userco", userco);
 
         investController.investorsList(modelMap, request, project);
+<<<<<<< 87e83ea814ecb7cfdae833f46431b26ca3138045
         /*
+=======
+
+>>>>>>> [POSTINVEST] Added Finished Project List
         List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();
 
         /*Sort of the comments by the arriving tickets*
@@ -95,10 +130,16 @@ public class PostInvestmentController {
         }
 
         modelMap.addAttribute("new_c_models",new_c_models);
+<<<<<<< 87e83ea814ecb7cfdae833f46431b26ca3138045
         */
         return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
     }
 
+=======
+        return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
+    }
+*/
+>>>>>>> [POSTINVEST] Added Finished Project List
     public void groupInvestors(ArrayList<Investor> listOfInvestors, Investor investor) {
 
         if (investor.isAnonymous()) {

@@ -67,6 +67,34 @@ public class ProjectDisplayController {
         modelMap.addAttribute("userco", userco);
 
         /* Check if the user connected is the administrator of the projet */
+        if (userco != null && project != null && ((userco.getId().equals(project.getUser_id()))
+                || (userco.getFirstName().compareTo("Admin") == 0)))
+            request.getSession().setAttribute("isAdmin", "true");
+        else
+            request.getSession().setAttribute("isAdmin", "false");
+
+        investController.investorsList(modelMap, request, project);
+        return "/preinvest/projectDisplay";
+    }
+
+    @RequestMapping(value = {"/projectDisplay/{projectId}/comment"}) // The adress to call the function
+    public String projectDisplayComment(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
+        /* Code your logic here */
+        Project project = this.projectService.getProjectById(projectId);
+        modelMap.addAttribute(PROJECT_ATTRIBUTE, project);
+
+        /*PostInvest Total Amount invested on Project*/
+        Float totalProjectAmountInvested = getProjectMoneyInvested(projectId);
+        modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
+        /*\PostInvest Total Amount invested on Project*/
+
+         /*Get the current user in the session in order to know if he is
+        * connected */
+        AppUser userco = new AppUser();
+        userco = (AppUser) request.getSession().getAttribute("userCo");
+        modelMap.addAttribute("userco", userco);
+
+        /* Check if the user connected is the administrator of the projet */
         if (userco != null && userco.getId() == project.getUser_id())
             request.getSession().setAttribute("isAdmin", "true");
 
@@ -76,8 +104,6 @@ public class ProjectDisplayController {
         investController.investorsList(modelMap, request, project);
 
         List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();
-
-
         /*Sort of the comments by the arriving tickets*/
         List<CommentsModel>new_c_models = new ArrayList<CommentsModel>();
         ListIterator<CommentsModel> i= list.listIterator(list.size());
@@ -85,21 +111,16 @@ public class ProjectDisplayController {
         {
             new_c_models.add(i.previous());
         }
-        if (userco != null && userco.getId() == project.getUser_id())
-        {
         modelMap.addAttribute("new_c_models",new_c_models);
-        return "/preinvest/projectDisplay"; }
-        else
-        {
-            modelMap.addAttribute("new_c_models",new_c_models);
-        return "/preinvest/projectDisplay";
-        }     // The adress of the JSP coded in tiles.xml
+        return "/preinvest/projectDisplay/Comment";
+
     }
+
 
     @RequestMapping(value = {"/", "/projectList"}) // The adress to call the function
     public String projectList(ModelMap modelMap) {
         List<Project> projects = this.projectService.getAllUnfinishedProjects();
-
+        int i = 0;
         for (Project p: projects)
             Hibernate.initialize(p.getRewards());
         modelMap.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);

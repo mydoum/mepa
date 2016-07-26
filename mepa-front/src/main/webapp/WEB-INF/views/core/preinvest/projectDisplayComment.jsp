@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: Valentin ZHENG
   Date: 24/07/2016
@@ -44,48 +44,55 @@
                                 : ${project.name}</a>
                         </li>
                         <li>
-                            <a href="/invest/comment">Commentaires</a>
+                            <a href="/core/preinvest/projectDisplay/${project.id}/comment">Commentaires</a>
                         </li>
                     </ul>
                 </nav>
-                <div class="row">
-                    <div class="col-md-12">
-                        <c:choose>
-                            <c:when test="${isConnected != null && isConnected == false}">
-                                <div class="row">
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-10">
-                                        <p align="center" class="glyphicon glyphicon-info-sign">
-                                            Vous devez être identifié pour laisser un commentaire
-                                        </p>
-                                    </div>
-                                    <div class="col-md-2"></div>
+            </div>
+            <br/>
+            <%-- SOCIAL DIV FOR ADDING COMMENT PART --%>
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <!-- www.webtutoriaux.com Compteur de visiteurs -->
+                    <script type='text/javascript' src='http://www.webtutoriaux.com/services/compteur-visiteurs/index.php?client=154864'></script>
+                    <!-- End Compteur de visiteurs -->
+                </div>
+                <div class="col-md-12">
+                    <c:choose>
+                        <c:when test="${userCo == null}">
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-10">
+                                    <p align="center" class="glyphicon glyphicon-info-sign">
+                                        Vous devez être identifié pour laisser un commentaire
+                                    </p>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-4">
-                                        <p align="center">
-                                            <a class="btn btn-success loginButton" href="/authentification/signin" role="button">Connexion</a>
-                                        </p>
-                                    </div>
-                                    <div class="col-md-4"></div>
+                                <div class="col-md-2"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <p align="center">
+                                        <a class="btn btn-success loginButton" href="/authentification/signin" role="button">Connexion</a>
+                                    </p>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-4">
-                                        <p align="center">
-                                            <a href="/authentification/signup">S'inscrire</a>
-                                        </p>
+                                <div class="col-md-4"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <p align="center">
+                                        <a href="/authentification/signup">S'inscrire</a>
+                                    </p>
 
-                                    </div>
-                                    <div class="col-md-4"></div>
                                 </div>
-                            </c:when>
-                            <c:otherwise>
-                                <%@ include file="/WEB-INF/views/comments/core/comment_form.jsp" %>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <%@ include file="/WEB-INF/views/comments/core/comment_form.jsp" %>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
@@ -133,7 +140,7 @@
                         <h4>Temps restant : ${projectLeftTime} jour(s)</h4>
                     </div>
                 </div>
-                <c:url var="investMoney" value="/invest/investMoney"/>
+                <c:url var="investMoney" value="/invest/${project.id}/investMoney"/>
                 <form:form role="form" action="${investMoney}" method="post" modelAttribute="User">
                     <div id="keypress"
                          class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12"></div>
@@ -171,22 +178,10 @@
             <div class="col-md-12 rewardSection">
                 <h4 class="rewardHeader">Choisissez votre contrepartie</h4>
                 <ol>
-                    <li class="rewardItem" id="">
-                        <h4 class="rewardTitle">Poster à partir 5€</h4>
-                        <div class="rewardDescription">
-                            <p>totomgoemogme</p>
-                        </div>
-                    </li>
-                    <li class="rewardItem" id="">
-                        <h4 class="rewardTitle">T-shirt à partir 10€</h4>
-                        <div class="rewardDescription">
-                            <p>totomgoemogme</p>
-                        </div>
-                    </li>
-                    <c:if test="${rewardList != null and rewardList.size() > 0}">
-                        <c:forEach items="${rewardList}" var="reward" varStatus="status">
+                    <c:if test="${project.rewards != null and project.rewards.size() > 0}">
+                        <c:forEach items="${project.rewards}" var="reward" varStatus="status">
                             <li class="rewardItem" name="reward/${reward.id}">
-                                <h4 class="rewardTitle">${reward.name} à partir de ${reward.costStart}€</h4>
+                                <h4 class="rewardTitle"> <a href="/invest/${project.id}/rewardDisplay/${reward.id}"> ${reward.name} à partir de ${reward.costStart}€</a></h4>
                                 <div class="rewardDescription">
                                     <p>${reward.description}</p>
                                 </div>
@@ -194,7 +189,6 @@
                         </c:forEach>
                     </c:if>
                 </ol>
-
             </div>
         </div>
     </aside>

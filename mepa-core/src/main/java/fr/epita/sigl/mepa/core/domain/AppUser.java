@@ -4,7 +4,6 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -33,6 +32,12 @@ public class AppUser {
 
     @Column(name = "lastName")
     private String lastName;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "address")
+    private String address;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "birthDate")
@@ -84,6 +89,22 @@ public class AppUser {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override

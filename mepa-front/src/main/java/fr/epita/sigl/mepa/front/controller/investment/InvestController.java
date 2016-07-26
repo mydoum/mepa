@@ -8,9 +8,12 @@ import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.core.service.*;
 import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayController;
+import fr.epita.sigl.mepa.front.controller.postinvestment.PostInvestmentController;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
+import fr.epita.sigl.mepa.front.controller.postinvestment.*;
 
+import fr.epita.sigl.mepa.front.utilities.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import static fr.epita.sigl.mepa.front.utilities.Mail.sendMail;
+import static java.lang.Math.toIntExact;
 
 
 @Controller
@@ -50,6 +54,15 @@ public class InvestController {
     private ProjectService projectService;
     @Autowired
     private ProjectDisplayController projectDisplayController;
+    @Autowired
+    private PostInvestmentController postInvestmentController;
+
+    private int percentage (int a, int b) {
+        if (a == 0) {
+            return 100;
+        }
+        return ((b * 100) / a);
+    }
 
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
@@ -57,6 +70,12 @@ public class InvestController {
         totalAmount = getallinvestors(listinvestors, totalAmount, project, false);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
+
+        int goalAmount = toIntExact(project.getGoalAmount());
+        int percentageAmount = percentage(goalAmount , (int) totalAmount);
+
+        model.addAttribute("projectPercentage", percentageAmount);
+        model.addAttribute("projectPercentageBar", Math.min(percentageAmount, 100));
         return "/investment/investment";
     }
 
@@ -79,12 +98,13 @@ public class InvestController {
     public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId) {
         float moneyAmount = 0.00f;
         Project project = this.projectService.getProjectById(projectId);
+        AppUser tmpUser = (AppUser) request.getSession().getAttribute("userCo");
 
         /**
          * Check is the user is signed-in
          */
-        String errorCo = "Veuillez vous identifier pour investir dans un projet";
-        if ((boolean) request.getSession().getAttribute("isCo") == false) {
+        if ((boolean) request.getSession().getAttribute("isCo") == false || tmpUser == null) {
+            String errorCo = "Veuillez vous identifier pour investir dans un projet";
             model.addAttribute("messageRedirect", errorCo);
             return "/authentification/signin";
         }
@@ -108,10 +128,9 @@ public class InvestController {
         }
 
         model.addAttribute("amount", moneyAmount);
-        Long userId = 2L;
         boolean anonymous_id = request.getParameter("anonymous_id") != null;
 
-        if (insertNewInvestor(moneyAmount, userId, projectId, anonymous_id) != 0L) {
+        if (insertNewInvestor(moneyAmount, tmpUser.getId(), projectId, anonymous_id) != 0L) {
             String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
             model.addAttribute("errorInvest", errorMessage);
         }
@@ -119,7 +138,7 @@ public class InvestController {
 
     }
 
-    private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
+    public float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(project.getId()));
         ArrayList<String> listmailinvestor = new ArrayList<String>();
         AppUser tmpUser;
@@ -128,6 +147,9 @@ public class InvestController {
         String email;
         boolean investorIsPresent = false;
 
+        if (investments == null || investments.size() == 0)
+            return 0.0f;
+
         for (Investment invest : investments) {
             investorIsPresent = true;
             Date created = invest.getCreated();
@@ -135,7 +157,7 @@ public class InvestController {
             Long userId = invest.getUserId();
             boolean anonymous = invest.isAnonymous();
             tmpUser = appUserService.getUserById(userId);
-            if (!anonymous) {
+            if (!anonymous || downloadCsv) {
                 firstname = tmpUser.getFirstName();
                 lastname = tmpUser.getLastName();
                 if (listmailinvestor.indexOf(tmpUser.getLogin()) == -1) {
@@ -155,7 +177,6 @@ public class InvestController {
                 listOfInvestors.add(tmpInvestor);
             //}
             totalAmount += amount;
-            System.out.println(totalAmount);
         }
         Collections.sort(listOfInvestors);
         return totalAmount;
@@ -170,11 +191,12 @@ public class InvestController {
         Date date = new Date();
         newInvestment.setDate(date);
 
+        AppUser tmpUser = appUserService.getUserById(userId);
+
         investmentService.createInvestment(newInvestment);
         Project tmpProject = projectService.getProjectById(projectId);
 
-        //String mail = "simon.mace@epita.fr";
-        String mail = "hugo.capes@hotmail.fr";
+        String mail = tmpUser.getLogin();
         String subject = "Merci pour votre contribution au projet " + tmpProject.getName();
         String message = "Votre contribution est de" + moneyAmount + " euros";
 
@@ -188,15 +210,16 @@ public class InvestController {
         return 0;
     }
 
-    @RequestMapping(value = {"/invest/download"})
-    public String investDownload(HttpServletResponse response, ModelMap model, Project project) {
+    @RequestMapping(value = {"/invest/download/{projectId}"})
+    public String investDownload(HttpServletResponse response, ModelMap model, @PathVariable Long projectId) {
         float totalAmount = 0.00f;
         Date actual = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String date = dateFormat.format(actual);
         ArrayList<Investor> investors = new ArrayList<Investor>();
+        Project project = projectService.getProjectById(projectId);
         totalAmount = getallinvestors(investors, totalAmount, project, true);
-        if (investors.size() > 0) {
+        if (investors != null && investors.size() > 0) {
             String fileWriter = CsvExporter.writeCsvFile(investors);
             response.setContentType("text/csv");
             response.setHeader("Content-Disposition", "attachment; filename=\"Investors_export_" + date + ".csv\"");
@@ -209,18 +232,17 @@ public class InvestController {
                 e.printStackTrace();
             }
         }
-        model.addAttribute("investorsList", investors);
-        model.addAttribute("totalDonation", totalAmount);
-        return "/investment/investment";
+        return "/core/preinvest/projectDisplay/" + projectId;
     }
 
     @RequestMapping(value = {"/invest/{projectId}/rewardDisplay/{rewardId}"}, method = RequestMethod.GET) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap model, @PathVariable long projectId, @PathVariable long rewardId) {
 
+        AppUser tmpUser = (AppUser) request.getSession().getAttribute("userCo");
         /**
          * Check is the user is signed-in
          */
-        if ((boolean) request.getSession().getAttribute("isCo") == false) {
+        if ((boolean) request.getSession().getAttribute("isCo") == false || tmpUser == null) {
             String errorCo = "Veuillez vous identifier pour investir dans un projet";
             model.addAttribute("messageRedirect", errorCo);
             return "/authentification/signin";

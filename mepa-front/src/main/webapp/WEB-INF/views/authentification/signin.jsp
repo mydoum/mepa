@@ -15,70 +15,6 @@
     }
 </style>
 
-<%--<div class="container">--%>
-    <%--<div class="row">--%>
-        <%--<div class="col-md-6">--%>
-                <%--<c:url var="addCustomUserFormActionUrl" value="/authentification/createUser"/>--%>
-                <%--<form data-toggle="validator" role="form" id="eventForm" class="form-horizontal" action="${addCustomUserFormActionUrl}"--%>
-                    <%--modelAttribute="addCustomUserFormBean"--%>
-                    <%--method="POST">--%>
-                <%--<fieldset>--%>
-                    <%--<div id="legend">--%>
-                        <%--<legend class="">Inscription</legend>--%>
-                    <%--</div>--%>
-                    <%--<div class="control-group">--%>
-                        <%--<label for="inputEmail" class="control-label">Adresse e-mail</label>--%>
-                        <%--<input id="inputEmail" name="inputEmail" type="email" id="email" class="form-control" placeholder=""--%>
-                               <%--data-error="Bruh, that email address is invalid" required>--%>
-                        <%--<div class="help-block with-errors"></div>--%>
-                    <%--</div>--%>
-
-                    <%--<div class="control-group">--%>
-                        <%--<label for="inputPassword" class="control-label">Mot de passe</label>--%>
-                                <%--<input type="password" data-minlength="6" class="form-control" id="inputPassword" name="inputPassword" placeholder="" required>--%>
-                                <%--<div class="help-block"></div>--%>
-                    <%--</div>--%>
-
-                    <%--<div class="control-group">--%>
-                        <%--<label for="inputLastName" class="control-label">Nom</label>--%>
-                        <%--<input type="text" class="form-control" id="inputLastName" name="inputLastName" placeholder="">--%>
-                        <%--<i class="help-block">(Facultatif)</i>--%>
-                    <%--</div>--%>
-
-                    <%--<div class="control-group">--%>
-                        <%--<label for="inputFirstName" class="control-label">Prénom</label>--%>
-                        <%--<input type="text" class="form-control" id="inputFirstName" name="inputFirstName" placeholder="">--%>
-                        <%--<i class="help-block">(Facultatif)</i>--%>
-                    <%--</div>--%>
-
-                    <%--<div class="control-group">--%>
-                        <%--<label class="control-label">Date de naissance</label>--%>
-                        <%--<div class="input-group input-append date pad-left-date" id="datePicker">--%>
-                            <%--<input type="text" class="form-control" name="birthdate"/>--%>
-                            <%--<span class="input-group-addon add-on">--%>
-                                <%--<span class="glyphicon glyphicon-calendar"></span>--%>
-                            <%--</span>--%>
-                        <%--</div>--%>
-                        <%--<i class="help-block margin-bottom-date">(Facultatif)</i>--%>
-                    <%--</div>--%>
-
-                    <%--<div class="control-group">--%>
-                        <%--<!-- Button -->--%>
-                        <%--<div class="controls">--%>
-                            <%--<button type="submit" class="btn btn-default">Inscription</button>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</fieldset>--%>
-            <%--</form>--%>
-        <%--</div>--%>
-        <%--<br/>--%>
-
-
-
-        <%--<br/>--%>
-    <%--</div>--%>
-<%--</div>--%>
-
 <script>
     $(document).ready(function () {
         $('#datePicker')
@@ -96,6 +32,11 @@
 </script>
 
 <div class="container">
+    <c:if test="${pwdFalse == true}">
+        <div class="col-md-12 text-center alert alert-danger col-sm-12">
+            La connexion a échouée : Mot de passe ou Identifiant incorrect.
+        </div>
+    </c:if>
     <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="panel panel-info" >
             <div class="panel-heading">
@@ -121,16 +62,6 @@
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                         <input id="login-inputPassword" type="password" class="form-control" name="inputPassword" placeholder="Mot de passe">
                     </div>
-
-                    <%-- FIXME --%>
-                    <div class="input-group">
-                        <div class="checkbox">
-                            <label>
-                                <input id="login-remember" type="checkbox" name="remember" value="1"> Se souvenir de moi
-                            </label>
-                        </div>
-                    </div>
-
 
                     <div style="margin-top:10px" class="form-group">
                         <!-- Button -->
@@ -176,7 +107,7 @@
 
 
                     <div class="form-group">
-                        <label for="email" class="col-md-3 control-label">Adresse e-mail</label>
+                        <label for="emailInput" class="col-md-3 control-label">Adresse e-mail</label>
                         <div class="col-md-9">
                             <input id="emailInput" type="email" class="form-control" name="emailInput" placeholder="Adresse e-mail">
                         </div>
@@ -185,7 +116,7 @@
                     <div class="form-group">
                         <label for="passwordInput" class="col-md-3 control-label">Mot de passe</label>
                         <div class="col-md-9">
-                            <input id="passwordInput" type="password" class="form-control" name="passwordInput" placeholder="Mot de passe">
+                            <input id="passwordInput" type="password" class="form-control" name="passwordInput" placeholder="Mot de passe" pattern=".{6,15}" required title="6 à 15 caractères">
                         </div>
                     </div>
 
@@ -235,34 +166,6 @@
                 </form>
             </div>
         </div>
-    </div>
-
-    <div class="col-md-12 investFormInside">
-        <tr/>
-        <div class="col-md-12 investFormInside">
-            <div class="col-md-8"><h2>Utilisateurs</h2></div>
-        </div>
-        <br/>
-        <table class="col-md-12 table table-striped">
-            <thead>
-            <tr>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Email</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:if test="${usersList.size() > 0}">
-                <c:forEach items="${usersList}" var="appUser" varStatus="status">
-                    <tr>
-                        <td>${appUser.firstName}</td>
-                        <td>${appUser.lastName}</td>
-                        <td>${appUser.login}</td>
-                    </tr>
-                </c:forEach>
-            </c:if>
-            </tbody>
-        </table>
     </div>
 </div>
 

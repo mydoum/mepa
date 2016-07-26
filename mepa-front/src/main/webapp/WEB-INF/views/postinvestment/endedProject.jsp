@@ -1,39 +1,27 @@
-<%@ page import="java.util.ArrayList" %><%--
+<%--
   Created by IntelliJ IDEA.
-  User: Valentin ZHENG
-  Date: 24/07/2016
-  Time: 00:31
+  User: Guillaume
+  Date: 25/07/2016
+  Time: 17:14
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
-
 <script>
+    $("#slideshow > div:gt(0)").hide();
+
+    setInterval(function () {
+        $('#slideshow > div:first')
+                .fadeOut(1000)
+                .next()
+                .fadeIn(1000)
+                .end()
+                .appendTo('#slideshow');
+    }, 3000);
 </script>
-<%
-    Integer hitsCount = (Integer)application.getAttribute("hitCounter");
-    ArrayList<String> visits = (ArrayList<String>) application.getAttribute("visits");
-    if (visits == null)
-        visits = new ArrayList<>();
-    String id = request.getSession().getId();
-    if( hitsCount == null || hitsCount == 0 ){
-        hitsCount = 1;
-        visits.add(id);
-    }
-    else {
-        if (!visits.contains(id)) {
-            visits.add(id);
-            ++hitsCount;
-        }
-    }
-    application.setAttribute("hitCounter", hitsCount);
-    System.out.println(visits.size());
-    application.setAttribute("visits", visits);
-%>
 
-<center>
 
-</center>
 <div class="container">
     <header class="title projectHeader">
         <h1 class="short">${project.name}</h1>
@@ -54,18 +42,21 @@
                 <nav class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active">
-                            <a href="/core/preinvest/projectDisplay/${project.id}">Accueil de la page du projet
+                            <a href="/postinvest/projectDisplay/${project.id}">Accueil de la page du projet
                                 : ${project.name}</a>
                         </li>
                         <li>
-                            <a href="/core/preinvest/projectDisplay/${project.id}/comment">Commentaires</a>
+                            <a href="/invest/comment">Commentaires</a>
                         </li>
                     </ul>
                 </nav>
+                <c:if test="${isComment != null && isComment == true}">
+
+                </c:if>
                 <%-- Part of the page where the slideshow and the project date are printed --%>
                 <div class="row">
                     <div class="col-md-4" id="slideshow">
-                       <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
+                        <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
                             <div>
                                 <img src="${image}" style="width:100%"
                                      class="projectImageInvest img-responsive img-rounded"/>
@@ -81,44 +72,24 @@
 
                     </div>
                 </div>
+
                 <%-- Part of the page for Social buttons --%>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div id="social-box" class="row">
-                            <div class="col-md-12">
-                                <%-- Facebook share button --%>
-                                <div class="fb-share-button"
-                                     data-href="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}"
-                                     data-layout="button_count"
-                                     data-size="large"
-                                <%-- Open the iframe --%>
-                                     data-mobile-iframe="true">
-                                    <a class="fb-xfbml-parse-ignore" target="_blank"
-                                       href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmepa.herokuapp.com%2Fcore%2Fpreinvest%2F${project.id}&amp;src=sdkpreparse">
-                                        Partager
-                                    </a>
-                                </div>
-                                <br/>
-                            </div>
-                            <div class="col-md-12">
-                                <a href="https://twitter.com/share" class="twitter-share-button" data-size="large"
-                                   data-text="Découvrez le projet ${project.name} :" data-hashtags="LGIS"
-                                   data-lang="fr" data-show-count="false">Tweet</a>
-                                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-                            </div>
-                        </div>
+                <div class="col-md-12">
+                    <%-- Facebook share button --%>
+                    <div class="fb-share-button"
+                         data-href="https://mepa.herokuapp.com/postinvest/projectDisplay/${project.id}"
+                         data-layout="button_count"
+                         data-size="large"
+                    <%-- Open the iframe --%>
+                         data-mobile-iframe="true">
+                        <a class="fb-xfbml-parse-ignore" target="_blank"
+                           href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmepa.herokuapp.com%2Fcore%2Fpreinvest%2F${project.id}&amp;src=sdkpreparse">
+                            Partager
+                        </a>
                     </div>
-                    <div class="col-md-4">
-                        <!-- www.webtutoriaux.com Compteur de visiteurs -->
-                        <script type='text/javascript' src='http://www.webtutoriaux.com/services/compteur-visiteurs/index.php?client=154864'></script>
-                        <!-- End Compteur de visiteurs -->
-                    </div>
-                    <div class="col-md-2">
-                        <c:if test="${isAdmin == true}">
-                            <p>Nombre de visiteurs: <%= hitsCount%></p>
-                        </c:if>
-                    </div>
+                    <br/>
                 </div>
+
                 <%-- Part of the page for the project description --%>
                 <div class="panel panel-primary projectDescriptionInvest col-md-12">
                     <!-- Default panel contents -->
@@ -166,11 +137,13 @@
                 </table>
             </div>
             <br/>
-            <div class="col-md-12 download investFormInside">
+            <c:if test="${isAdmin != null && isAdmin == true}">
+                <div class="col-md-12 download investFormInside">
                     <p align="center">
-                        <a href="/invest/download/${project.id}"><span class="btn btn-primary">Download</span></a>
+                        <a href="/invest/download"><span class="btn btn-primary">Download</span></a>
                     </p>
                 </div>
+            </c:if>
         </div>
     </div>
 
@@ -183,10 +156,14 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="progress">
-                                <div class="progress-bar progress-bar-success" role="progressbar"
+                                <%--<div class="progress-bar progress-bar-success" role="progressbar"
                                 aria-valuenow="${projectPercentage}" aria-valuemin="0" aria-valuemax="100"
-                                style="width:${projectPercentageBar}%">
+                                style="width:${projectPercentage}%">
                                     ${projectPercentage}%
+                                </div>--%>
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80"
+                                     aria-valuemin="0" aria-valuemax="100" style="width:80%">
+                                    80%
                                 </div>
                             </div>
                         </div>
@@ -195,12 +172,12 @@
                         <h4>Contribution totale : ${totalDonation}€</h4>
                     </div>
                     <div class="col-md-12">
-                        <h4>Objectif : ${project.goalAmount}€</h4>
+                        <h4>Objectif : <%--${project.requestAmount}--%>500€</h4>
                     </div>
                     <div class="col-md-12">
                         <%-- POST INVEST --%>
                         <%-- PARTI POUR LE POST INVEST --%>
-                        <%--<jsp:useBean id="todayDate" class="java.util.Date"/>
+                        <jsp:useBean id="todayDate" class="java.util.Date"/>
                         <c:choose>
                             <c:when test="${project.endDate <= todayDate}">
                                <div class="date">PostInvest -> Date de fin atteinte.</div>
@@ -208,11 +185,12 @@
                            <c:otherwise>
                                <div class="date">PostInvest -> Date de fin non atteinte.</div>
                            </c:otherwise>
-                       </c:choose>--%>
+                       </c:choose>
+<%--
                         <h4>Temps restant : ${projectLeftTime} jour(s)</h4>
                     </div>
                 </div>
-                <c:url var="investMoney" value="/invest/${project.id}/investMoney"/>
+                <c:url var="investMoney" value="/invest/investMoney"/>
                 <form:form role="form" action="${investMoney}" method="post" modelAttribute="User">
                     <div id="keypress"
                          class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12"></div>
@@ -245,15 +223,27 @@
                 </form:form>
             </div>
         </div>
-        <%-- Part of the page where the slideshow and the project date are printed --%>
+        <%-- Part of the page where the slideshow and the project date are printed --%
         <div class="row">
             <div class="col-md-12 rewardSection">
                 <h4 class="rewardHeader">Choisissez votre contrepartie</h4>
                 <ol>
-                    <c:if test="${project.rewards != null and project.rewards.size() > 0}">
-                        <c:forEach items="${project.rewards}" var="reward" varStatus="status">
+                    <li class="rewardItem" id="">
+                        <h4 class="rewardTitle">Poster à partir 5€</h4>
+                        <div class="rewardDescription">
+                            <p>totomgoemogme</p>
+                        </div>
+                    </li>
+                    <li class="rewardItem" id="">
+                        <h4 class="rewardTitle">T-shirt à partir 10€</h4>
+                        <div class="rewardDescription">
+                            <p>totomgoemogme</p>
+                        </div>
+                    </li>
+                    <c:if test="${rewardList != null and rewardList.size() > 0}">
+                        <c:forEach items="${rewardList}" var="reward" varStatus="status">
                             <li class="rewardItem" name="reward/${reward.id}">
-                                <h4 class="rewardTitle"> <a href="/invest/${project.id}/rewardDisplay/${reward.id}"> ${reward.name} à partir de ${reward.costStart}€</a></h4>
+                                <h4 class="rewardTitle">${reward.name} à partir de ${reward.costStart}€</h4>
                                 <div class="rewardDescription">
                                     <p>${reward.description}</p>
                                 </div>
@@ -261,14 +251,15 @@
                         </c:forEach>
                     </c:if>
                 </ol>
+
             </div>
         </div>
     </aside>
 </div>
 
+--%>
+
 <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
 <script src="${investSliderJs}"></script>
 <c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>
 <script src="${investSliderPersoJs}"></script>
-
-

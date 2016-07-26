@@ -21,6 +21,16 @@
 </style>
 
 <div class="container">
+    <c:if test="${isEdited == true}">
+        <div class="col-md-12 text-center alert alert-success investFormInside">
+            Votre profil a été modifié avec succès !
+        </div>
+    </c:if>
+    <c:if test="${isNotEdited == true}">
+        <div class="col-md-12 text-center alert alert-danger investFormInside">
+            Erreur. Cette adresse email est déjà affiliée à un autre utilisateur.
+        </div>
+    </c:if>
     <div class="row">
         <div class="col-md-6">
             <c:url var="addCustomUserFormActionUrl" value="/authentification/editUser"/>
@@ -49,34 +59,31 @@
                         <label class="control-label" for="email">Adresse e-mail</label>
                         <div class="controls">
                             <input id="email" name="email" placeholder="" class="form-control input-lg" type="email"
-                                   value="${userCo.login}">
+                                   value="${userCo.login}" required>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Date de naissance</label>
-                        <div class="input-group input-append pad-left-date date" id="datePicker">
-                            <input type="text" class="form-control input-lg" name="date"/>
-                            <span class="input-group-addon add-on">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                        </div>
                         <div class="controls">
+                            <input type="text" class="form-control input-lg" name="date" value="${userCo.birthDate}" readonly/>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="adress">Adresse</label>
+                        <label class="control-label" for="address">Adresse</label>
                         <div class="controls">
-                            <input id="adress" name="adress" placeholder="" class="form-control input-lg" type="text"
-                                   value="">
+                            <input id="address" name="address" placeholder="" class="form-control input-lg" type="text"
+                                   value="${userCo.address}">
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="description">Description</label>
                         <div class="controls">
                             <input id="description" name="description" placeholder="" class="form-control input-lg" type="text"
-                                   value="">
+                                   value="${userCo.description}">
                         </div>
                     </div>
+                    <br/>
+                    <br/>
                     <div class="control-group">
                         <!-- Button -->
                         <div class="controls">
@@ -93,38 +100,3 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 <script src="http://formvalidation.io/vendor/formvalidation/js/formValidation.min.js"></script>
 <script src="http://formvalidation.io/vendor/formvalidation/js/framework/bootstrap.min.js"></script>
-
-<script>
-    $(document).ready(function () {
-        $('#datePicker')
-                .datepicker({
-                    format: 'dd/mm/yyyy'
-                })
-                .on('changeDate', function (e) {
-                    // Revalidate the date field
-                    $('#eventForm').formValidation('revalidateField', 'date');
-                });
-
-        $('#eventForm').formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                date: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The date is required'
-                        },
-                        date: {
-                            format: 'DD/MM/YYYY',
-                            message: 'The date is not a valid'
-                        }
-                    }
-                }
-            }
-        });
-    });
-</script>

@@ -11,10 +11,50 @@
 <html>
 <head>
     <title>Create a new project</title>
+    <script>
+        $(function()
+        {
+            $(document).on('click', '.btn-add', function(e)
+            {
+                e.preventDefault();
+
+                var controlForm = $('.controls form:first'),
+                        currentEntry = $(this).parents('.entry:first'),
+                        newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+                newEntry.find('input').val('');
+                controlForm.find('.entry:not(:last) .btn-add')
+                        .removeClass('btn-add').addClass('btn-remove')
+                        .removeClass('btn-success').addClass('btn-danger')
+                        .html('<span class="glyphicon glyphicon-minus"></span>');
+            }).on('click', '.btn-remove', function(e)
+            {
+                $(this).parents('.entry:first').remove();
+
+                e.preventDefault();
+                return false;
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container">
         <c:if test="${is_connected}">
+            <c:if test="${is_unique}">
+                <div class="alert alert-warning">
+                    Ce nom de projet est déjà pris : veuillez choisir un autre nom
+                </div>
+            </c:if>
+            <c:if test="${is_null}">
+                <div class="alert alert-warning">
+                    Vous devez rentrez un nom de projet pour créer le projet
+                </div>
+            </c:if>
+            <c:if test="${is_date}">
+                <div class="alert alert-warning">
+                    La date de fin ne peut être antérieur à la date de début
+                </div>
+            </c:if>
             <sf:form method="post" modelAttribute="newProject" action="processCreation">
                 <div class="control-group">
                     <label class="control-label">Nom du projet</label>
@@ -38,12 +78,22 @@
                 </div>
                 <br/>
                 <div class="control-group">
+                    <label class="control-label">Objectif du projet</label>
+                    <div class="controls">
+                        <td><form:input path="goalAmount" class="form-control input-lg" placeholder="Entrez la somme à atteindre"/></td>
+                    </div>
+                </div>
+                <br/>
+                <div class="control-group">
                     <label class="control-label">Description</label>
                     <div class="controls">
                         <td><form:textarea path="description" class="form-control input-lg" placeholder="Description" style="margin-top: 0px;"/></td>
                     </div>
                 </div>
                 <br/>
+                <div class="control-group">
+                    <input name="imageUrl" class="form-control input-lg" placeholder="URL pour insérer une image"/>
+                </div>
 
             <form action="http://www.html.am/html-codes/forms/html-form-tag-action.cfm" target="result" method="get">
                 <p>Partager son projet </p>

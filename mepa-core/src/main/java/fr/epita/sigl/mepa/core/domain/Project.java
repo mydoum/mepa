@@ -18,7 +18,8 @@ import java.util.*;
 @NamedQueries({
         @NamedQuery(name = "Project.findById", query = "FROM Project p WHERE p.id=:id"),
         @NamedQuery(name = "Project.findAll", query = "FROM Project p ORDER BY p.endDate ASC"),
-        @NamedQuery(name = "Project.findAllUnfinished", query = "FROM Project p WHERE p.endDate > CURRENT_DATE ORDER BY p.endDate ASC")
+        @NamedQuery(name = "Project.findAllUnfinished", query = "FROM Project p WHERE p.endDate > CURRENT_DATE ORDER BY p.endDate ASC"),
+        @NamedQuery(name = "Project.findAllFinished", query = "FROM Project p WHERE p.endDate <= CURRENT_DATE ORDER BY p.endDate ASC")
 })
 public class Project implements Serializable {
 
@@ -27,7 +28,7 @@ public class Project implements Serializable {
     @Column(name = "reward_id", nullable = false)
     private Long id;
 
-    @NotNull
+
     private Long user_id; //Id of the user creating the project
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -47,19 +48,19 @@ public class Project implements Serializable {
 
     private ArrayList<String> imagesLinks;
 
-    @OneToMany(fetch = FetchType.EAGER) //, mappedBy="project"
-    @JoinColumn(name="project_id")
-    private Set<Reward> rewards;
-
     private Long goalAmount;
 
     private Long visitNumber;
+
+    @OneToMany(fetch = FetchType.EAGER) //, mappedBy="project"
+    @JoinColumn(name="project_id")
+    private Set<Reward> rewards;
 
     private boolean isTwitterAllowed;
 
     private boolean isFacebookAllowed;
 
-/*
+    /*
 * ID
 * Name
 * UserID
@@ -74,7 +75,8 @@ public class Project implements Serializable {
         this.startDate = new Date();
         this.endDate = new Date();
         this.name = "Nom du projet";
-        rewards= new HashSet<>();
+        this.rewards= new HashSet<>();
+        this.goalAmount = 0L;
     }
 
     public Project(int nb) {
@@ -85,7 +87,8 @@ public class Project implements Serializable {
         this.startDate = new Date();
         this.endDate = endDate;
         this.name = projectName;
-        rewards= new HashSet<>();
+        this.rewards= new HashSet<>();
+        this.goalAmount = 0L;
     }
 
     //return Date with a specific format
