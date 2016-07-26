@@ -10,7 +10,6 @@ import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.front.Service.investmentFrontService;
 import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayController;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
-import fr.epita.sigl.mepa.front.utilities.CsvExporter;
 
 import fr.epita.sigl.mepa.front.utilities.Tools;
 import org.slf4j.Logger;
@@ -31,6 +30,7 @@ import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import static java.lang.Math.toIntExact;
@@ -52,13 +52,12 @@ public class InvestController {
     @Autowired
     private ProjectDisplayController projectDisplayController;
 
-    private investmentFrontService investmentFrontService = new investmentFrontService();
     private Tools tools = new Tools();
 
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount = investmentFrontService.getallinvestors(listinvestors, totalAmount, project, false);
+        totalAmount = getallinvestors(listinvestors, totalAmount, project, false);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
 
@@ -154,9 +153,9 @@ public class InvestController {
         String date = dateFormat.format(actual);
         ArrayList<Investor> investors = new ArrayList<Investor>();
         Project project = projectService.getProjectById(projectId);
-        totalAmount = investmentFrontService.getallinvestors(investors, totalAmount, project, true);
+        totalAmount = getallinvestors(investors, totalAmount, project, true);
         if (investors != null && investors.size() > 0) {
-            String fileWriter = CsvExporter.writeCsvFile(investors);
+            String fileWriter = Tools.writeCsvFile(investors);
             response.setContentType("text/csv");
             response.setHeader("Content-Disposition", "attachment; filename=\"Investors_export_" + date + ".csv\"");
             try {
@@ -211,6 +210,52 @@ public class InvestController {
     public String payReward(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId, @PathVariable long rewardId) {
         investMoney(model, session, request, projectId);
         return "/preinvest/projectDisplay";
+    }
+
+    public float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
+        System.out.println("invest : " + (investmentService != null));
+        System.out.println("project : " + (project != null));
+        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(project.getId()));
+        ArrayList<String> listmailinvestor = new ArrayList<String>();
+        AppUser tmpUser;
+        String firstname;
+        String lastname;
+        String email;
+        boolean investorIsPresent = false;
+
+        if (investments == null || investments.size() == 0)
+            return 0.0f;
+
+        for (Investment invest : investments) {
+            investorIsPresent = true;
+            Date created = invest.getCreated();
+            Float amount = invest.getAmount();
+            Long userId = invest.getUserId();
+            boolean anonymous = invest.isAnonymous();
+            tmpUser = appUserService.getUserById(userId);
+            if (!anonymous || downloadCsv) {
+                firstname = tmpUser.getFirstName();
+                lastname = tmpUser.getLastName();
+                if (listmailinvestor.indexOf(tmpUser.getLogin()) == -1) {
+                    listmailinvestor.add(tmpUser.getLogin());
+                    investorIsPresent = false;
+                }
+            } else {
+                firstname = "Anonyme";
+                lastname = "Anonyme";
+                listmailinvestor.add("anonyme");
+            }
+            email = tmpUser.getLogin();
+            Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created, anonymous);
+            /*if (project.isfinished && investorIsPresent) {
+                insertinto(listOfInvestors, tmpInvestor);
+            } else {*/
+            listOfInvestors.add(tmpInvestor);
+            //}
+            totalAmount += amount;
+        }
+        Collections.sort(listOfInvestors);
+        return totalAmount;
     }
 
     private void printalluser() {

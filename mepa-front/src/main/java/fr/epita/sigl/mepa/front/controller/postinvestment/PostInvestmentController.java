@@ -64,7 +64,7 @@ public class PostInvestmentController {
     public String displayEndedProject(ModelMap model, HttpServletRequest request, Project project) {
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount = investmentFrontService.getallinvestors(listinvestors, totalAmount, project, false);
+        totalAmount = investController.getallinvestors(listinvestors, totalAmount, project, false);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
         return "/project-end";
