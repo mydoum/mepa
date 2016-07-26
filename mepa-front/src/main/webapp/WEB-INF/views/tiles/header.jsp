@@ -37,6 +37,8 @@
                                     <li><a href="${editUser}">${userCo.login}</a></li>
                                 </c:otherwise>
                             </c:choose>
+                            <c:url var="modifyPassword" value="/authentification/modifyPassword"/>
+                            <li><a href="${modifyPassword}">Modifier mot de passe</a></li>
                             <c:url var="deconnexion" value="/authentification/deconnexion"/>
                             <li><a href="${deconnexion}">Déconnexion</a></li>
                         </c:if>

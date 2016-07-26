@@ -212,6 +212,41 @@ public class AuthController {
 
     }
 
+    @RequestMapping(value = {"/modifyPassword"}, method = {RequestMethod.GET})
+    public String showModifyPassordPage(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if (userCo != null && isCo) {
+            // tu peux afficher les données user
+
+            return "/authentification/modifyPassword";
+        }
+        return "/home/home";
+//        return "redirect:/home/home"; A tester pour plus tard
+    }
+
+    @RequestMapping(value = {"/modifyPassword"}, method = {RequestMethod.POST})
+    public String modifyPassword(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+
+        System.out.println("user pwd = " + userCo.getPassword());
+        if (userCo != null && isCo) {
+            //AppUser user = this.appUserService.getUserByLogin(userCo.getLogin());
+            if (userCo != null) { // the user really exist, it's not a fake
+                String password = request.getParameter("password");
+                System.out.println("login = " + userCo.getLogin());
+                userCo.setPassword(password);
+
+                this.appUserService.updateUser(userCo);
+                request.getSession().setAttribute("userCo", userCo);
+            }
+            return "/home/home";
+        }
+        return "/home/home";
+
+    }
+
     @RequestMapping(value = {"/addFakeUser"}, method = {RequestMethod.GET})
     public String addFakeUser() {
         AppUser newAppUser = new AppUser();
