@@ -36,6 +36,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import static fr.epita.sigl.mepa.front.utilities.Mail.sendMail;
+import static java.lang.Math.toIntExact;
 
 
 @Controller
@@ -70,7 +71,8 @@ public class InvestController {
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
 
-        int percentageAmount = percentage(2000, (int) totalAmount);
+        int goalAmount = toIntExact(project.getGoalAmount());
+        int percentageAmount = percentage(goalAmount , (int) totalAmount);
 
         model.addAttribute("projectPercentage", percentageAmount);
         model.addAttribute("projectPercentageBar", Math.min(percentageAmount, 100));

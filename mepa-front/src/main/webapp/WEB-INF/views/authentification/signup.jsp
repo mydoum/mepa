@@ -37,6 +37,11 @@
             La connexion a échouée : Mot de passe ou Identifiant incorrect.
         </div>
     </c:if>
+    <c:if test="${isNotCreated == true}">
+        <div class="col-md-12 text-center alert alert-danger col-sm-12">
+            Erreur. L'adresse email est déjà affiliée à un autre utilisateur.
+        </div>
+    </c:if>
     <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="panel panel-info">
             <div class="panel-heading">
