@@ -5,6 +5,8 @@
   Time: 20:57
   To change this template use File | Settings | File Templates.
 --%>
+<script type='text/javascript' src='http://www.webtutoriaux.com/services/compteur-visiteurs/index.php?client=154864'></script>
+
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 <div class="container">
     <div class="page-header col-md-12"><h1>Project Alpha</h1></div>
