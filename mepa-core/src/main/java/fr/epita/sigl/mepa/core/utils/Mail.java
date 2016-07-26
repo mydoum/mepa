@@ -34,8 +34,8 @@ public class Mail
             InternetAddress[] internetAddresses = new InternetAddress[1];
             internetAddresses[0] = new InternetAddress("hugo.capes@hotmail.fr");
             message.setRecipients(javax.mail.Message.RecipientType.TO, internetAddresses);
-            message.setSubject("Thanks for your donation");
-            message.setText("Hello! Thanks you for your donation to this project!\nYours sincerely.\nThe MEPA team");
+            message.setSubject("Merci pour votre contribution");
+            message.setText("Bonjour! Merci pour votre contribution sur ce projet!\nCordialement.\nLa Team MEPA");
             message.setHeader("X-Mailer", MAILER_VERSION);
             message.setSentDate(new Date());
             session.setDebug(debug);

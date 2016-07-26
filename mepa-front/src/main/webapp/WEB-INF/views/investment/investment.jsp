@@ -47,14 +47,20 @@
             <c:url var="investMoney" value="/invest/investMoney"/>
             <form:form role="form" action="${investMoney}" method="post" modelAttribute="User">
                 <div id="keypress"
-                     class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12"></div>
+                     class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12">
+                </div>
                 <label class="investFormInside col-md-12">Amount (€):</label>
                 <div class="col-md-12 InvestFormInside">
                     <input name="investAmount" id="input-with-keypress"
                            class="form-control" type="text" required="required" readonly/>
                 </div>
                 <br/>
-                <div class="col-md-4"></div>
+                <label class="investFormInside col-md-12">Anonyme: </label>
+                <div class="col-md-12 InvestFormInside">
+                    <input type="checkbox" id="anonymous_id" name="anonymous_id" value="anonymous_id_value"
+                           class="form-control"/>
+                </div>
+                <br/>
                 <div class="col-md-4">
                     <p align="center"><input type="submit" class="btn btn-primary InvestFormInside" value="Donate"></p>
                 </div>
@@ -90,7 +96,7 @@
                             <td>${investor.firstname}</td>
                             <td>${investor.lastname}</td>
                             <td>${investor.moneyAmount} €</td>
-                            <td>${investor.dateOfInvestment}</td>
+                            <td>${investor.stringDate}</td>
                         </tr>
                     </c:forEach>
                 </c:if>

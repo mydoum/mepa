@@ -17,4 +17,5 @@ public interface ProjectDao {
 
     List<Project> getAll();
 
+    public List<Project> getAllUnfinished();
 }

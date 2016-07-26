@@ -1,27 +1,30 @@
 package fr.epita.sigl.mepa.core.domain;
 
+import fr.epita.sigl.mepa.core.service.RewardService;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.awt.*;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Entity
+@Table(name="PROJECT")
 @NamedQueries({
         @NamedQuery(name = "Project.findById", query = "FROM Project p WHERE p.id=:id"),
-        @NamedQuery(name = "Project.findAll", query = "FROM Project p ORDER BY p.endDate ASC")
+        @NamedQuery(name = "Project.findAll", query = "FROM Project p ORDER BY p.endDate ASC"),
+        @NamedQuery(name = "Project.findAllUnfinished", query = "FROM Project p WHERE p.endDate > CURRENT_DATE ORDER BY p.endDate ASC")
 })
-public class Project {
+public class Project implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "reward_id", nullable = false)
     private Long id;
 
     @NotNull
@@ -44,10 +47,19 @@ public class Project {
 
     private ArrayList<String> imagesLinks;
 
-    @OneToMany(mappedBy="id")
+    private Long goalAmount;
+
+    private Long visitNumber;
+
+    @OneToMany(fetch = FetchType.EAGER) //, mappedBy="project"
+    @JoinColumn(name="project_id")
     private Set<Reward> rewards;
 
-    /*
+    private boolean isTwitterAllowed;
+
+    private boolean isFacebookAllowed;
+
+/*
 * ID
 * Name
 * UserID
@@ -62,6 +74,9 @@ public class Project {
         this.startDate = new Date();
         this.endDate = new Date();
         this.name = "Nom du projet";
+    }
+
+    public Project(int nb) {
     }
 
     public Project(Long user_id, String projectName, Date endDate) {
@@ -138,12 +153,52 @@ public class Project {
         this.imagesLinks = imagesLinks;
     }
 
+    public Long getGoalAmount() {
+        return goalAmount;
+    }
+
+    public void setGoalAmount(Long goalAmount) {
+        this.goalAmount = Math.abs(goalAmount);
+    }
+
+    public Long getVisitNumber() {
+        return visitNumber;
+    }
+
+    public void setVisitNumber(Long visitNumber) {
+        this.visitNumber = visitNumber;
+    }
+
+    public void increaseVisits() {
+        ++this.visitNumber;
+    }
+
+    public boolean isTwitterAllowed() {
+        return isTwitterAllowed;
+    }
+
+    public void setTwitterAllowed(boolean twitterAllowed) {
+        isTwitterAllowed = twitterAllowed;
+    }
+
+    public boolean isFacebookAllowed() {
+        return isFacebookAllowed;
+    }
+
+    public void setFacebookAllowed(boolean displayAllowed) {
+        isFacebookAllowed = displayAllowed;
+    }
+
     public Set<Reward> getRewards() {
         return rewards;
     }
 
     public void setRewards(Set<Reward> rewards) {
         this.rewards = rewards;
+    }
+
+    public Boolean isFinished() {
+        return this.endDate.after(new Date());
     }
 
     @Override
