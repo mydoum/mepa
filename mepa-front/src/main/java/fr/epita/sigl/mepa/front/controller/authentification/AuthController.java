@@ -164,7 +164,6 @@ public class AuthController {
         }
         else {
             modelMap.addAttribute("pwdFalse", true);
-            System.out.println("Identifiant / mdp incorrect");
             return "/authentification/signin";
         }
 
