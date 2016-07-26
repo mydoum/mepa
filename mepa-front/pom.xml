@@ -100,11 +100,6 @@
             <artifactId>tiles-jsp</artifactId>
             <version>${tiles.version}</version>
         </dependency>
-        <dependency>
-            <groupId>fr.epita.sigl</groupId>
-            <artifactId>mepa-front</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <build>
