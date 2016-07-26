@@ -2,8 +2,6 @@ package fr.epita.sigl.mepa.front.utilities;
 
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -46,7 +44,6 @@ public class CsvExporter {
             }
         }
 
-
         String fileWriter = "";
         fileWriter += FILE_HEADER;
         fileWriter += NEW_LINE_SEPARATOR;
@@ -54,21 +51,15 @@ public class CsvExporter {
         for (String investor : keys) {
             ArrayList<Float> floats = investorsMap.get(investor);
             Float sum = calculSum(floats);
-            for (Float f : floats) {
-                fileWriter += investor;
-                fileWriter += COMMA_DELIMITER;
-                fileWriter += sum;
-                fileWriter += COMMA_DELIMITER;
-                fileWriter += f;
-                fileWriter += NEW_LINE_SEPARATOR;
-            }
+            fileWriter += investor;
+            fileWriter += COMMA_DELIMITER;
+            fileWriter += sum;
+            fileWriter += NEW_LINE_SEPARATOR;
         }
-
         return fileWriter;
     }
 
-    static private Float calculSum(ArrayList<Float> floats)
-    {
+    static private Float calculSum(ArrayList<Float> floats) {
         Float sum = 0.0f;
 
         for (Float f : floats)
