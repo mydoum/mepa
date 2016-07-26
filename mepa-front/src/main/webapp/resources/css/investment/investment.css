@@ -28,6 +28,11 @@
     position: relative;
 }
 
+.buttonRight {
+    float: right;
+    margin-right:10px;
+}
+
 .rewardSection{
     border: 1px solid darkgray;
     border-radius: 10px;

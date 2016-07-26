@@ -65,7 +65,7 @@ public class ProjectCreateController {
     }
 
     @RequestMapping(value = {"/processCreation"}, method = RequestMethod.POST) // The adress to call the function
-    public String processCreation(HttpServletRequest request, @ModelAttribute(NEWPROJECT) Project newProject, ModelMap model)
+    public String processCreation(@ModelAttribute(NEWPROJECT) Project newProject, ModelMap model, HttpServletRequest request)
     {
         //model.addAttribute("Retour", newProject.getName() + newProject.getEndDate() + newProject.getDescription());
 

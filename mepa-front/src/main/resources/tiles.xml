@@ -33,15 +33,12 @@
     <!-- Authentification -->
     <definition name="/authentification/signup" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/signup.jsp"/>
-        <put-attribute name="title" value="authent.title"/>
     </definition>
     <definition name="/authentification/signin" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/signin.jsp"/>
-        <put-attribute name="title" value="signin.title"/>
     </definition>
     <definition name="/authentification/resendPwd" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/resendPwd.jsp"/>
-        <put-attribute name="title" value="resendPwd.title"/>
     </definition>
     <definition name="/authentification/editUser" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/editUser.jsp"/>

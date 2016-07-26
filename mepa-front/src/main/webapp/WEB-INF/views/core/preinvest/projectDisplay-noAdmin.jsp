@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: Valentin ZHENG
   Date: 24/07/2016
@@ -7,8 +7,9 @@
 --%>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
+<!-- www.webtutoriaux.com Compteur de visiteurs -->
 <script type='text/javascript' src='http://www.webtutoriaux.com/services/compteur-visiteurs/index.php?client=154864'></script>
-
+<!-- End Compteur de visiteurs -->
 <script>
     $("#slideshow > div:gt(0)").hide();
 
@@ -21,6 +22,27 @@
                 .appendTo('#slideshow');
     }, 3000);
 </script>
+<%
+    Integer hitsCount = (Integer)application.getAttribute("hitCounter");
+    ArrayList<String> visits = (ArrayList<String>) application.getAttribute("visits");
+    if (visits == null)
+        visits = new ArrayList<>();
+    String id = request.getSession().getId();
+    if( hitsCount == null || hitsCount == 0 ){
+        hitsCount = 1;
+        visits.add(id);
+    }
+    else {
+        if (!visits.contains(id)) {
+            visits.add(id);
+            ++hitsCount;
+        }
+    }
+    application.setAttribute("hitCounter", hitsCount);
+    System.out.println(visits.size());
+    application.setAttribute("visits", visits);
+%>
+
 
 <div class="container">
     <header class="title projectHeader">
@@ -74,20 +96,28 @@
                 </div>
                 <a href="https://twitter.com/share" class="twitter-share-button" data-lang="fr">Tweeter</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
                 <%-- Part of the page for Social buttons --%>
-                <div class="col-md-12">
-                    <%-- Facebook share button --%>
-                    <div class="fb-share-button"
-                         data-href="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}"
-                         data-layout="button_count"
-                         data-size="large"
-                    <%-- Open the iframe --%>
-                         data-mobile-iframe="true">
-                        <a class="fb-xfbml-parse-ignore" target="_blank"
-                           href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmepa.herokuapp.com%2Fcore%2Fpreinvest%2F${project.id}&amp;src=sdkpreparse">
-                            Partager
-                        </a>
+                <div id="social-box" class="row">
+                    <div class="col-md-12">
+                        <%-- Facebook share button --%>
+                        <div class="fb-share-button"
+                             data-href="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}"
+                             data-layout="button_count"
+                             data-size="large"
+                        <%-- Open the iframe --%>
+                             data-mobile-iframe="true">
+                            <a class="fb-xfbml-parse-ignore" target="_blank"
+                               href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmepa.herokuapp.com%2Fcore%2Fpreinvest%2F${project.id}&amp;src=sdkpreparse">
+                                Partager
+                            </a>
+                        </div>
+                        <br/>
                     </div>
-                    <br/>
+                    <div class="col-md-12">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-size="large"
+                           data-text="Découvrez le projet ${project.name} :" data-hashtags="LGIS"
+                           data-lang="fr" data-show-count="false">Tweet</a>
+                        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    </div>
                 </div>
 
                 <%-- Part of the page for the project description --%>
@@ -189,7 +219,7 @@
                         <h4>Temps restant : ${projectLeftTime} jour(s)</h4>
                     </div>
                 </div>
-                <c:url var="investMoney" value="/invest/investMoney"/>
+                <c:url var="investMoney" value="/invest/${project.id}/investMoney"/>
                 <form:form role="form" action="${investMoney}" method="post" modelAttribute="User">
                     <div id="keypress"
                          class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12"></div>
@@ -239,10 +269,10 @@
                             <p>totomgoemogme</p>
                         </div>
                     </li>
-                    <c:if test="${rewardList != null and rewardList.size() > 0}">
-                        <c:forEach items="${rewardList}" var="reward" varStatus="status">
+                    <c:if test="${project.rewards != null and project.rewards.size() > 0}">
+                        <c:forEach items="${project.rewards}" var="reward" varStatus="status">
                             <li class="rewardItem" name="reward/${reward.id}">
-                                <h4 class="rewardTitle">${reward.name} à partir de ${reward.costStart}€</h4>
+                                <h4 class="rewardTitle"> <a href="/invest/${project.id}/rewardDisplay/${reward.id}"> ${reward.name} à partir de ${reward.costStart}€</a></h4>
                                 <div class="rewardDescription">
                                     <p>${reward.description}</p>
                                 </div>

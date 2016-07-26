@@ -59,10 +59,18 @@
                     </div>
                 </div>
                 <br/>
+
+            <form action="http://www.html.am/html-codes/forms/html-form-tag-action.cfm" target="result" method="get">
+                <p>Partager son projet </p>
+                <input type="checkbox" name="fruit" value="Facebook"> Facebook
+                <input type="checkbox" name="fruit" value="Twitter"> Twitter
+                <input type="checkbox" name="fruit" value="Non Merci"> Non Merci
+
                 <div class="control-group">
                    <button type="submit" class="btn btn-default">Créer le projet</button>
                 </div>
             </sf:form>
+
 
         </c:if>
         <c:if test="${!is_connected}">
