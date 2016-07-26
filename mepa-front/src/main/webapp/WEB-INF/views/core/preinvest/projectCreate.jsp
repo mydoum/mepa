@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <br/>
-            
+
             <form action="http://www.html.am/html-codes/forms/html-form-tag-action.cfm" target="result" method="get">
                 <p>Partager son projet </p>
                 <input type="checkbox" name="fruit" value="Facebook"> Facebook
