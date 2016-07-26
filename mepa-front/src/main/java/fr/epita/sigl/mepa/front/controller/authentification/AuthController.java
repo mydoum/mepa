@@ -107,7 +107,7 @@ public class AuthController {
         if (recipient != null) {
             try {
                 String obj = "Récupération de votre mot de passe";
-                String text = "Cette information est strictement privée." + "<br> Here is your password: \""
+                String text = "Cette information est strictement privée." + "<br> Voici votre mot de passe: \""
                         + recipient.getPassword() + "\". <br><br> Regards, <br>MEPA Team";
                 isSent = sendMail(recipient.getLogin(), obj, text);
                 modelMap.addAttribute("isSent", isSent);
