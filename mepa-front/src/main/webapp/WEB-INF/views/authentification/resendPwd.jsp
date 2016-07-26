@@ -1,6 +1,22 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <div class="container">
+    <c:choose>
+        <c:when test="${isNotSent == false}">
+            <div class="col-md-12 text-center alert alert-success investFormInside">
+                Un mail a été envoyé à ${email}!
+            </div>
+            <br/>
+        </c:when>
+        <c:when test="${isNotSent == true}">
+            <div class="col-md-12 text-center alert alert-danger investFormInside">
+                Email incorrect. Veuillez sélectionner l'email affilié à votre compte.
+            </div>
+            <br/>
+        </c:when>
+        <c:otherwise>
+        </c:otherwise>
+    </c:choose>
     <div class="row">
         <div class="col-md-6">
             <c:url var="resendPwdFormActionUrl" value="/authentification/resendPwd"/>
@@ -32,21 +48,5 @@
                 </fieldset>
             </form>
         </div>
-        <c:choose>
-            <c:when test="${isSent == true}">
-                <div class="col-md-12 text-center alert alert-success investFormInside">
-                    Un mail a été envoyé à ${email}!
-                </div>
-                <br/>
-            </c:when>
-            <c:when test="${isNotSent == true}">
-                <div class="col-md-12 text-center alert alert-danger investFormInside">
-                    Email incorrect. Veuillez sélectionner l'email affilié à votre compte.
-                </div>
-                <br/>
-            </c:when>
-            <c:otherwise>
-            </c:otherwise>
-        </c:choose>
     </div>
 </div>
