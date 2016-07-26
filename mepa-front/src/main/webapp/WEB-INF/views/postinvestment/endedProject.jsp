@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
-
+<%--
 <script>
     $("#slideshow > div:gt(0)").hide();
 
@@ -20,6 +20,7 @@
                 .appendTo('#slideshow');
     }, 3000);
 </script>
+--%>
 
 <div class="container">
     <header class="title projectHeader">
@@ -176,7 +177,7 @@
                     <div class="col-md-12">
                         <%-- POST INVEST --%>
                         <%-- PARTI POUR LE POST INVEST --%>
-                        <%--<jsp:useBean id="todayDate" class="java.util.Date"/>
+                        <jsp:useBean id="todayDate" class="java.util.Date"/>
                         <c:choose>
                             <c:when test="${project.endDate <= todayDate}">
                                <div class="date">PostInvest -> Date de fin atteinte.</div>
@@ -184,7 +185,8 @@
                            <c:otherwise>
                                <div class="date">PostInvest -> Date de fin non atteinte.</div>
                            </c:otherwise>
-                       </c:choose>--%>
+                       </c:choose>
+<%--
                         <h4>Temps restant : ${projectLeftTime} jour(s)</h4>
                     </div>
                 </div>
@@ -221,7 +223,7 @@
                 </form:form>
             </div>
         </div>
-        <%-- Part of the page where the slideshow and the project date are printed --%>
+        <%-- Part of the page where the slideshow and the project date are printed --%
         <div class="row">
             <div class="col-md-12 rewardSection">
                 <h4 class="rewardHeader">Choisissez votre contrepartie</h4>
@@ -254,6 +256,8 @@
         </div>
     </aside>
 </div>
+
+--%>
 
 <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
 <script src="${investSliderJs}"></script>
