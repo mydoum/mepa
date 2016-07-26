@@ -108,11 +108,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <!-- www.webtutoriaux.com Compteur de visiteurs -->
-                        <script type='text/javascript' src='http://www.webtutoriaux.com/services/compteur-visiteurs/index.php?client=154864'></script>
-                        <!-- End Compteur de visiteurs -->
-                    </div>
+
                     <div class="col-md-2">
                         <c:if test="${isAdmin == true}">
                             <p>Nombre de visiteurs: <%= hitsCount%></p>
