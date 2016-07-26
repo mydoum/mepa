@@ -187,7 +187,11 @@
                 <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Se connecter</a></div>
             </div>
             <div class="panel-body" >
-                <form id="signupform" class="form-horizontal" role="form">
+                <c:url var="addCustomUserFormActionUrl" value="/authentification/createUser"/>
+                <form data-toggle="validator" role="form" id="signupform" class="form-horizontal" action="${addCustomUserFormActionUrl}"
+                      modelAttribute="addCustomUserFormBean" role="form"
+                      method="POST">
+                    <fieldset>
 
                     <div id="signupalert" style="display:none" class="alert alert-danger">
                         <p>Error:</p>
@@ -238,7 +242,7 @@
                     <div class="form-group">
                         <!-- Button -->
                         <div class="col-md-offset-3 col-md-9">
-                            <button id="btn-signup" type="button" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Inscription</button>
+                            <button id="btn-signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Inscription</button>
                             <%--<span style="margin-left:8px;">or</span>--%>
                         </div>
                     </div>
@@ -251,7 +255,7 @@
                         <%--</div>--%>
 
                     <%--</div>--%>
-
+                        </fieldset>
                 </form>
             </div>
         </div>

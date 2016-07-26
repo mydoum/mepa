@@ -58,10 +58,10 @@ public class AuthController {
     public String processForm(HttpServletRequest request, ModelMap modelMap) {
         AppUser newAppUser = new AppUser();
         String birthdate = request.getParameter("birthdate");
-        String firstName = request.getParameter("inputFirstName");
-        String lastName = request.getParameter("inputLastName");
-        String login = request.getParameter("inputEmail");
-        String pwd = request.getParameter("inputPassword");
+        String firstName = request.getParameter("firstNameInput");
+        String lastName = request.getParameter("lastNameInput");
+        String login = request.getParameter("emailInput");
+        String pwd = request.getParameter("passwordInput");
 
         // Change string to date
         DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
