@@ -38,7 +38,7 @@
                                 </c:otherwise>
                             </c:choose>
                             <c:url var="deconnexion" value="/authentification/deconnexion"/>
-                            <li><a href="${deconnexion}"><span class="glyphicon glyphicon-off"></span> Déconnexion</a></li>
+                            <li><a href="${deconnexion}"><span class="glyphicon glyphicon-off"></span>  Déconnexion</a></li>
                         </c:if>
                     </ul>
                 </div>
