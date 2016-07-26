@@ -23,6 +23,8 @@ import java.util.ListIterator;
 
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 
+import static java.lang.Math.toIntExact;
+
 @Controller
 @SessionAttributes({})
 @RequestMapping("/postinvest")
@@ -47,8 +49,8 @@ public class PostInvestmentController {
     @RequestMapping(value = "/project-list", method = RequestMethod.GET)
     public String displayEndedProjectList(ModelMap model, HttpServletRequest request) {
         List<Project> projects = this.projectService.getAllFinishedProjects();
-        for (Project p: projects)
-                Hibernate.initialize(p.getRewards());
+        for (Project p : projects)
+            Hibernate.initialize(p.getRewards());
         model.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
 
         return "/project-end-list";
@@ -79,7 +81,7 @@ public class PostInvestmentController {
         int totalAmount = randomWithRange(0, 1000);
         modelMap.addAttribute("totalDonationDummy", totalAmount);
 
-        int var = totalAmount / 6;
+        int var = percentage (toIntExact(project.getGoalAmount()), totalAmount);
         modelMap.addAttribute("var", var);
 
 
@@ -113,8 +115,8 @@ public class PostInvestmentController {
             return;
         }
 
-        for (Investor i: listOfInvestors) {
-            if(i.getEmail().equals(investor.getEmail())) {
+        for (Investor i : listOfInvestors) {
+            if (i.getEmail().equals(investor.getEmail())) {
                 i.setMoneyAmount(i.getMoneyAmount() + investor.getMoneyAmount());
                 return;
             }
@@ -130,9 +132,16 @@ public class PostInvestmentController {
         return totalProjectAmount;
     }
 
-    int randomWithRange(int min, int max)
-    {
+    int randomWithRange(int min, int max) {
         int range = (max - min) + 1;
-        return (int)(Math.random() * range) + min;
+        return (int) (Math.random() * range) + min;
+    }
+
+
+    private int percentage(int a, int b) {
+        if (a == 0) {
+            return 100;
+        }
+        return ((b * 100) / a);
     }
 }
