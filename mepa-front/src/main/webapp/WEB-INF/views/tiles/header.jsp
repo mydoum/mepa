@@ -34,7 +34,7 @@
                                     <li><a href="${editUser}"><span class="glyphicon glyphicon-user"></span>  ${userCo.firstName} ${userCo.lastName}</a></li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li><a href="${editUser}"><span class="glyphicon glyphicon-user"></span> ${userCo.login}</a></li>
+                                    <li><a href="${editUser}"><span class="glyphicon glyphicon-user"></span>  ${userCo.login}</a></li>
                                 </c:otherwise>
                             </c:choose>
                             <c:url var="deconnexion" value="/authentification/deconnexion"/>
