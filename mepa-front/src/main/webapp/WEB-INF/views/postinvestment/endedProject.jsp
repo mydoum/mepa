@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
-<%--
+
 <script>
     $("#slideshow > div:gt(0)").hide();
 
@@ -20,7 +20,7 @@
                 .appendTo('#slideshow');
     }, 3000);
 </script>
---%>
+
 
 <div class="container">
     <header class="title projectHeader">
@@ -42,7 +42,7 @@
                 <nav class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active">
-                            <a href="/core/preinvest/projectDisplay/${project.id}">Accueil de la page du projet
+                            <a href="/postinvest/projectDisplay/${project.id}">Accueil de la page du projet
                                 : ${project.name}</a>
                         </li>
                         <li>
@@ -77,7 +77,7 @@
                 <div class="col-md-12">
                     <%-- Facebook share button --%>
                     <div class="fb-share-button"
-                         data-href="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}"
+                         data-href="https://mepa.herokuapp.com/postinvest/projectDisplay/${project.id}"
                          data-layout="button_count"
                          data-size="large"
                     <%-- Open the iframe --%>
