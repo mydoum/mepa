@@ -95,20 +95,28 @@
                 </div>
 
                 <%-- Part of the page for Social buttons --%>
-                <div class="col-md-12">
-                    <%-- Facebook share button --%>
-                    <div class="fb-share-button"
-                         data-href="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}"
-                         data-layout="button_count"
-                         data-size="large"
-                    <%-- Open the iframe --%>
-                         data-mobile-iframe="true">
-                        <a class="fb-xfbml-parse-ignore" target="_blank"
-                           href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmepa.herokuapp.com%2Fcore%2Fpreinvest%2F${project.id}&amp;src=sdkpreparse">
-                            Partager
-                        </a>
+                <div id="social-box" class="row">
+                    <div class="col-md-12">
+                        <%-- Facebook share button --%>
+                        <div class="fb-share-button"
+                             data-href="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}"
+                             data-layout="button_count"
+                             data-size="large"
+                        <%-- Open the iframe --%>
+                             data-mobile-iframe="true">
+                            <a class="fb-xfbml-parse-ignore" target="_blank"
+                               href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmepa.herokuapp.com%2Fcore%2Fpreinvest%2F${project.id}&amp;src=sdkpreparse">
+                                Partager
+                            </a>
+                        </div>
+                        <br/>
                     </div>
-                    <br/>
+                    <div class="col-md-12">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-size="large"
+                           data-text="Venez voir ce nouveau projet :" data-hashtags="LGIS"
+                           data-lang="fr" data-show-count="false">Tweet</a>
+                        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    </div>
                 </div>
 
                 <%-- Part of the page for the project description --%>
