@@ -65,6 +65,11 @@ public class InvestController {
         int goalAmount = toIntExact(project.getGoalAmount());
         int percentageAmount = tools.percentage(goalAmount , (int) totalAmount);
 
+        model.addAttribute("amountSize", true);
+
+        if (listinvestors == null || listinvestors.size() == 0)
+            model.addAttribute("amountSize", false);
+
         model.addAttribute("projectPercentage", percentageAmount);
         model.addAttribute("projectPercentageBar", Math.min(percentageAmount, 100));
 

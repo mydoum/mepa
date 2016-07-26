@@ -169,7 +169,7 @@
             <c:if test="${isAdmin != null && isAdmin == true && amountSize != null && amountSize == false}">
                 <div class="col-md-12 download investFormInside disabled">
                     <p align="center">
-                        <a href="/invest/download/${project.id}"><span class="btn btn-primary">Download</span></a>
+                        <a href="/invest/download/${project.id}"><span class="btn btn-primary">Téléchargement</span></a>
                     </p>
                 </div>
             </c:if>
