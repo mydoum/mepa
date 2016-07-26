@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <div class="container">
-    <h1>Liste des projets</h1>
+    <h1>Liste des projets en cours</h1>
 
     <div class="table-responsive">
         <table class="table table-striped">
