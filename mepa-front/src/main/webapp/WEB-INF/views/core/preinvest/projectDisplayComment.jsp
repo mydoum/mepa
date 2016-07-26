@@ -7,7 +7,6 @@
 --%>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
-
 <script>
     $("#slideshow > div:gt(0)").hide();
 
@@ -20,30 +19,7 @@
                 .appendTo('#slideshow');
     }, 3000);
 </script>
-<%
-    Integer hitsCount = (Integer)application.getAttribute("hitCounter");
-    ArrayList<String> visits = (ArrayList<String>) application.getAttribute("visits");
-    if (visits == null)
-        visits = new ArrayList<>();
-    String id = request.getSession().getId();
-    if( hitsCount == null || hitsCount == 0 ){
-        hitsCount = 1;
-        visits.add(id);
-    }
-    else {
-        if (!visits.contains(id)) {
-            visits.add(id);
-            ++hitsCount;
-        }
-    }
-    application.setAttribute("hitCounter", hitsCount);
-    System.out.println(visits.size());
-    application.setAttribute("visits", visits);
-%>
 
-<center>
-
-</center>
 <div class="container">
     <header class="title projectHeader">
         <h1 class="short">${project.name}</h1>
@@ -72,115 +48,53 @@
                         </li>
                     </ul>
                 </nav>
-                <%-- Part of the page where the slideshow and the project date are printed --%>
-                <div class="row">
-                    <div class="col-md-4" id="slideshow">
-                        <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
-                            <div>
-                                <img src="${image}" style="width:100%"
-                                     class="projectImageInvest img-responsive img-rounded"/>
-                            </div>
-                        </c:forEach>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="date firstDate">Date de début:</div>
-                        <div class="date">${project.dateFormat("dd/MM/yyyy", project.startDate)}</div>
-                        <div class="date">Date de fin:</div>
-                        <div class="date">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
-
-
-                    </div>
+            </div>
+            <br/>
+            <%-- SOCIAL DIV FOR ADDING COMMENT PART --%>
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <!-- www.webtutoriaux.com Compteur de visiteurs -->
+                    <script type='text/javascript' src='http://www.webtutoriaux.com/services/compteur-visiteurs/index.php?client=154864'></script>
+                    <!-- End Compteur de visiteurs -->
                 </div>
-                <%-- Part of the page for Social buttons --%>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div id="social-box" class="row">
-                            <div class="col-md-12">
-                                <%-- Facebook share button --%>
-                                <div class="fb-share-button"
-                                     data-href="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}"
-                                     data-layout="button_count"
-                                     data-size="large"
-                                <%-- Open the iframe --%>
-                                     data-mobile-iframe="true">
-                                    <a class="fb-xfbml-parse-ignore" target="_blank"
-                                       href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmepa.herokuapp.com%2Fcore%2Fpreinvest%2F${project.id}&amp;src=sdkpreparse">
-                                        Partager
-                                    </a>
+                <div class="col-md-12">
+                    <c:choose>
+                        <c:when test="${userCo == null}">
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-10">
+                                    <p align="center" class="glyphicon glyphicon-info-sign">
+                                        Vous devez être identifié pour laisser un commentaire
+                                    </p>
                                 </div>
-                                <br/>
+                                <div class="col-md-2"></div>
                             </div>
-                            <div class="col-md-12">
-                                <a href="https://twitter.com/share" class="twitter-share-button" data-size="large"
-                                   data-text="Découvrez le projet ${project.name} :" data-hashtags="LGIS"
-                                   data-lang="fr" data-show-count="false">Tweet</a>
-                                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <p align="center">
+                                        <a class="btn btn-success loginButton" href="/authentification/signin" role="button">Connexion</a>
+                                    </p>
+                                </div>
+                                <div class="col-md-4"></div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <!-- www.webtutoriaux.com Compteur de visiteurs -->
-                        <script type='text/javascript' src='http://www.webtutoriaux.com/services/compteur-visiteurs/index.php?client=154864'></script>
-                        <!-- End Compteur de visiteurs -->
-                    </div>
-                    <div class="col-md-2">
-                        <p>Nombre de visiteurs: <%= hitsCount%></p>
-                    </div>
-                </div>
-                <%-- Part of the page for the project description --%>
-                <div class="panel panel-primary projectDescriptionInvest col-md-12">
-                    <!-- Default panel contents -->
-                    <div class="panel-heading">Description</div>
-                    <div class="panel-body">
-                        <p>${project.description}</p>
-                    </div>
-                </div>
-            </div>
-            <br/>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <p align="center">
+                                        <a href="/authentification/signup">S'inscrire</a>
+                                    </p>
 
-            <%-- Part of the page where the list of the investors are printed --%>
-            <div class="col-md-12 investFormInside">
-                <tr/>
-                <div class="col-md-12 investFormInside">
-                    <div class="col-md-12"><h2>Liste des contributeurs</h2></div>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <%@ include file="/WEB-INF/views/comments/core/comment_form.jsp" %>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
-                <table class="col-md-12 table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Prénom ou email</th>
-                        <th>Contribution</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:if test="${investorsList.size() > 0}">
-                        <c:forEach items="${investorsList}" var="investor" varStatus="status">
-                            <tr>
-                                <c:choose>
-                                    <c:when test="${investor.anonymous}">
-                                        <td>Anonyme</td>
-                                    </c:when>
-                                    <c:when test="${investor.firstname == null or empty investor.firstname}">
-                                        <td>${investor.email}</td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <td>${investor.firstname}</td>
-                                    </c:otherwise>
-                                </c:choose>
-                                <td>${investor.moneyAmount} €</td>
-                            </tr>
-                        </c:forEach>
-                    </c:if>
-                    </tbody>
-                </table>
             </div>
-            <br/>
-            <c:if test="${isAdmin != null && isAdmin == true}">
-                <div class="col-md-12 download investFormInside">
-                    <p align="center">
-                        <a href="/invest/download"><span class="btn btn-primary">Download</span></a>
-                    </p>
-                </div>
-            </c:if>
         </div>
     </div>
 

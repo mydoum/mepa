@@ -80,6 +80,10 @@
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectCreate.jsp"/>
         <put-attribute name="title" value="createProject.title"/>
     </definition>
+    <definition name="/preinvest/projectDisplay/Comment" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectDisplayComment.jsp"/>
+        <put-attribute name="title" value="project.title"/>
+    </definition>
 
     <!-- Comments -->
     <definition name="/comments/core/comment_form" extends="base.definition">

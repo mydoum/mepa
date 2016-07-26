@@ -46,7 +46,7 @@
                                 : ${project.name}</a>
                         </li>
                         <li>
-                            <a href="/invest/comment">Commentaires</a>
+                            <a href="/invest/">Commentaires</a>
                         </li>
                     </ul>
                 </nav>
