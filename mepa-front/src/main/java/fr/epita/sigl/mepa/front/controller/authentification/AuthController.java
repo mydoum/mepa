@@ -58,10 +58,10 @@ public class AuthController {
     public String processForm(HttpServletRequest request, ModelMap modelMap) {
         AppUser newAppUser = new AppUser();
         String birthdate = request.getParameter("birthdate");
-        String firstName = request.getParameter("inputFirstName");
-        String lastName = request.getParameter("inputLastName");
-        String login = request.getParameter("inputEmail");
-        String pwd = request.getParameter("inputPassword");
+        String firstName = request.getParameter("firstNameInput");
+        String lastName = request.getParameter("lastNameInput");
+        String login = request.getParameter("emailInput");
+        String pwd = request.getParameter("passwordInput");
 
         // Change string to date
         DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -136,16 +136,20 @@ public class AuthController {
     public String signIn(HttpServletRequest request, ModelMap modelMap) {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        if (userCo != null || isCo) { // The user in already log in
+        if (userCo != null && isCo) { // The user in already log in
             return home.home(request);
         }
-        String login = request.getParameter("email");
-        String pwd = request.getParameter("password");
+//        String login = request.getParameter("email");
+//        String pwd = request.getParameter("password");
 
-        AppUser signinUser = this.appUserService.getUserByLogin(login);
+//        FIXME
+        String inputLogin = request.getParameter("inputEmail");
+        String inputPwd = request.getParameter("inputPassword");
+
+        AppUser signinUser = this.appUserService.getUserByLogin(inputLogin);
         if (signinUser != null) { // the user exist
             AppUser newAppUser = this.appUserService.getUserById(signinUser.getId());
-            if (StringUtils.equals(pwd, newAppUser.getPassword())) {
+            if (StringUtils.equals(inputPwd, newAppUser.getPassword())) {
                 request.getSession().setAttribute("userCo", newAppUser);
                 isCo = true;
                 request.getSession().setAttribute("isCo", true);
