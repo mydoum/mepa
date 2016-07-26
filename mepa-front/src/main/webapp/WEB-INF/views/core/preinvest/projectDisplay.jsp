@@ -124,7 +124,9 @@
                         <!-- End Compteur de visiteurs -->
                     </div>
                     <div class="col-md-2">
-                        <p>Nombre de visiteurs: <%= hitsCount%></p>
+                        <c:if test="${isAdmin == true}">
+                            <p>Nombre de visiteurs: <%= hitsCount%></p>
+                        </c:if>
                     </div>
                 </div>
                 <%-- Part of the page for the project description --%>
