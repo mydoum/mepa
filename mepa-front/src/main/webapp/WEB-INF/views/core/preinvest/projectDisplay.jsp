@@ -177,7 +177,7 @@
             <c:if test="${isAdmin != null && isAdmin == true}">
                 <div class="col-md-12 download investFormInside">
                     <p align="center">
-                        <a href="/invest/download"><span class="btn btn-primary">Download</span></a>
+                        <a href="/invest/download/${project.id}"><span class="btn btn-primary">Download</span></a>
                     </p>
                 </div>
             </c:if>

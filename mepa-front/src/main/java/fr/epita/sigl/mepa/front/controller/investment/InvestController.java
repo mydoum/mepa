@@ -205,13 +205,14 @@ public class InvestController {
         return 0;
     }
 
-    @RequestMapping(value = {"/invest/download"})
-    public String investDownload(HttpServletResponse response, ModelMap model, Project project) {
+    @RequestMapping(value = {"/invest/download/{projectId}"})
+    public String investDownload(HttpServletResponse response, ModelMap model, @PathVariable Long projectId) {
         float totalAmount = 0.00f;
         Date actual = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String date = dateFormat.format(actual);
         ArrayList<Investor> investors = new ArrayList<Investor>();
+        Project project = projectService.getProjectById(projectId);
         totalAmount = getallinvestors(investors, totalAmount, project, true);
         if (investors.size() > 0) {
             String fileWriter = CsvExporter.writeCsvFile(investors);
@@ -226,9 +227,7 @@ public class InvestController {
                 e.printStackTrace();
             }
         }
-        model.addAttribute("investorsList", investors);
-        model.addAttribute("totalDonation", totalAmount);
-        return "/investment/investment";
+        return displayList(model, project);
     }
 
     @RequestMapping(value = {"/invest/{projectId}/rewardDisplay/{rewardId}"}, method = RequestMethod.GET) // The adress to call the function

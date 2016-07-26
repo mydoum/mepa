@@ -68,9 +68,9 @@ public class ProjectDisplayController {
         modelMap.addAttribute("userco", userco);
 
         /* Check if the user connected is the administrator of the projet */
-        if (userco != null && userco.getId() == project.getUser_id())
+        if (userco != null && project != null && ((userco.getId() == project.getUser_id())
+                || (userco.getFirstName().compareTo("Admin") == 0)))
             request.getSession().setAttribute("isAdmin", "true");
-
         else
             request.getSession().setAttribute("isAdmin", "false");
 
