@@ -7,6 +7,7 @@ import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.core.service.*;
 import fr.epita.sigl.mepa.core.service.AppUserService;
+import fr.epita.sigl.mepa.front.Service.InvestmentFrontService;
 import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayController;
 import fr.epita.sigl.mepa.front.controller.postinvestment.PostInvestmentController;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
@@ -56,6 +57,7 @@ public class InvestController {
     private ProjectDisplayController projectDisplayController;
     @Autowired
     private PostInvestmentController postInvestmentController;
+    private InvestmentFrontService investmentFrontService = new InvestmentFrontService();
 
     private int percentage (int a, int b) {
         if (a == 0) {
@@ -67,7 +69,7 @@ public class InvestController {
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(listinvestors, totalAmount, project, false);
+        totalAmount = investmentFrontService.getallinvestors(listinvestors, totalAmount, project, false);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
 
@@ -88,7 +90,7 @@ public class InvestController {
     public String comment(ModelMap model, HttpSession session, Project project) {
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(listinvestors, totalAmount, project, false);
+        totalAmount = investmentFrontService.getallinvestors(listinvestors, totalAmount, project, false);
         model.addAttribute("totalDonation", totalAmount);
         model.addAttribute("isConnected", false);
         return "/investment/comment";
@@ -135,51 +137,6 @@ public class InvestController {
             model.addAttribute("errorInvest", errorMessage);
         }
         return projectDisplayController.projectDisplay(request, model, projectId);
-
-    }
-
-    public float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
-        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(project.getId()));
-        ArrayList<String> listmailinvestor = new ArrayList<String>();
-        AppUser tmpUser;
-        String firstname;
-        String lastname;
-        String email;
-        boolean investorIsPresent = false;
-
-        if (investments == null || investments.size() == 0)
-            return 0.0f;
-
-        for (Investment invest : investments) {
-            investorIsPresent = true;
-            Date created = invest.getCreated();
-            Float amount = invest.getAmount();
-            Long userId = invest.getUserId();
-            boolean anonymous = invest.isAnonymous();
-            tmpUser = appUserService.getUserById(userId);
-            if (!anonymous || downloadCsv) {
-                firstname = tmpUser.getFirstName();
-                lastname = tmpUser.getLastName();
-                if (listmailinvestor.indexOf(tmpUser.getLogin()) == -1) {
-                    listmailinvestor.add(tmpUser.getLogin());
-                    investorIsPresent = false;
-                }
-            } else {
-                firstname = "Anonyme";
-                lastname = "Anonyme";
-                listmailinvestor.add("anonyme");
-            }
-            email = tmpUser.getLogin();
-            Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created, anonymous);
-            /*if (project.isfinished && investorIsPresent) {
-                insertinto(listOfInvestors, tmpInvestor);
-            } else {*/
-                listOfInvestors.add(tmpInvestor);
-            //}
-            totalAmount += amount;
-        }
-        Collections.sort(listOfInvestors);
-        return totalAmount;
     }
 
     private int insertNewInvestor(float moneyAmount, Long userId, Long projectId, boolean anonymous) {
@@ -218,7 +175,7 @@ public class InvestController {
         String date = dateFormat.format(actual);
         ArrayList<Investor> investors = new ArrayList<Investor>();
         Project project = projectService.getProjectById(projectId);
-        totalAmount = getallinvestors(investors, totalAmount, project, true);
+        totalAmount = investmentFrontService.getallinvestors(investors, totalAmount, project, true);
         if (investors != null && investors.size() > 0) {
             String fileWriter = CsvExporter.writeCsvFile(investors);
             response.setContentType("text/csv");
