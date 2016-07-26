@@ -7,7 +7,7 @@
 
 <style type="text/css">
     .pad-left-date {
-        left: -83px;
+        left: -56px;
     }
 
     .margin-bottom-date {
@@ -51,16 +51,16 @@
                         <i class="help-block">(Facultatif)</i>
                     </div>
 
-                    <div class="control-group">
-                        <label class="control-label">Date de naissance</label>
-                        <div class="input-group input-append date pad-left-date" id="datePicker">
-                            <input type="text" class="form-control" name="birthdate"/>
-                            <span class="input-group-addon add-on">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                        <i class="help-block margin-bottom-date">(Facultatif)</i>
-                    </div>
+                    <%--<div class="control-group">--%>
+                        <%--<label class="control-label">Date de naissance</label>--%>
+                        <%--<div class="input-group input-append date pad-left-date" id="datePicker">--%>
+                            <%--<input type="text" class="form-control" name="birthdate"/>--%>
+                            <%--<span class="input-group-addon add-on">--%>
+                                <%--<span class="glyphicon glyphicon-calendar"></span>--%>
+                            <%--</span>--%>
+                        <%--</div>--%>
+                        <%--<i class="help-block margin-bottom-date">(Facultatif)</i>--%>
+                    <%--</div>--%>
 
                     <div class="control-group">
                         <!-- Button -->
@@ -138,19 +138,19 @@
                     <fieldset>
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input id="inputEmail" type="email" class="form-control" name="inputEmail" value="" placeholder="username or email">
+                        <input id="inputEmail" type="email" class="form-control" name="inputEmail" value="" placeholder="Adresse e-mail">
                     </div>
 
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input id="login-inputPassword" type="password" class="form-control" name="inputPassword" placeholder="password">
+                        <input id="login-inputPassword" type="password" class="form-control" name="inputPassword" placeholder="Mot de passe">
                     </div>
 
                     <%-- FIXME --%>
                     <div class="input-group">
                         <div class="checkbox">
                             <label>
-                                <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
+                                <input id="login-remember" type="checkbox" name="remember" value="1"> Se souvenir de moi
                             </label>
                         </div>
                     </div>
@@ -158,12 +158,9 @@
 
                     <div style="margin-top:10px" class="form-group">
                         <!-- Button -->
-
                         <div class="col-sm-12 controls">
-                            <%--<a id="btn-login" type="submit" class="btn btn-success">Login  </a>--%>
-                            <%--<button id="btn-signup" type="button" class="btn btn-info"><i class="icon-hand-right"></i>  Sign Up</button>--%>
+                            <button id="btn-login" type="submit" class="btn btn-success">Connexion</button>
                             <%--<a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>--%>
-                            <button id="btn-login" type="submit" class="btn btn-success">Login</button>
                         </div>
                     </div>
 
@@ -186,8 +183,8 @@
     <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <div class="panel-title">Sign Up</div>
-                <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Sign In</a></div>
+                <div class="panel-title">S'inscrire</div>
+                <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Se connecter</a></div>
             </div>
             <div class="panel-body" >
                 <form id="signupform" class="form-horizontal" role="form">
@@ -198,44 +195,50 @@
                     </div>
 
 
-
                     <div class="form-group">
-                        <label for="email" class="col-md-3 control-label">Email</label>
+                        <label for="email" class="col-md-3 control-label">Adresse e-mail</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="email" placeholder="Email Address">
+                            <input id="emailInput" type="email" class="form-control" name="emailInput" placeholder="Adresse e-mail">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="firstname" class="col-md-3 control-label">First Name</label>
+                        <label for="passwordInput" class="col-md-3 control-label">Mot de passe</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="firstname" placeholder="First Name">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-md-3 control-label">Last Name</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" name="lastname" placeholder="Last Name">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="col-md-3 control-label">Password</label>
-                        <div class="col-md-9">
-                            <input type="password" class="form-control" name="passwd" placeholder="Password">
+                            <input id="passwordInput" type="password" class="form-control" name="passwordInput" placeholder="Mot de passe">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="icode" class="col-md-3 control-label">Invitation Code</label>
+                        <label for="lastNameInput" class="col-md-3 control-label">Nom</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="icode" placeholder="">
+                            <input id="lastNameInput" type="text" class="form-control" name="lastNameInput" placeholder="">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstNameInput" class="col-md-3 control-label">Prénom</label>
+                        <div class="col-md-9">
+                            <input id="firstNameInput" type="text" class="form-control" name="firstNameInput" placeholder="">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Date de naissance</label>
+                        <div class="col-md-9">
+                            <div class="input-group input-append date pad-left-date" id="datePicker">
+                                <input type="text" class="form-control" name="birthdate"/>
+                                <span class="input-group-addon add-on">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                         </div>
                     </div>
 
                     <div class="form-group">
                         <!-- Button -->
                         <div class="col-md-offset-3 col-md-9">
-                            <button id="btn-signup" type="button" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Sign Up</button>
+                            <button id="btn-signup" type="button" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Inscription</button>
                             <%--<span style="margin-left:8px;">or</span>--%>
                         </div>
                     </div>
