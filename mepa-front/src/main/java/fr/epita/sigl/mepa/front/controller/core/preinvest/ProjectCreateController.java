@@ -50,7 +50,7 @@ public class ProjectCreateController {
     @RequestMapping(value = {"/projectCreate"}, method = RequestMethod.GET) // The adress to call the function
     public String projectCreate(HttpServletRequest request, ModelMap modelMap) {
         /* Code your logic here */
-        Project p = new Project();
+        Project p = new Project(1);
 
         Boolean is_co = (Boolean) request.getSession().getAttribute("isCo");
         if (is_co == null)
