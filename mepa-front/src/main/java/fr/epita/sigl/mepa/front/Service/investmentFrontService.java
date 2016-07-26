@@ -15,7 +15,11 @@ import java.util.Date;
 /**
  * Created by Simon on 26/07/2016.
  */
-public class InvestmentFrontService {
+public class investmentFrontService {
+
+    public investmentFrontService() {
+
+    }
     @Autowired
     private InvestmentService investmentService;
     @Autowired

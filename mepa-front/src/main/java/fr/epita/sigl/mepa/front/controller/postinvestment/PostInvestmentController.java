@@ -7,6 +7,7 @@ import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ModelService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
+import fr.epita.sigl.mepa.front.Service.investmentFrontService;
 import fr.epita.sigl.mepa.front.controller.investment.InvestController;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -44,6 +45,9 @@ public class PostInvestmentController {
     @Autowired
     private InvestmentService investmentService;
 
+    private investmentFrontService investmentFrontService = new investmentFrontService();
+
+
     private static final Logger LOG = LoggerFactory.getLogger(PostInvestmentController.class);
 
     @RequestMapping(value = "/project-list", method = RequestMethod.GET)
@@ -60,7 +64,7 @@ public class PostInvestmentController {
     public String displayEndedProject(ModelMap model, HttpServletRequest request, Project project) {
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount = investController.getallinvestors(listinvestors, totalAmount, project, false);
+        totalAmount = investmentFrontService.getallinvestors(listinvestors, totalAmount, project, false);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
         return "/project-end";
