@@ -31,7 +31,6 @@
                     <div id="legend">
                         <legend class="">Modification du profil</legend>
                     </div>
-
                     <div class="control-group">
                         <label class="control-label" for="firstname">Prénom</label>
                         <div class="controls">
@@ -78,47 +77,16 @@
                                    value="">
                         </div>
                     </div>
-
                     <div class="control-group">
                         <!-- Button -->
                         <div class="controls">
                             <button type="submit" class="btn btn-default">Enregistrer</button>
                         </div>
                     </div>
-
                 </fieldset>
 
             </form>
         </div>
-        <br/>
-        <div class="col-md-12 investFormInside">
-            <tr/>
-            <div class="col-md-12 investFormInside">
-                <div class="col-md-8"><h2>Utilisateurs</h2></div>
-            </div>
-            <br/>
-            <table class="col-md-12 table table-striped">
-                <thead>
-                <tr>
-                    <th>Prénom</th>
-                    <th>Nom</th>
-                    <th>Email</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:if test="${usersList.size() > 0}">
-                    <c:forEach items="${usersList}" var="appUser" varStatus="status">
-                        <tr>
-                            <td>${appUser.firstName}</td>
-                            <td>${appUser.lastName}</td>
-                            <td>${appUser.login}</td>
-                        </tr>
-                    </c:forEach>
-                </c:if>
-                </tbody>
-            </table>
-        </div>
-        <br/>
     </div>
 </div>
 
