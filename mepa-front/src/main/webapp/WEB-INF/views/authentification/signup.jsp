@@ -116,12 +116,8 @@
 
                     <div class="form-group">
                         <label for="inputPassword" class="control-label">Mot de passe</label>
-                        <div class="form-inline row">
-                            <div class="form-group col-sm-6">
                                 <input type="password" data-minlength="6" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" required>
                                 <div class="help-block"></div>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="form-group">
@@ -132,7 +128,7 @@
 
                     <div class="form-group">
                         <label for="inputFirstName" class="control-label">Prénom</label>
-                        <input type="text" class="form-control" id="inputFirstName" name="inputLastName" placeholder="Cina">
+                        <input type="text" class="form-control" id="inputFirstName" name="inputFirstName" placeholder="Cina">
                         <i class="help-block">(Facultatif)</i>
                     </div>
 
