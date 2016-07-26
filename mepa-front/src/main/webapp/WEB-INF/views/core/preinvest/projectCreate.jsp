@@ -1,5 +1,8 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="from" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <%--
   Created by IntelliJ IDEA.
   User: Xavier
@@ -41,7 +44,10 @@
                 <div class="control-group">
                     <label class="control-label">Date de début</label>
                     <div class="controls">
-                        <td><form:input path="startDate" class="form-control input-lg" placeholder="mm/jj/aaaa"/></td>
+                        <td>
+                            <form:input path="startDate" class="form-control input-lg" placeholder="mm/jj/aaaa"/>
+                            <form:errors path="startDate"/>
+                        </td>
                     </div>
                 </div>
                 <br/>
