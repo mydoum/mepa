@@ -81,8 +81,10 @@ public class PostInvestmentController {
         int totalAmount = randomWithRange(0, 1000);
         modelMap.addAttribute("totalDonationDummy", totalAmount);
 
-        int var = percentage (toIntExact(project.getGoalAmount()), totalAmount);
-        modelMap.addAttribute("var", var);
+        int var = 100 *totalAmount / toIntExact(project.getGoalAmount());
+        System.out.println("7777777777777777 " + var);
+        modelMap.addAttribute("varpercentage", var);
+
 
 
          /*Get the current user in the session in order to know if he is

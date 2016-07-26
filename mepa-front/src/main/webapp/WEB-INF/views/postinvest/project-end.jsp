@@ -180,10 +180,11 @@
                                 style="width:${projectPercentage}%">
                                     ${projectPercentage}%
                                 </div>--%>
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="${var}"
-                                     aria-valuemin="0" aria-valuemax="100" style="width:${var}">
-                                    ${var}
-                                </div>
+                                    <div class="progress-bar progress-bar-success" role="progressbar"
+                                         aria-valuenow="${varpercentage}" aria-valuemin="0" aria-valuemax="100"
+                                         style="width:${varpercentage}%">
+                                        ${varpercentage}%
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -197,7 +198,6 @@
                         <%-- POST INVEST --%>
                         <%-- PARTI POUR LE POST INVEST --%>
                         <jsp:useBean id="todayDate" class="java.util.Date"/>
-
                             <c:if test="${totalDonationDummy lt project.goalAmount  && project.endDate lt now}">
                             <c:url var="addAmountUrl" value="/admin/addAmount"/>
                             <form:form role="form" controller="AdminController" method="post"
