@@ -203,16 +203,16 @@ public class AuthController {
         if (userCo != null && isCo) {
             AppUser user = this.appUserService.getUserByLogin(userCo.getLogin());
             if (user != null) { // the user really exist, it's not a fake
-                String bithDate = request.getParameter("birthdate");
                 String firstName = request.getParameter("firstname");
                 String lastName = request.getParameter("lastname");
                 String login = request.getParameter("email");
-//                String pwd = request.getParameter("password");
-
+                String description = request.getParameter("description");
+                String address = request.getParameter("address");
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
-                user.setBirthDate(user.getBirthDate());
                 user.setLogin(login);
+                user.setDescription(description);
+                user.setAddress(address);
 
                 this.appUserService.updateUser(user);
                 request.getSession().setAttribute("userCo", user);
