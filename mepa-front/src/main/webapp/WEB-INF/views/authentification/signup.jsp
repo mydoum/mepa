@@ -112,7 +112,7 @@
                             <!-- Button -->
                             <div class="col-md-offset-3 col-md-9">
                                 <button id="btn-signup" type="submit" class="btn btn-info"><i
-                                        class="icon-hand-right"></i> &nbsp Inscription
+                                        class="icon-hand-right"></i> &nbsp S'inscrire
                                 </button>
                                 <%--<span style="margin-left:8px;">or</span>--%>
                             </div>
