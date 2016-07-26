@@ -205,7 +205,7 @@
                         <h4>Contribution totale : ${totalDonation}€</h4>
                     </div>
                     <div class="col-md-12">
-                        <h4>Objectif : <%--${project.requestAmount}--%>500€</h4>
+                        <h4>Objectif : ${project.goalAmount}€</h4>
                     </div>
                     <div class="col-md-12">
                         <%-- POST INVEST --%>

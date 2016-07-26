@@ -48,13 +48,13 @@ public class Project implements Serializable {
 
     private ArrayList<String> imagesLinks;
 
-    @OneToMany(fetch = FetchType.EAGER) //, mappedBy="project"
-    @JoinColumn(name="project_id")
-    private Set<Reward> rewards;
-
     private Long goalAmount;
 
     private Long visitNumber;
+
+    @OneToMany(fetch = FetchType.EAGER) //, mappedBy="project"
+    @JoinColumn(name="project_id")
+    private Set<Reward> rewards;
 
     private boolean isTwitterAllowed;
 
