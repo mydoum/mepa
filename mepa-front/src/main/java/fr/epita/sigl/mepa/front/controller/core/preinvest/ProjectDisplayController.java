@@ -77,6 +77,35 @@ public class ProjectDisplayController {
         return "/preinvest/projectDisplay";
     }
 
+    @RequestMapping(value = {"/", "/projectList"}) // The adress to call the function
+    public String projectList(ModelMap modelMap) {
+        List<Project> projects = this.projectService.getAllUnfinishedProjects();
+        int i = 0;
+        for (Project p: projects)
+            Hibernate.initialize(p.getRewards());
+        modelMap.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
+        return "/preinvest/projectList"; // The adress of the JSP coded in tiles.xml
+    }
+
+    @RequestMapping(value = {"/projectListInclude"}) // The adress to call the function
+    public String projectListInclude(HttpServletRequest request, ModelMap modelMap) {
+        /* Code your logic here */
+
+        this.projectList(modelMap);
+        return "/preinvest/projectListInclude"; // The adress of the JSP coded in tiles.xml
+    }
+
+    /*PostInvest Total Amount invested on Project*/
+    public Float getProjectMoneyInvested(long projectId) {
+        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
+        Float totalProjectAmount = 0.0f;
+        for (Investment inv : investments)
+            if (inv.getProjectId() == projectId)
+                totalProjectAmount += inv.getAmount();
+        return totalProjectAmount;
+    }
+    /*\PostInvest Total Amount invested on Project*/
+
     @RequestMapping(value = {"/projectDisplay/{projectId}/comment"}) // The adress to call the function
     public String projectDisplayComment(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
         /* Code your logic here */
@@ -115,34 +144,4 @@ public class ProjectDisplayController {
         return "/preinvest/projectDisplay/Comment";
 
     }
-
-
-    @RequestMapping(value = {"/", "/projectList"}) // The adress to call the function
-    public String projectList(ModelMap modelMap) {
-        List<Project> projects = this.projectService.getAllUnfinishedProjects();
-        int i = 0;
-        for (Project p: projects)
-            Hibernate.initialize(p.getRewards());
-        modelMap.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
-        return "/preinvest/projectList"; // The adress of the JSP coded in tiles.xml
-    }
-
-    @RequestMapping(value = {"/projectListInclude"}) // The adress to call the function
-    public String projectListInclude(HttpServletRequest request, ModelMap modelMap) {
-        /* Code your logic here */
-
-        this.projectList(modelMap);
-        return "/preinvest/projectListInclude"; // The adress of the JSP coded in tiles.xml
-    }
-
-    /*PostInvest Total Amount invested on Project*/
-    public Float getProjectMoneyInvested(long projectId) {
-        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
-        Float totalProjectAmount = 0.0f;
-        for (Investment inv : investments)
-            if (inv.getProjectId() == projectId)
-                totalProjectAmount += inv.getAmount();
-        return totalProjectAmount;
-    }
-    /*\PostInvest Total Amount invested on Project*/
 }
