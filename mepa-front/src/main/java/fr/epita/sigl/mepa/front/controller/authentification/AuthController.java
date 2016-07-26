@@ -34,10 +34,6 @@ public class AuthController {
     @Autowired
     private HomeController home;
 
-    static private Properties mailServerProperties;
-    static private Session getMailSession;
-    static private MimeMessage generateMailMessage;
-
     @RequestMapping(value = {"/signup"}, method = {RequestMethod.GET})
     public String showSignUpPage(HttpServletRequest request, ModelMap modelMap) {
         // Checking if user is login need to handle this in the model
