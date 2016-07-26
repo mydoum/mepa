@@ -28,7 +28,7 @@
     </header>
     <c:if test="${amount != null}">
         <div class="col-md-12 text-center alert alert-success investFormInside">
-            Thank you for donating ${amount}€! An email to notify you has been sent.
+            Merci pour votre don de ${amount}€! Un mail de notification vous a été envoyé.
         </div>
     </c:if>
     <c:if test="${errorInvest != null and !empty errorInvest}">
