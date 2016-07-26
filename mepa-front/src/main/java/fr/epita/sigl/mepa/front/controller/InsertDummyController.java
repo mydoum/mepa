@@ -125,6 +125,7 @@ public class InsertDummyController {
             imageLinkList.add("http://www.nyan.cat/images/cat/4.gif");
             newProject.setImagesLinks(imageLinkList);
             newProject.setDescription("tototototototototototototototototototototo");
+            newProject.setGoalAmount(2500L);
 
 
 
