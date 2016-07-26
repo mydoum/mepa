@@ -84,7 +84,7 @@ public class InvestController {
         /**
          * Check is the user is signed-in
          */
-        if ((boolean) request.getSession().getAttribute("isCo") == false || tmpUser != null) {
+        if ((boolean) request.getSession().getAttribute("isCo") == false || tmpUser == null) {
             String errorCo = "Veuillez vous identifier pour investir dans un projet";
             model.addAttribute("messageRedirect", errorCo);
             return "/authentification/signin";
@@ -222,7 +222,7 @@ public class InvestController {
         /**
          * Check is the user is signed-in
          */
-        if ((boolean) request.getSession().getAttribute("isCo") == false || tmpUser != null) {
+        if ((boolean) request.getSession().getAttribute("isCo") == false || tmpUser == null) {
             String errorCo = "Veuillez vous identifier pour investir dans un projet";
             model.addAttribute("messageRedirect", errorCo);
             return "/authentification/signin";
