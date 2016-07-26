@@ -30,10 +30,11 @@
         <put-attribute name="body" value="/WEB-INF/views/invalid.jsp"/>
     </definition>
     <definition name="/project-end-list" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/views/postinvestment/endedProjectList.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/postinvest/project-end-list.jsp"/>
     </definition>
     <definition name="/project-end" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/views/postinvestment/endedProjectList.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/postinvest/project-end.jsp"/>
+        <put-attribute name="title" value="project.title"/>
     </definition>
 
     <!-- Authentification -->

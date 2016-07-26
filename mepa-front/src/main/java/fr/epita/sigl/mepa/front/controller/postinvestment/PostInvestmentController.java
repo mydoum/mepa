@@ -65,7 +65,7 @@ public class PostInvestmentController {
     }
 
 
-    @RequestMapping(value = {"/projectDisplay/{projectId}"}) // The adress to call the function
+    @RequestMapping(value = {"/project-end/{projectId}"}) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
         /* Code your logic here */
         Project project = this.projectService.getProjectById(projectId);
@@ -76,6 +76,8 @@ public class PostInvestmentController {
         modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
         /*PostInvest Total Amount invested on Project*/
 
+        int totalAmount = randomWithRange(0, 500);
+        modelMap.addAttribute("totalDonationDummy", totalAmount);
          /*Get the current user in the session in order to know if he is
         * connected */
         AppUser userco = new AppUser();
@@ -96,7 +98,7 @@ public class PostInvestmentController {
 
         modelMap.addAttribute("new_c_models",new_c_models);
         */
-        return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
+        return "/project-end"; // The adress of the JSP coded in tiles.xml
     }
 
     public void groupInvestors(ArrayList<Investor> listOfInvestors, Investor investor) {
@@ -121,5 +123,11 @@ public class PostInvestmentController {
             if (inv.getProjectId() == projectId)
                 totalProjectAmount += inv.getAmount();
         return totalProjectAmount;
+    }
+
+    int randomWithRange(int min, int max)
+    {
+        int range = (max - min) + 1;
+        return (int)(Math.random() * range) + min;
     }
 }
