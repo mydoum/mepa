@@ -27,19 +27,24 @@
     <header class="title projectHeader">
         <h1 class="short">${project.name}</h1>
     </header>
-<%--
+
     <jsp:useBean id="now" class="java.util.Date"/>
-    <c:if test="${totalDonationDummy >= ${projet.goalAmount}  && project.endDate lt now}">
-        <h2 style="background-color:rgb(0,255,0)">
-           Ce Projet est terminé et a été financé !
-        </h2>
+    <c:if test="${totalDonationDummy gt project.goalAmount  && project.endDate lt now}">
+    <div class="container">
+        <br>
+        <div class="alert alert-success" >
+            <h2><strong><center>Ce projet est terminé et a été financé !</center></strong></h2>
+        </div>
+    </div>
     </c:if>
-    <c:if test="${totalDonationDummy <= ${projet.goalAmount}  && project.endDate lt now}">
-        <h2 style="background-color:rgb(0,255,0)">
-           Ce Projet est terminé et n'a malheureusement été financé !
-        </h2>
+    <c:if test="${totalDonationDummy lt project.goalAmount  && project.endDate lt now}">
+    <div class="container">
+        <div class="alert alert-danger">
+            <h2><strong><center>Ce Projet est terminé et n'a malheureusement pas été financé !</center></strong></h2>
+        </div>
+    </div>
     </c:if>
---%>
+
     <c:if test="${amount != null}">
         <div class="col-md-12 text-center alert alert-success investFormInside">
             Merci pour votre don de ${amount}€! Un mail de notification vous a été envoyé.
@@ -175,9 +180,9 @@
                                 style="width:${projectPercentage}%">
                                     ${projectPercentage}%
                                 </div>--%>
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80"
-                                     aria-valuemin="0" aria-valuemax="100" style="width:80%">
-                                    80%
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="${var}"
+                                     aria-valuemin="0" aria-valuemax="100" style="width:${var}">
+                                    ${var}
                                 </div>
                             </div>
                         </div>
@@ -186,20 +191,43 @@
                         <h4>Contribution totale : ${totalDonationDummy}€</h4>
                     </div>
                     <div class="col-md-12">
-                        <h4>Objectif : <%--${project.requestAmount}--%>${projet.goalAmount}</h4>
+                        <h4>Objectif : <%--${project.requestAmount}--%>${project.goalAmount} €</h4>
                     </div>
                     <div class="col-md-12">
                         <%-- POST INVEST --%>
                         <%-- PARTI POUR LE POST INVEST --%>
                         <jsp:useBean id="todayDate" class="java.util.Date"/>
-                        <c:choose>
-                            <c:when test="${project.endDate <= todayDate}">
-                               <div class="date">PostInvest -> Date de fin atteinte.</div>
-                           </c:when>
-                           <c:otherwise>
-                               <div class="date">PostInvest -> Date de fin non atteinte.</div>
-                           </c:otherwise>
-                       </c:choose>
+
+                            <c:if test="${totalDonationDummy lt project.goalAmount  && project.endDate lt now}">
+                            <c:url var="addAmountUrl" value="/admin/addAmount"/>
+                            <form:form role="form" controller="AdminController" method="post"
+                                       action="${addAmountUrl}">
+                                <!--
+                                <input id="amount" type="text" maxlength="20" placeholder="20" name="amount"/>
+                                -->
+                                <label for="amount">Vous souhaitez quand même montrer votre interet envers ce projet ? Indiquez la quantité d'argent que vous voudriez donner !</label>
+                                <input id="amount" type="text" placeholder="20" name="amount"/>
+                                <button type="submit" class="btn btn-default">Soumettre</button>
+                            </form:form>
+                                </c:if>
+                    </div>
+                    <%-- <div class="container">
+                        <c:url var="addAmountUrl" value="/admin/addAmount"/>
+                        <form:form role="form" controller="AdminController" method="post"
+                                   action="${addAmountUrl}">
+                            <!--
+                            <input id="amount" type="text" maxlength="20" placeholder="20" name="amount"/>
+                            -->
+                            <label for="amount">Quantité d'argent que vous voudriez donner</label>
+                            <input id="amount" type="text" placeholder="20" name="amount"/>
+                            <button type="submit" class="btn btn-default">Soumettre</button>
+                        </form:form> </div> --%>
+
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>
 <%--
                         <h4>Temps restant : ${projectLeftTime} jour(s)</h4>
                     </div>
@@ -270,7 +298,6 @@
         </div>
     </aside>
 </div>
-
 --%>
 
 <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>

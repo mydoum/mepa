@@ -76,8 +76,13 @@ public class PostInvestmentController {
         modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
         /*PostInvest Total Amount invested on Project*/
 
-        int totalAmount = randomWithRange(0, 500);
+        int totalAmount = randomWithRange(0, 1000);
         modelMap.addAttribute("totalDonationDummy", totalAmount);
+
+        int var = totalAmount / 6;
+        modelMap.addAttribute("var", var);
+
+
          /*Get the current user in the session in order to know if he is
         * connected */
         AppUser userco = new AppUser();
