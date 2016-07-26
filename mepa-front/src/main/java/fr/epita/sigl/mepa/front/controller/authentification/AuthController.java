@@ -200,7 +200,6 @@ public class AuthController {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
 
-        System.out.println("user pwd = " + userCo.getPassword());
         if (userCo != null && isCo) {
             AppUser user = this.appUserService.getUserByLogin(userCo.getLogin());
             if (user != null) { // the user really exist, it's not a fake
