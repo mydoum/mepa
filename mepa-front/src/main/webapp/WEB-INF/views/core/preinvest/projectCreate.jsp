@@ -78,6 +78,13 @@
                 </div>
                 <br/>
                 <div class="control-group">
+                    <label class="control-label">Objectif du projet</label>
+                    <div class="controls">
+                        <td><form:input path="goalAmount" class="form-control input-lg" placeholder="Entrez la somme à atteindre"/></td>
+                    </div>
+                </div>
+                <br/>
+                <div class="control-group">
                     <label class="control-label">Description</label>
                     <div class="controls">
                         <td><form:textarea path="description" class="form-control input-lg" placeholder="Description" style="margin-top: 0px;"/></td>
