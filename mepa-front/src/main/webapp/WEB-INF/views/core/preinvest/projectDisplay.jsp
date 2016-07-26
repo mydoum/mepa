@@ -258,18 +258,6 @@
             <div class="col-md-12 rewardSection">
                 <h4 class="rewardHeader">Choisissez votre contrepartie</h4>
                 <ol>
-                    <li class="rewardItem" id="">
-                        <h4 class="rewardTitle">Poster à partir 5€</h4>
-                        <div class="rewardDescription">
-                            <p>totomgoemogme</p>
-                        </div>
-                    </li>
-                    <li class="rewardItem" id="">
-                        <h4 class="rewardTitle">T-shirt à partir 10€</h4>
-                        <div class="rewardDescription">
-                            <p>totomgoemogme</p>
-                        </div>
-                    </li>
                     <c:if test="${project.rewards != null and project.rewards.size() > 0}">
                         <c:forEach items="${project.rewards}" var="reward" varStatus="status">
                             <li class="rewardItem" name="reward/${reward.id}">
@@ -281,7 +269,6 @@
                         </c:forEach>
                     </c:if>
                 </ol>
-
             </div>
         </div>
     </aside>

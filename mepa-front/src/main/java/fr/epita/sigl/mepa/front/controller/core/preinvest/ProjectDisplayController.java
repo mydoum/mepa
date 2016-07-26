@@ -86,15 +86,8 @@ public class ProjectDisplayController {
         {
             new_c_models.add(i.previous());
         }
-        if (userco != null && userco.getId() == project.getUser_id())
-        {
         modelMap.addAttribute("new_c_models",new_c_models);
-        return "/preinvest/projectDisplay"; }
-        else
-        {
-            modelMap.addAttribute("new_c_models",new_c_models);
-        return "/preinvest/projectDisplay-noAdmin";
-        }     // The adress of the JSP coded in tiles.xml
+        return "/preinvest/projectDisplay";
     }
 
     @RequestMapping(value = {"/", "/projectList"}) // The adress to call the function

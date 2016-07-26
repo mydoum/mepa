@@ -79,12 +79,13 @@ public class InvestController {
     public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId) {
         float moneyAmount = 0.00f;
         Project project = this.projectService.getProjectById(projectId);
+        AppUser tmpUser = (AppUser) request.getSession().getAttribute("userCo");
 
         /**
          * Check is the user is signed-in
          */
-        String errorCo = "Veuillez vous identifier pour investir dans un projet";
-        if ((boolean) request.getSession().getAttribute("isCo") == false) {
+        if ((boolean) request.getSession().getAttribute("isCo") == false || tmpUser != null) {
+            String errorCo = "Veuillez vous identifier pour investir dans un projet";
             model.addAttribute("messageRedirect", errorCo);
             return "/authentification/signin";
         }
@@ -108,10 +109,9 @@ public class InvestController {
         }
 
         model.addAttribute("amount", moneyAmount);
-        Long userId = 2L;
         boolean anonymous_id = request.getParameter("anonymous_id") != null;
 
-        if (insertNewInvestor(moneyAmount, userId, projectId, anonymous_id) != 0L) {
+        if (insertNewInvestor(moneyAmount, tmpUser.getId(), projectId, anonymous_id) != 0L) {
             String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
             model.addAttribute("errorInvest", errorMessage);
         }
@@ -170,11 +170,12 @@ public class InvestController {
         Date date = new Date();
         newInvestment.setDate(date);
 
+        AppUser tmpUser = appUserService.getUserById(userId);
+
         investmentService.createInvestment(newInvestment);
         Project tmpProject = projectService.getProjectById(projectId);
 
-        //String mail = "simon.mace@epita.fr";
-        String mail = "hugo.capes@hotmail.fr";
+        String mail = tmpUser.getLogin();
         String subject = "Merci pour votre contribution au projet " + tmpProject.getName();
         String message = "Votre contribution est de" + moneyAmount + " euros";
 
@@ -217,10 +218,11 @@ public class InvestController {
     @RequestMapping(value = {"/invest/{projectId}/rewardDisplay/{rewardId}"}, method = RequestMethod.GET) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap model, @PathVariable long projectId, @PathVariable long rewardId) {
 
+        AppUser tmpUser = (AppUser) request.getSession().getAttribute("userCo");
         /**
          * Check is the user is signed-in
          */
-        if ((boolean) request.getSession().getAttribute("isCo") == false) {
+        if ((boolean) request.getSession().getAttribute("isCo") == false || tmpUser != null) {
             String errorCo = "Veuillez vous identifier pour investir dans un projet";
             model.addAttribute("messageRedirect", errorCo);
             return "/authentification/signin";

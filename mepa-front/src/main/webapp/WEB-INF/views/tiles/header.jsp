@@ -19,8 +19,6 @@
                         <li><a href="${homeUrl}">Accueil</a></li>
                         <c:url var="preinvestCoreUrl" value="/core/preinvest/projectCreate"/>
                         <li><a href="${preinvestCoreUrl}">Créer un projet</a></li>
-                        <c:url var="investUrl" value="/invest"/>
-                        <li><a href="${investUrl}">Investissements</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <c:if test="${!isCo}">
