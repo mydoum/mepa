@@ -1,6 +1,5 @@
 package fr.epita.sigl.mepa.core.service;
 
-import fr.epita.sigl.mepa.core.domain.Model;
 import fr.epita.sigl.mepa.core.domain.Project;
 
 import java.util.List;

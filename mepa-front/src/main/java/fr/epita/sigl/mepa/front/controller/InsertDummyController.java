@@ -114,6 +114,7 @@ public class InsertDummyController {
         for (int i = 0; i < 20; ++i) {
             rand.nextLong();
             Project newProject = new Project((long) 1, "Yolo", getRandomDate());
+            newProject.setGoalAmount((long) 600);
             Date d = getRandomDate();
             while (d.after(newProject.getEndDate()))
                 d = getRandomDate();
@@ -151,6 +152,7 @@ public class InsertDummyController {
             rand.nextLong();
             Project newProject = new Project((long) 1, "YoloSwag", getRandomDateFinishedDate());
             Date d = getRandomDateFinishedDate();
+            newProject.setGoalAmount((long) 600);
             while (d.after(newProject.getEndDate()))
                 d = getRandomDateFinishedDate();
 

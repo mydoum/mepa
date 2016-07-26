@@ -30,10 +30,11 @@
         <put-attribute name="body" value="/WEB-INF/views/invalid.jsp"/>
     </definition>
     <definition name="/project-end-list" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/views/postinvestment/endedProjectList.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/postinvest/project-end-list.jsp"/>
     </definition>
     <definition name="/project-end" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/views/postinvestment/endedProjectList.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/postinvest/project-end.jsp"/>
+        <put-attribute name="title" value="project.title"/>
     </definition>
 
     <!-- Authentification -->
@@ -91,6 +92,13 @@
         <put-attribute name="title" value="project.title"/>
     </definition>
 
+    <definition name="/preinvest/rewardAdd" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/core/preinvest/rewardAdd.jsp"/>
+    </definition>
+
+    <definition name="/preinvest/rewardCreate" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/core/preinvest/rewardCreate.jsp"/>
+    </definition>
     <!-- Comments -->
     <definition name="/comments/core/comment_form" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/comments/core/comment_form.jsp"/>
