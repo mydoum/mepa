@@ -84,7 +84,7 @@ public class AuthController {
 //        modelMap.addAttribute("userIsCreated", msg);
         List<AppUser> appUsers = this.appUserService.getAllUsers();
         modelMap.addAttribute("usersList", appUsers);
-        return "/authentification/signup";
+        return "/authentification/signin";
     }
 
     @RequestMapping(value = {"/resendPwd"}, method = {RequestMethod.GET})
@@ -128,6 +128,11 @@ public class AuthController {
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
         if (userCo != null && isCo) { // The user in already log in
             return home.home(request);
+        }
+
+        List<AppUser> appUsers = this.appUserService.getAllUsers();
+        if (appUsers.size() > 0) {
+            modelMap.addAttribute("usersList", appUsers);
         }
         return "/authentification/signin";
     }
@@ -253,6 +258,6 @@ public class AuthController {
             this.appUserService.createUser(newAppUser);
         }
 
-        return "/authentification/signup";
+        return "/authentification/signin";
     }
 }
