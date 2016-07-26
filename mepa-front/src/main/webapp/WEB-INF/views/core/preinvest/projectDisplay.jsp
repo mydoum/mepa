@@ -7,6 +7,9 @@
 --%>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
+<!-- www.webtutoriaux.com Compteur de visiteurs -->
+<script type='text/javascript' src='http://www.webtutoriaux.com/services/compteur-visiteurs/index.php?client=154864'></script>
+<!-- End Compteur de visiteurs -->
 <script>
     $("#slideshow > div:gt(0)").hide();
 
