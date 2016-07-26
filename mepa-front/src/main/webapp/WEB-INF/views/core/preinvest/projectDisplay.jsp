@@ -8,16 +8,15 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <%
-    Integer hitsCount = (Integer)application.getAttribute("hitCounter");
+    Integer hitsCount = (Integer) application.getAttribute("hitCounter");
     ArrayList<String> visits = (ArrayList<String>) application.getAttribute("visits");
     if (visits == null)
         visits = new ArrayList<>();
     String id = request.getSession().getId();
-    if( hitsCount == null || hitsCount == 0 ){
+    if (hitsCount == null || hitsCount == 0) {
         hitsCount = 1;
         visits.add(id);
-    }
-    else {
+    } else {
         if (!visits.contains(id)) {
             visits.add(id);
             ++hitsCount;
@@ -62,7 +61,7 @@
                 <%-- Part of the page where the slideshow and the project date are printed --%>
                 <div class="row">
                     <div class="col-md-4" id="slideshow">
-                       <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
+                        <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
                             <div>
                                 <img src="${image}" style="width:100%"
                                      class="projectImageInvest img-responsive img-rounded"/>
@@ -104,10 +103,10 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-2">
                         <c:if test="${isAdmin == true}">
-                            <p>Nombre de visiteurs: <%= hitsCount%></p>
+                            <p>Nombre de visiteurs: <%= hitsCount%>
+                            </p>
                         </c:if>
                     </div>
                 </div>
@@ -158,11 +157,20 @@
                 </table>
             </div>
             <br/>
-            <div class="col-md-12 download investFormInside">
+            <c:if test="${isAdmin != null && isAdmin == true && amountSize != null && amountSize == true}">
+                <div class="col-md-12 download investFormInside">
                     <p align="center">
                         <a href="/invest/download/${project.id}"><span class="btn btn-primary">Download</span></a>
                     </p>
                 </div>
+            </c:if>
+            <c:if test="${isAdmin != null && isAdmin == true && amountSize != null && amountSize == false}">
+                <div class="col-md-12 download investFormInside disabled">
+                    <p align="center">
+                        <a href="/invest/download/${project.id}"><span class="btn btn-primary">Download</span></a>
+                    </p>
+                </div>
+            </c:if>
         </div>
     </div>
 
@@ -176,8 +184,8 @@
                         <div class="col-md-12">
                             <div class="progress">
                                 <div class="progress-bar progress-bar-success" role="progressbar"
-                                aria-valuenow="${projectPercentage}" aria-valuemin="0" aria-valuemax="100"
-                                style="width:${projectPercentageBar}%">
+                                     aria-valuenow="${projectPercentage}" aria-valuemin="0" aria-valuemax="100"
+                                     style="width:${projectPercentageBar}%">
                                     ${projectPercentage}%
                                 </div>
                             </div>
@@ -245,7 +253,9 @@
                     <c:if test="${project.rewards != null and project.rewards.size() > 0}">
                         <c:forEach items="${project.rewards}" var="reward" varStatus="status">
                             <li class="rewardItem" name="reward/${reward.id}">
-                                <h4 class="rewardTitle"> <a href="/invest/${project.id}/rewardDisplay/${reward.id}"> ${reward.name} à partir de ${reward.costStart}€</a></h4>
+                                <h4 class="rewardTitle"><a
+                                        href="/invest/${project.id}/rewardDisplay/${reward.id}"> ${reward.name} à partir
+                                    de ${reward.costStart}€</a></h4>
                                 <div class="rewardDescription">
                                     <p>${reward.description}</p>
                                 </div>
