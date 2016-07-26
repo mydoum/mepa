@@ -79,7 +79,11 @@ public class AuthController {
 //        modelMap.addAttribute("userIsCreated", msg);
         List<AppUser> appUsers = this.appUserService.getAllUsers();
         modelMap.addAttribute("usersList", appUsers);
-        return "/authentification/signin";
+        request.getSession().setAttribute("userCo", newAppUser);
+        request.getSession().setAttribute("isCo", true);
+        request.getSession().setAttribute("oneTime", true);
+        modelMap.addAttribute("isCo", true);
+        return home.home(request);
     }
 
     @RequestMapping(value = {"/resendPwd"}, method = {RequestMethod.GET})
