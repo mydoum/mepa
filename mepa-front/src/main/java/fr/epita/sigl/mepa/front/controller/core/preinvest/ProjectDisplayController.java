@@ -93,9 +93,11 @@ public class ProjectDisplayController {
     @RequestMapping(value = {"/", "/projectList"}) // The adress to call the function
     public String projectList(ModelMap modelMap) {
         List<Project> projects = this.projectService.getAllUnfinishedProjects();
-
-        for (Project p: projects)
+        int i = 0;
+        for (Project p: projects) {
             Hibernate.initialize(p.getRewards());
+            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + p.getImagesLinks().get(i++));
+        }
         modelMap.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
         return "/preinvest/projectList"; // The adress of the JSP coded in tiles.xml
     }

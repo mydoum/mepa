@@ -11,6 +11,31 @@
 <html>
 <head>
     <title>Create a new project</title>
+    <script>
+        $(function()
+        {
+            $(document).on('click', '.btn-add', function(e)
+            {
+                e.preventDefault();
+
+                var controlForm = $('.controls form:first'),
+                        currentEntry = $(this).parents('.entry:first'),
+                        newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+                newEntry.find('input').val('');
+                controlForm.find('.entry:not(:last) .btn-add')
+                        .removeClass('btn-add').addClass('btn-remove')
+                        .removeClass('btn-success').addClass('btn-danger')
+                        .html('<span class="glyphicon glyphicon-minus"></span>');
+            }).on('click', '.btn-remove', function(e)
+            {
+                $(this).parents('.entry:first').remove();
+
+                e.preventDefault();
+                return false;
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -59,6 +84,9 @@
                     </div>
                 </div>
                 <br/>
+                <div class="control-group">
+                    <input name="imageUrl" class="form-control input-lg" placeholder="URL pour insérer une image"/>
+                </div>
 
             <form action="http://www.html.am/html-codes/forms/html-form-tag-action.cfm" target="result" method="get">
                 <p>Partager son projet </p>

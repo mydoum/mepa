@@ -11,16 +11,6 @@
 <script type='text/javascript' src='http://www.webtutoriaux.com/services/compteur-visiteurs/index.php?client=154864'></script>
 <!-- End Compteur de visiteurs -->
 <script>
-    $("#slideshow > div:gt(0)").hide();
-
-    setInterval(function () {
-        $('#slideshow > div:first')
-                .fadeOut(1000)
-                .next()
-                .fadeIn(1000)
-                .end()
-                .appendTo('#slideshow');
-    }, 3000);
 </script>
 <%
     Integer hitsCount = (Integer)application.getAttribute("hitCounter");
@@ -80,7 +70,7 @@
                 <%-- Part of the page where the slideshow and the project date are printed --%>
                 <div class="row">
                     <div class="col-md-4" id="slideshow">
-                        <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
+                       <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
                             <div>
                                 <img src="${image}" style="width:100%"
                                      class="projectImageInvest img-responsive img-rounded"/>

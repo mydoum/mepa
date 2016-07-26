@@ -27,7 +27,7 @@ public class Project implements Serializable {
     @Column(name = "reward_id", nullable = false)
     private Long id;
 
-    @NotNull
+
     private Long user_id; //Id of the user creating the project
 
     @Temporal(TemporalType.TIMESTAMP)
