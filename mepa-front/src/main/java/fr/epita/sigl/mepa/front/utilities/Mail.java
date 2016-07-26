@@ -47,9 +47,11 @@ public class Mail
             transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
             transport.close();
         } catch (AddressException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
+            return false;
         } catch (javax.mail.MessagingException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
+            return false;
         }
         return result;
     }

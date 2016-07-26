@@ -7,6 +7,7 @@ import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.core.service.*;
 import fr.epita.sigl.mepa.core.service.AppUserService;
+import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayController;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
 
@@ -47,6 +48,8 @@ public class InvestController {
     private RewardService rewardService;
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private ProjectDisplayController projectDisplayController;
 
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
@@ -78,20 +81,28 @@ public class InvestController {
         Project project = this.projectService.getProjectById(projectId);
 
         /**
-         * Trying if the getted input is a number or not. If the input is not a number
-         * an exception is raised. Also a message is send to the user
+         * Check is the user is signed-in
          */
+        String errorCo = "Veuillez vous identifier pour investir dans un projet";
+        if ((boolean) request.getSession().getAttribute("isCo") == false) {
+            model.addAttribute("messageRedirect", errorCo);
+            return "/authentification/signin";
+        }
+            /**
+             * Trying if the getted input is a number or not. If the input is not a number
+             * an exception is raised. Also a message is send to the user
+             */
         try {
             moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
             moneyAmount = (float) ((int) (moneyAmount * 100)) / 100;
         } catch (Exception e) {
-            String errorMessage = "Please enter a numerical number as donation amount.";
+            String errorMessage = "Veuillez entrer un nombre pour le montant du don.";
             model.addAttribute("errorInvest", errorMessage);
             return displayList(model, project);
         }
 
         if (moneyAmount <= 0) {
-            String errorMessage = "Please enter a positive number as donation amount.";
+            String errorMessage = "Veuillez entrer un nombre positif pour le montant du don.";
             model.addAttribute("errorInvest", errorMessage);
             return displayList(model, project);
         }
@@ -104,11 +115,12 @@ public class InvestController {
             String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
             model.addAttribute("errorInvest", errorMessage);
         }
-        return "/projectDisplay";
+        return projectDisplayController.projectDisplay(request, model, projectId);
+
     }
 
     private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
-        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(1L/*project.getId()*/));
+        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(project.getId()));
         ArrayList<String> listmailinvestor = new ArrayList<String>();
         AppUser tmpUser;
         String firstname;
@@ -143,6 +155,7 @@ public class InvestController {
                 listOfInvestors.add(tmpInvestor);
             //}
             totalAmount += amount;
+            System.out.println(totalAmount);
         }
         Collections.sort(listOfInvestors);
         return totalAmount;
@@ -158,17 +171,20 @@ public class InvestController {
         newInvestment.setDate(date);
 
         investmentService.createInvestment(newInvestment);
+        Project tmpProject = projectService.getProjectById(projectId);
 
-        String mail = "simon.mace@epita.fr";
-        // String mail = "hugo.capes@hotmail.fr";
-        String subject = "Thanks for investing in the project alpha";
-        String message = "blop" + moneyAmount + " €";
+        //String mail = "simon.mace@epita.fr";
+        String mail = "hugo.capes@hotmail.fr";
+        String subject = "Merci pour votre contribution au projet " + tmpProject.getName();
+        String message = "Votre contribution est de" + moneyAmount + " euros";
 
         try {
             sendMail(mail, subject, message);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+
+        investmentService.dumpAllInvestmentsByProject(projectId);
         return 0;
     }
 
@@ -200,10 +216,25 @@ public class InvestController {
 
     @RequestMapping(value = {"/invest/{projectId}/rewardDisplay/{rewardId}"}, method = RequestMethod.GET) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap model, @PathVariable long projectId, @PathVariable long rewardId) {
-        /* Code your logic here */
+
+        /**
+         * Check is the user is signed-in
+         */
+        if ((boolean) request.getSession().getAttribute("isCo") == false) {
+            String errorCo = "Veuillez vous identifier pour investir dans un projet";
+            model.addAttribute("messageRedirect", errorCo);
+            return "/authentification/signin";
+        }
+
+        /**
+         * We check that the selected reward exist
+         * If it does not, we print an error message on the project page
+         */
         Reward reward = rewardService.getRewardById(rewardId);
         if (reward == null) {
-            return "/home/home";
+            String errorMessage = "Votre donation n'a pu être prise en compte. La contrepartie sélectionnée n'existe pas. Veuillez rééssayer ultérieurement.";
+            model.addAttribute("errorInvest", errorMessage);
+            return projectDisplayController.projectDisplay(request, model, projectId);
         }
         long rewardPrice = reward.getCostStart();
         String description = reward.getDescription();
@@ -215,23 +246,13 @@ public class InvestController {
         model.addAttribute("projectId", projectId);
         model.addAttribute("rewardId", rewardId);
 
-        String return_string = "/invest/rewardpay";
-        return return_string; // The adress of the JSP coded in tiles.xml
+        return "/invest/rewardpay"; // The adress of the JSP coded in tiles.xml
     }
 
     @RequestMapping(value = "/invest/{projectId}/rewardpay/{rewardId}/invest", method = RequestMethod.POST)
     public String payReward(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId, @PathVariable long rewardId) {
         investMoney(model, session, request, projectId);
         return "/preinvest/projectDisplay";
-    }
-
-    private void printelements(ArrayList<Investor> listinvestors) {
-        for (Investor investor : listinvestors) {
-            System.out.println(investor.getFirstname());
-            System.out.println(investor.getLastname());
-            System.out.println(investor.getMoneyAmount());
-            System.out.println(investor.getDateOfInvestment());
-        }
     }
 
     private void printalluser() {

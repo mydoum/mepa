@@ -22,6 +22,9 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
+    public void updateUser(AppUser appUser) { this.appUserDao.update(appUser); }
+
+    @Override
     @Transactional(readOnly = true)
     public AppUser getUserById(Long id) {
         return this.appUserDao.getById(id);

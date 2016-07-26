@@ -4,6 +4,7 @@ package fr.epita.sigl.mepa.front.model.investment;
 import javax.swing.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -102,6 +103,15 @@ public class Investor implements Comparable<Investor>{
 
         // Les deux livres sont à la même position
         return 0;
+    }
+
+    public void dumpAllInvestors(ArrayList<Investor> listinvestors) {
+        for (Investor investor : listinvestors) {
+            System.out.println(investor.getFirstname());
+            System.out.println(investor.getLastname());
+            System.out.println(investor.getMoneyAmount());
+            System.out.println(investor.getDateOfInvestment());
+        }
     }
 
 }

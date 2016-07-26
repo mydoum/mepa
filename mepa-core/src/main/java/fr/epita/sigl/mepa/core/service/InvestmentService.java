@@ -18,4 +18,6 @@ public interface InvestmentService {
 
     List<Investment> getAllInvestments();
 
+    void dumpAllInvestmentsByProject(Long id);
+
 }

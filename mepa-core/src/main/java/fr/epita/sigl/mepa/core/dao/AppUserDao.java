@@ -7,6 +7,7 @@ import java.util.List;
 public interface AppUserDao {
 
     void create(AppUser appUser);
+    void update(AppUser appUser);
 
     AppUser getById(Long id);
 

@@ -33,15 +33,15 @@
     <!-- Authentification -->
     <definition name="/authentification/signup" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/signup.jsp"/>
-        <put-attribute name="title" value="authent.title"/>
     </definition>
     <definition name="/authentification/signin" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/signin.jsp"/>
-        <put-attribute name="title" value="signin.title"/>
     </definition>
     <definition name="/authentification/resendPwd" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/resendPwd.jsp"/>
-        <put-attribute name="title" value="resendPwd.title"/>
+    </definition>
+    <definition name="/authentification/editUser" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/authentification/editUser.jsp"/>
     </definition>
 
     <!-- Invest -->
@@ -55,6 +55,9 @@
     <definition name="/investment/comment" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/investment/projectComments.jsp"/>
         <put-attribute name="title" value="invest.title"/>
+    </definition>
+    <definition name="/invest/rewardpay" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/investment/rewardpay.jsp"/>
     </definition>
     <definition name="/invest/rewardpay" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/investment/rewardpay.jsp"/>

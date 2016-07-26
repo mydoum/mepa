@@ -2,6 +2,7 @@ package fr.epita.sigl.mepa.core.service.impl;
 
 
 import fr.epita.sigl.mepa.core.dao.ModelDao;
+import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Model;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,5 +51,10 @@ public class ModelServiceImplUTests {
     }
 
 
-}
+
+
+
+    }
+
+
 

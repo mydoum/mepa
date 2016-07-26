@@ -26,6 +26,9 @@ public class AppUserDaoImpl implements AppUserDao {
     }
 
     @Override
+    public void update(AppUser appUser) { this.getSession().saveOrUpdate(appUser);}
+
+    @Override
     public AppUser getById(Long id) {
         Query query = this.getSession().getNamedQuery("AppUser.findById");
         query.setParameter("id", id);
