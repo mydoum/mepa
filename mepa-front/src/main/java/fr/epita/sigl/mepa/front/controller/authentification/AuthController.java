@@ -217,6 +217,7 @@ public class AuthController {
                 this.appUserService.updateUser(user);
                 request.getSession().setAttribute("userCo", user);
             }
+            modelMap.addAttribute("isEdited", true);
             return "/authentification/editUser";
         }
         if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){

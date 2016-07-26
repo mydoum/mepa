@@ -21,6 +21,11 @@
 </style>
 
 <div class="container">
+    <c:if test="${isEdited == true}">
+        <div class="col-md-12 text-center alert alert-success investFormInside">
+            Votre profil a été modifié avec succès !
+        </div>
+    </c:if>
     <div class="row">
         <div class="col-md-6">
             <c:url var="addCustomUserFormActionUrl" value="/authentification/editUser"/>
@@ -72,6 +77,8 @@
                                    value="${userCo.description}">
                         </div>
                     </div>
+                    <br/>
+                    <br/>
                     <div class="control-group">
                         <!-- Button -->
                         <div class="controls">
