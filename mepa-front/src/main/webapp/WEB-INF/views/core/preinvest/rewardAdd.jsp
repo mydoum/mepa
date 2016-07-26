@@ -17,7 +17,7 @@
     <c:url var="addRewardUrl" value="/core/preinvest/rewardAdd/add/${newProject}"/>
     <a href="${addRewardUrl}"><button>Ajouter une contrepartie</button></a>
     <c:url var="listProjectUrl" value="/core/preinvest/rewardAdd/projectList"/>
-    <button><a href="${listProjectUrl}">Valider le projet</a></button>
+    <a href="${listProjectUrl}"><button>Valider le projet</button></a>
   </div>
 </body>
 </html>
