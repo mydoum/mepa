@@ -52,6 +52,7 @@ public class InvestController {
     @Autowired
     private ProjectDisplayController projectDisplayController;
 
+    private investmentFrontService investmentFrontService = new investmentFrontService();
     private Tools tools = new Tools();
 
     private String displayList(ModelMap model, Project project) {
@@ -212,47 +213,29 @@ public class InvestController {
         return "/preinvest/projectDisplay";
     }
 
+    /* This function should be moved. But I do not know how*/
+    /**
+     *
+     * @param listOfInvestors
+     * @param totalAmount
+     * @param project
+     * @param downloadCsv
+     * @return
+     */
     public float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
         System.out.println("invest : " + (investmentService != null));
         System.out.println("project : " + (project != null));
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(project.getId()));
         ArrayList<String> listmailinvestor = new ArrayList<String>();
         AppUser tmpUser;
-        String firstname;
-        String lastname;
-        String email;
-        boolean investorIsPresent = false;
+
 
         if (investments == null || investments.size() == 0)
             return 0.0f;
 
         for (Investment invest : investments) {
-            investorIsPresent = true;
-            Date created = invest.getCreated();
-            Float amount = invest.getAmount();
-            Long userId = invest.getUserId();
-            boolean anonymous = invest.isAnonymous();
-            tmpUser = appUserService.getUserById(userId);
-            if (!anonymous || downloadCsv) {
-                firstname = tmpUser.getFirstName();
-                lastname = tmpUser.getLastName();
-                if (listmailinvestor.indexOf(tmpUser.getLogin()) == -1) {
-                    listmailinvestor.add(tmpUser.getLogin());
-                    investorIsPresent = false;
-                }
-            } else {
-                firstname = "Anonyme";
-                lastname = "Anonyme";
-                listmailinvestor.add("anonyme");
-            }
-            email = tmpUser.getLogin();
-            Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created, anonymous);
-            /*if (project.isfinished && investorIsPresent) {
-                insertinto(listOfInvestors, tmpInvestor);
-            } else {*/
-            listOfInvestors.add(tmpInvestor);
-            //}
-            totalAmount += amount;
+            tmpUser = appUserService.getUserById(invest.getUserId());
+            totalAmount += investmentFrontService.mergeInvestor(listOfInvestors, invest, tmpUser, listmailinvestor ,downloadCsv);
         }
         Collections.sort(listOfInvestors);
         return totalAmount;

@@ -114,21 +114,6 @@ public class PostInvestmentController {
         return "/project-end"; // The adress of the JSP coded in tiles.xml
     }
 
-    public void groupInvestors(ArrayList<Investor> listOfInvestors, Investor investor) {
-
-        if (investor.isAnonymous()) {
-            listOfInvestors.add(investor);
-            return;
-        }
-
-        for (Investor i : listOfInvestors) {
-            if (i.getEmail().equals(investor.getEmail())) {
-                i.setMoneyAmount(i.getMoneyAmount() + investor.getMoneyAmount());
-                return;
-            }
-        }
-    }
-
     public Float getProjectMoneyInvested(long projectId) {
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
         Float totalProjectAmount = 0.0f;
