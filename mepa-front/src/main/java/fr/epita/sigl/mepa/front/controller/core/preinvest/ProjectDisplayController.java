@@ -120,7 +120,7 @@ public class ProjectDisplayController {
     @RequestMapping(value = {"/", "/projectList"}) // The adress to call the function
     public String projectList(ModelMap modelMap) {
         List<Project> projects = this.projectService.getAllUnfinishedProjects();
-
+        int i = 0;
         for (Project p: projects)
             Hibernate.initialize(p.getRewards());
         modelMap.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);

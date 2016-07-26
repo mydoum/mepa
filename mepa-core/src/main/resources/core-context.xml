@@ -65,6 +65,8 @@
         <!-- Declare a transaction manager -->
         <bean id="stagingTransactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager"
               p:sessionFactory-ref="stagingSessionFactory"/>
+
+
     </beans>
 
 </beans>

@@ -76,6 +76,8 @@ public class ProjectCreateController {
         boolean is_null = false;
         boolean is_date = false;
         AppUser connectedUser = (AppUser) request.getSession().getAttribute("userCo");
+        newProject.setImagesLinks(new ArrayList<>());
+        newProject.getImagesLinks().add(request.getParameter("imageUrl"));
         projectService.createProject(newProject);
         newProject.setUser_id(connectedUser.getId());
         List<Project> projects = this.projectService.getAllProjects();
