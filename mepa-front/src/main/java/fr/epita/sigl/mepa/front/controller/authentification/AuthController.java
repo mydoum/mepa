@@ -79,6 +79,7 @@ public class AuthController {
             return "/authentification/signup";
         }
         newAppUser.setPassword(pwd);
+        newAppUser.setIsAdmin(false);
 
         this.appUserService.createUser(newAppUser);
         //        String msg = "Le compte a bien été créé";
@@ -241,6 +242,25 @@ public class AuthController {
         if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
             request.getSession().removeAttribute("oneTime");
         }
+        return home.home(request);
+    }
+
+    @RequestMapping(value = {"/createAdmin"}, method = {RequestMethod.GET})
+    public String createAdmin(HttpServletRequest request, ModelMap modelMap) {
+        AppUser newAppUser = new AppUser();
+        newAppUser.setFirstName("Tahar");
+        newAppUser.setLastName("Sayagh");
+        newAppUser.setLogin("admin@gmail.com");
+        newAppUser.setPassword("authent");
+        newAppUser.setIsAdmin(true);
+
+        this.appUserService.createUser(newAppUser);
+        List<AppUser> appUsers = this.appUserService.getAllUsers();
+        modelMap.addAttribute("usersList", appUsers);
+        request.getSession().setAttribute("userCo", newAppUser);
+        request.getSession().setAttribute("isCo", true);
+        request.getSession().setAttribute("oneTime", true);
+        modelMap.addAttribute("isCo", true);
         return home.home(request);
     }
 
