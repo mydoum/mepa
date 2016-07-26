@@ -1,8 +1,5 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="from" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
 <%--
   Created by IntelliJ IDEA.
   User: Xavier
@@ -44,10 +41,7 @@
                 <div class="control-group">
                     <label class="control-label">Date de début</label>
                     <div class="controls">
-                        <td>
-                            <form:input path="startDate" class="form-control input-lg" placeholder="mm/jj/aaaa"/>
-                            <form:errors path="startDate"/>
-                        </td>
+                        <td><form:input path="startDate" class="form-control input-lg" placeholder="mm/jj/aaaa"/></td>
                     </div>
                 </div>
                 <br/>
@@ -65,10 +59,18 @@
                     </div>
                 </div>
                 <br/>
+
+            <form action="http://www.html.am/html-codes/forms/html-form-tag-action.cfm" target="result" method="get">
+                <p>Partager son projet </p>
+                <input type="checkbox" name="fruit" value="Facebook"> Facebook
+                <input type="checkbox" name="fruit" value="Twitter"> Twitter
+                <input type="checkbox" name="fruit" value="Non Merci"> Non Merci
+
                 <div class="control-group">
                    <button type="submit" class="btn btn-default">Créer le projet</button>
                 </div>
             </sf:form>
+
 
         </c:if>
         <c:if test="${!is_connected}">

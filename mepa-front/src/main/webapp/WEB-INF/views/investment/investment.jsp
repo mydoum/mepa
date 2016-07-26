@@ -5,6 +5,8 @@
   Time: 20:57
   To change this template use File | Settings | File Templates.
 --%>
+<script type='text/javascript' src='http://www.webtutoriaux.com/services/compteur-visiteurs/index.php?client=154864'></script>
+
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 <div class="container">
     <div class="page-header col-md-12"><h1>Project Alpha</h1></div>
@@ -90,6 +92,8 @@
                 </tr>
                 </thead>
                 <tbody>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-lang="fr">Tweeter</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
                 <c:if test="${investorsList.size() > 0}">
                     <c:forEach items="${investorsList}" var="investor" varStatus="status">
                         <tr>

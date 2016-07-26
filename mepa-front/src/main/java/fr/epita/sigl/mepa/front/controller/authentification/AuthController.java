@@ -3,33 +3,23 @@ package fr.epita.sigl.mepa.front.controller.authentification;
 import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.front.controller.home.HomeController;
-import fr.epita.sigl.mepa.front.user.form.AddCustomUserFormBean;
-import fr.epita.sigl.mepa.front.utilities.Mail;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
 
 import static fr.epita.sigl.mepa.front.utilities.Mail.sendMail;
 
@@ -44,12 +34,15 @@ public class AuthController {
     @Autowired
     private HomeController home;
 
-    static private Properties mailServerProperties;
-    static private Session getMailSession;
-    static private MimeMessage generateMailMessage;
+    @RequestMapping(value = {"/signup"}, method = {RequestMethod.GET})
+    public String showSignUpPage(HttpServletRequest request, ModelMap modelMap) {
+        // Checking if user is login need to handle this in the model
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if (userCo != null && isCo) { // The user in already log in
+            return home.home(request);
+        }
 
-    @RequestMapping(value = {"/auth"}, method = {RequestMethod.GET})
-    public String showAuth(HttpServletRequest request, ModelMap modelMap) {
         List<AppUser> appUsers = this.appUserService.getAllUsers();
         if (appUsers.size() > 0) {
             modelMap.addAttribute("usersList", appUsers);
@@ -57,21 +50,14 @@ public class AuthController {
         return "/authentification/signup";
     }
 
-    @RequestMapping(value = {"/add"}, method = {RequestMethod.GET})
-    public String getForm(HttpServletRequest request, ModelMap modelMap,
-                          @Valid AddCustomUserFormBean addCustomUserFormBean, BindingResult result) throws ParseException {
-        return "/home/home";
-
-    }
-
-    @RequestMapping(value = {"/addUser"}, method = {RequestMethod.POST})
+    @RequestMapping(value = {"/createUser"}, method = {RequestMethod.POST})
     public String processForm(HttpServletRequest request, ModelMap modelMap) {
         AppUser newAppUser = new AppUser();
         String birthdate = request.getParameter("birthdate");
-        String firstName = request.getParameter("firstname");
-        String lastName = request.getParameter("lastname");
-        String login = request.getParameter("email");
-        String pwd = request.getParameter("password");
+        String firstName = request.getParameter("firstNameInput");
+        String lastName = request.getParameter("lastNameInput");
+        String login = request.getParameter("emailInput");
+        String pwd = request.getParameter("passwordInput");
 
         // Change string to date
         DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -89,16 +75,20 @@ public class AuthController {
         newAppUser.setPassword(pwd);
 
         this.appUserService.createUser(newAppUser);
-        System.out.println("Created new user : " + newAppUser.getFirstName() + " " + newAppUser.getLastName());
-//        String msg = "Le compte a bien été créé";
+        //        String msg = "Le compte a bien été créé";
 //        modelMap.addAttribute("userIsCreated", msg);
         List<AppUser> appUsers = this.appUserService.getAllUsers();
         modelMap.addAttribute("usersList", appUsers);
-        return "/authentification/signup";
+        return "/authentification/signin";
     }
 
     @RequestMapping(value = {"/resendPwd"}, method = {RequestMethod.GET})
     public String showPwd(HttpServletRequest request, ModelMap modelMap) throws ParseException {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if (userCo != null && isCo) { // The user in already log in
+            return home.home(request);
+        }
         return "/authentification/resendPwd";
     }
 
@@ -112,8 +102,8 @@ public class AuthController {
         if (recipient != null) {
             try {
                 String obj = "Récupération de votre mot de passe";
-                String text = "This information is strictly private." + "<br> Here is your password: \""
-                        + recipient.getPassword() + "\". <br><br> Regards, <br>MEPA Team";
+                String text = "Cette information est strictement privée." + "<br> Voici votre mot de passe: \""
+                        + recipient.getPassword() + "\". <br><br> Cordialement, <br>l'équipe MEPA";
                 isSent = sendMail(recipient.getLogin(), obj, text);
                 modelMap.addAttribute("isSent", isSent);
                 modelMap.addAttribute("email", recipient.getLogin());
@@ -129,30 +119,47 @@ public class AuthController {
 
     @RequestMapping(value = {"/signin"}, method = {RequestMethod.GET})
     public String getsignin(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if (userCo != null && isCo) { // The user in already log in
+            return home.home(request);
+        }
+
+        List<AppUser> appUsers = this.appUserService.getAllUsers();
+        if (appUsers.size() > 0) {
+            modelMap.addAttribute("usersList", appUsers);
+        }
         return "/authentification/signin";
     }
 
     @RequestMapping(value = {"/signin"}, method = {RequestMethod.POST})
     public String signIn(HttpServletRequest request, ModelMap modelMap) {
-
-        String login = request.getParameter("email");
-        String pwd = request.getParameter("password");
-
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        AppUser userCo = this.appUserService.getUserByLogin(login);
-        if (userCo != null) {
-            AppUser newAppUser = this.appUserService.getUserById(userCo.getId());
-            if (StringUtils.equals(pwd, newAppUser.getPassword())) {
+        if (userCo != null && isCo) { // The user in already log in
+            return home.home(request);
+        }
+//        String login = request.getParameter("email");
+//        String pwd = request.getParameter("password");
+
+//        FIXME
+        String inputLogin = request.getParameter("inputEmail");
+        String inputPwd = request.getParameter("inputPassword");
+
+        AppUser signinUser = this.appUserService.getUserByLogin(inputLogin);
+        if (signinUser != null) { // the user exist
+            AppUser newAppUser = this.appUserService.getUserById(signinUser.getId());
+            if (StringUtils.equals(inputPwd, newAppUser.getPassword())) {
                 request.getSession().setAttribute("userCo", newAppUser);
                 isCo = true;
                 request.getSession().setAttribute("isCo", true);
+                request.getSession().setAttribute("oneTime", true);
                 modelMap.addAttribute("isCo", isCo);
                 return home.home(request);
             }
         }
         else {
             modelMap.addAttribute("pwdFalse", true);
-            System.out.println("Identifiant / mdp incorrect");
             return "/authentification/signin";
         }
 
@@ -165,34 +172,34 @@ public class AuthController {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
         if (userCo != null && isCo) {
-            System.out.println("User deconnexion : " + userCo.getFirstName() + " " + userCo.getLastName());
             request.getSession().removeAttribute("userCo");
             request.getSession().removeAttribute("isCo");
         }
-        return "/home/home";
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
+            request.getSession().removeAttribute("oneTime");
+        }
+        return home.home(request);
     }
 
     @RequestMapping(value = {"/editUser"}, method = {RequestMethod.GET})
     public String showEditUserPage(HttpServletRequest request, ModelMap modelMap) {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        System.out.println("inside showEditUserPage");
         if (userCo != null && isCo) {
             // tu peux afficher les données user
-
             return "/authentification/editUser";
         }
-        return "/home/home";
-//        return "redirect:/home/home"; A tester pour plus tard
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
+            request.getSession().removeAttribute("oneTime");
+        }
+        return home.home(request);
     }
 
     @RequestMapping(value = {"/editUser"}, method = {RequestMethod.POST})
     public String editUser(HttpServletRequest request, ModelMap modelMap) {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        System.out.println("inside editUser");
 
-        System.out.println("user pwd = " + userCo.getPassword());
         if (userCo != null && isCo) {
             AppUser user = this.appUserService.getUserByLogin(userCo.getLogin());
             if (user != null) { // the user really exist, it's not a fake
@@ -212,8 +219,10 @@ public class AuthController {
             }
             return "/authentification/editUser";
         }
-        return "/home/home";
-
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
+            request.getSession().removeAttribute("oneTime");
+        }
+        return home.home(request);
     }
 
     @RequestMapping(value = {"/addFakeUser"}, method = {RequestMethod.GET})
@@ -250,6 +259,6 @@ public class AuthController {
             this.appUserService.createUser(newAppUser);
         }
 
-        return "/authentification/signup";
+        return "/authentification/signin";
     }
 }
