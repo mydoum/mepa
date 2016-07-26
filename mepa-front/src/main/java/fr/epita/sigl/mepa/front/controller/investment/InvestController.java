@@ -145,6 +145,9 @@ public class InvestController {
         String email;
         boolean investorIsPresent = false;
 
+        if (investments == null || investments.size() == 0)
+            return 0.0f;
+
         for (Investment invest : investments) {
             investorIsPresent = true;
             Date created = invest.getCreated();
@@ -152,7 +155,7 @@ public class InvestController {
             Long userId = invest.getUserId();
             boolean anonymous = invest.isAnonymous();
             tmpUser = appUserService.getUserById(userId);
-            if (!anonymous) {
+            if (!anonymous || downloadCsv) {
                 firstname = tmpUser.getFirstName();
                 lastname = tmpUser.getLastName();
                 if (listmailinvestor.indexOf(tmpUser.getLogin()) == -1) {
@@ -214,7 +217,7 @@ public class InvestController {
         ArrayList<Investor> investors = new ArrayList<Investor>();
         Project project = projectService.getProjectById(projectId);
         totalAmount = getallinvestors(investors, totalAmount, project, true);
-        if (investors.size() > 0) {
+        if (investors != null && investors.size() > 0) {
             String fileWriter = CsvExporter.writeCsvFile(investors);
             response.setContentType("text/csv");
             response.setHeader("Content-Disposition", "attachment; filename=\"Investors_export_" + date + ".csv\"");
@@ -227,7 +230,7 @@ public class InvestController {
                 e.printStackTrace();
             }
         }
-        return displayList(model, project);
+        return "/core/preinvest/projectDisplay/" + projectId;
     }
 
     @RequestMapping(value = {"/invest/{projectId}/rewardDisplay/{rewardId}"}, method = RequestMethod.GET) // The adress to call the function
