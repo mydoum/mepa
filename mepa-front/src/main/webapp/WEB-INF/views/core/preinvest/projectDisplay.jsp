@@ -193,14 +193,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="progress">
-                                <%--<div class="progress-bar progress-bar-success" role="progressbar"
+                                <div class="progress-bar progress-bar-success" role="progressbar"
                                 aria-valuenow="${projectPercentage}" aria-valuemin="0" aria-valuemax="100"
-                                style="width:${projectPercentage}%">
+                                style="width:${projectPercentageBar}%">
                                     ${projectPercentage}%
-                                </div>--%>
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80"
-                                     aria-valuemin="0" aria-valuemax="100" style="width:80%">
-                                    80%
                                 </div>
                             </div>
                         </div>

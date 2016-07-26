@@ -13,6 +13,7 @@ import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
 import fr.epita.sigl.mepa.front.controller.postinvestment.*;
 
+import fr.epita.sigl.mepa.front.utilities.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,12 +56,24 @@ public class InvestController {
     @Autowired
     private PostInvestmentController postInvestmentController;
 
+    private int percentage (int a, int b) {
+        if (a == 0) {
+            return 100;
+        }
+        return ((b * 100) / a);
+    }
+
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
         totalAmount = getallinvestors(listinvestors, totalAmount, project, false);
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
+
+        int percentageAmount = percentage(2000, (int) totalAmount);
+
+        model.addAttribute("projectPercentage", percentageAmount);
+        model.addAttribute("projectPercentageBar", Math.min(percentageAmount, 100));
         return "/investment/investment";
     }
 
@@ -123,7 +136,7 @@ public class InvestController {
 
     }
 
-    private float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
+    public float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(project.getId()));
         ArrayList<String> listmailinvestor = new ArrayList<String>();
         AppUser tmpUser;

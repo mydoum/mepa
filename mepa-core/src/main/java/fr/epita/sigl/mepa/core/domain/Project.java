@@ -75,6 +75,7 @@ public class Project implements Serializable {
         this.startDate = new Date();
         this.endDate = new Date();
         this.name = "Nom du projet";
+        this.goalAmount = 0L;
     }
 
     public Project(int nb) {
@@ -85,6 +86,7 @@ public class Project implements Serializable {
         this.startDate = new Date();
         this.endDate = endDate;
         this.name = projectName;
+        this.goalAmount = 0L;
     }
 
     //return Date with a specific format
