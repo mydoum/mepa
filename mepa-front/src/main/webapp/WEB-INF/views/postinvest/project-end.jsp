@@ -27,6 +27,19 @@
     <header class="title projectHeader">
         <h1 class="short">${project.name}</h1>
     </header>
+<%--
+    <jsp:useBean id="now" class="java.util.Date"/>
+    <c:if test="${totalDonationDummy >= ${projet.goalAmount}  && project.endDate lt now}">
+        <h2 style="background-color:rgb(0,255,0)">
+           Ce Projet est terminé et a été financé !
+        </h2>
+    </c:if>
+    <c:if test="${totalDonationDummy <= ${projet.goalAmount}  && project.endDate lt now}">
+        <h2 style="background-color:rgb(0,255,0)">
+           Ce Projet est terminé et n'a malheureusement été financé !
+        </h2>
+    </c:if>
+--%>
     <c:if test="${amount != null}">
         <div class="col-md-12 text-center alert alert-success investFormInside">
             Merci pour votre don de ${amount}€! Un mail de notification vous a été envoyé.
@@ -170,10 +183,10 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <h4>Contribution totale : ${totalDonation}€</h4>
+                        <h4>Contribution totale : ${totalDonationDummy}€</h4>
                     </div>
                     <div class="col-md-12">
-                        <h4>Objectif : <%--${project.requestAmount}--%>500€</h4>
+                        <h4>Objectif : <%--${project.requestAmount}--%>${projet.goalAmount}</h4>
                     </div>
                     <div class="col-md-12">
                         <%-- POST INVEST --%>

@@ -37,6 +37,10 @@
 <div class="container">
     <header class="title projectHeader">
         <h1 class="short">${project.name}</h1>
+        <jsp:useBean id="now" class="java.util.Date"/>
+        <c:if test="${project.goalAmount <= totalDonation && project.endDate gt now}">
+            <h1 class="short">88888888888888888</h1>
+        </c:if>
     </header>
     <c:if test="${amount != null}">
         <div class="col-md-12 text-center alert alert-success investFormInside">
