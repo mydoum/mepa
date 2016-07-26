@@ -31,9 +31,9 @@
     </definition>
 
     <!-- Authentification -->
-    <definition name="/authentification/signup" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/views/authentification/signup.jsp"/>
-    </definition>
+    <!--<definition name="/authentification/signup" extends="base.definition">-->
+        <!--<put-attribute name="body" value="/WEB-INF/views/authentification/signup.jsp"/>-->
+    <!--</definition>-->
     <definition name="/authentification/signin" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/signin.jsp"/>
     </definition>
