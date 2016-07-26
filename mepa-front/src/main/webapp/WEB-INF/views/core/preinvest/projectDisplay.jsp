@@ -113,7 +113,7 @@
                     </div>
                     <div class="col-md-12">
                         <a href="https://twitter.com/share" class="twitter-share-button" data-size="large"
-                           data-text="Venez voir ce nouveau projet :" data-hashtags="LGIS"
+                           data-text="Découvrez le projet ${project.name} :" data-hashtags="LGIS"
                            data-lang="fr" data-show-count="false">Tweet</a>
                         <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                     </div>

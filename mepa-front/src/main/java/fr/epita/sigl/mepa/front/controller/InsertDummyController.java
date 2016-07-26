@@ -59,6 +59,16 @@ public class InsertDummyController {
     @RequestMapping(value = {"/"}) // The adress to call the function
     public String insertDummy(HttpServletRequest request, ModelMap modelMap) {
 
+        /* Default AUTH, used for testing when the subscription is down */
+        AppUser appUserDefault = new AppUser();
+        appUserDefault.setFirstName("Admin");
+        appUserDefault.setLastName("Admin");
+        appUserDefault.setLogin("admin@admin.com");
+        appUserDefault.setPassword("admin");
+        Date dateDefault = new Date();
+        appUserDefault.setBirthDate(dateDefault);
+        this.appUserService.createUser(appUserDefault);
+
         /*AUTH */
         String a = "";
         for (int i = 0; i < 10; i++) {
