@@ -107,7 +107,7 @@
 
 
                     <div class="form-group">
-                        <label for="email" class="col-md-3 control-label">Adresse e-mail</label>
+                        <label for="emailInput" class="col-md-3 control-label">Adresse e-mail</label>
                         <div class="col-md-9">
                             <input id="emailInput" type="email" class="form-control" name="emailInput" placeholder="Adresse e-mail">
                         </div>
@@ -116,7 +116,7 @@
                     <div class="form-group">
                         <label for="passwordInput" class="col-md-3 control-label">Mot de passe</label>
                         <div class="col-md-9">
-                            <input id="passwordInput" type="password" class="form-control" name="passwordInput" placeholder="Mot de passe">
+                            <input id="passwordInput" type="password" class="form-control" name="passwordInput" placeholder="Mot de passe" pattern=".{6,15}" required title="7 to 10 characters">
                         </div>
                     </div>
 
