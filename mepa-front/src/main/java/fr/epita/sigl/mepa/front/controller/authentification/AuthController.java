@@ -222,14 +222,13 @@ public class AuthController {
                 String address = request.getParameter("address");
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
-                AppUser userTest = new AppUser();
-                userTest = this.appUserService.getUserByLogin(login);
-                if (userTest.toString() == "")
-                    user.setLogin(login);
-                if (userTest != null){
+                if (this.appUserService.getUserByLogin(login) != null
+                        && StringUtils.equalsIgnoreCase(login, this.appUserService.getUserByLogin(login).getLogin())
+                        && !StringUtils.equalsIgnoreCase(this.appUserService.getUserByLogin(login).getLogin(), userCo.getLogin())){
                     modelMap.addAttribute("isNotEdited", true);
                     return "/authentification/editUser";
                 }
+                user.setLogin(login);
                 user.setDescription(description);
                 user.setAddress(address);
 
