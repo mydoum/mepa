@@ -31,7 +31,7 @@
                             <c:url var="editUser" value="/authentification/editUser"/>
                             <c:choose>
                                 <c:when test='${not empty userCo.firstName}'>
-                                    <li><a href="${editUser}"><span class="glyphicon glyphicon-user"></span> ${userCo.firstName} ${userCo.lastName}</a></li>
+                                    <li><a href="${editUser}"><span class="glyphicon glyphicon-user"></span>  ${userCo.firstName} ${userCo.lastName}</a></li>
                                 </c:when>
                                 <c:otherwise>
                                     <li><a href="${editUser}"><span class="glyphicon glyphicon-user"></span> ${userCo.login}</a></li>
