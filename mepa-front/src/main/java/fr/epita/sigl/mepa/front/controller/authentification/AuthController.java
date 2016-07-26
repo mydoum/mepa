@@ -79,8 +79,7 @@ public class AuthController {
         newAppUser.setPassword(pwd);
 
         this.appUserService.createUser(newAppUser);
-        System.out.println("Created new user : " + newAppUser.getFirstName() + " " + newAppUser.getLastName());
-//        String msg = "Le compte a bien été créé";
+        //        String msg = "Le compte a bien été créé";
 //        modelMap.addAttribute("userIsCreated", msg);
         List<AppUser> appUsers = this.appUserService.getAllUsers();
         modelMap.addAttribute("usersList", appUsers);
@@ -176,7 +175,6 @@ public class AuthController {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
         if (userCo != null && isCo) {
-            System.out.println("User deconnexion : " + userCo.getFirstName() + " " + userCo.getLastName());
             request.getSession().removeAttribute("userCo");
             request.getSession().removeAttribute("isCo");
         }
@@ -198,7 +196,6 @@ public class AuthController {
     public String editUser(HttpServletRequest request, ModelMap modelMap) {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        System.out.println("inside editUser");
 
         System.out.println("user pwd = " + userCo.getPassword());
         if (userCo != null && isCo) {
