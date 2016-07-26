@@ -2,6 +2,7 @@ package fr.epita.sigl.mepa.front.controller.postinvestment;
 
 import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.CommentsModel;
+import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ModelService;
@@ -29,12 +30,17 @@ public class PostInvestmentController {
 
     protected static final String PROJECT_ATTRIBUTE = "project";
     protected static final String PROJECTS_LIST_ATTRIBUTE = "project_list";
+    /*PostInvest Total Amount invested on Project*/
+    protected static final String PROJECT_TOTAL_AMOUNT = "totalProjectAmountInvested";
 
     @Autowired
     private ProjectService projectService;
 
     @Autowired
     private InvestController investController;
+
+    @Autowired
+    private InvestmentService investmentService;
 
     private static final Logger LOG = LoggerFactory.getLogger(PostInvestmentController.class);
 
@@ -43,11 +49,11 @@ public class PostInvestmentController {
         List<Project> projects = this.projectService.getAllFinishedProjects();
         for (Project p: projects)
                 Hibernate.initialize(p.getRewards());
-        model.addAttribute("project_list", projects);
+        model.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
 
         return "/project-end-list";
     }
-/*
+
     @RequestMapping(value = "/project", method = RequestMethod.GET)
     public String displayEndedProject(ModelMap model, HttpServletRequest request, Project project) {
         float totalAmount = 0.00f;
@@ -61,23 +67,23 @@ public class PostInvestmentController {
 
     @RequestMapping(value = {"/projectDisplay/{projectId}"}) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
-        /* Code your logic here *
+        /* Code your logic here */
         Project project = this.projectService.getProjectById(projectId);
         modelMap.addAttribute(PROJECT_ATTRIBUTE, project);
 
-        /*PostInvest Total Amount invested on Project*
+        /*PostInvest Total Amount invested on Project*/
         Float totalProjectAmountInvested = getProjectMoneyInvested(projectId);
         modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
-        /*\PostInvest Total Amount invested on Project*
+        /*PostInvest Total Amount invested on Project*/
 
          /*Get the current user in the session in order to know if he is
-        * connected *
+        * connected */
         AppUser userco = new AppUser();
         userco = (AppUser) request.getSession().getAttribute("userCo");
         modelMap.addAttribute("userco", userco);
 
         investController.investorsList(modelMap, request, project);
-
+        /*
         List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();
 
         /*Sort of the comments by the arriving tickets*
@@ -89,9 +95,10 @@ public class PostInvestmentController {
         }
 
         modelMap.addAttribute("new_c_models",new_c_models);
+        */
         return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
     }
-*/
+
     public void groupInvestors(ArrayList<Investor> listOfInvestors, Investor investor) {
 
         if (investor.isAnonymous()) {
@@ -105,5 +112,14 @@ public class PostInvestmentController {
                 return;
             }
         }
+    }
+
+    public Float getProjectMoneyInvested(long projectId) {
+        ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestments());
+        Float totalProjectAmount = 0.0f;
+        for (Investment inv : investments)
+            if (inv.getProjectId() == projectId)
+                totalProjectAmount += inv.getAmount();
+        return totalProjectAmount;
     }
 }
