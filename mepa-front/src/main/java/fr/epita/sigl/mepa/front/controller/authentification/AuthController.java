@@ -216,7 +216,14 @@ public class AuthController {
                 String address = request.getParameter("address");
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
-                user.setLogin(login);
+                AppUser userTest = new AppUser();
+                userTest = this.appUserService.getUserByLogin(login);
+                if (userTest.toString() == "")
+                    user.setLogin(login);
+                if (userTest != null){
+                    modelMap.addAttribute("isNotEdited", true);
+                    return "/authentification/editUser";
+                }
                 user.setDescription(description);
                 user.setAddress(address);
 

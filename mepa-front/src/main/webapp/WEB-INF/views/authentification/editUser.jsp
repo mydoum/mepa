@@ -26,6 +26,11 @@
             Votre profil a été modifié avec succès !
         </div>
     </c:if>
+    <c:if test="${isNotEdited == true}">
+        <div class="col-md-12 text-center alert alert-danger investFormInside">
+            Erreur. Cette adresse email est déjà affiliée à un autre utilisateur.
+        </div>
+    </c:if>
     <div class="row">
         <div class="col-md-6">
             <c:url var="addCustomUserFormActionUrl" value="/authentification/editUser"/>
@@ -54,7 +59,7 @@
                         <label class="control-label" for="email">Adresse e-mail</label>
                         <div class="controls">
                             <input id="email" name="email" placeholder="" class="form-control input-lg" type="email"
-                                   value="${userCo.login}">
+                                   value="${userCo.login}" required>
                         </div>
                     </div>
                     <div class="control-group">
