@@ -1,11 +1,6 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <div class="container">
-    <c:if test="${pwdFalse == true}">
-        <div class="col-md-12 text-center alert alert-danger investFormInside">
-            La connexion a échouée : Mot de passe ou Identifiant incorrect.
-        </div>
-    </c:if>
     <c:if test="${not empty messageRedirect}">
         <div class="col-md-12 text-center alert alert-danger investFormInside">
                 ${messageRedirect}

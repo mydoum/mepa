@@ -161,13 +161,15 @@ public class AuthController {
                 modelMap.addAttribute("isCo", isCo);
                 return home.home(request);
             }
+            else {
+                modelMap.addAttribute("pwdFalse", true);
+                return "/authentification/signin";
+            }
         }
         else {
             modelMap.addAttribute("pwdFalse", true);
             return "/authentification/signin";
         }
-
-        return "/authentification/signin";
     }
 
     @RequestMapping(value = {"/deconnexion"}, method = {RequestMethod.GET})
