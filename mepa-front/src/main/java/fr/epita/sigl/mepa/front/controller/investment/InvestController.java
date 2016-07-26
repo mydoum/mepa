@@ -143,7 +143,7 @@ public class InvestController {
 
         String mail = tmpUser.getLogin();
         String subject = "Merci pour votre contribution au projet " + tmpProject.getName();
-        String message = "Votre contribution est de" + moneyAmount + " euros";
+        String message = "Votre contribution est de " + moneyAmount + " euros";
 
         try {
             tools.sendMail(mail, subject, message);
