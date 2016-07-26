@@ -155,18 +155,7 @@
                             <input id="login-inputPassword" type="password" class="form-control" name="inputPassword"
                                    placeholder="Mot de passe">
                         </div>
-
-                        <%-- FIXME --%>
-                        <div class="input-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input id="login-remember" type="checkbox" name="remember" value="1"> Se souvenir de
-                                    moi
-                                </label>
-                            </div>
-                        </div>
-
-
+                        
                         <div style="margin-top:10px" class="form-group">
                             <!-- Button -->
                             <div class="col-sm-12 controls">
