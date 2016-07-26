@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
-<%--
+
 <script>
     $("#slideshow > div:gt(0)").hide();
 
@@ -20,7 +20,7 @@
                 .appendTo('#slideshow');
     }, 3000);
 </script>
---%>
+
 
 
 <div class="container">
