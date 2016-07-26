@@ -94,10 +94,8 @@ public class ProjectDisplayController {
     public String projectList(ModelMap modelMap) {
         List<Project> projects = this.projectService.getAllUnfinishedProjects();
         int i = 0;
-        for (Project p: projects) {
+        for (Project p: projects)
             Hibernate.initialize(p.getRewards());
-            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + p.getImagesLinks().get(i++));
-        }
         modelMap.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
         return "/preinvest/projectList"; // The adress of the JSP coded in tiles.xml
     }
