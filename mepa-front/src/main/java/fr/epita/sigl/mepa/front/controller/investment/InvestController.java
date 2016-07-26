@@ -12,6 +12,7 @@ import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayControll
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.CsvExporter;
 
+import fr.epita.sigl.mepa.front.utilities.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static fr.epita.sigl.mepa.front.utilities.Mail.sendMail;
 import static java.lang.Math.toIntExact;
 
 
@@ -53,13 +53,7 @@ public class InvestController {
     private ProjectDisplayController projectDisplayController;
 
     private investmentFrontService investmentFrontService = new investmentFrontService();
-
-    private int percentage (int a, int b) {
-        if (a == 0) {
-            return 100;
-        }
-        return ((b * 100) / a);
-    }
+    private Tools tools = new Tools();
 
     private String displayList(ModelMap model, Project project) {
         float totalAmount = 0.00f;
@@ -69,7 +63,7 @@ public class InvestController {
         model.addAttribute("totalDonation", totalAmount);
 
         int goalAmount = toIntExact(project.getGoalAmount());
-        int percentageAmount = percentage(goalAmount , (int) totalAmount);
+        int percentageAmount = tools.percentage(goalAmount , (int) totalAmount);
 
         model.addAttribute("projectPercentage", percentageAmount);
         model.addAttribute("projectPercentageBar", Math.min(percentageAmount, 100));
@@ -80,16 +74,6 @@ public class InvestController {
     public String investorsList(ModelMap model, HttpServletRequest request, Project project) {
         return displayList(model, project);
     }
-
-   /* @RequestMapping(value = "/invest/comment", method = RequestMethod.GET)
-    public String comment(ModelMap model, HttpSession session, Project project) {
-        float totalAmount = 0.00f;
-        ArrayList<Investor> listinvestors = new ArrayList<Investor>();
-        totalAmount = investmentFrontService.getallinvestors(listinvestors, totalAmount, project, false);
-        model.addAttribute("totalDonation", totalAmount);
-        model.addAttribute("isConnected", false);
-        return "/investment/comment";
-    }*/
 
     @RequestMapping(value = "/invest/{projectId}/investMoney", method = RequestMethod.POST)
     public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId) {
@@ -153,7 +137,7 @@ public class InvestController {
         String message = "Votre contribution est de" + moneyAmount + " euros";
 
         try {
-            sendMail(mail, subject, message);
+            tools.sendMail(mail, subject, message);
         } catch (MessagingException e) {
             e.printStackTrace();
         }

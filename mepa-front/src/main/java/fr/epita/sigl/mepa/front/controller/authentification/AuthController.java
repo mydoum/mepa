@@ -3,6 +3,7 @@ package fr.epita.sigl.mepa.front.controller.authentification;
 import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.front.controller.home.HomeController;
+import fr.epita.sigl.mepa.front.utilities.Tools;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,9 +22,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import static fr.epita.sigl.mepa.front.utilities.Mail.sendMail;
-
-
 @RequestMapping("/authentification")
 @Controller
 public class AuthController {
@@ -33,6 +31,8 @@ public class AuthController {
 
     @Autowired
     private HomeController home;
+
+    private Tools tools = new Tools();
 
     @RequestMapping(value = {"/signup"}, method = {RequestMethod.GET})
     public String showSignUpPage(HttpServletRequest request, ModelMap modelMap) {
@@ -114,7 +114,7 @@ public class AuthController {
                 String obj = "Récupération de votre mot de passe";
                 String text = "Cette information est strictement privée." + "<br> Voici votre mot de passe: \""
                         + recipient.getPassword() + "\". <br><br> Cordialement, <br>l'équipe MEPA";
-                isSent = sendMail(recipient.getLogin(), obj, text);
+                isSent = tools.sendMail(recipient.getLogin(), obj, text);
                 modelMap.addAttribute("isNotSent", false);
                 modelMap.addAttribute("email", recipient.getLogin());
             } catch (Exception e) {
