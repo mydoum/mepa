@@ -30,7 +30,7 @@ public class Tools {
 
     //CSV file header
     private static final String FILE_HEADER = "Prénom;Nom;Email;Montant total;Liste des contributions";
-    private static final String FILE_HEADER_USER = "Prénom;Nom;Email";
+    private static final String FILE_HEADER_USER = "Pr\u00E9nom;Nom;Email";
 
 
 
