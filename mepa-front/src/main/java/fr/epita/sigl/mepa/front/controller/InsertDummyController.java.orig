@@ -107,7 +107,11 @@ public class InsertDummyController {
             Reward r = new Reward();
             r.setName("Coucou");
             r.setDescription("Ceci est une description");
+<<<<<<< 0f6f747d2cbb82f2fdbda7c0e723d62ea831ccf7
+            r.setCostStart((float) 10);
+=======
             r.setCostStart((long) 10);
+>>>>>>> [LANGUAGE][INVEST] Switched english to french
             rewardService.createReward(r);
         }
 
@@ -138,7 +142,11 @@ public class InsertDummyController {
                 Reward r = new Reward();
                 r.setName("Coucou");
                 r.setDescription("Ceci est une description");
+<<<<<<< 0f6f747d2cbb82f2fdbda7c0e723d62ea831ccf7
+                r.setCostStart((float) 10);
+=======
                 r.setCostStart((long) 10);
+>>>>>>> [LANGUAGE][INVEST] Switched english to french
                 this.rewardService.createReward(r);
                 rewards.add(r);
             }
@@ -174,7 +182,11 @@ public class InsertDummyController {
                 Reward r = new Reward();
                 r.setName("Gildas est beau" + j);
                 r.setDescription("Ceci est une description");
+<<<<<<< 0f6f747d2cbb82f2fdbda7c0e723d62ea831ccf7
+                r.setCostStart((float) 10);
+=======
                 r.setCostStart((long) 10);
+>>>>>>> [LANGUAGE][INVEST] Switched english to french
                 this.rewardService.createReward(r);
                 rewards.add(r);
             }
