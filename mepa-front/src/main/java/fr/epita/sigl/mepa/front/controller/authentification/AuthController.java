@@ -344,4 +344,53 @@ public class AuthController {
         }
         return "/authentification/checkUsers";
     }
+
+        @RequestMapping(value = {"/modifyPassword"}, method = {RequestMethod.GET})
+    public String showModifyPassordPage(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if (userCo != null && isCo) {
+
+            return "/authentification/modifyPassword";
+        }
+        return "/home/home";
+    }
+
+    @RequestMapping(value = {"/modifyPassword"}, method = {RequestMethod.POST})
+    public String modifyPassword(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+
+        System.out.println("user pwd = " + userCo.getPassword());
+        if (userCo != null && isCo) {
+            //AppUser user = this.appUserService.getUserByLogin(userCo.getLogin());
+            if (userCo != null) { // the user really exist, it's not a fake
+                String password = request.getParameter("password");
+                String passwordOld = request.getParameter("passwordOld");
+                String passwordConf = request.getParameter("passwordConf");
+                boolean confPassword = true;
+                boolean newPassword = true;
+                System.out.println("login = " + userCo.getLogin());
+
+                if (!passwordOld.equals(userCo.getPassword())){
+                    newPassword = false;
+                    modelMap.addAttribute("newPassword", newPassword);
+                    return "/authentification/modifyPassword";
+                } else if (!password.equals(passwordConf)) {
+                    confPassword = false;
+                    modelMap.addAttribute("confPassword", confPassword);
+                    return "/authentification/modifyPassword";
+                } else  {
+                    userCo.setPassword(password);
+                    this.appUserService.updateUser(userCo);
+                    request.getSession().setAttribute("userCo", userCo);
+                    newPassword = true;
+                    confPassword = true;
+                    return "/home/home";
+                }
+            }
+        }
+        return "/home/home";
+
+    }
 }
