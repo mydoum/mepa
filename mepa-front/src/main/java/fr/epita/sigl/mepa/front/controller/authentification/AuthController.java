@@ -300,4 +300,18 @@ public class AuthController {
 
         return "/authentification/signin";
     }
+
+    @RequestMapping(value = {"/checkUsers"}, method = {RequestMethod.GET})
+    public String getCheckUsersPage(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if ((userCo == null) || !isCo || !userCo.getIsAdmin()){
+            return home.home(request);
+        }
+        List<AppUser> appUsers = this.appUserService.getAllUsers();
+        if (appUsers.size() > 0) {
+            modelMap.addAttribute("usersList", appUsers);
+        }
+        return "/authentification/checkUsers";
+    }
 }

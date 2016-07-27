@@ -1,46 +1,41 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <div class="container">
-    <c:if test="${not empty messageRedirect}">
-        <div class="col-md-12 text-center alert alert-danger investFormInside">
-                ${messageRedirect}
-        </div>
-    </c:if>
     <div class="row">
-        <div class="col-md-6">
-            <c:url var="loginUserFormActionUrl" value="/authentification/signin"/>
-            <form id="eventForm" class="form-horizontal" action="${loginUserFormActionUrl}"
-                  modelAttribute="loginUserFormBean"
-                  method="POST">
-                <fieldset>
-                    <div id="legend">
-                        <legend class="">Connexion</legend>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="email">Adresse e-mail</label>
-                        <div class="controls">
-                            <input id="email" name="email" placeholder="" class="form-control input-lg" type="email">
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="password">Mot de passe</label>
-                        <div class="controls">
-                            <input id="password" name="password" placeholder="" class="form-control input-lg"
-                                   type="password">
-                        </div>
-                    </div>
-                    <br/>
-                    <br/>
-                    <div class="control-group">
-                        <!-- Buttons -->
-                        <div class="controls">
-                            <button type="submit" class="btn btn-default">Connexion</button>
-                            <a class="btn" href="/authentification/resendPwd">Mot de passe oublié ?</a>
-                        </div>
-                    </div>
-                </fieldset>
-
-            </form>
+        <div class="col-md-12 investFormInside">
+            <tr/>
+            <div class="col-md-12 investFormInside">
+                <div class="col-md-2">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="col-md-8" style="text-align: center"><h2 >Liste des Utilisateurs</h2></div>
+                <div class="col-md-3">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+            <br/>
+            <table class="col-md-12 table table-striped">
+                <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:if test="${usersList.size() > 0}">
+                    <c:forEach items="${usersList}" var="appUser" varStatus="status">
+                        <tr>
+                            <td>${appUser.firstName}</td>
+                            <td>${appUser.lastName}</td>
+                            <td>${appUser.login}</td>
+                        </tr>
+                    </c:forEach>
+                </c:if>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
