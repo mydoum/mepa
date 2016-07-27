@@ -37,5 +37,8 @@
                 </tbody>
             </table>
         </div>
+        <br/>
+        <button type="button" class="btn btn-success btn-md" style="display: block; margin: 0 auto;">Exporter</button>
+        <br/>
     </div>
 </div>
