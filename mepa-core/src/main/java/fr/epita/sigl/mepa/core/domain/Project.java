@@ -75,6 +75,7 @@ public class Project implements Serializable {
         this.startDate = new Date();
         this.endDate = new Date();
         this.name = "Nom du projet";
+        this.rewards= new HashSet<>();
         this.goalAmount = 0L;
     }
 
@@ -86,6 +87,7 @@ public class Project implements Serializable {
         this.startDate = new Date();
         this.endDate = endDate;
         this.name = projectName;
+        this.rewards= new HashSet<>();
         this.goalAmount = 0L;
     }
 
@@ -198,6 +200,10 @@ public class Project implements Serializable {
 
     public void setRewards(Set<Reward> rewards) {
         this.rewards = rewards;
+    }
+
+    public void addRewards(Reward reward){
+        this.rewards.add(reward);
     }
 
     public Boolean isFinished() {

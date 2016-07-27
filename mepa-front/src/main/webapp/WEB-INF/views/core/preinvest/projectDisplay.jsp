@@ -7,9 +7,6 @@
 --%>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
-
-<script>
-</script>
 <%
     Integer hitsCount = (Integer)application.getAttribute("hitCounter");
     ArrayList<String> visits = (ArrayList<String>) application.getAttribute("visits");
@@ -31,12 +28,13 @@
     application.setAttribute("visits", visits);
 %>
 
-<center>
-
-</center>
 <div class="container">
     <header class="title projectHeader">
         <h1 class="short">${project.name}</h1>
+        <jsp:useBean id="now" class="java.util.Date"/>
+        <c:if test="${project.goalAmount <= totalDonation && project.endDate gt now}">
+            <h1 class="short">88888888888888888</h1>
+        </c:if>
     </header>
     <c:if test="${amount != null}">
         <div class="col-md-12 text-center alert alert-success investFormInside">
@@ -54,8 +52,7 @@
                 <nav class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active">
-                            <a href="/core/preinvest/projectDisplay/${project.id}">Accueil de la page du projet
-                                : ${project.name}</a>
+                            <a href="/core/preinvest/projectDisplay/${project.id}">${project.name}</a>
                         </li>
                         <li>
                             <a href="/core/preinvest/projectDisplay/${project.id}/comment">Commentaires</a>
@@ -77,8 +74,7 @@
                         <div class="date">${project.dateFormat("dd/MM/yyyy", project.startDate)}</div>
                         <div class="date">Date de fin:</div>
                         <div class="date">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
-
-
+                        <div class="date">Nombre de contributeurs : ${nbrContributos}</div>
                     </div>
                 </div>
                 <%-- Part of the page for Social buttons --%>
@@ -108,11 +104,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <!-- www.webtutoriaux.com Compteur de visiteurs -->
-                        <script type='text/javascript' src='http://www.webtutoriaux.com/services/compteur-visiteurs/index.php?client=154864'></script>
-                        <!-- End Compteur de visiteurs -->
-                    </div>
+
                     <div class="col-md-2">
                         <c:if test="${isAdmin == true}">
                             <p>Nombre de visiteurs: <%= hitsCount%></p>
@@ -134,12 +126,12 @@
             <div class="col-md-12 investFormInside">
                 <tr/>
                 <div class="col-md-12 investFormInside">
-                    <div class="col-md-12"><h2>Liste des contributeurs</h2></div>
+                    <div class="col-md-12"><h2>Liste des investisseurs</h2></div>
                 </div>
                 <table class="col-md-12 table table-striped">
                     <thead>
                     <tr>
-                        <th>Prénom ou email</th>
+                        <th>Investisseur</th>
                         <th>Contribution</th>
                     </tr>
                     </thead>
@@ -265,6 +257,12 @@
         </div>
     </aside>
 </div>
+
+<script>
+    var stepSlider = ${project.goalAmount} * 0.1;
+    stepSlider = Number(stepSlider).toFixed();
+    var maxSlider = ${project.goalAmount};
+</script>
 
 <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
 <script src="${investSliderJs}"></script>

@@ -34,7 +34,8 @@ public class CommentsModel
     @NotNull
     private int projectId;
 
-
+    @NotNull
+    private String user;
 
     @NotNull
     private int arriving;
@@ -86,6 +87,14 @@ public class CommentsModel
 
     public void setArriving(int arriving) {
         this.arriving = arriving;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     @Override

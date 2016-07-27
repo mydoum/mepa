@@ -7,6 +7,7 @@ import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ModelService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
+import fr.epita.sigl.mepa.front.Service.investmentFrontService;
 import fr.epita.sigl.mepa.front.controller.investment.InvestController;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -22,6 +23,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 import fr.epita.sigl.mepa.front.model.investment.Investor;
+
+import static java.lang.Math.toIntExact;
 
 @Controller
 @SessionAttributes({})
@@ -42,13 +45,16 @@ public class PostInvestmentController {
     @Autowired
     private InvestmentService investmentService;
 
+    private investmentFrontService investmentFrontService = new investmentFrontService();
+
+
     private static final Logger LOG = LoggerFactory.getLogger(PostInvestmentController.class);
 
     @RequestMapping(value = "/project-list", method = RequestMethod.GET)
     public String displayEndedProjectList(ModelMap model, HttpServletRequest request) {
         List<Project> projects = this.projectService.getAllFinishedProjects();
-        for (Project p: projects)
-                Hibernate.initialize(p.getRewards());
+        for (Project p : projects)
+            Hibernate.initialize(p.getRewards());
         model.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
 
         return "/project-end-list";
@@ -65,7 +71,7 @@ public class PostInvestmentController {
     }
 
 
-    @RequestMapping(value = {"/projectDisplay/{projectId}"}) // The adress to call the function
+    @RequestMapping(value = {"/project-end/{projectId}"}) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
         /* Code your logic here */
         Project project = this.projectService.getProjectById(projectId);
@@ -75,6 +81,15 @@ public class PostInvestmentController {
         Float totalProjectAmountInvested = getProjectMoneyInvested(projectId);
         modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
         /*PostInvest Total Amount invested on Project*/
+
+        int totalAmount = randomWithRange(0, 1000);
+        modelMap.addAttribute("totalDonationDummy", totalAmount);
+
+        int var = 100 *totalAmount / toIntExact(project.getGoalAmount());
+        System.out.println("7777777777777777 " + var);
+        modelMap.addAttribute("varpercentage", var);
+
+
 
          /*Get the current user in the session in order to know if he is
         * connected */
@@ -96,22 +111,7 @@ public class PostInvestmentController {
 
         modelMap.addAttribute("new_c_models",new_c_models);
         */
-        return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
-    }
-
-    public void groupInvestors(ArrayList<Investor> listOfInvestors, Investor investor) {
-
-        if (investor.isAnonymous()) {
-            listOfInvestors.add(investor);
-            return;
-        }
-
-        for (Investor i: listOfInvestors) {
-            if(i.getEmail().equals(investor.getEmail())) {
-                i.setMoneyAmount(i.getMoneyAmount() + investor.getMoneyAmount());
-                return;
-            }
-        }
+        return "/project-end"; // The adress of the JSP coded in tiles.xml
     }
 
     public Float getProjectMoneyInvested(long projectId) {
@@ -121,5 +121,18 @@ public class PostInvestmentController {
             if (inv.getProjectId() == projectId)
                 totalProjectAmount += inv.getAmount();
         return totalProjectAmount;
+    }
+
+    int randomWithRange(int min, int max) {
+        int range = (max - min) + 1;
+        return (int) (Math.random() * range) + min;
+    }
+
+
+    private int percentage(int a, int b) {
+        if (a == 0) {
+            return 100;
+        }
+        return ((b * 100) / a);
     }
 }

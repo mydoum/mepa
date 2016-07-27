@@ -21,14 +21,30 @@
     }, 3000);
 </script>
 
-<<<<<<< 87e83ea814ecb7cfdae833f46431b26ca3138045
 
-=======
->>>>>>> [POSTINVEST] Added Finished Project List
+
 <div class="container">
     <header class="title projectHeader">
         <h1 class="short">${project.name}</h1>
     </header>
+
+    <jsp:useBean id="now" class="java.util.Date"/>
+    <c:if test="${totalDonationDummy gt project.goalAmount  && project.endDate lt now}">
+    <div class="container">
+        <br>
+        <div class="alert alert-success" >
+            <h2><strong><center>Ce projet est terminé et a été financé !</center></strong></h2>
+        </div>
+    </div>
+    </c:if>
+    <c:if test="${totalDonationDummy lt project.goalAmount  && project.endDate lt now}">
+    <div class="container">
+        <div class="alert alert-danger">
+            <h2><strong><center>Ce Projet est terminé et n'a malheureusement pas été financé !</center></strong></h2>
+        </div>
+    </div>
+    </c:if>
+
     <c:if test="${amount != null}">
         <div class="col-md-12 text-center alert alert-success investFormInside">
             Merci pour votre don de ${amount}€! Un mail de notification vous a été envoyé.
@@ -45,11 +61,7 @@
                 <nav class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active">
-<<<<<<< 87e83ea814ecb7cfdae833f46431b26ca3138045
-                            <a href="/postinvest/projectDisplay/${project.id}">Accueil de la page du projet
-=======
-                            <a href="/core/preinvest/projectDisplay/${project.id}">Accueil de la page du projet
->>>>>>> [POSTINVEST] Added Finished Project List
+                            <a href="/postinvest/project-end/${project.id}">Accueil de la page du projet
                                 : ${project.name}</a>
                         </li>
                         <li>
@@ -84,11 +96,7 @@
                 <div class="col-md-12">
                     <%-- Facebook share button --%>
                     <div class="fb-share-button"
-<<<<<<< 87e83ea814ecb7cfdae833f46431b26ca3138045
-                         data-href="https://mepa.herokuapp.com/postinvest/projectDisplay/${project.id}"
-=======
-                         data-href="https://mepa.herokuapp.com/core/preinvest/projectDisplay/${project.id}"
->>>>>>> [POSTINVEST] Added Finished Project List
+                         data-href="https://mepa.herokuapp.com/postinvest/project-end/${project.id}"
                          data-layout="button_count"
                          data-size="large"
                     <%-- Open the iframe --%>
@@ -172,40 +180,55 @@
                                 style="width:${projectPercentage}%">
                                     ${projectPercentage}%
                                 </div>--%>
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80"
-                                     aria-valuemin="0" aria-valuemax="100" style="width:80%">
-                                    80%
-                                </div>
+                                    <div class="progress-bar progress-bar-success" role="progressbar"
+                                         aria-valuenow="${varpercentage}" aria-valuemin="0" aria-valuemax="100"
+                                         style="width:${varpercentage}%">
+                                        ${varpercentage}%
+                                    </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <h4>Contribution totale : ${totalDonation}€</h4>
+                        <h4>Contribution totale : ${totalDonationDummy}€</h4>
                     </div>
                     <div class="col-md-12">
-                        <h4>Objectif : <%--${project.requestAmount}--%>500€</h4>
+                        <h4>Objectif : <%--${project.requestAmount}--%>${project.goalAmount} €</h4>
                     </div>
                     <div class="col-md-12">
                         <%-- POST INVEST --%>
                         <%-- PARTI POUR LE POST INVEST --%>
-<<<<<<< 87e83ea814ecb7cfdae833f46431b26ca3138045
                         <jsp:useBean id="todayDate" class="java.util.Date"/>
-=======
-                        <%--<jsp:useBean id="todayDate" class="java.util.Date"/>
->>>>>>> [POSTINVEST] Added Finished Project List
-                        <c:choose>
-                            <c:when test="${project.endDate <= todayDate}">
-                               <div class="date">PostInvest -> Date de fin atteinte.</div>
-                           </c:when>
-                           <c:otherwise>
-                               <div class="date">PostInvest -> Date de fin non atteinte.</div>
-                           </c:otherwise>
-<<<<<<< 87e83ea814ecb7cfdae833f46431b26ca3138045
-                       </c:choose>
+                            <c:if test="${totalDonationDummy lt project.goalAmount  && project.endDate lt now}">
+                            <c:url var="addAmountUrl" value="/admin/addAmount"/>
+                            <form:form role="form" controller="AdminController" method="post"
+                                       action="${addAmountUrl}">
+                                <!--
+                                <input id="amount" type="text" maxlength="20" placeholder="20" name="amount"/>
+                                -->
+                                <label for="amount">Vous souhaitez quand même montrer votre interet envers ce projet ? Indiquez la quantité d'argent que vous voudriez donner !</label>
+                                <input id="amount" type="text" placeholder="20" name="amount"/>
+                                <button type="submit" class="btn btn-default">Soumettre</button>
+                            </form:form>
+                                </c:if>
+                    </div>
+                    <%-- <div class="container">
+                        <c:url var="addAmountUrl" value="/admin/addAmount"/>
+                        <form:form role="form" controller="AdminController" method="post"
+                                   action="${addAmountUrl}">
+                            <!--
+                            <input id="amount" type="text" maxlength="20" placeholder="20" name="amount"/>
+                            -->
+                            <label for="amount">Quantité d'argent que vous voudriez donner</label>
+                            <input id="amount" type="text" placeholder="20" name="amount"/>
+                            <button type="submit" class="btn btn-default">Soumettre</button>
+                        </form:form> </div> --%>
+
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>
 <%--
-=======
-                       </c:choose>--%>
->>>>>>> [POSTINVEST] Added Finished Project List
                         <h4>Temps restant : ${projectLeftTime} jour(s)</h4>
                     </div>
                 </div>
@@ -242,11 +265,7 @@
                 </form:form>
             </div>
         </div>
-<<<<<<< 87e83ea814ecb7cfdae833f46431b26ca3138045
         <%-- Part of the page where the slideshow and the project date are printed --%
-=======
-        <%-- Part of the page where the slideshow and the project date are printed --%>
->>>>>>> [POSTINVEST] Added Finished Project List
         <div class="row">
             <div class="col-md-12 rewardSection">
                 <h4 class="rewardHeader">Choisissez votre contrepartie</h4>
@@ -279,12 +298,8 @@
         </div>
     </aside>
 </div>
-
-<<<<<<< 87e83ea814ecb7cfdae833f46431b26ca3138045
 --%>
 
-=======
->>>>>>> [POSTINVEST] Added Finished Project List
 <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
 <script src="${investSliderJs}"></script>
 <c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>

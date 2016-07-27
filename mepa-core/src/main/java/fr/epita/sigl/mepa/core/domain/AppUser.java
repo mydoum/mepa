@@ -43,6 +43,9 @@ public class AppUser {
     @Column(name = "birthDate")
     private Date birthDate;
 
+    @Column(name = "isAdmin")
+    private Boolean isAdmin;
+
     public Long getId() {
         return id;
     }
@@ -65,6 +68,18 @@ public class AppUser {
 
     public Date getBirthDate() {
         return birthDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public Boolean getIsAdmin() {
+        return isAdmin;
     }
 
     public void setId(Long id) {
@@ -91,20 +106,16 @@ public class AppUser {
         this.birthDate = birthDate;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     @Override
