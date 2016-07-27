@@ -7,7 +7,7 @@
 
 <style type="text/css">
     .pad-left-date {
-        left: -56px;
+        left: -15%; <%-- -56px;--%>
     }
 
     .margin-bottom-date {

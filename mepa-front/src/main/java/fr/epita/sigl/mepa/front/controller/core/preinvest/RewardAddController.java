@@ -60,6 +60,7 @@ public class RewardAddController {
         System.out.println("Is Co" + is_co);
         modelMap.addAttribute(NEWPROJECT, projectId);
         modelMap.addAttribute(NEWREWARD, r);
+        modelMap.addAttribute(PROJECT_ATTRIBUTE, projectService.getProjectById(projectId));
         modelMap.addAttribute(IS_CONNECTED_ATTRIBUTE, is_co);
 
         System.out.print("\n\n  create reward\n");
@@ -75,7 +76,9 @@ public class RewardAddController {
 
         project.addRewards(newReward);
 
+
         projectService.updateProject(project);
+        model.addAttribute(PROJECT_ATTRIBUTE, project);
 
         return display(projectId, model);
     }

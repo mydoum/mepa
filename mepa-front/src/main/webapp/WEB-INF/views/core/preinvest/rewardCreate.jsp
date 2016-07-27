@@ -22,9 +22,14 @@
                 </div>
                 <br/>
                 <div class="control-group">
-                    <label class="control-label">Montant de début</label>
-                    <div class="controls">
-                        <td><form:input path="costStart" class="form-control input-lg" placeholder="Montant à partir du quel la contrepartie s'applique"/></td>
+
+                    <label class="control-label">Montant de départ(€):</label>
+                    <div id="keypress"
+                         class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12"></div>
+                    <div class="control-label">
+                        <td><form:input path="costStart" class="form-control input-lg" placeholder="Montant à partir du quel la contrepartie s'applique" id="input-with-keypress"
+                              type="text" required="required" />
+                        </td>
                     </div>
                 </div>
                 <br/>
@@ -49,7 +54,17 @@
         </c:if>
 
 --%>
-            <h1> ajout reward</h1>
     </div>
+
+<script>
+    var stepSlider = 5;
+    stepSlider = Number(stepSlider).toFixed();
+    var maxSlider = ${project.goalAmount};
+</script>
+
+<c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
+<script src="${investSliderJs}"></script>
+<c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>
+<script src="${investSliderPersoJs}"></script>
 
 

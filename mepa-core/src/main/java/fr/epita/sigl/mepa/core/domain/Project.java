@@ -31,11 +31,11 @@ public class Project implements Serializable {
 
     private Long user_id; //Id of the user creating the project
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "startDate", nullable = false)
     private Date startDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "endDate", nullable = false)
     private Date endDate;
 

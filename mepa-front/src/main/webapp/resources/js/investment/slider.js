@@ -11,7 +11,8 @@ $('document').ready(function(){
         range: {
             'min': Number(stepSlider),
             'max': Number(maxSlider)
-        }
+        },
+        connect: 'lower',
     });
 
     keypressSlider.noUiSlider.on('update', function( values, handle ) {
