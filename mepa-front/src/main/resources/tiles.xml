@@ -50,6 +50,9 @@
     <definition name="/authentification/editUser" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/editUser.jsp"/>
     </definition>
+    <definition name="/authentification/checkUsers" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/authentification/checkUsers.jsp"/>
+    </definition>
 
     <!-- Invest -->
     <definition name="invest.definition" extends="base.definition">

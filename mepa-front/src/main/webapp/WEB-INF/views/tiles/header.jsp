@@ -24,21 +24,31 @@
                         <c:if test="${!isCo}">
                             <c:url var="signin" value="/authentification/signin"/>
                             <%-- <c:url var="signup" value="/authentification/signup"/>--%>
-                            <li><a href="${signin}"><span class="glyphicon glyphicon-log-in"></span>  Se connecter</a></li>
+                            <li><a href="${signin}"><span class="glyphicon glyphicon-log-in"></span> Se connecter</a>
+                            </li>
                             <%--<li><a href="${signup}"><span class="glyphicon glyphicon-user"></span>  S'inscrire</a></li>--%>
                         </c:if>
                         <c:if test="${isCo == true}">
+                            <c:if test="${userCo.isAdmin}">
+                                <c:url var="checkUsers" value="/authentification/checkUsers"/>
+                                <li><a href="${checkUsers}"><span
+                                        class="glyphicon glyphicon-th-list"></span> Liste des utilisateurs</a></li>
+                            </c:if>
                             <c:url var="editUser" value="/authentification/editUser"/>
                             <c:choose>
                                 <c:when test='${not empty userCo.firstName}'>
-                                    <li><a href="${editUser}"><span class="glyphicon glyphicon-user"></span>  ${userCo.firstName} ${userCo.lastName}</a></li>
+                                    <li><a href="${editUser}"><span
+                                            class="glyphicon glyphicon-user"></span> ${userCo.firstName} ${userCo.lastName}
+                                    </a></li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li><a href="${editUser}"><span class="glyphicon glyphicon-user"></span>  ${userCo.login}</a></li>
+                                    <li><a href="${editUser}"><span
+                                            class="glyphicon glyphicon-user"></span> ${userCo.login}</a></li>
                                 </c:otherwise>
                             </c:choose>
                             <c:url var="deconnexion" value="/authentification/deconnexion"/>
-                            <li><a href="${deconnexion}"><span class="glyphicon glyphicon-off"></span>  Déconnexion</a></li>
+                            <li><a href="${deconnexion}"><span class="glyphicon glyphicon-off"></span> Déconnexion</a>
+                            </li>
                         </c:if>
                     </ul>
                 </div>
