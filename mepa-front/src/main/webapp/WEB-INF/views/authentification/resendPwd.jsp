@@ -41,7 +41,7 @@
                         <!-- Buttons -->
                         <div class="controls">
                             <center>
-                                <button type="submit" class="btn btn-default">Valider</button>
+                                <button type="submit" class="btn btn-default">Récupérer le mot de passe</button>
                             </center>
                         </div>
                     </div>

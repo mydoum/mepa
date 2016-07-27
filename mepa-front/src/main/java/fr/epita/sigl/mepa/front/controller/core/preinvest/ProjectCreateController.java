@@ -11,15 +11,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -35,6 +37,9 @@ public class ProjectCreateController {
     protected static final String IS_UNIQUE_ATTRIBUTE = "is_unique";
     protected static final String IS_NULL_ATTRIBUTE = "is_null";
     protected static final String IS_DATE_ATTRIBUTE = "is_date";
+    protected static final String CURRENT_DATE = "current_date";
+
+    private DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     @Autowired
     private ProjectService projectService;
@@ -45,6 +50,9 @@ public class ProjectCreateController {
     @RequestMapping(value = {"/projectCreate"}, method = RequestMethod.GET) // The adress to call the function
     public String projectCreate(HttpServletRequest request, ModelMap modelMap) {
         /* Code your logic here */
+
+        modelMap.addAttribute(CURRENT_DATE, sourceFormat.format(new Date()));
+
         Project p = new Project(1);
 
         Boolean is_co = (Boolean) request.getSession().getAttribute("isCo");
@@ -68,6 +76,22 @@ public class ProjectCreateController {
         boolean is_date = false;
         AppUser connectedUser = (AppUser) request.getSession().getAttribute("userCo");
         newProject.setUser_id(connectedUser.getId());
+
+
+        // Change string to date
+        String startDateString = request.getParameter("startDate");
+        String endDateString = request.getParameter("endDate");
+        Date startDate = new Date();
+        Date endDate = new Date();
+        try {
+            startDate = sourceFormat.parse(startDateString);
+            endDate = sourceFormat.parse(endDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        newProject.setStartDate(startDate);
+        newProject.setEndDate(endDate);
+
         newProject.setImagesLinks(new ArrayList<>());
         newProject.getImagesLinks().add(request.getParameter("imageUrl"));
         projectService.createProject(newProject);

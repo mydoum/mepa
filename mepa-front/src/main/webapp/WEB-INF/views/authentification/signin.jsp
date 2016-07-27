@@ -47,7 +47,14 @@
             <div style="padding-top:30px" class="panel-body" >
 
                 <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-                <c:url var="loginUserFormActionUrl" value="/authentification/signin"/>
+                <c:choose>
+                    <c:when test="${projectId != null}">
+                        <c:url var="loginUserFormActionUrl" value="/authentification/signin/project/${projectId}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:url var="loginUserFormActionUrl" value="/authentification/signin"/>
+                    </c:otherwise>
+                </c:choose>
                 <form id="loginform" class="form-horizontal" role="form" action="${loginUserFormActionUrl}"
                       modelAttribute="loginUserFormBean"
                       method="POST">

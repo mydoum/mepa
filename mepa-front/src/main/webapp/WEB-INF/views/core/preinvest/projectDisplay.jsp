@@ -7,20 +7,16 @@
 --%>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
-
-<script>
-</script>
 <%
-    Integer hitsCount = (Integer)application.getAttribute("hitCounter");
+    Integer hitsCount = (Integer) application.getAttribute("hitCounter");
     ArrayList<String> visits = (ArrayList<String>) application.getAttribute("visits");
     if (visits == null)
         visits = new ArrayList<>();
     String id = request.getSession().getId();
-    if( hitsCount == null || hitsCount == 0 ){
+    if (hitsCount == null || hitsCount == 0) {
         hitsCount = 1;
         visits.add(id);
-    }
-    else {
+    } else {
         if (!visits.contains(id)) {
             visits.add(id);
             ++hitsCount;
@@ -31,9 +27,6 @@
     application.setAttribute("visits", visits);
 %>
 
-<center>
-
-</center>
 <div class="container">
     <header class="title projectHeader">
         <h1 class="short">${project.name}</h1>
@@ -58,8 +51,7 @@
                 <nav class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active">
-                            <a href="/core/preinvest/projectDisplay/${project.id}">Accueil de la page du projet
-                                : ${project.name}</a>
+                            <a href="/core/preinvest/projectDisplay/${project.id}">${project.name}</a>
                         </li>
                         <li>
                             <a href="/core/preinvest/projectDisplay/${project.id}/comment">Commentaires</a>
@@ -69,7 +61,7 @@
                 <%-- Part of the page where the slideshow and the project date are printed --%>
                 <div class="row">
                     <div class="col-md-4" id="slideshow">
-                       <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
+                        <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
                             <div>
                                 <img src="${image}" style="width:100%"
                                      class="projectImageInvest img-responsive img-rounded"/>
@@ -81,8 +73,7 @@
                         <div class="date">${project.dateFormat("dd/MM/yyyy", project.startDate)}</div>
                         <div class="date">Date de fin:</div>
                         <div class="date">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
-
-
+                        <div class="date">Nombre de contributeurs : ${nbrContributos}</div>
                     </div>
                 </div>
                 <%-- Part of the page for Social buttons --%>
@@ -112,10 +103,10 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-2">
                         <c:if test="${isAdmin == true}">
-                            <p>Nombre de visiteurs: <%= hitsCount%></p>
+                            <p>Nombre de visiteurs: <%= hitsCount%>
+                            </p>
                         </c:if>
                     </div>
                 </div>
@@ -134,12 +125,12 @@
             <div class="col-md-12 investFormInside">
                 <tr/>
                 <div class="col-md-12 investFormInside">
-                    <div class="col-md-12"><h2>Liste des contributeurs</h2></div>
+                    <div class="col-md-12"><h2>Liste des investisseurs</h2></div>
                 </div>
                 <table class="col-md-12 table table-striped">
                     <thead>
                     <tr>
-                        <th>Prénom ou email</th>
+                        <th>Investisseur</th>
                         <th>Contribution</th>
                     </tr>
                     </thead>
@@ -166,11 +157,20 @@
                 </table>
             </div>
             <br/>
-            <div class="col-md-12 download investFormInside">
+            <c:if test="${isAdmin != null && isAdmin == true && amountSize != null && amountSize == true}">
+                <div class="col-md-12 download investFormInside">
                     <p align="center">
                         <a href="/invest/download/${project.id}"><span class="btn btn-primary">Download</span></a>
                     </p>
                 </div>
+            </c:if>
+            <c:if test="${isAdmin != null && isAdmin == true && amountSize != null && amountSize == false}">
+                <div class="col-md-12 download investFormInside disabled">
+                    <p align="center">
+                        <a href="/invest/download/${project.id}"><span class="btn btn-primary">Download</span></a>
+                    </p>
+                </div>
+            </c:if>
         </div>
     </div>
 
@@ -184,8 +184,8 @@
                         <div class="col-md-12">
                             <div class="progress">
                                 <div class="progress-bar progress-bar-success" role="progressbar"
-                                aria-valuenow="${projectPercentage}" aria-valuemin="0" aria-valuemax="100"
-                                style="width:${projectPercentageBar}%">
+                                     aria-valuenow="${projectPercentage}" aria-valuemin="0" aria-valuemax="100"
+                                     style="width:${projectPercentageBar}%">
                                     ${projectPercentage}%
                                 </div>
                             </div>
@@ -253,7 +253,9 @@
                     <c:if test="${project.rewards != null and project.rewards.size() > 0}">
                         <c:forEach items="${project.rewards}" var="reward" varStatus="status">
                             <li class="rewardItem" name="reward/${reward.id}">
-                                <h4 class="rewardTitle"> <a href="/invest/${project.id}/rewardDisplay/${reward.id}"> ${reward.name} à partir de ${reward.costStart}€</a></h4>
+                                <h4 class="rewardTitle"><a
+                                        href="/invest/${project.id}/rewardDisplay/${reward.id}"> ${reward.name} à partir
+                                    de ${reward.costStart}€</a></h4>
                                 <div class="rewardDescription">
                                     <p>${reward.description}</p>
                                 </div>
@@ -265,6 +267,12 @@
         </div>
     </aside>
 </div>
+
+<script>
+    var stepSlider = ${project.goalAmount} * 0.1;
+    stepSlider = Number(stepSlider).toFixed();
+    var maxSlider = ${project.goalAmount};
+</script>
 
 <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
 <script src="${investSliderJs}"></script>

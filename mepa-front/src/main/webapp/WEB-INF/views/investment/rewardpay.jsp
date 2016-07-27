@@ -30,7 +30,7 @@
                 <label class="investFormInside col-md-12">Amount (€):</label>
                 <div class="col-md-12 InvestFormInside">
                     <input name="investAmount" id="input-with-keypress"
-                           class="form-control" type="number" required="required" value="${rewardPrice}" readonly/>
+                           class="form-control" type="number" required="required" value="${rewardPrice}"/>
                 </div>
                 <br/>
                 <label class="investFormInside col-md-12">Anonyme: </label>
