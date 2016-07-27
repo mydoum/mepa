@@ -1,6 +1,11 @@
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <div class="container">
+    <c:if test="${noUsers == true}">
+        <div class="col-md-12 text-center alert alert-danger col-sm-12">
+            Erreur. Il n'y a aucun utilisateur à exporter.
+        </div>
+    </c:if>
     <div class="row">
         <div class="col-md-12 investFormInside">
             <tr/>
@@ -38,7 +43,21 @@
             </table>
         </div>
         <br/>
-        <button type="button" class="btn btn-success btn-md" style="display: block; margin: 0 auto;">Exporter</button>
+        <div class="col-md-12 investFormInside">
+            <c:url var="exportActionUrl" value="/authentification/exportUsers"/>
+            <form id="eventForm" class="form-horizontal" action="${exportActionUrl}"
+                  method="POST">
+                <fieldset>
+                    <div class="control-group">
+                        <!-- Buttons -->
+                        <div class="controls">
+                            <button type="submit" class="btn btn-success" style="display: block; margin: 0 auto;">
+                                <span class="glyphicon glyphicon-export"></span>  Exporter</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
         <br/>
     </div>
 </div>

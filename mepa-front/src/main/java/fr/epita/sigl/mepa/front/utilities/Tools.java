@@ -1,5 +1,6 @@
 package fr.epita.sigl.mepa.front.utilities;
 
+import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 
 import javax.mail.Message;
@@ -29,6 +30,7 @@ public class Tools {
 
     //CSV file header
     private static final String FILE_HEADER = "Prénom;Nom;Email;Montant total;Liste des contributions";
+    private static final String FILE_HEADER_USER = "Prénom;Nom;Email";
 
 
 
@@ -117,6 +119,41 @@ public class Tools {
             fileWriter += investor;
             fileWriter += COMMA_DELIMITER;
             fileWriter += sum;
+            fileWriter += NEW_LINE_SEPARATOR;
+        }
+        return fileWriter;
+    }
+
+    public static String writeUserCsvFile(ArrayList<AppUser> users) {
+
+        ArrayList<String> keys = new ArrayList<>();
+        HashMap<String, ArrayList<Float>> usersMap = new HashMap<>();
+
+        for (AppUser user : users) {
+            ArrayList<Float> floats;
+            if (!usersMap.containsKey(user.getFirstName() + COMMA_DELIMITER + user.getLastName()
+                    + COMMA_DELIMITER + user.getLogin())) {
+                floats = new ArrayList<>();
+                usersMap.put(user.getFirstName() + COMMA_DELIMITER + user.getLastName() + COMMA_DELIMITER
+                        + user.getLogin(), floats);
+                keys.add(user.getFirstName() + ";" + user.getLastName() + ";" + user.getLogin());
+            } else {
+                floats = usersMap.get(user.getFirstName() + COMMA_DELIMITER + user.getLastName()
+                        + COMMA_DELIMITER + user.getLogin());
+                usersMap.put(user.getFirstName() + COMMA_DELIMITER + user.getLastName() + COMMA_DELIMITER
+                        + user.getLogin(), floats);
+            }
+        }
+
+        String fileWriter = "";
+        fileWriter += FILE_HEADER_USER;
+        fileWriter += NEW_LINE_SEPARATOR;
+
+        for (String user : keys) {
+            ArrayList<Float> floats = usersMap.get(user);
+            Float sum = calculSum(floats);
+            fileWriter += user;
+            fileWriter += COMMA_DELIMITER;
             fileWriter += NEW_LINE_SEPARATOR;
         }
         return fileWriter;

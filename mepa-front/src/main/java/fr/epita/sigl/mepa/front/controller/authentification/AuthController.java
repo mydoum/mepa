@@ -1,8 +1,10 @@
 package fr.epita.sigl.mepa.front.controller.authentification;
 
 import fr.epita.sigl.mepa.core.domain.AppUser;
+import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.front.controller.home.HomeController;
+import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.Tools;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -311,6 +316,31 @@ public class AuthController {
         List<AppUser> appUsers = this.appUserService.getAllUsers();
         if (appUsers.size() > 0) {
             modelMap.addAttribute("usersList", appUsers);
+        }
+        return "/authentification/checkUsers";
+    }
+
+    @RequestMapping(value = {"/exportUsers"})
+    public String exportUsers(HttpServletResponse response, HttpServletRequest request, ModelMap modelMap) {
+        Date actual = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String date = dateFormat.format(actual);
+        if ((this.appUserService.getAllUsers() != null) && this.appUserService.getAllUsers().size() > 0) {
+            ArrayList<AppUser> users = (ArrayList<AppUser>) this.appUserService.getAllUsers();
+            String fileWriter = Tools.writeUserCsvFile(users);
+            response.setContentType("text/csv");
+            response.setHeader("Content-Disposition", "attachment; filename=\"Users_export_" + date + ".csv\"");
+            try {
+                OutputStream output = response.getOutputStream();
+                output.write(fileWriter.getBytes());
+                output.flush();
+                output.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            modelMap.addAttribute("noUsers", true);
         }
         return "/authentification/checkUsers";
     }
