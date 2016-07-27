@@ -14,9 +14,11 @@ import fr.epita.sigl.mepa.core.service.RewardService;
 import fr.epita.sigl.mepa.front.controller.home.HomeController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.asm.Label;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -104,7 +106,7 @@ public class InsertDummyController {
         for (int j = 0; j < 10; ++j) {
             Reward r = new Reward();
             r.setName("Coucou");
-            r.setDescription("This is a description");
+            r.setDescription("Ceci est une description");
             r.setCostStart((float) 10);
             rewardService.createReward(r);
         }
@@ -135,7 +137,7 @@ public class InsertDummyController {
             for (int j = 0; j < 10; ++j) {
                 Reward r = new Reward();
                 r.setName("Coucou");
-                r.setDescription("This is a description");
+                r.setDescription("Ceci est une description");
                 r.setCostStart((float) 10);
                 this.rewardService.createReward(r);
                 rewards.add(r);
@@ -171,7 +173,7 @@ public class InsertDummyController {
             for (int j = 0; j < 10; ++j) {
                 Reward r = new Reward();
                 r.setName("Gildas est beau" + j);
-                r.setDescription("This is a description");
+                r.setDescription("Ceci est une description");
                 r.setCostStart((float) 10);
                 this.rewardService.createReward(r);
                 rewards.add(r);
