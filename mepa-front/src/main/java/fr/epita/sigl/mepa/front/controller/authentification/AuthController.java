@@ -217,12 +217,10 @@ public class AuthController {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
         if (userCo != null && isCo) {
-            // tu peux afficher les données user
 
             return "/authentification/modifyPassword";
         }
         return "/home/home";
-//        return "redirect:/home/home"; A tester pour plus tard
     }
 
     @RequestMapping(value = {"/modifyPassword"}, method = {RequestMethod.POST})
@@ -235,13 +233,29 @@ public class AuthController {
             //AppUser user = this.appUserService.getUserByLogin(userCo.getLogin());
             if (userCo != null) { // the user really exist, it's not a fake
                 String password = request.getParameter("password");
+                String passwordOld = request.getParameter("passwordOld");
+                String passwordConf = request.getParameter("passwordConf");
+                boolean confPassword = true;
+                boolean newPassword = true;
                 System.out.println("login = " + userCo.getLogin());
-                userCo.setPassword(password);
 
-                this.appUserService.updateUser(userCo);
-                request.getSession().setAttribute("userCo", userCo);
+                if (!passwordOld.equals(userCo.getPassword())){
+                    newPassword = false;
+                    modelMap.addAttribute("newPassword", newPassword);
+                    return "/authentification/modifyPassword";
+                } else if (!password.equals(passwordConf)) {
+                    confPassword = false;
+                    modelMap.addAttribute("confPassword", confPassword);
+                    return "/authentification/modifyPassword";
+                } else  {
+                    userCo.setPassword(password);
+                    this.appUserService.updateUser(userCo);
+                    request.getSession().setAttribute("userCo", userCo);
+                    newPassword = true;
+                    confPassword = true;
+                    return "/home/home";
+                }
             }
-            return "/home/home";
         }
         return "/home/home";
 

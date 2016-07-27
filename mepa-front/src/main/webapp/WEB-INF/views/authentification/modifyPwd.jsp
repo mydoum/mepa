@@ -11,6 +11,16 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css"/>
 
 <div class="container">
+    <c:if test="${newPassword == false}">
+        <div class="col-md-12 text-center alert alert-danger investFormInside">
+            Le mot de passe actuel est incorrect.
+        </div>
+    </c:if>
+    <c:if test="${confPassword == false}">
+        <div class="col-md-12 text-center alert alert-danger investFormInside">
+            Le mot de passe de confirmation est incorrect.
+        </div>
+    </c:if>
     <div class="row">
         <div class="col-md-6">
             <c:url var="addCustomUserFormActionUrl" value="/authentification/modifyPassword"/>
@@ -22,10 +32,19 @@
                         <legend class="">Modification du mot de passe</legend>
                     </div>
                     <div class="control-group">
+                        <label class="control-label" for="password">Mot de passe actuel</label>
+                        <div class="controls">
+                            <input id="passwordOld" name="passwordOld" placeholder="" class="form-control input-lg"
+                                   type="text" value="" pattern="[0-9a-zA-Z]{6,15}" required>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="control-group">
                         <label class="control-label" for="password">Nouveau mot de passe</label>
                         <div class="controls">
                             <input id="password" name="password" placeholder="" class="form-control input-lg"
-                                   type="text" value="" pattern="[0-9a-zA-Z]{6,}">
+                                   type="text" value="" pattern="[0-9a-zA-Z]{6,15}" required>
                         </div>
                     </div>
                     <br/>
@@ -33,8 +52,8 @@
                     <div class="control-group">
                         <label class="control-label" for="password">Confirmation du nouveau mot de passe</label>
                         <div class="controls">
-                            <input id="passwordConf" name="password" placeholder="" class="form-control input-lg"
-                                   type="text" value="" pattern="[0-9a-zA-Z]{6,}">
+                            <input id="passwordConf" name="passwordConf" placeholder="" class="form-control input-lg"
+                                   type="text" value="" pattern="[0-9a-zA-Z]{6,15}" required>
                         </div>
                     </div>
                     <br/>
