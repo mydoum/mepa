@@ -12,9 +12,9 @@ import java.util.Date;
  * Created by Simon on 26/07/2016.
  */
 @Service
-public class investmentFrontService {
+public class InvestmentFrontService {
 
-    public investmentFrontService() {
+    public InvestmentFrontService() {
 
     }
 

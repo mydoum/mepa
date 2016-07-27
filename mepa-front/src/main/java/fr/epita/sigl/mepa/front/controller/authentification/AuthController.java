@@ -3,6 +3,8 @@ package fr.epita.sigl.mepa.front.controller.authentification;
 import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.AppUserService;
+import fr.epita.sigl.mepa.front.Service.AuthentificationFrontService;
+import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayController;
 import fr.epita.sigl.mepa.front.controller.home.HomeController;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.Tools;
@@ -10,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -37,7 +40,11 @@ public class AuthController {
     @Autowired
     private HomeController home;
 
+    @Autowired
+    private ProjectDisplayController projectDisplayController;
+
     private Tools tools = new Tools();
+    private AuthentificationFrontService authentificationFrontService = new AuthentificationFrontService();
 
     @RequestMapping(value = {"/signup"}, method = {RequestMethod.GET})
     public String showSignUpPage(HttpServletRequest request, ModelMap modelMap) {
@@ -163,23 +170,29 @@ public class AuthController {
         String inputPwd = request.getParameter("inputPassword");
 
         AppUser signinUser = this.appUserService.getUserByLogin(inputLogin);
-        if (signinUser != null) { // the user exist
-            AppUser newAppUser = this.appUserService.getUserById(signinUser.getId());
-            if (StringUtils.equals(inputPwd, newAppUser.getPassword())) {
-                request.getSession().setAttribute("userCo", newAppUser);
-                isCo = true;
-                request.getSession().setAttribute("isCo", true);
-                request.getSession().setAttribute("oneTime", true);
-                modelMap.addAttribute("isCo", isCo);
-                return home.home(request);
-            }
-            else {
-                modelMap.addAttribute("pwdFalse", true);
-                return "/authentification/signin";
-            }
+        if (authentificationFrontService.isUserValid(signinUser, inputPwd, request, modelMap)) {
+            return "/home/home";
+        } else {
+            return "/authentification/signin";
         }
-        else {
-            modelMap.addAttribute("pwdFalse", true);
+    }
+
+    @RequestMapping(value = "/signin/project/{projectId}", method = RequestMethod.POST)
+    public String signInProject(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if (userCo != null && isCo) { // The user in already log in
+            return home.home(request);
+        }
+
+        String inputLogin = request.getParameter("inputEmail");
+        String inputPwd = request.getParameter("inputPassword");
+
+        AppUser signinUser = this.appUserService.getUserByLogin(inputLogin);
+        if (authentificationFrontService.isUserValid(signinUser, inputPwd, request, modelMap)) {
+            System.out.println("otot");
+            return projectDisplayController.projectDisplay(request, modelMap, projectId);
+        } else {
             return "/authentification/signin";
         }
     }

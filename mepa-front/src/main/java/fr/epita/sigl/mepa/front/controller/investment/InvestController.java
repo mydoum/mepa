@@ -7,7 +7,7 @@ import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.core.service.*;
 import fr.epita.sigl.mepa.core.service.AppUserService;
-import fr.epita.sigl.mepa.front.Service.investmentFrontService;
+import fr.epita.sigl.mepa.front.Service.InvestmentFrontService;
 import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayController;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 
@@ -52,7 +52,7 @@ public class InvestController {
     @Autowired
     private ProjectDisplayController projectDisplayController;
 
-    private investmentFrontService investmentFrontService = new investmentFrontService();
+    private InvestmentFrontService InvestmentFrontService = new InvestmentFrontService();
     private Tools tools = new Tools();
 
     private String displayList(ModelMap model, Project project) {
@@ -97,6 +97,7 @@ public class InvestController {
         if ((boolean) request.getSession().getAttribute("isCo") == false || tmpUser == null) {
             String errorCo = "Veuillez vous identifier pour investir dans un projet";
             model.addAttribute("messageRedirect", errorCo);
+            model.addAttribute("projectId", projectId);
             return "/authentification/signin";
         }
             /**
@@ -242,7 +243,7 @@ public class InvestController {
 
         for (Investment invest : investments) {
             tmpUser = appUserService.getUserById(invest.getUserId());
-            totalAmount += investmentFrontService.mergeInvestor(listOfInvestors, invest, tmpUser, listmailinvestor, downloadCsv);
+            totalAmount += InvestmentFrontService.mergeInvestor(listOfInvestors, invest, tmpUser, listmailinvestor, downloadCsv);
         }
         Collections.sort(listOfInvestors);
         return totalAmount;

@@ -1,13 +1,11 @@
 package fr.epita.sigl.mepa.front.controller.postinvestment;
 
 import fr.epita.sigl.mepa.core.domain.AppUser;
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
 import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
-import fr.epita.sigl.mepa.core.service.ModelService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
-import fr.epita.sigl.mepa.front.Service.investmentFrontService;
+import fr.epita.sigl.mepa.front.Service.InvestmentFrontService;
 import fr.epita.sigl.mepa.front.controller.investment.InvestController;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 
@@ -45,7 +42,7 @@ public class PostInvestmentController {
     @Autowired
     private InvestmentService investmentService;
 
-    private investmentFrontService investmentFrontService = new investmentFrontService();
+    private InvestmentFrontService InvestmentFrontService = new InvestmentFrontService();
 
 
     private static final Logger LOG = LoggerFactory.getLogger(PostInvestmentController.class);
