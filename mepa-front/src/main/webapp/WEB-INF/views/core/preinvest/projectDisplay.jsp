@@ -126,12 +126,12 @@
             <div class="col-md-12 investFormInside">
                 <tr/>
                 <div class="col-md-12 investFormInside">
-                    <div class="col-md-12"><h2>Liste des contributeurs</h2></div>
+                    <div class="col-md-12"><h2>Liste des investisseurs</h2></div>
                 </div>
                 <table class="col-md-12 table table-striped">
                     <thead>
                     <tr>
-                        <th>Investisseurs</th>
+                        <th>Investisseur</th>
                         <th>Contribution</th>
                     </tr>
                     </thead>
@@ -260,7 +260,7 @@
 
 <script>
     var stepSlider = ${project.goalAmount} * 0.1;
-    stepSlider = stepSlider.toFixed();
+    stepSlider = Number(stepSlider).toFixed();
     var maxSlider = ${project.goalAmount};
 </script>
 

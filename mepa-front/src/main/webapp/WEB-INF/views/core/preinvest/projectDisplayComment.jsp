@@ -193,6 +193,12 @@
     </aside>
 </div>
 
+<script>
+    var stepSlider = ${project.goalAmount} * 0.1;
+    stepSlider = Number(stepSlider).toFixed();
+    var maxSlider = ${project.goalAmount};
+</script>
+
 <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
 <script src="${investSliderJs}"></script>
 <c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>
