@@ -28,11 +28,12 @@
         <div class="date">Objectif : ${project.goalAmount}€</div>
       </div>
     </div>
-    <c:url var="addRewardUrl" value="/core/preinvest/rewardAdd/add/${newProject}"/>
-    <a href="${addRewardUrl}"><button>Ajouter une contrepartie</button></a>
-    <c:url var="listProjectUrl" value="/core/preinvest/rewardAdd/projectList"/>
-    <a href="${listProjectUrl}"><button>Valider le projet</button></a>
-
+    <p align="center">
+      <c:url var="addRewardUrl" value="/core/preinvest/rewardAdd/add/${newProject}"/>
+      <a href="${addRewardUrl}"><button type="button" class="btn btn-primary">Ajouter une contrepartie</button></a>
+      <c:url var="listProjectUrl" value="/core/preinvest/rewardAdd/projectList"/>
+      <a href="${listProjectUrl}"><button type="button" class="btn btn-success">Valider le projet</button></a>
+    </p>
     <div class="row">
       <div class="col-md-12 rewardSection">
         <h4 class="rewardHeader">Les contreparties</h4>
