@@ -29,7 +29,7 @@ public class investmentFrontService {
      * @return
      */
     public float mergeInvestor(ArrayList<Investor> listOfInvestors, Investment invest, AppUser user, ArrayList<String> listmailinvestor, boolean counteOneInvestmentPerUser) {
-        boolean investorIsPresent = false;
+        boolean investorIsPresent = counteOneInvestmentPerUser;
         String firstname;
         String lastname;
         String email;
@@ -40,14 +40,13 @@ public class investmentFrontService {
         if (!anonymous || counteOneInvestmentPerUser) {
             firstname = user.getFirstName();
             lastname = user.getLastName();
-            if (counteOneInvestmentPerUser && listmailinvestor.indexOf(user.getLogin()) == -1) {
-                listmailinvestor.add(user.getLogin());
-                investorIsPresent = true;
-            }
         } else {
             firstname = "Anonyme";
             lastname = "Anonyme";
-            listmailinvestor.add("anonyme");
+        }
+        if (counteOneInvestmentPerUser && listmailinvestor.indexOf(user.getLogin()) == -1) {
+            listmailinvestor.add(user.getLogin());
+            investorIsPresent = false;
         }
         email = user.getLogin();
         Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created, anonymous);
@@ -60,15 +59,15 @@ public class investmentFrontService {
     }
 
     public void groupInvestors(ArrayList<Investor> listOfInvestors, Investor investor) {
-
         if (investor.isAnonymous()) {
             listOfInvestors.add(investor);
             return;
         }
 
-        for (Investor i : listOfInvestors) {
-            if (i.getEmail().equals(investor.getEmail())) {
-                i.setMoneyAmount(i.getMoneyAmount() + investor.getMoneyAmount());
+        for (Investor tmpInvestor : listOfInvestors) {
+
+            if (tmpInvestor.getEmail().equals(investor.getEmail())) {
+                tmpInvestor.setMoneyAmount(tmpInvestor.getMoneyAmount() + investor.getMoneyAmount());
                 return;
             }
         }

@@ -62,6 +62,11 @@ public class InvestController {
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
 
+        ArrayList<Investor> listOfContributors = new ArrayList<Investor>();
+        totalAmount = getallinvestors(listOfContributors, totalAmount, project, true);
+        model.addAttribute("nbrContributos", listOfContributors.size());
+
+
         int goalAmount = toIntExact(project.getGoalAmount());
         int percentageAmount = tools.percentage(goalAmount , (int) totalAmount);
 
@@ -218,7 +223,6 @@ public class InvestController {
         return "/preinvest/projectDisplay";
     }
 
-    /* This function should be moved. But I do not know how*/
     /**
      *
      * @param listOfInvestors
@@ -228,8 +232,6 @@ public class InvestController {
      * @return
      */
     public float getallinvestors(ArrayList<Investor> listOfInvestors, float totalAmount, Project project, boolean downloadCsv) {
-        System.out.println("invest : " + (investmentService != null));
-        System.out.println("project : " + (project != null));
         ArrayList<Investment> investments = new ArrayList<Investment>(investmentService.getAllInvestmentsByProjectId(project.getId()));
         ArrayList<String> listmailinvestor = new ArrayList<String>();
         AppUser tmpUser;
@@ -240,7 +242,7 @@ public class InvestController {
 
         for (Investment invest : investments) {
             tmpUser = appUserService.getUserById(invest.getUserId());
-            totalAmount += investmentFrontService.mergeInvestor(listOfInvestors, invest, tmpUser, listmailinvestor ,downloadCsv);
+            totalAmount += investmentFrontService.mergeInvestor(listOfInvestors, invest, tmpUser, listmailinvestor, downloadCsv);
         }
         Collections.sort(listOfInvestors);
         return totalAmount;
