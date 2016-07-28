@@ -78,7 +78,7 @@ public class InvestController {
         model.addAttribute("nbrContributos", listOfContributors.size());
 
         model.addAttribute("amountSize", !(listinvestors == null || listinvestors.size() == 0));
-        model.addAttribute("amountCurrency", project.getCurrency());
+        model.addAttribute("amountCurrency", project.getCurrencyString());
 
         return "/investment/investment";
     }

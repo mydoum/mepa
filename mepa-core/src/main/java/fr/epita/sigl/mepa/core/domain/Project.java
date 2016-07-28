@@ -1,10 +1,7 @@
 package fr.epita.sigl.mepa.core.domain;
 
-import fr.epita.sigl.mepa.core.service.*;
-import fr.epita.sigl.mepa.core.service.Currency;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,6 +20,31 @@ import java.util.*;
         @NamedQuery(name = "Project.findAllFinished", query = "FROM Project p WHERE p.endDate <= CURRENT_DATE ORDER BY p.endDate ASC")
 })
 public class Project implements Serializable {
+    public enum Currency {
+        DOLLAR("$"),
+        EURO("€"),
+        POUND("£");
+
+        public String getSymbol() {
+            return symbol;
+        }
+
+        public void setSymbol(String symbol) {
+            this.symbol = symbol;
+        }
+
+        private String symbol;
+
+        private Currency(String symbol){
+            this.symbol = symbol;
+        }
+
+        public String getValue() {
+            return name();
+        }
+
+        public void setValue(String value) {}
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -63,7 +85,7 @@ public class Project implements Serializable {
 
     private boolean isFacebookAllowed;
 
-    private String currency;
+    //private String currency;
 
     /*
 * ID
@@ -172,10 +194,6 @@ public class Project implements Serializable {
         this.goalAmount = Math.abs(goalAmount);
     }
 
-    public Currency getCurrency() {
-        return currency;
-    }
-
     public String getCurrencyString() {
         switch (this.currency){
             case DOLLAR:
@@ -187,10 +205,6 @@ public class Project implements Serializable {
             default:
                 return "*";
         }
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
     }
 
     public Long getVisitNumber() {
@@ -235,14 +249,6 @@ public class Project implements Serializable {
 
     public Boolean isFinished() {
         return this.endDate.after(new Date());
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     @Override
