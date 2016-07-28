@@ -77,6 +77,23 @@ public class ProjectDisplayController {
 
         investController.investorsList(modelMap, request, project);
 
+
+        /*int display;
+        List<NewsletterModel> newsletterlist = this.newsletterService.getAllNewsletterModels();
+        //boolean exist = false;
+        for (NewsletterModel i : newsletterlist) {
+            if (i.getProjectid() == projectId) {
+                if (i.getEmails().contains(userco.getLogin())) {
+                    System.out.println("\n\n JE te connais déja niga\n\n");
+                    display = 1;
+                } else {
+                    System.out.println("\n\n JE ne te connais pas niga\n\n");
+                    display = 2;
+                }
+                modelMap.addAttribute("display", display);
+            }
+        }*/
+
         return "/preinvest/projectDisplay";
     }
 
