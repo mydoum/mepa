@@ -81,9 +81,9 @@ public class Project implements Serializable {
     @JoinColumn(name="project_id")
     private Set<Reward> rewards;
 
-    private boolean isTwitterAllowed;
+    private Boolean twitterAllowed;
 
-    private boolean isFacebookAllowed;
+    private Boolean facebookAllowed;
 
     //private String currency;
 
@@ -219,20 +219,20 @@ public class Project implements Serializable {
         ++this.visitNumber;
     }
 
-    public boolean isTwitterAllowed() {
-        return isTwitterAllowed;
+    public Boolean getTwitterAllowed() {
+        return twitterAllowed;
     }
 
-    public void setTwitterAllowed(boolean twitterAllowed) {
-        isTwitterAllowed = twitterAllowed;
+    public void setTwitterAllowed(Boolean twitterAllowed) {
+        this.twitterAllowed = twitterAllowed;
     }
 
-    public boolean isFacebookAllowed() {
-        return isFacebookAllowed;
+    public Boolean getFacebookAllowed() {
+        return facebookAllowed;
     }
 
-    public void setFacebookAllowed(boolean displayAllowed) {
-        isFacebookAllowed = displayAllowed;
+    public void setFacebookAllowed(Boolean facebookAllowed) {
+        this.facebookAllowed = facebookAllowed;
     }
 
     public Set<Reward> getRewards() {

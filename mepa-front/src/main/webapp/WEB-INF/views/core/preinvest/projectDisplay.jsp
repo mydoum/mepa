@@ -82,6 +82,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div id="social-box" class="row">
+                            <c:if test="${project.facebookAllowed}">
                             <div class="col-md-12">
                                 <%-- Facebook share button --%>
                                 <div class="fb-share-button"
@@ -97,12 +98,15 @@
                                 </div>
                                 <br/>
                             </div>
+                            </c:if>
+                            <c:if test="${project.twitterAllowed}">
                             <div class="col-md-12">
                                 <a href="https://twitter.com/share" class="twitter-share-button" data-size="large"
                                    data-text="Découvrez le projet ${project.name} :" data-hashtags="LGIS"
                                    data-lang="fr" data-show-count="false">Tweet</a>
                                 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                             </div>
+                            </c:if>
                         </div>
                     </div>
                     <div class="col-md-2">
