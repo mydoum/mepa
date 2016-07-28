@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
-
+<link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900" rel="stylesheet" type="text/css">
 <%
     Integer hitsCount = (Integer) application.getAttribute("hitCounter");
     ArrayList<String> visits = (ArrayList<String>) application.getAttribute("visits");
@@ -191,7 +191,7 @@
                             <div class="progress">
                                 <div class="progress-bar progress-bar-success" role="progressbar"
                                      aria-valuenow="${projectPercentage}" aria-valuemin="0" aria-valuemax="100"
-                                     style="width:${projectPercentageBar}%">
+                                     style="width:${projectPercentageBar}%; color: black">
                                     ${projectPercentage}%
                                 </div>
                             </div>
@@ -304,11 +304,13 @@
     console.log("InvestorsList Size :" + infiniteListSize + "\n");
     console.log("InvestorsList Content :" + infiniteScrollerElements + "\n");
 
+
 </script>
 
 <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
 <script src="${investSliderJs}"></script>
 <c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>
 <script src="${investSliderPersoJs}"></script>
-
+<c:url var="investProgressBar" value="/js/investment/progressBar.js"/>
+<script src="${investProgressBar}"></script>
 
