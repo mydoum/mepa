@@ -11,11 +11,11 @@ import java.util.Date;
  * Created by prosp_000 on 20/07/2016.
  */
 @Entity
+@Table(name="COMMENTSMODEL")
 @NamedQueries({
     @NamedQuery(name = "CommentsModel.findById", query = "FROM CommentsModel o WHERE o.id=:id"),
         @NamedQuery(name = "CommentsModel.findAll", query = "FROM CommentsModel o")
 })
-
 public class CommentsModel
 {
 
