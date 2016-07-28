@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: patrickear
-  Date: 25/7/2016
-  Time: 9:45 AM
-  To change this template use File | Settings | File Templates.
---%>
 <!-- Include Bootstrap Datepicker -->
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css"/>

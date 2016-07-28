@@ -1,4 +1,3 @@
-<%@ page import="java.util.ArrayList" %>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <c:if test="${oneTime == true}">
