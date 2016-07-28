@@ -6,5 +6,5 @@
         <% session.setAttribute("oneTime", false); %>
     </div>
 </c:if>
-<%@ include file="/WEB-INF/views/home/slider.jsp" %>
+<%-- <%@ include file="/WEB-INF/views/home/slider.jsp" %> --%>
 <c:import url="/core/preinvest/projectListInclude"/>
