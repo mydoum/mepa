@@ -1,9 +1,7 @@
 package fr.epita.sigl.mepa.core.domain;
 
-import fr.epita.sigl.mepa.core.service.RewardService;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,6 +20,31 @@ import java.util.*;
         @NamedQuery(name = "Project.findAllFinished", query = "FROM Project p WHERE p.endDate <= CURRENT_DATE ORDER BY p.endDate ASC")
 })
 public class Project implements Serializable {
+    public enum Currency {
+        DOLLAR("$"),
+        EURO("€"),
+        POUND("£");
+
+        public String getSymbol() {
+            return symbol;
+        }
+
+        public void setSymbol(String symbol) {
+            this.symbol = symbol;
+        }
+
+        private String symbol;
+
+        private Currency(String symbol){
+            this.symbol = symbol;
+        }
+
+        public String getValue() {
+            return name();
+        }
+
+        public void setValue(String value) {}
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,6 +73,8 @@ public class Project implements Serializable {
 
     private Long goalAmount;
 
+    private Currency currency;
+
     private Long visitNumber;
 
     @OneToMany(fetch = FetchType.EAGER) //, mappedBy="project"
@@ -59,6 +84,8 @@ public class Project implements Serializable {
     private boolean isTwitterAllowed;
 
     private boolean isFacebookAllowed;
+
+    //private String currency;
 
     /*
 * ID
@@ -77,6 +104,7 @@ public class Project implements Serializable {
         this.name = "Nom du projet";
         this.rewards= new HashSet<>();
         this.goalAmount = 0L;
+        this.currency = Currency.DOLLAR;
     }
 
     public Project(int nb) {
@@ -166,6 +194,19 @@ public class Project implements Serializable {
         this.goalAmount = Math.abs(goalAmount);
     }
 
+    public String getCurrencyString() {
+        switch (this.currency){
+            case DOLLAR:
+                return "$";
+            case EURO:
+                return "€";
+            case POUND:
+                return "£";
+            default:
+                return "*";
+        }
+    }
+
     public Long getVisitNumber() {
         return visitNumber;
     }
@@ -214,7 +255,4 @@ public class Project implements Serializable {
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
-
-
-
 }

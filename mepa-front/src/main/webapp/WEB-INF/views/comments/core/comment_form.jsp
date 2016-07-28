@@ -38,7 +38,7 @@
                     <br/>
                     <textarea id="data" name="userText" type="text" rows="6" cols="50"></textarea>
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" class="btn btn-default">Commenter</button>
             </form:form>
     </c:if>
 

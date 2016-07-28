@@ -5,6 +5,7 @@ package fr.epita.sigl.mepa.front.controller.core.preinvest;
  */
 import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.Project;
+import fr.epita.sigl.mepa.core.service.Currency;
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,7 @@ public class ProjectCreateController {
     protected static final String IS_NULL_ATTRIBUTE = "is_null";
     protected static final String IS_DATE_ATTRIBUTE = "is_date";
     protected static final String CURRENT_DATE = "current_date";
+    protected static final String CURRENCY_ENUM = "currency_enum";
 
     private DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -52,6 +54,7 @@ public class ProjectCreateController {
         /* Code your logic here */
 
         modelMap.addAttribute(CURRENT_DATE, sourceFormat.format(new Date()));
+        modelMap.addAttribute(CURRENCY_ENUM, Currency.values());
 
         Project p = new Project(1);
 

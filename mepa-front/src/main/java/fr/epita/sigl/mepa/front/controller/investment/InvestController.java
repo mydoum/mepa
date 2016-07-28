@@ -62,11 +62,6 @@ public class InvestController {
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
 
-        ArrayList<Investor> listOfContributors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(listOfContributors, totalAmount, project, true);
-        model.addAttribute("nbrContributos", listOfContributors.size());
-
-
         int goalAmount = toIntExact(project.getGoalAmount());
         int percentageAmount = tools.percentage(goalAmount , (int) totalAmount);
 
@@ -77,6 +72,14 @@ public class InvestController {
 
         model.addAttribute("projectPercentage", percentageAmount);
         model.addAttribute("projectPercentageBar", Math.min(percentageAmount, 100));
+
+        ArrayList<Investor> listOfContributors = new ArrayList<Investor>();
+        getallinvestors(listOfContributors, totalAmount, project, true);
+        model.addAttribute("nbrContributos", listOfContributors.size());
+
+        model.addAttribute("amountSize", !(listinvestors == null || listinvestors.size() == 0));
+        model.addAttribute("amountCurrency", project.getCurrencyString());
+
         return "/investment/investment";
     }
 
@@ -144,8 +147,8 @@ public class InvestController {
         Project tmpProject = projectService.getProjectById(projectId);
 
         String mail = tmpUser.getLogin();
-        String subject = "Merci pour votre contribution au projet " + tmpProject.getName();
-        String message = "Votre contribution est de" + moneyAmount + " euros";
+        String subject = "Merci pour votre contributn clion au projet " + tmpProject.getName();
+        String message = "Votre contribution est de " + moneyAmount + " euros";
 
         try {
             tools.sendMail(mail, subject, message);
@@ -205,7 +208,7 @@ public class InvestController {
             model.addAttribute("errorInvest", errorMessage);
             return projectDisplayController.projectDisplay(request, model, projectId);
         }
-        long rewardPrice = reward.getCostStart();
+        float rewardPrice = reward.getCostStart();
         String description = reward.getDescription();
         String rewardName = reward.getName();
 

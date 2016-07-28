@@ -33,7 +33,7 @@ public class Reward implements Serializable{
 
     private String description;
 
-    private Long costStart;
+    private float costStart;
 
 
     /*
@@ -83,11 +83,11 @@ public class Reward implements Serializable{
         this.description = description;
     }
 
-    public Long getCostStart() {
+    public float getCostStart() {
         return costStart;
     }
 
-    public void setCostStart(Long costStart) {
+    public void setCostStart(float costStart) {
         this.costStart = costStart;
     }
 

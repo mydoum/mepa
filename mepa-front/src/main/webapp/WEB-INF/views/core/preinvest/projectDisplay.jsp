@@ -37,7 +37,7 @@
     </header>
     <c:if test="${amount != null}">
         <div class="col-md-12 text-center alert alert-success investFormInside">
-            Merci pour votre don de ${amount}€! Un mail de notification vous a été envoyé.
+            Merci pour votre don de ${amount}${amountCurrency}! Un mail de notification vous a été envoyé.
         </div>
     </c:if>
     <c:if test="${errorInvest != null and !empty errorInvest}">
@@ -59,6 +59,7 @@
                     </ul>
                 </nav>
                 <%-- Part of the page where the slideshow and the project date are printed --%>
+                <div class="well bs-component">
                 <div class="row">
                     <div class="col-md-4" id="slideshow">
                         <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
@@ -69,12 +70,13 @@
                         </c:forEach>
                     </div>
                     <div class="col-md-8">
-                        <div class="date firstDate">Date de début:</div>
-                        <div class="date">${project.dateFormat("dd/MM/yyyy", project.startDate)}</div>
-                        <div class="date">Date de fin:</div>
-                        <div class="date">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
-                        <div class="date">Nombre de contributeurs : ${nbrContributos}</div>
+                        <div class="date-display firstDate">Date de début:</div>
+                        <div class="date-display">${project.dateFormat("dd/MM/yyyy", project.startDate)}</div>
+                        <div class="date-display">Date de fin:</div>
+                        <div class="date-display">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
+                        <div class="date-display">Nombre de contributeurs : ${nbrContributos}</div>
                     </div>
+                </div>
                 </div>
                 <%-- Part of the page for Social buttons --%>
                 <div class="row">
@@ -134,7 +136,7 @@
                         <th>Contribution</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="infiniteInvestorsList">
                     <c:if test="${investorsList.size() > 0}">
                         <c:forEach items="${investorsList}" var="investor" varStatus="status">
                             <tr>
@@ -149,7 +151,7 @@
                                         <td>${investor.firstname}</td>
                                     </c:otherwise>
                                 </c:choose>
-                                <td>${investor.moneyAmount} €</td>
+                                <td>${investor.moneyAmount} ${amountCurrency}</td>
                             </tr>
                         </c:forEach>
                     </c:if>
@@ -160,14 +162,14 @@
             <c:if test="${isAdmin != null && isAdmin == true && amountSize != null && amountSize == true}">
                 <div class="col-md-12 download investFormInside">
                     <p align="center">
-                        <a href="/invest/download/${project.id}"><span class="btn btn-primary">Download</span></a>
+                        <a href="/invest/download/${project.id}"><span class="btn btn-primary">Téléchargement</span></a>
                     </p>
                 </div>
             </c:if>
             <c:if test="${isAdmin != null && isAdmin == true && amountSize != null && amountSize == false}">
                 <div class="col-md-12 download investFormInside disabled">
                     <p align="center">
-                        <a href="/invest/download/${project.id}"><span class="btn btn-primary">Download</span></a>
+                        <a href="/invest/download/${project.id}"><span class="btn btn-primary">Téléchargement</span></a>
                     </p>
                 </div>
             </c:if>
@@ -192,10 +194,10 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <h4>Contribution totale : ${totalDonation}€</h4>
+                        <h4>Contribution totale : ${totalDonation}${amountCurrency}</h4>
                     </div>
                     <div class="col-md-12">
-                        <h4>Objectif : ${project.goalAmount}€</h4>
+                        <h4>Objectif : ${project.goalAmount}${amountCurrency}</h4>
                     </div>
                     <div class="col-md-12">
                         <%-- POST INVEST --%>
@@ -216,7 +218,7 @@
                 <form:form role="form" action="${investMoney}" method="post" modelAttribute="User">
                     <div id="keypress"
                          class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12"></div>
-                    <label class="investFormInside col-md-12">Montant (€):</label>
+                    <label class="investFormInside col-md-12">Montant (${amountCurrency}):</label>
                     <div class="col-md-12 InvestFormInside">
                         <input name="investAmount" id="input-with-keypress"
                                class="form-control" type="text" required="required" readonly/>
@@ -251,11 +253,11 @@
                 <h4 class="rewardHeader">Choisissez votre contrepartie</h4>
                 <ol>
                     <c:if test="${project.rewards != null and project.rewards.size() > 0}">
-                        <c:forEach items="${project.rewards}" var="reward" varStatus="status">
+                        <c:forEach items="${project.rewards}" begin="0" end="25" var="reward" varStatus="status">
                             <li class="rewardItem" name="reward/${reward.id}">
                                 <h4 class="rewardTitle"><a
                                         href="/invest/${project.id}/rewardDisplay/${reward.id}"> ${reward.name} à partir
-                                    de ${reward.costStart}€</a></h4>
+                                    de ${reward.costStart}${amountCurrency}</a></h4>
                                 <div class="rewardDescription">
                                     <p>${reward.description}</p>
                                 </div>
@@ -269,9 +271,35 @@
 </div>
 
 <script>
+    var startStep = 0;
+    startStep = Number(startStep).toFixed();
     var stepSlider = ${project.goalAmount} * 0.1;
     stepSlider = Number(stepSlider).toFixed();
     var maxSlider = ${project.goalAmount};
+    var infiniteListSize = ${investorsList.size()};
+
+    var infiniteScrollerElements = [
+        <c:forEach items="${investorsList}" begin="10" end="${investorsList.size()}" var="investor" varStatus="status">
+            [
+                <c:choose>
+                    <c:when test="${investor.anonymous}">
+                        "Anonyme",
+                    </c:when>
+                    <c:when test="${investor.firstname == null or empty investor.firstname}">
+                        "${investor.email}",
+                    </c:when>
+                    <c:otherwise>
+                        "${investor.firstname}",
+                    </c:otherwise>
+                    </c:choose>
+                        "${investor.moneyAmount}${amountCurrency}"
+            ]<c:if test="${not status.last}">,</c:if>
+        </c:forEach>
+    ];
+
+    console.log("InvestorsList Size :" + infiniteListSize + "\n");
+    console.log("InvestorsList Content :" + infiniteScrollerElements + "\n");
+
 </script>
 
 <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>

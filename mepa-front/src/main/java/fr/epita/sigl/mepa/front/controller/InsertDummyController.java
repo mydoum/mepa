@@ -106,8 +106,8 @@ public class InsertDummyController {
         for (int j = 0; j < 10; ++j) {
             Reward r = new Reward();
             r.setName("Coucou");
-            r.setDescription("This is a description");
-            r.setCostStart((long) 10);
+            r.setDescription("Ceci est une description");
+            r.setCostStart((float) 10);
             rewardService.createReward(r);
         }
 
@@ -137,8 +137,8 @@ public class InsertDummyController {
             for (int j = 0; j < 10; ++j) {
                 Reward r = new Reward();
                 r.setName("Coucou");
-                r.setDescription("This is a description");
-                r.setCostStart((long) 10);
+                r.setDescription("Ceci est une description");
+                r.setCostStart((float) 10);
                 this.rewardService.createReward(r);
                 rewards.add(r);
             }
@@ -173,8 +173,8 @@ public class InsertDummyController {
             for (int j = 0; j < 10; ++j) {
                 Reward r = new Reward();
                 r.setName("Gildas est beau" + j);
-                r.setDescription("This is a description");
-                r.setCostStart((long) 10);
+                r.setDescription("Ceci est une description");
+                r.setCostStart((float) 10);
                 this.rewardService.createReward(r);
                 rewards.add(r);
             }

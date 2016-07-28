@@ -6,10 +6,10 @@ $('document').ready(function(){
         input = document.getElementById('input-with-keypress');
 
     noUiSlider.create(keypressSlider, {
-        start: Number(stepSlider),
+        start: Number(startStep),
         step: Number(stepSlider),
         range: {
-            'min': Number(stepSlider),
+            'min': Number(startStep),
             'max': Number(maxSlider)
         },
         connect: 'lower',

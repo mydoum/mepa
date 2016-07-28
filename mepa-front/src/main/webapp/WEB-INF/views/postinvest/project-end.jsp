@@ -83,10 +83,10 @@
                         </c:forEach>
                     </div>
                     <div class="col-md-8">
-                        <div class="date firstDate">Date de début:</div>
-                        <div class="date">${project.dateFormat("dd/MM/yyyy", project.startDate)}</div>
-                        <div class="date">Date de fin:</div>
-                        <div class="date">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
+                        <div class="date-display firstDate">Date de début:</div>
+                        <div class="date-display">${project.dateFormat("dd/MM/yyyy", project.startDate)}</div>
+                        <div class="date-display">Date de fin:</div>
+                        <div class="date-display">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
 
 
                     </div>
