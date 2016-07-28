@@ -275,6 +275,23 @@
                         </c:forEach>
                     </c:if>
                 </ol>
+                <c:if test="${userco != null}">
+                    <form:form role="form" action="/core/preinvest/projectDisplay/newsletter/${project.id}" method="post">
+                        <div class="form-group">
+                                <%--<Input TYPE="CHECKBOX"  NAME="check" VALUE="check" />
+                                Newsletter
+                                <br/>--%>
+                            <a style="text-align: center;">
+                                <c:if test="${display == 2}">
+                                    <button type="submit" id="like" data-loading-text="J'aime..." class="btn btn-success">J'AIME !</button><center/>
+                                </c:if>
+                                <c:if test="${display == 1}">
+                                    <button type="submit" id="dislike" data-loading-text="J'aime..." class="btn btn-danger">JE N'AIME PLUS </button><center/>
+                                </c:if>
+                            </a>
+                        </div>
+                    </form:form>
+                </c:if>
             </div>
         </div>
     </aside>
