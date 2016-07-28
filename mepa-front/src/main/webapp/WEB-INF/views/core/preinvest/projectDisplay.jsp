@@ -275,7 +275,7 @@
     var infiniteListSize = ${investorsList.size()};
 
     var infiniteScrollerElements = [
-        <c:forEach items="${investorsList}" begin="25" end="${investorsList.size()}" var="investor" varStatus="status">
+        <c:forEach items="${investorsList}" begin="10" end="${investorsList.size()}" var="investor" varStatus="status">
             [
                 <c:choose>
                     <c:when test="${investor.anonymous}">
