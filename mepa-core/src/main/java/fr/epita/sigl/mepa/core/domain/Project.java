@@ -1,6 +1,7 @@
 package fr.epita.sigl.mepa.core.domain;
 
-import fr.epita.sigl.mepa.core.service.RewardService;
+import fr.epita.sigl.mepa.core.service.*;
+import fr.epita.sigl.mepa.core.service.Currency;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,8 @@ public class Project implements Serializable {
 
     private Long goalAmount;
 
+    private Currency currency;
+
     private Long visitNumber;
 
     @OneToMany(fetch = FetchType.EAGER) //, mappedBy="project"
@@ -79,6 +82,7 @@ public class Project implements Serializable {
         this.name = "Nom du projet";
         this.rewards= new HashSet<>();
         this.goalAmount = 0L;
+        this.currency = Currency.DOLLAR;
     }
 
     public Project(int nb) {
@@ -166,6 +170,27 @@ public class Project implements Serializable {
 
     public void setGoalAmount(Long goalAmount) {
         this.goalAmount = Math.abs(goalAmount);
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public String getCurrencyString() {
+        switch (this.currency){
+            case DOLLAR:
+                return "$";
+            case EURO:
+                return "€";
+            case POUND:
+                return "£";
+            default:
+                return "*";
+        }
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     public Long getVisitNumber() {

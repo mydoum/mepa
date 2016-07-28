@@ -25,7 +25,7 @@
       <div class="col-md-8">
         <div class="date-display firstDate">Date de début: ${project.dateFormat("dd/MM/yyyy", project.startDate)}</div>
         <div class="date-display">Date de fin: ${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
-        <div class="date-display">Objectif : ${project.goalAmount}€</div>
+        <div class="date-display">Objectif : ${project.goalAmount} ${project.getCurrencyString()}</div>
       </div>
     </div>
     <p align="center">

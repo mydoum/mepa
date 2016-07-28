@@ -100,7 +100,7 @@
                 <div class="control-group">
                     <label class="control-label">Nom du projet</label>
                     <div class="controls">
-                        <td><form:input path="Name" class="form-control input-lg" placeholder="Définissez le nom du projet" /></td>
+                        <td><form:input path="Name" class="form-control input-lg" placeholder="Définissez le nom du projet" required="required"/></td>
                     </div>
                 </div>
                 <br/>
@@ -110,7 +110,7 @@
                 <label class="control-label">Date de début</label>
                 <div class="controls">
                     <div class="input-group input-append date" id="datePicker1">
-                        <td><form:input path="startDate" class="form-control input-lg" placeholder="jj/mm/aaaa" value='${current_date}'/></td>
+                        <td><form:input path="startDate" class="form-control input-lg" placeholder="jj/mm/aaaa" value='${current_date}' required="required"/></td>
                                     <span class="input-group-addon add-on">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -123,7 +123,7 @@
                 <label class="control-label">Date de fin</label>
                 <div class="controls">
                     <div class="input-group input-append date" id="datePicker2">
-                        <td><form:input path="endDate" class="form-control input-lg" placeholder="jj/mm/aaaa"/></td>
+                        <td><form:input path="endDate" class="form-control input-lg" placeholder="jj/mm/aaaa" required="required"/></td>
                                     <span class="input-group-addon add-on">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -133,9 +133,22 @@
 
                 <br/>
                 <div class="control-group">
-                    <label class="control-label">Objectif du projet</label>
+                    <label class="control-label">Objectif du projet en </label>
+                        <label>
+                            <input name="currency" id="dollar" value="DOLLAR" checked="" type="radio">
+                            $
+                        </label>
+
+                        <label>
+                            <input name="currency" id="euro" value="EURO" type="radio">
+                            €
+                        </label>
+
+                            <input name="currency" id="pound" value="POUND"  type="radio">
+                            £
+
                     <div class="controls">
-                        <td><form:input path="goalAmount" class="form-control input-lg" placeholder="Entrez la somme à atteindre"/></td>
+                        <td><form:input path="goalAmount" class="form-control input-lg" placeholder="Entrez la somme à atteindre" required="required"/></td>
                     </div>
                 </div>
                 <br/>
