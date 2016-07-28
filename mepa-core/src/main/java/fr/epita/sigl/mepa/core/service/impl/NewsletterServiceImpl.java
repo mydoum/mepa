@@ -2,7 +2,6 @@
 package fr.epita.sigl.mepa.core.service.impl;
 
 import fr.epita.sigl.mepa.core.dao.NewsletterDAO;
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
 import fr.epita.sigl.mepa.core.domain.NewsletterModel;
 import fr.epita.sigl.mepa.core.service.NewsletterService;
 import org.springframework.beans.factory.annotation.Autowired;

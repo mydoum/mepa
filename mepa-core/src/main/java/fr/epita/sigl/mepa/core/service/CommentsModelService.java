@@ -1,6 +1,6 @@
 package fr.epita.sigl.mepa.core.service;
 
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
+import fr.epita.sigl.mepa.core.domain.AppCommentsModel;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface CommentsModelService
 {
-    void createCommentsModel(CommentsModel commentsmodel);
-    void updateCommentsModel(CommentsModel commentsmodel);
-    void deleteCommentsModel(CommentsModel commentsmodel);
-    CommentsModel getCommentsModelById(Long id);
-    List<CommentsModel> getAllCommentsModels();
+    void createCommentsModel(AppCommentsModel commentsmodel);
+    void updateCommentsModel(AppCommentsModel commentsmodel);
+    void deleteCommentsModel(AppCommentsModel commentsmodel);
+    AppCommentsModel getCommentsModelById(Long id);
+    List<AppCommentsModel> getAllCommentsModels();
 }

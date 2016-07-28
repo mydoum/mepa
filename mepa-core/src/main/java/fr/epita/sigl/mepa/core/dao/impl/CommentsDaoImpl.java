@@ -1,7 +1,7 @@
 package fr.epita.sigl.mepa.core.dao.impl;
 
 import fr.epita.sigl.mepa.core.dao.CommentsModelDao;
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
+import fr.epita.sigl.mepa.core.domain.AppCommentsModel;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -25,30 +25,30 @@ public class CommentsDaoImpl implements CommentsModelDao
     }
 
     @Override
-    public void create(CommentsModel commentsmodel) {
+    public void create(AppCommentsModel commentsmodel) {
         this.getSession().save(commentsmodel);
     }
 
     @Override
-    public void update(CommentsModel commentsmodel) {
+    public void update(AppCommentsModel commentsmodel) {
         this.getSession().saveOrUpdate(commentsmodel);
     }
 
     @Override
-    public void delete(CommentsModel commentsmodel) {
+    public void delete(AppCommentsModel commentsmodel) {
         this.getSession().delete(commentsmodel);
     }
 
     @Override
-    public CommentsModel getById(Long id) {
-        Query query = this.getSession().getNamedQuery("CommentsModel.findById");
+    public AppCommentsModel getById(Long id) {
+        Query query = this.getSession().getNamedQuery("AppCommentsModel.findById");
         query.setParameter("id", id);
-        return (CommentsModel) query.uniqueResult();
+        return (AppCommentsModel) query.uniqueResult();
     }
 
     @Override
-    public List<CommentsModel> getAll() {
-        Query query = this.getSession().getNamedQuery("CommentsModel.findAll");
+    public List<AppCommentsModel> getAll() {
+        Query query = this.getSession().getNamedQuery("AppCommentsModel.findAll");
         return query.list();
     }
 }

@@ -1,8 +1,7 @@
 package fr.epita.sigl.mepa.front.controller.comments;
 
 import fr.epita.sigl.mepa.core.domain.AppUser;
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
-import fr.epita.sigl.mepa.core.domain.Project;
+import fr.epita.sigl.mepa.core.domain.AppCommentsModel;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +16,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Created by prosp_000 on 21/07/2016.
@@ -48,14 +44,14 @@ public class CommentsController {
                 userco = (AppUser) request.getSession().getAttribute("userCo");
                 modelMap.addAttribute("userco", userco);
 
-                CommentsModel newCommentsModel = new CommentsModel();
-                newCommentsModel.setData(text);
-                newCommentsModel.setProjectId(projectId);
-                newCommentsModel.setUser(userco.getLastName() + " " + userco.getFirstName());
-                this.commentsModelService.createCommentsModel(newCommentsModel);
+                AppCommentsModel newAppCommentsModel = new AppCommentsModel();
+                newAppCommentsModel.setData(text);
+                newAppCommentsModel.setProjectId(projectId);
+                newAppCommentsModel.setUser(userco.getLastName() + " " + userco.getFirstName());
+                this.commentsModelService.createCommentsModel(newAppCommentsModel);
 
                 /*Helps to sort the tickets */
-                newCommentsModel.setArriving(ticket);
+                newAppCommentsModel.setArriving(ticket);
                 ticket++;
             }
 

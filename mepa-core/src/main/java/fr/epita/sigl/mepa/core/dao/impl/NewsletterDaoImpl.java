@@ -1,7 +1,6 @@
 package fr.epita.sigl.mepa.core.dao.impl;
 
 import fr.epita.sigl.mepa.core.dao.NewsletterDAO;
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
 import fr.epita.sigl.mepa.core.domain.NewsletterModel;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

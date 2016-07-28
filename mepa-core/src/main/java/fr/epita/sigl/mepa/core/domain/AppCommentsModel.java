@@ -12,10 +12,10 @@ import java.util.Date;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "CommentsModel.findById", query = "FROM CommentsModel o WHERE o.id=:id"),
-        @NamedQuery(name = "CommentsModel.findAll", query = "FROM CommentsModel o")
+    @NamedQuery(name = "AppCommentsModel.findById", query = "FROM AppCommentsModel o WHERE o.id=:id"),
+        @NamedQuery(name = "AppCommentsModel.findAll", query = "FROM AppCommentsModel o")
 })
-public class CommentsModel
+public class AppCommentsModel
 {
 
     @Id

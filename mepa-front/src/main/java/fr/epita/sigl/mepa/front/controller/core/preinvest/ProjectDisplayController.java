@@ -1,13 +1,12 @@
 package fr.epita.sigl.mepa.front.controller.core.preinvest;
 
+import fr.epita.sigl.mepa.core.domain.AppCommentsModel;
 import fr.epita.sigl.mepa.core.domain.AppUser;
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
 import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
-import fr.epita.sigl.mepa.front.controller.authentification.AuthController;
 import fr.epita.sigl.mepa.front.controller.investment.InvestController;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -135,10 +134,10 @@ public class ProjectDisplayController {
 
         investController.investorsList(modelMap, request, project);
 
-        List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();
+        List<AppCommentsModel> list = this.commentsModelService.getAllCommentsModels();
         /*Sort of the comments by the arriving tickets*/
-        List<CommentsModel>new_c_models = new ArrayList<CommentsModel>();
-        ListIterator<CommentsModel> i= list.listIterator(list.size());
+        List<AppCommentsModel>new_c_models = new ArrayList<AppCommentsModel>();
+        ListIterator<AppCommentsModel> i= list.listIterator(list.size());
         while(i.hasPrevious())
         {
             new_c_models.add(i.previous());

@@ -1,6 +1,6 @@
 package fr.epita.sigl.mepa.core.dao;
 
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
+import fr.epita.sigl.mepa.core.domain.AppCommentsModel;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface CommentsModelDao 
 {
-    void create (CommentsModel commentsmodel);
-    void update (CommentsModel commentsmodel);
-    void delete (CommentsModel commentsmodel);
-    CommentsModel getById (Long Id);
-    List<CommentsModel> getAll();
+    void create (AppCommentsModel commentsmodel);
+    void update (AppCommentsModel commentsmodel);
+    void delete (AppCommentsModel commentsmodel);
+    AppCommentsModel getById (Long Id);
+    List<AppCommentsModel> getAll();
 }

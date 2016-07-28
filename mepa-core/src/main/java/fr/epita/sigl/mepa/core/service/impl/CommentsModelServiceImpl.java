@@ -1,7 +1,7 @@
 package fr.epita.sigl.mepa.core.service.impl;
 
 import fr.epita.sigl.mepa.core.dao.CommentsModelDao;
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
+import fr.epita.sigl.mepa.core.domain.AppCommentsModel;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class CommentsModelServiceImpl implements CommentsModelService
     private CommentsModelDao commentsmodelDao;
 
     @Override
-    public void createCommentsModel(CommentsModel commentsmodel) {
+    public void createCommentsModel(AppCommentsModel commentsmodel) {
         commentsmodel.setCreated(new Date());
         System.out.println("JE SUIS DANS LE SERVICE");
         System.out.println("la date de création de mon model est : " + commentsmodel.getCreated());
@@ -30,24 +30,24 @@ public class CommentsModelServiceImpl implements CommentsModelService
     }
 
     @Override
-    public void updateCommentsModel(CommentsModel model) {
+    public void updateCommentsModel(AppCommentsModel model) {
         this.commentsmodelDao.update(model);
     }
 
     @Override
-    public void deleteCommentsModel(CommentsModel model) {
+    public void deleteCommentsModel(AppCommentsModel model) {
         this.commentsmodelDao.delete(model);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public CommentsModel getCommentsModelById(Long id) {
+    public AppCommentsModel getCommentsModelById(Long id) {
         return this.commentsmodelDao.getById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<CommentsModel> getAllCommentsModels() {
+    public List<AppCommentsModel> getAllCommentsModels() {
         return this.commentsmodelDao.getAll();
     }
 }

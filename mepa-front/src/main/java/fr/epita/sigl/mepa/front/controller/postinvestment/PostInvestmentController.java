@@ -96,11 +96,11 @@ public class PostInvestmentController {
 
         investController.investorsList(modelMap, request, project);
         /*
-        List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();
+        List<AppCommentsModel> list = this.commentsModelService.getAllCommentsModels();
 
         /*Sort of the comments by the arriving tickets*
-        List<CommentsModel>new_c_models = new ArrayList<CommentsModel>();
-        ListIterator<CommentsModel> i= list.listIterator(list.size());
+        List<AppCommentsModel>new_c_models = new ArrayList<AppCommentsModel>();
+        ListIterator<AppCommentsModel> i= list.listIterator(list.size());
         while(i.hasPrevious())
         {
             new_c_models.add(i.previous());

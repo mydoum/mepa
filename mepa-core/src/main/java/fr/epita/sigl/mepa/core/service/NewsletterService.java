@@ -1,6 +1,5 @@
 package fr.epita.sigl.mepa.core.service;
 
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
 import fr.epita.sigl.mepa.core.domain.NewsletterModel;
 
 import java.util.List;
