@@ -5,15 +5,6 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 
-<style type="text/css">
-    .pad-left-date {
-        left: -15%; <%-- -56px;--%>
-    }
-
-    .margin-bottom-date {
-        margin-top: -25px;
-    }
-</style>
 
 <script>
     $(document).ready(function () {
@@ -99,7 +90,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Date de naissance</label>
                             <div class="col-md-9">
-                                <div class="input-group input-append date pad-left-date" id="datePicker">
+                                <div class="input-group input-append date" id="datePicker">
                                     <input type="text" class="form-control" name="birthdate"/>
                                     <span class="input-group-addon add-on">
                                     <span class="glyphicon glyphicon-calendar"></span>

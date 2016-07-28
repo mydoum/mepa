@@ -18,16 +18,6 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 
 
-<style type="text/css">
-    .pad-left-date {
-        left: -15%;
-    }
-
-    .margin-bottom-date {
-        margin-top: -25px;
-    }
-</style>
-
 <script>
     $(document).ready(function () {
         $('#datePicker1')
@@ -119,7 +109,7 @@
             <div class="control-group">
                 <label class="control-label">Date de début</label>
                 <div class="controls">
-                    <div class="input-group input-append date pad-left-date" id="datePicker1">
+                    <div class="input-group input-append date" id="datePicker1">
                         <td><form:input path="startDate" class="form-control input-lg" placeholder="jj/mm/aaaa" value='${current_date}'/></td>
                                     <span class="input-group-addon add-on">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -127,11 +117,12 @@
                     </div>
                 </div>
             </div>
+                <br/>
 
             <div class="control-group">
                 <label class="control-label">Date de fin</label>
                 <div class="controls">
-                    <div class="input-group input-append date pad-left-date" id="datePicker2">
+                    <div class="input-group input-append date" id="datePicker2">
                         <td><form:input path="endDate" class="form-control input-lg" placeholder="jj/mm/aaaa"/></td>
                                     <span class="input-group-addon add-on">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -139,20 +130,7 @@
                     </div>
                 </div>
             </div>
-<%--
-                <div class="control-group">
-                    <label class="control-label">Date de début</label>
-                    <div class="controls">
-                        <td><form:input path="startDate" class="form-control input-lg" placeholder="jj/mm/aaaa"/></td>
-                    </div>
-                </div>
-                <br/>
-                <div class="control-group">
-                    <label class="control-label">Date de fin</label>
-                    <div class="controls">
-                        <td><form:input path="endDate" class="form-control input-lg" placeholder="mm/jj/aaaa"/></td>
-                    </div>
-                </div>--%>
+
                 <br/>
                 <div class="control-group">
                     <label class="control-label">Objectif du projet</label>
