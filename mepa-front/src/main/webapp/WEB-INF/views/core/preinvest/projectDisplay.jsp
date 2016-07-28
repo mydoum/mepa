@@ -37,7 +37,7 @@
     </header>
     <c:if test="${amount != null}">
         <div class="col-md-12 text-center alert alert-success investFormInside">
-            Merci pour votre don de ${amount}€! Un mail de notification vous a été envoyé.
+            Merci pour votre don de ${amount}${amountCurrency}! Un mail de notification vous a été envoyé.
         </div>
     </c:if>
     <c:if test="${errorInvest != null and !empty errorInvest}">
@@ -151,7 +151,7 @@
                                         <td>${investor.firstname}</td>
                                     </c:otherwise>
                                 </c:choose>
-                                <td>${investor.moneyAmount} €</td>
+                                <td>${investor.moneyAmount} ${amountCurrency}</td>
                             </tr>
                         </c:forEach>
                     </c:if>
@@ -194,10 +194,10 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <h4>Contribution totale : ${totalDonation}€</h4>
+                        <h4>Contribution totale : ${totalDonation}${amountCurrency}</h4>
                     </div>
                     <div class="col-md-12">
-                        <h4>Objectif : ${project.goalAmount}€</h4>
+                        <h4>Objectif : ${project.goalAmount}${amountCurrency}</h4>
                     </div>
                     <div class="col-md-12">
                         <%-- POST INVEST --%>
@@ -218,7 +218,7 @@
                 <form:form role="form" action="${investMoney}" method="post" modelAttribute="User">
                     <div id="keypress"
                          class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12"></div>
-                    <label class="investFormInside col-md-12">Montant (€):</label>
+                    <label class="investFormInside col-md-12">Montant (${amountCurrency}):</label>
                     <div class="col-md-12 InvestFormInside">
                         <input name="investAmount" id="input-with-keypress"
                                class="form-control" type="text" required="required" readonly/>
@@ -257,7 +257,7 @@
                             <li class="rewardItem" name="reward/${reward.id}">
                                 <h4 class="rewardTitle"><a
                                         href="/invest/${project.id}/rewardDisplay/${reward.id}"> ${reward.name} à partir
-                                    de ${reward.costStart}€</a></h4>
+                                    de ${reward.costStart}${amountCurrency}</a></h4>
                                 <div class="rewardDescription">
                                     <p>${reward.description}</p>
                                 </div>
@@ -292,7 +292,7 @@
                         "${investor.firstname}",
                     </c:otherwise>
                     </c:choose>
-                        "${investor.moneyAmount}€"
+                        "${investor.moneyAmount}${amountCurrency}"
             ]<c:if test="${not status.last}">,</c:if>
         </c:forEach>
     ];

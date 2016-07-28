@@ -41,6 +41,7 @@ public class Tools {
         if (a == 0) {
             return 100;
         }
+        System.out.println("goal: " + a + ", actual: " + b);
         return ((b * 100) / a);
     }
 

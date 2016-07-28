@@ -60,6 +60,8 @@ public class Project implements Serializable {
 
     private boolean isFacebookAllowed;
 
+    private String currency;
+
     /*
 * ID
 * Name
@@ -210,11 +212,16 @@ public class Project implements Serializable {
         return this.endDate.after(new Date());
     }
 
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
-
-
-
 }

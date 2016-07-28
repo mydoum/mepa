@@ -62,21 +62,19 @@ public class InvestController {
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
 
-        ArrayList<Investor> listOfContributors = new ArrayList<Investor>();
-        totalAmount = getallinvestors(listOfContributors, totalAmount, project, true);
-        model.addAttribute("nbrContributos", listOfContributors.size());
-
-
         int goalAmount = toIntExact(project.getGoalAmount());
         int percentageAmount = tools.percentage(goalAmount , (int) totalAmount);
 
-        model.addAttribute("amountSize", true);
-
-        if (listinvestors == null || listinvestors.size() == 0)
-            model.addAttribute("amountSize", false);
-
         model.addAttribute("projectPercentage", percentageAmount);
         model.addAttribute("projectPercentageBar", Math.min(percentageAmount, 100));
+
+        ArrayList<Investor> listOfContributors = new ArrayList<Investor>();
+        getallinvestors(listOfContributors, totalAmount, project, true);
+        model.addAttribute("nbrContributos", listOfContributors.size());
+
+        model.addAttribute("amountSize", !(listinvestors == null || listinvestors.size() == 0));
+        model.addAttribute("amountCurrency", project.getCurrency());
+
         return "/investment/investment";
     }
 
