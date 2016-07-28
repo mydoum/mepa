@@ -11,12 +11,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand">LGIS</a>
+                    <c:url var="homeUrl" value="/home"/>
+                    <a class="navbar-brand" href="${homeUrl}"> LGIS</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <c:url var="homeUrl" value="/home"/>
-                        <li><a href="${homeUrl}">Accueil</a></li>
                         <c:url var="preinvestCoreUrl" value="/core/preinvest/projectCreate"/>
                         <li><a href="${preinvestCoreUrl}">Créer un projet</a></li>
                     </ul>
