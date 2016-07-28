@@ -172,22 +172,30 @@
                     <input name="imageUrl" class="form-control input-lg" placeholder="URL pour insérer une image"/>
                 </div>
 
-            <form action="http://www.html.am/html-codes/forms/html-form-tag-action.cfm" target="result" method="get">
+                <form action="http://www.html.am/html-codes/forms/html-form-tag-action.cfm" target="result" method="get">
+
                 <p>Partager son projet </p>
-                <input type="checkbox" name="fruit" value="Facebook"> Facebook
-                <input type="checkbox" name="fruit" value="Twitter"> Twitter
-                <input type="checkbox" name="fruit" value="Non Merci"> Non Merci
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="Facebook"> Facebook
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="Twitter"> Twitter
+                    </label>
+                </div>
 
                 <div class="control-group">
-                   <button type="submit" class="btn btn-default">Créer le projet</button>
+                    <button type="submit" class="btn btn-default">Créer le projet</button>
                 </div>
             </sf:form>
             </div>
 
-        </c:if>
-        <c:if test="${!is_connected}">
-            <h1> Vous devez être connecté pour ajouter un projet.</h1>
-        </c:if>
-    </div>
-</body>
-</html>
+            </c:if>
+            <c:if test="${!is_connected}">
+                <h1> Vous devez être connecté pour ajouter un projet.</h1>
+            </c:if>
+        </div>
+    </body>
+    </html>
