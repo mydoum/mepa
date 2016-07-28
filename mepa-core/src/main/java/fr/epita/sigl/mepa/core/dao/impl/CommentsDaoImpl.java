@@ -50,5 +50,6 @@ public class CommentsDaoImpl implements CommentsModelDao
     public List<CommentsModel> getAll() {
         Query query = this.getSession().getNamedQuery("CommentsModel.findAll");
         return query.list();
+        
     }
 }
