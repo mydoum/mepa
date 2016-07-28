@@ -7,6 +7,7 @@ import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
+import fr.epita.sigl.mepa.front.controller.authentification.AuthController;
 import fr.epita.sigl.mepa.front.controller.investment.InvestController;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -62,6 +63,7 @@ public class ProjectDisplayController {
 
          /*Get the current user in the session in order to know if he is
         * connected */
+
         AppUser userco = new AppUser();
         userco = (AppUser) request.getSession().getAttribute("userCo");
         modelMap.addAttribute("userco", userco);
@@ -74,6 +76,7 @@ public class ProjectDisplayController {
             request.getSession().setAttribute("isAdmin", "false");
 
         investController.investorsList(modelMap, request, project);
+
         return "/preinvest/projectDisplay";
     }
 

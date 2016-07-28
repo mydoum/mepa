@@ -7,6 +7,7 @@ import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.Currency;
 import fr.epita.sigl.mepa.core.service.ProjectService;
+import fr.epita.sigl.mepa.front.controller.authentification.AuthController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,8 @@ public class ProjectCreateController {
 
     @Autowired
     private RewardAddController rewardAddController;
+    @Autowired
+    private AuthController authController;
 
     @RequestMapping(value = {"/projectCreate"}, method = RequestMethod.GET) // The adress to call the function
     public String projectCreate(HttpServletRequest request, ModelMap modelMap) {
@@ -62,11 +65,13 @@ public class ProjectCreateController {
         if (is_co == null)
             is_co = false;
 
-        System.out.println("Is Co" + is_co);
         modelMap.addAttribute(NEWPROJECT, p);
         modelMap.addAttribute(IS_CONNECTED_ATTRIBUTE, is_co);
 
-        return "/preinvest/projectCreate"; // The adress of the JSP coded in tiles.xml
+        if (is_co == false)
+            return authController.getsignin(request, modelMap);
+        else
+            return "/preinvest/projectCreate"; // The adress of the JSP coded in tiles.xml
     }
 
     @RequestMapping(value = {"/processCreation"}, method = RequestMethod.POST) // The adress to call the function
