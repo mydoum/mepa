@@ -199,17 +199,22 @@
                         <%-- PARTI POUR LE POST INVEST --%>
                         <jsp:useBean id="todayDate" class="java.util.Date"/>
                             <c:if test="${totalDonationDummy lt project.goalAmount  && project.endDate lt now}">
-                            <c:url var="addAmountUrl" value="/admin/addAmount"/>
-                            <form:form role="form" controller="AdminController" method="post"
+                            <c:url var="addAmountUrl" value="/admin/addAmount/"/>
+                            <form:form id="Post-Invest-Form" role="form" controller="AdminController" method="post"
                                        action="${addAmountUrl}">
                                 <!--
                                 <input id="amount" type="text" maxlength="20" placeholder="20" name="amount"/>
                                 -->
                                 <label for="amount">Vous souhaitez quand même montrer votre interet envers ce projet ? Indiquez la quantité d'argent que vous voudriez donner !</label>
                                 <input id="amount" type="text" placeholder="20" name="amount"/>
-                                <button type="submit" class="btn btn-default">Soumettre</button>
+                                <button id="test-feature-button" type="submit" class="btn btn-default">Soumettre</button>
                             </form:form>
-                                </c:if>
+                                <div id="hidden-msg-div" style="display:none">
+                                    <p>
+                                        Cette fonctionnalité est en cours de développement.
+                                    </p>
+                                </div>
+                            </c:if>
                     </div>
                     <%-- <div class="container">
                         <c:url var="addAmountUrl" value="/admin/addAmount"/>
@@ -304,3 +309,16 @@
 <script src="${investSliderJs}"></script>
 <c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>
 <script src="${investSliderPersoJs}"></script>
+<script>
+    $('#Post-Invest-Form').submit(function(e){
+        e.preventDefault();
+        var form = $('#Post-Invest-Form');
+        $.ajax({
+            url: "/admin/addAmount/",
+            type: 'POST',
+            data: form.serialize()
+           });
+        $('#hidden-msg-div').show();
+        return false;
+    });
+</script>

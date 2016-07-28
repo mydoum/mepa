@@ -28,7 +28,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = {"/admin/addAmount"}, method = {RequestMethod.POST})
-    public String addAmount(@RequestParam("amount") String amount)
+    public void addAmount(@RequestParam("amount") String amount)
     //        ModelMap model, HttpSession session, HttpServletRequest request)
     {
         Integer adding = 0;
@@ -36,11 +36,12 @@ public class AdminController {
         try {
             adding = Integer.parseInt(amount);
         } catch (Exception e) {
-            return "/invalid";
+            return;
         }
         if (adding > 0) {
             totalAmount += adding;
+            return;
         }
-        return "/invalid";
+        return;
     }
 }
