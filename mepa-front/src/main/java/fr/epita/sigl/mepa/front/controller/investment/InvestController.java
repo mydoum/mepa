@@ -205,7 +205,7 @@ public class InvestController {
             model.addAttribute("errorInvest", errorMessage);
             return projectDisplayController.projectDisplay(request, model, projectId);
         }
-        long rewardPrice = reward.getCostStart();
+        float rewardPrice = reward.getCostStart();
         String description = reward.getDescription();
         String rewardName = reward.getName();
 

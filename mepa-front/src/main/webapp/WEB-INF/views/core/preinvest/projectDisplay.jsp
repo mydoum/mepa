@@ -59,6 +59,7 @@
                     </ul>
                 </nav>
                 <%-- Part of the page where the slideshow and the project date are printed --%>
+                <div class="well bs-component">
                 <div class="row">
                     <div class="col-md-4" id="slideshow">
                         <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
@@ -75,6 +76,7 @@
                         <div class="date">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
                         <div class="date">Nombre de contributeurs : ${nbrContributos}</div>
                     </div>
+                </div>
                 </div>
                 <%-- Part of the page for Social buttons --%>
                 <div class="row">
