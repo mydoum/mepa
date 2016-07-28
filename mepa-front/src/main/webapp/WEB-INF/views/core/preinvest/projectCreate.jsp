@@ -110,7 +110,7 @@
                 <div class="control-group">
                     <label class="control-label">Nom du projet</label>
                     <div class="controls">
-                        <td><form:input path="Name" class="form-control input-lg" placeholder="Définissez le nom du projet"/></td>
+                        <td><form:input path="Name" class="form-control input-lg" placeholder="Définissez le nom du projet" /></td>
                     </div>
                 </div>
                 <br/>

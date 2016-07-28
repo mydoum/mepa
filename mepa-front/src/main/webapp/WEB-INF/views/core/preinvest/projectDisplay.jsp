@@ -271,6 +271,8 @@
 </div>
 
 <script>
+    var startStep = 0;
+    startStep = Number(startStep).toFixed();
     var stepSlider = ${project.goalAmount} * 0.1;
     stepSlider = Number(stepSlider).toFixed();
     var maxSlider = ${project.goalAmount};

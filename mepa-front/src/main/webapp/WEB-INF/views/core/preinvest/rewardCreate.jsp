@@ -12,12 +12,13 @@
 
     <div class="container">
         <%--<c:if test="${is_connected}">--%>
-
+            <div class="well bs-component">
+                <legend>Créer une nouvelle contrepartie pour ${project.getName()}</legend>
             <sf:form method="post" modelAttribute="newReward" action="/core/preinvest/rewardAdd/processCreation/${newProject}">
                 <div class="control-group">
                     <label class="control-label">Nom de la contrepartie</label>
                     <div class="controls">
-                        <td><form:input path="Name" class="form-control input-lg" placeholder="Définissez le nom de la contrepartie"/></td>
+                        <td><form:input path="Name" class="form-control input-lg" placeholder="Définissez le nom de la contrepartie" required="required" /></td>
                     </div>
                 </div>
                 <br/>
@@ -28,7 +29,7 @@
                          class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12"></div>
                     <div class=control-label">
                         <td><form:input path="costStart" class="form-control input-lg" placeholder="Montant à partir du quel la contrepartie s'applique" id="input-with-keypress"
-                              type="text" required="required" />
+                              type="text" required="required" readonly="true" />
                         </td>
                     </div>
 
@@ -48,6 +49,7 @@
                    <button type="submit" class="btn btn-default">Ajouter la contrepartie</button>
                 </div>
             </sf:form>
+                </div>
 <%--
         </c:if>
         <c:if test="${!is_connected}">
@@ -58,6 +60,8 @@
     </div>
 
 <script>
+    var startStep = 0;
+    startStep = Number(startStep).toFixed();
     var stepSlider = 5;
     stepSlider = Number(stepSlider).toFixed();
     var maxSlider = ${project.goalAmount};
