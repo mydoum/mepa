@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class AuthController {
                 e.printStackTrace();
             }
             newAppUser.setBirthDate(birthdateDate);
+//            System.out.println("birthday = " + birthdateDate.toString() +  " !!!!!!!!!!!!! ");
         }
 
         newAppUser.setFirstName(firstName);
@@ -213,6 +215,17 @@ public class AuthController {
     public String showEditUserPage(HttpServletRequest request, ModelMap modelMap) {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+
+        Date date = userCo.getBirthDate();
+        if (date != null) {
+            Format formatter = new SimpleDateFormat("dd/MM/yyyy");
+            String birthday = formatter.format(date);
+            System.out.println(birthday);
+            modelMap.addAttribute("formatedBirthday", birthday);
+        } else {
+            modelMap.addAttribute("formatedBirthday", "");
+        }
+
         if (userCo != null && isCo) {
             // tu peux afficher les données user
             return "/authentification/editUser";

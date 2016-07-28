@@ -63,7 +63,7 @@
                     <div class="control-group">
                         <label class="control-label">Date de naissance</label>
                         <div class="controls">
-                            <input type="text" class="form-control input-lg" name="date" value="${userCo.birthDate}" readonly/>
+                            <input type="text" class="form-control input-lg" name="date" value="${formatedBirthday}" readonly/>
                         </div>
                     </div>
                     <div class="control-group">

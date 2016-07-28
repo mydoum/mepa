@@ -11,14 +11,13 @@
                 .datepicker({
                     format: 'dd/mm/yyyy',
                     startDate: '01/01/1900',
-                    endDate: '26/07/2016'
+                    endDate: '29/07/2016'
                 })
                 .on('changeDate', function (e) {
                     // Revalidate the date field
                     $('#eventForm').formValidation('revalidateField', 'date');
                 });
     });
-
 </script>
 
 <div class="container">
