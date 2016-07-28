@@ -134,7 +134,7 @@
                         <th>Contribution</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="infiniteInvestorsList">
                     <c:if test="${investorsList.size() > 0}">
                         <c:forEach items="${investorsList}" var="investor" varStatus="status">
                             <tr>
@@ -251,7 +251,7 @@
                 <h4 class="rewardHeader">Choisissez votre contrepartie</h4>
                 <ol>
                     <c:if test="${project.rewards != null and project.rewards.size() > 0}">
-                        <c:forEach items="${project.rewards}" var="reward" varStatus="status">
+                        <c:forEach items="${project.rewards}" begin="0" end="25" var="reward" varStatus="status">
                             <li class="rewardItem" name="reward/${reward.id}">
                                 <h4 class="rewardTitle"><a
                                         href="/invest/${project.id}/rewardDisplay/${reward.id}"> ${reward.name} à partir
@@ -272,6 +272,30 @@
     var stepSlider = ${project.goalAmount} * 0.1;
     stepSlider = Number(stepSlider).toFixed();
     var maxSlider = ${project.goalAmount};
+    var infiniteListSize = ${investorsList.size()};
+
+    var infiniteScrollerElements = [
+        <c:forEach items="${investorsList}" begin="25" end="${investorsList.size()}" var="investor" varStatus="status">
+            [
+                <c:choose>
+                    <c:when test="${investor.anonymous}">
+                        "Anonyme",
+                    </c:when>
+                    <c:when test="${investor.firstname == null or empty investor.firstname}">
+                        "${investor.email}",
+                    </c:when>
+                    <c:otherwise>
+                        "${investor.firstname}",
+                    </c:otherwise>
+                    </c:choose>
+                        "${investor.moneyAmount}€"
+            ]<c:if test="${not status.last}">,</c:if>
+        </c:forEach>
+    ];
+
+    console.log("InvestorsList Size :" + infiniteListSize + "\n");
+    console.log("InvestorsList Content :" + infiniteScrollerElements + "\n");
+
 </script>
 
 <c:url var="investSliderJs" value="/js/investment/nouislider.min.js"/>
