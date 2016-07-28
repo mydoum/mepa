@@ -168,12 +168,12 @@
                 <p>Partager son projet </p>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" value="Facebook"> Facebook
+                        <form:checkbox path="facebookAllowed"/> Facebook
                     </label>
                 </div>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" value="Twitter"> Twitter
+                        <form:checkbox path="twitterAllowed"/> Twitter
                     </label>
                 </div>
 
