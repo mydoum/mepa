@@ -1,12 +1,10 @@
 package fr.epita.sigl.mepa.front.controller.authentification;
 
 import fr.epita.sigl.mepa.core.domain.AppUser;
-import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.AppUserService;
 import fr.epita.sigl.mepa.front.Service.AuthentificationFrontService;
 import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayController;
 import fr.epita.sigl.mepa.front.controller.home.HomeController;
-import fr.epita.sigl.mepa.front.model.investment.Investor;
 import fr.epita.sigl.mepa.front.utilities.Tools;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,7 +24,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 @RequestMapping("/authentification")
 @Controller
