@@ -68,14 +68,16 @@ public class AuthController {
 
         // Change string to date
         DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date birthdateDate = new Date();
-        try {
-            birthdateDate = sourceFormat.parse(birthdate);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (birthdate != "") {
+            Date birthdateDate = new Date();
+            try {
+                birthdateDate = sourceFormat.parse(birthdate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            newAppUser.setBirthDate(birthdateDate);
         }
 
-        newAppUser.setBirthDate(birthdateDate);
         newAppUser.setFirstName(firstName);
         newAppUser.setLastName(lastName);
         AppUser userTest = new AppUser();
