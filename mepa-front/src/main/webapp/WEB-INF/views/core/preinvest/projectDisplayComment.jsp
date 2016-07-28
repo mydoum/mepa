@@ -37,16 +37,14 @@
     <div class="col-md-8 investFormInside">
         <div class="row">
             <div class="col-md-12">
-                <nav class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active">
-                            <a href="/core/preinvest/projectDisplay/${project.id}">${project.name}</a>
-                        </li>
-                        <li>
-                            <a href="/core/preinvest/projectDisplay/${project.id}/comment">Commentaires</a>
-                        </li>
-                    </ul>
-                </nav>
+                <ul class="nav nav-tabs">
+                    <li>
+                        <a href="/core/preinvest/projectDisplay/${project.id}">Description</a>
+                    </li>
+                    <li class="active">
+                        <a href="/core/preinvest/projectDisplay/${project.id}/comment" >Commentaires</a>
+                    </li>
+                </ul>
             </div>
             <br/>
             <%-- SOCIAL DIV FOR ADDING COMMENT PART --%>

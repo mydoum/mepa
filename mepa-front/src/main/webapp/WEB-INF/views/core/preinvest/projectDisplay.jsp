@@ -33,7 +33,7 @@
         <h1 class="short">${project.name}</h1>
         <jsp:useBean id="now" class="java.util.Date"/>
         <c:if test="${project.goalAmount <= totalDonation && project.endDate gt now}">
-            <h1 class="short">88888888888888888</h1>
+            <h1 class="short"></h1>
         </c:if>
     </header>
     <c:if test="${amount != null}">
@@ -49,18 +49,16 @@
     <div class="col-md-8 investFormInside">
         <div class="row">
             <div class="col-md-12">
-                <nav class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="/core/preinvest/projectDisplay/${project.id}">${project.name}</a>
+                            <a href="/core/preinvest/projectDisplay/${project.id}">Description</a>
                         </li>
                         <li>
-                            <a href="/core/preinvest/projectDisplay/${project.id}/comment">Commentaires</a>
+                            <a href="/core/preinvest/projectDisplay/${project.id}/comment" >Commentaires</a>
                         </li>
                     </ul>
-                </nav>
                 <%-- Part of the page where the slideshow and the project date are printed --%>
-                <div class="well bs-component">
+                <div class="bs-component" >
                     <div class="row">
                         <div class="col-md-4" id="slideshow">
                             <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
