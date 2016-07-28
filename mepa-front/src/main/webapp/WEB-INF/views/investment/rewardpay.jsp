@@ -40,7 +40,7 @@
                 </div>
                 <br/>
                 <div class="col-md-4">
-                    <p align="center"><input type="submit" class="btn btn-primary InvestFormInside" value="Donate"></p>
+                    <p align="center"><input type="submit" class="btn btn-primary InvestFormInside" value="Contribuer"></p>
                 </div>
                 <div class="col-md-4"></div>
             </form:form>
