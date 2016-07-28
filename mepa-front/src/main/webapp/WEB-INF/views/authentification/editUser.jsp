@@ -31,9 +31,14 @@
                   modelAttribute="addCustomUserFormBean"
                   method="POST">
                 <fieldset>
-                    <div id="legend">
-                        <legend class="">Modification du profil</legend>
-                    </div>
+
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#editUserTab">Modification du profil</a></li>
+                        <li><a data-toggle="tab" href="#modifyPasswordTab">Changer de mot de passe</a></li>
+                    </ul>
+                    <div class="tab-content">
+                    <div class="tab-pane fade in active" id="editUserTab">
+
                     <div class="control-group">
                         <label class="control-label" for="firstname">Prénom</label>
                         <div class="controls">
@@ -83,6 +88,66 @@
                             <button type="submit" class="btn btn-default">Enregistrer</button>
                         </div>
                     </div>
+                    </div>
+                        <div id="modifyPasswordTab" class="tab-pane fade">
+                            <c:if test="${newPassword == false}">
+                                <div class="col-md-12 text-center alert alert-danger investFormInside">
+                                    Le mot de passe actuel est incorrect.
+                                </div>
+                            </c:if>
+                            <c:if test="${confPassword == false}">
+                                <div class="col-md-12 text-center alert alert-danger investFormInside">
+                                    Le mot de passe de confirmation est incorrect.
+                                </div>
+                            </c:if>
+                            <div class="row">
+                                    <c:url var="addCustomUserFormActionUrl" value="/authentification/modifyPassword"/>
+                                    <form id="eventForm" class="form-horizontal" action="${addCustomUserFormActionUrl}"
+                                          modelAttribute="addCustomUserFormBean"
+                                          method="POST">
+                                        <fieldset>
+
+
+                                                <div class="control-group">
+                                                    <label class="control-label" for="password">Mot de passe actuel</label>
+                                                    <div class="controls">
+                                                        <input id="passwordOld" name="passwordOld" placeholder="" class="form-control input-lg"
+                                                               type="password" value="" pattern="[0-9a-zA-Z]{6,15}" required>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <br/>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="password">Nouveau mot de passe</label>
+                                                    <div class="controls">
+                                                        <input id="password" name="password" placeholder="" class="form-control input-lg"
+                                                               type="password" value="" pattern="[0-9a-zA-Z]{6,15}" required>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <br/>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="password">Confirmation du nouveau mot de passe</label>
+                                                    <div class="controls">
+                                                        <input id="passwordConf" name="passwordConf" placeholder="" class="form-control input-lg"
+                                                               type="password" value="" pattern="[0-9a-zA-Z]{6,15}" required>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <br/>
+                                                <div class="control-group">
+                                                    <!-- Button -->
+                                                    <div class="controls">
+                                                        <button type="submit" class="btn btn-default">Enregistrer</button>
+                                                    </div>
+                                                </div>                           
+                                        </fieldset>
+
+                                    </form>
+                                </div>
+                        </div>
+                    </div>
+
                 </fieldset>
 
             </form>
@@ -93,3 +158,9 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 <script src="http://formvalidation.io/vendor/formvalidation/js/formValidation.min.js"></script>
 <script src="http://formvalidation.io/vendor/formvalidation/js/framework/bootstrap.min.js"></script>
+<!--
+<script>
+    function openModifyPasswordTab() {
+        $('#modifyPasswordTab').load('modifyPwd.jsp')
+    }
+</script>-->
