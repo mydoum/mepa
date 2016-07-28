@@ -1,11 +1,9 @@
 package fr.epita.sigl.mepa.front.controller.core.preinvest;
 
-import fr.epita.sigl.mepa.core.domain.AppCommentsModel;
-import fr.epita.sigl.mepa.core.domain.AppUser;
-import fr.epita.sigl.mepa.core.domain.Investment;
-import fr.epita.sigl.mepa.core.domain.Project;
+import fr.epita.sigl.mepa.core.domain.*;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
+import fr.epita.sigl.mepa.core.service.NewsletterService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import fr.epita.sigl.mepa.front.controller.investment.InvestController;
 import org.hibernate.Hibernate;
@@ -47,6 +45,9 @@ public class ProjectDisplayController {
 
     @Autowired
     private InvestController investController;
+
+    @Autowired
+    private NewsletterService newsletterService;
 
 
     @RequestMapping(value = {"/projectDisplay/{projectId}"}) // The adress to call the function
@@ -137,12 +138,39 @@ public class ProjectDisplayController {
         List<AppCommentsModel> list = this.commentsModelService.getAllCommentsModels();
         /*Sort of the comments by the arriving tickets*/
         List<AppCommentsModel>new_c_models = new ArrayList<AppCommentsModel>();
-        ListIterator<AppCommentsModel> i= list.listIterator(list.size());
-        while(i.hasPrevious())
+        ListIterator<AppCommentsModel> a= list.listIterator(list.size());
+        while(a.hasPrevious())
         {
-            new_c_models.add(i.previous());
+            new_c_models.add(a.previous());
         }
         modelMap.addAttribute("new_c_models",new_c_models);
+
+
+        int display;
+        List<NewsletterModel> newsletterlist = this.newsletterService.getAllNewsletterModels();
+        //boolean exist = false;
+        for (NewsletterModel i : newsletterlist) {
+            if (i.getProjectid() == projectId) {
+                System.out.println("\n USER LOGIN : " + userco.getLogin() + "\n");
+                System.out.println("LE NOMBRE DE LIKE INITIAL SUR LE PROJ: " + project.getName() + " EST " + i.getLike_());
+
+                if (i.getEmails().contains(userco.getLogin())) {
+                    System.out.println("\n\n JE te connais déja niga\n\n");
+                    i.getEmails().remove(userco.getLogin());
+                    if (i.getLike_() != 0)
+                        i.setLike_(i.getLike_() - 1);
+                    display = 2;
+                } else {
+                    System.out.println("\n\n JE ne te connais pas niga\n\n");
+                    i.addEmail(userco.getLogin());
+                    i.setLike_(i.getLike_() + 1);
+                    display = 1;
+                }
+                this.newsletterService.updateNewsletter(i);
+                modelMap.addAttribute("display", display);
+                System.out.println("LE NOMBRE DE LIKE FINAL SUR LE PROJ: " + project.getName() + " EST " + i.getLike_());
+            }
+        }
         return "/preinvest/projectDisplay/Comment";
 
     }
