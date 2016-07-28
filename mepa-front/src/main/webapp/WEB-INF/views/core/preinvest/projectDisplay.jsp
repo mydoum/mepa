@@ -1,4 +1,5 @@
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%--
   Created by IntelliJ IDEA.
   User: Valentin ZHENG
   Date: 24/07/2016
@@ -60,23 +61,23 @@
                 </nav>
                 <%-- Part of the page where the slideshow and the project date are printed --%>
                 <div class="well bs-component">
-                <div class="row">
-                    <div class="col-md-4" id="slideshow">
-                        <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
-                            <div>
-                                <img src="${image}" style="width:100%"
-                                     class="projectImageInvest img-responsive img-rounded"/>
-                            </div>
-                        </c:forEach>
+                    <div class="row">
+                        <div class="col-md-4" id="slideshow">
+                            <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
+                                <div>
+                                    <img src="${image}" style="width:100%"
+                                         class="projectImageInvest img-responsive img-rounded"/>
+                                </div>
+                            </c:forEach>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="date-display firstDate">Date de début:</div>
+                            <div class="date-display">${project.dateFormat("dd/MM/yyyy", project.startDate)}</div>
+                            <div class="date-display">Date de fin:</div>
+                            <div class="date-display">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
+                            <div class="date-display">Nombre de contributeurs : ${nbrContributos}</div>
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="date-display firstDate">Date de début:</div>
-                        <div class="date-display">${project.dateFormat("dd/MM/yyyy", project.startDate)}</div>
-                        <div class="date-display">Date de fin:</div>
-                        <div class="date-display">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
-                        <div class="date-display">Nombre de contributeurs : ${nbrContributos}</div>
-                    </div>
-                </div>
                 </div>
                 <%-- Part of the page for Social buttons --%>
                 <div class="row">
@@ -220,22 +221,28 @@
                 </div>
                 <c:url var="investMoney" value="/invest/${project.id}/investMoney"/>
                 <form:form role="form" action="${investMoney}" method="post" modelAttribute="User">
+                    <label class="investFormInside col-md-12">Montant :</label>
                     <div id="keypress"
                          class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12"></div>
-                    <label class="investFormInside col-md-12">Montant (${amountCurrency}):</label>
+
                     <div class="col-md-12 InvestFormInside">
-                        <input name="investAmount" id="input-with-keypress"
-                               class="form-control" type="text" required="required" readonly/>
+                        <div class="input-group">
+                            <span class="input-group-addon">${project.getCurrencyString()}</span>
+                            <input name="investAmount" id="input-with-keypress"
+                                   class="form-control" type="text" required="required" readonly/>
+                        </div>
+
                     </div>
                     <br/>
+
                     <div class="row">
                         <div class="col-md-4">
-                            <label class="investFormInside col-md-12">Anonyme:</label>
+                            <div class="col-md-1 checkbox">
+                                <label><input type="checkbox" name="anonymous_id" value=""/>Anonyme</label>
+                                    <%--      <label class="investFormInside col-md-12">Anonyme:</label>--%>
+                            </div>
                         </div>
                         <div class="col-md-4"></div>
-                        <div class="col-md-1 checkbox">
-                            <label><input type="checkbox" name="anonymous_id" value=""/></label>
-                        </div>
                         <div class="col-md-7"></div>
                     </div>
 
@@ -262,6 +269,7 @@
                                 <h4 class="rewardTitle"><a
                                         href="/invest/${project.id}/rewardDisplay/${reward.id}"> ${reward.name} à partir
                                     de ${reward.costStart}${amountCurrency}</a></h4>
+
                                 <div class="rewardDescription">
                                     <p>${reward.description}</p>
                                 </div>
@@ -277,27 +285,29 @@
 <script>
     var startStep = 0;
     startStep = Number(startStep).toFixed();
-    var stepSlider = ${project.goalAmount} * 0.1;
+    var stepSlider =
+    ${project.goalAmount} *
+    0.1;
     stepSlider = Number(stepSlider).toFixed();
     var maxSlider = ${project.goalAmount};
     var infiniteListSize = ${investorsList.size()};
 
     var infiniteScrollerElements = [
         <c:forEach items="${investorsList}" begin="10" end="${investorsList.size()}" var="investor" varStatus="status">
-            [
-                <c:choose>
-                    <c:when test="${investor.anonymous}">
-                        "Anonyme",
-                    </c:when>
-                    <c:when test="${investor.firstname == null or empty investor.firstname}">
-                        "${investor.email}",
-                    </c:when>
-                    <c:otherwise>
-                        "${investor.firstname}",
-                    </c:otherwise>
-                    </c:choose>
-                        "${investor.moneyAmount}${amountCurrency}"
-            ]<c:if test="${not status.last}">,</c:if>
+        [
+            <c:choose>
+            <c:when test="${investor.anonymous}">
+            "Anonyme",
+            </c:when>
+            <c:when test="${investor.firstname == null or empty investor.firstname}">
+            "${investor.email}",
+            </c:when>
+            <c:otherwise>
+            "${investor.firstname}",
+            </c:otherwise>
+            </c:choose>
+            "${investor.moneyAmount}${amountCurrency}"
+        ]<c:if test="${not status.last}">, </c:if>
         </c:forEach>
     ];
 

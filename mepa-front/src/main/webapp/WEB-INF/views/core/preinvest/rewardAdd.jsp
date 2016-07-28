@@ -41,7 +41,7 @@
           <c:if test="${project.rewards != null and project.rewards.size() > 0}">
             <c:forEach items="${project.rewards}" var="reward" varStatus="status">
               <li class="rewardItem" name="reward/${reward.id}">
-                <h4 class="rewardTitle"> ${reward.name} à partir de ${reward.costStart}€</a></h4>
+                <h4 class="rewardTitle"> ${reward.name} à partir de ${reward.costStart} ${project.getCurrencyString()}</a></h4>
                 <div class="rewardDescription">
                   <p>${reward.description}</p>
                 </div>

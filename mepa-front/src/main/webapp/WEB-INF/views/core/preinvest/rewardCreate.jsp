@@ -24,10 +24,11 @@
                 <br/>
                 <div class="control-group">
 
-                    <label class="control-label">Montant de départ(€):</label>
+                    <label class="control-label">Montant de la contrepartie :</label>
                     <div id="keypress"
                          class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12"></div>
-                    <div class=control-label">
+                    <div class="input-group">
+                        <span class="input-group-addon">${project.getCurrencyString()}</span>
                         <td><form:input path="costStart" class="form-control input-lg" placeholder="Montant à partir du quel la contrepartie s'applique" id="input-with-keypress"
                               type="text" required="required" readonly="true" />
                         </td>

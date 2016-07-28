@@ -3,6 +3,7 @@ package fr.epita.sigl.mepa.core.domain;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import fr.epita.sigl.mepa.core.service.Currency;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.awt.*;
@@ -20,31 +21,7 @@ import java.util.*;
         @NamedQuery(name = "Project.findAllFinished", query = "FROM Project p WHERE p.endDate <= CURRENT_DATE ORDER BY p.endDate ASC")
 })
 public class Project implements Serializable {
-    public enum Currency {
-        DOLLAR("$"),
-        EURO("€"),
-        POUND("£");
 
-        public String getSymbol() {
-            return symbol;
-        }
-
-        public void setSymbol(String symbol) {
-            this.symbol = symbol;
-        }
-
-        private String symbol;
-
-        private Currency(String symbol){
-            this.symbol = symbol;
-        }
-
-        public String getValue() {
-            return name();
-        }
-
-        public void setValue(String value) {}
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -85,7 +62,7 @@ public class Project implements Serializable {
 
     private Boolean facebookAllowed;
 
-    //private String currency;
+
 
     /*
 * ID
@@ -117,6 +94,7 @@ public class Project implements Serializable {
         this.name = projectName;
         this.rewards= new HashSet<>();
         this.goalAmount = 0L;
+        this.currency = Currency.DOLLAR;
     }
 
     //return Date with a specific format
@@ -192,6 +170,15 @@ public class Project implements Serializable {
 
     public void setGoalAmount(Long goalAmount) {
         this.goalAmount = Math.abs(goalAmount);
+    }
+
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     public String getCurrencyString() {

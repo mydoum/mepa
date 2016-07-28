@@ -148,7 +148,7 @@
                             £
 
                     <div class="controls">
-                        <td><form:input path="goalAmount" class="form-control input-lg" placeholder="Entrez la somme à atteindre" required="required"/></td>
+                        <td><form:input type= "number" path="goalAmount" class="form-control input-lg" placeholder="Entrez la somme à atteindre" required="required"/></td>
                     </div>
                 </div>
                 <br/>
