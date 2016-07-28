@@ -30,7 +30,7 @@
                 <label class="investFormInside col-md-12">Montant :</label>
                 <div class="col-md-12 InvestFormInside">
                     <div class="input-group">
-                        <span class="input-group-addon">${project.getCurrencyString()}</span>
+                        <span class="input-group-addon">${amountCurrency}</span>
                         <input name="investAmount" id="input-with-keypress"
                            class="form-control" type="number" required="required" value="${rewardPrice}"/>
                 </div>
