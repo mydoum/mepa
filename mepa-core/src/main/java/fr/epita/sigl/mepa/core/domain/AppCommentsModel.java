@@ -21,7 +21,7 @@ public class AppCommentsModel
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private int id;
+    private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -30,7 +30,7 @@ public class AppCommentsModel
     private String data_;
 
     @NotNull
-    private int projectId_;
+    private Long projectId_;
 
     @NotNull
     private String user_;
@@ -39,12 +39,12 @@ public class AppCommentsModel
     private int arriving_;
 
 
-    public int getId_()
+    public Long getId_()
     {
         return this.id;
     }
 
-    public void setId_(int id_)
+    public void setId_(Long id_)
     {
         this.id = id_;
     }
@@ -70,11 +70,11 @@ public class AppCommentsModel
         this.data_ = data_;
     }
 
-    public int getProjectId_() {
+    public Long getProjectId_() {
         return projectId_;
     }
 
-    public void setProjectId_(int projectId) {
+    public void setProjectId_(Long projectId) {
         this.projectId_ = projectId;
     }
 

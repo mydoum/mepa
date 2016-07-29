@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by prosp_000 on 21/07/2016.
@@ -35,10 +38,11 @@ public class CommentsController {
     private CommentsModelService commentsModelService;
 
     @RequestMapping(value = {"/", "/{projectId}"}, method = {RequestMethod.POST})
-    public String processForm(HttpServletRequest request, ModelMap modelMap, HttpServletResponse response, @PathVariable int projectId) throws IOException {
+    public String processForm(HttpServletRequest request, ModelMap modelMap, HttpServletResponse response, @PathVariable Long projectId) throws IOException {
 
         String text = request.getParameter("userText");
-            if (text != "") {
+
+        if (text != "") {
 
                 AppUser userco = new AppUser();
                 userco = (AppUser) request.getSession().getAttribute("userCo");
@@ -56,7 +60,7 @@ public class CommentsController {
             }
 
 
-        response.sendRedirect("/core/preinvest/projectDisplay/" + Integer.toString(projectId)+ "/comment");
+        response.sendRedirect("/core/preinvest/projectDisplay/" + Long.toString(projectId)+ "/comment");
         return "/preinvest/projectDisplay";
     }
 }
