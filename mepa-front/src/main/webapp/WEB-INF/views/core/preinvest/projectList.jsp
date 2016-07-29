@@ -11,6 +11,7 @@
                 <th>Nom du projet</th>
                 <th>Date de fin</th>
                 <th>Description</th>
+                <th>Popularité</th>
                 <th></th>
             </tr>
             </thead>
@@ -19,7 +20,7 @@
             <button type="submit" id="sort" data-loading-text="Trier" class="btn btn-success">Trier par popularité</button><center/>
                 <c:forEach items="${sortedlist}" var="sortlist" varStatus="loop">
                     <c:if test="${sortlist.projectId == project.id}">
-                        <tr>
+
                             <td>${sortlist.likes_}</td>
                             <td><fmt:formatDate value="${c_model.created}" pattern="HH:mm:ss"/></td>
                             <td>${c_model.data}</td>
@@ -33,6 +34,10 @@
                     <td><a href="<c:url value='/core/preinvest/projectDisplay/${project.id}'/>" >${project.name} </a></td>
                     <td>${project.dateFormat("dd/MM/yyyy",project.endDate)}</td>
                     <td>${project.description}</td>
+                <td>${(project.getlikeProject())}</td>
+
+            </tr>
+
                     <!--<td>
                         Rewards:
 

@@ -93,18 +93,21 @@
             </div>
             <div class="panel-body">
                 <c:url var="addCustomUserFormActionUrl" value="/authentification/createUser"/>
+                <% int nbViewInscription = 0;
+                    if (session.getAttribute("nbViewInscription") != null)
+                        nbViewInscription = (Integer) session.getAttribute("nbViewInscription");
+                    nbViewInscription = nbViewInscription + 1;
+                    session.setAttribute("nbViewInscription", nbViewInscription);
+                    System.out.println("LOLOLOLOLOLOL " + nbViewInscription);%>
                 <form data-toggle="validator" role="form" id="signupform" class="form-horizontal"
                       action="${addCustomUserFormActionUrl}"
                       modelAttribute="addCustomUserFormBean" role="form"
                       method="POST">
                     <fieldset>
-
                         <div id="signupalert" style="display:none" class="alert alert-danger">
                             <p>Error:</p>
                             <span></span>
                         </div>
-
-
                         <div class="form-group">
                             <label for="emailInput" class="col-md-3 control-label">Adresse e-mail</label>
                             <div class="col-md-9">
