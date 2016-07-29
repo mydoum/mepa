@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import fr.epita.sigl.mepa.core.domain.AppUser;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,7 +22,13 @@ public class AdminController {
 
     @RequestMapping(value = {"/admin"}) // The address to call the function
     public String showForm(HttpServletRequest request, ModelMap modelMap) {
-        /* Code your logic here */
+
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        if ((userCo == null) || !isCo || !userCo.getIsAdmin()){
+            return "/home/home";
+        }
+
         request.setAttribute("clicks", clicks);
         request.setAttribute("totalAmount", totalAmount);
         return "/admin"; // The address of the JSP coded in tiles.xml
