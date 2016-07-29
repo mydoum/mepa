@@ -4,7 +4,7 @@
     <c:choose>
         <c:when test="${isNotSent == false}">
             <div class="col-md-12 text-center alert alert-success investFormInside">
-                Un mail a été envoyé à ${email}!
+                Un mail a été envoyé à ${email} !
             </div>
             <br/>
         </c:when>

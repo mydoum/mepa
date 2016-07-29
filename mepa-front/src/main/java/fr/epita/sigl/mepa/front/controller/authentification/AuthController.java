@@ -509,9 +509,9 @@ public class AuthController {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        
-
-        return home.home(request);
+        modelMap.addAttribute("isNotSent", false);
+        modelMap.addAttribute("email", user.getLogin());
+        return "/authentification/resendPwd";
 
     }
 
