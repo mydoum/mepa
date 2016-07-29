@@ -56,6 +56,8 @@ public class Project implements Serializable {
 
     private Long visitNumber;
 
+    private Float totalAmountFinal;
+
     @OneToMany(fetch = FetchType.EAGER) //, mappedBy="project"
     @JoinColumn(name="project_id")
     private Set<Reward> rewards;
@@ -132,6 +134,10 @@ public class Project implements Serializable {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public void setTotalAmountFinal(Float totalAmountFinal) {this.totalAmountFinal = totalAmountFinal;}
+
+    public Float getTotalAmountFinal() {return totalAmountFinal;}
 
     public String getName() {
         return name;

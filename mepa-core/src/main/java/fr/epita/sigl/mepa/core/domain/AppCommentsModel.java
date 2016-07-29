@@ -21,79 +21,78 @@ public class AppCommentsModel
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private int id;
+    private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created", nullable = false)
     private Date created;
 
     @NotNull
-    private String data;
+    private String data_;
 
     @NotNull
-    private int projectId;
+    private Long projectId_;
 
     @NotNull
-    private String user;
+    private String user_;
 
     @NotNull
-    private int arriving;
+    private int arriving_;
 
 
-    public int getId()
+    public Long getId_()
     {
         return this.id;
     }
 
-    public void setId(int id_)
+    public void setId_(Long id_)
     {
         this.id = id_;
     }
 
-    public Date getCreated()
+    public Date getCreated_()
     {
         return this.created;
     }
 
-    public void setCreated(Date created_)
+    public void setCreated_(Date created_)
     {
         this.created = created_;
     }
 
 
-    public String getData()
+    public String getData_()
     {
-        return this.data;
+        return this.data_;
     }
 
-    public void setData(String data_)
+    public void setData_(String data_)
     {
-        this.data = data_;
+        this.data_ = data_;
     }
 
-    public int getProjectId() {
-        return projectId;
+    public Long getProjectId_() {
+        return projectId_;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setProjectId_(Long projectId) {
+        this.projectId_ = projectId;
     }
 
 
-    public int getArriving() {
-        return arriving;
+    public int getArriving_() {
+        return arriving_;
     }
 
-    public void setArriving(int arriving) {
-        this.arriving = arriving;
+    public void setArriving_(int arriving_) {
+        this.arriving_ = arriving_;
     }
 
-    public String getUser() {
-        return user;
+    public String getUser_() {
+        return user_;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUser_(String user) {
+        this.user_ = user;
     }
 
     @Override

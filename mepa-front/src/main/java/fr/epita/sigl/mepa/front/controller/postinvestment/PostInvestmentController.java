@@ -50,8 +50,21 @@ public class PostInvestmentController {
     @RequestMapping(value = "/project-list", method = RequestMethod.GET)
     public String displayEndedProjectList(ModelMap model, HttpServletRequest request) {
         List<Project> projects = this.projectService.getAllFinishedProjects();
-        for (Project p : projects)
+        ArrayList<Investor> listinvestors = new ArrayList<Investor>();
+        float totalAmount = 0.00f;
+        boolean status = false;
+        for (Project p : projects) {
+            totalAmount = 0.00f;
+            totalAmount = investController.getallinvestors(listinvestors, totalAmount, p, false);
+            p.setTotalAmountFinal(totalAmount);
+            model.addAttribute("investorsList", listinvestors);
+            //model.addAttribute("totalDonation", p.getTotalAmountFinal());
+            if (p.getTotalAmountFinal() > p.getGoalAmount())
+                status = true;
+            //model.addAttribute("objectif", p.getGoalAmount());
+            model.addAttribute("financed", status);
             Hibernate.initialize(p.getRewards());
+        }
         model.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
 
         return "/project-end-list";
@@ -62,6 +75,7 @@ public class PostInvestmentController {
         float totalAmount = 0.00f;
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
         totalAmount = investController.getallinvestors(listinvestors, totalAmount, project, false);
+        model.addAttribute("goalAmount", project.getGoalAmount());
         model.addAttribute("investorsList", listinvestors);
         model.addAttribute("totalDonation", totalAmount);
         return "/project-end";
@@ -79,13 +93,14 @@ public class PostInvestmentController {
         modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
         /*PostInvest Total Amount invested on Project*/
 
-        int totalAmount = randomWithRange(0, 1000);
-        modelMap.addAttribute("totalDonationDummy", totalAmount);
+        //int totalAmount = randomWithRange(0, 1000);
+        ArrayList<Investor> listinvestors = new ArrayList<Investor>();
+        float  totalAmount = 0.00f;
+        totalAmount = investController.getallinvestors(listinvestors, totalAmount, project, false);
+        modelMap.addAttribute("totalDonation", totalAmount);
 
-        int var = 100 *totalAmount / toIntExact(project.getGoalAmount());
-        System.out.println("7777777777777777 " + var);
+        int var = 100 * (int) totalAmount / toIntExact(project.getGoalAmount());
         modelMap.addAttribute("varpercentage", var);
-
 
 
          /*Get the current user in the session in order to know if he is
@@ -120,7 +135,7 @@ public class PostInvestmentController {
         return totalProjectAmount;
     }
 
-    int randomWithRange(int min, int max) {
+    public static int randomWithRange(int min, int max) {
         int range = (max - min) + 1;
         return (int) (Math.random() * range) + min;
     }

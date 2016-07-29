@@ -13,6 +13,7 @@ import java.util.Date;
         @NamedQuery(name = "Investment.findById", query = "FROM Investment o WHERE o.id=:id"),
         @NamedQuery(name = "Investment.findAll", query = "FROM Investment o"),
         @NamedQuery(name = "Investment.findAllByProject", query = "FROM Investment o WHERE o.projectId=:projectId"),
+        @NamedQuery(name = "Investment.findAllByReward", query = "FROM Investment o WHERE o.projectId=:projectId AND o.rewardId=:rewardId")
         })
 public class Investment {
 
@@ -41,6 +42,8 @@ public class Investment {
     @NotNull
     private Long projectId;
 
+    private Long rewardId;
+
     @NotNull
     private boolean anonymous;
 
@@ -62,6 +65,9 @@ public class Investment {
         SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
         this.stringDate = formater.format(date);
     }
+
+    public Long getRewardId (){ return this.rewardId; }
+    public void setRewardId ( Long reward ) { this.rewardId = reward; }
 
     public Long getProjectId (){ return this.projectId; }
     public void setProjectId ( Long project ) { this.projectId = project; }
