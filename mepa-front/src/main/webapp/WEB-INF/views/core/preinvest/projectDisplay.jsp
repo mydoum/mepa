@@ -35,6 +35,12 @@
     application.setAttribute("visits", visits);
 %>
 
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
 <div class="container">
     <header class="title projectHeader">
         <h1 class="short">${project.name}</h1>
@@ -130,26 +136,20 @@
                         <p>${project.description}</p>
                     </div>
                 </div>
-            </div>
-            <br/>
-
-            <c:if test="${userco != null}">
-                <form:form role="form" action="/core/preinvest/projectDisplay/newsletter/${project.id}" method="post">
-                    <div class="form-group">
-                            <%--<Input TYPE="CHECKBOX"  NAME="check" VALUE="check" />
-                            Newsletter
-                            <br/>--%>
-                        <a style="text-align: center;">
+                <c:if test="${userco != null}">
+                    <form:form role="form" action="/core/preinvest/projectDisplay/newsletter/${project.id}" method="post">
+                        <div class="row">
                             <c:if test="${display == 2}">
-                                <button type="submit" id="like" data-loading-text="J'aime..." class="btn btn-success">J'AIME !</button>
+                                <button type="submit" data-toggle="tooltip" title="${nb_likes}" class="btn btn-success">J'AIME !</button>
                             </c:if>
                             <c:if test="${display == 1}">
-                                <button type="submit" id="dislike" data-loading-text="J'aime..." class="btn btn-danger">JE N'AIME PLUS </button>
+                                <button type="submit" data-toggle="tooltip" title="${nb_likes}" class="btn btn-danger">JE N'AIME PLUS </button>
                             </c:if>
-                        </a>
-                    </div>
-                </form:form>
-            </c:if>
+                        </div>
+                    </form:form>
+                </c:if>
+            </div>
+            <br/>
 
             <%-- Part of the page where the list of the investors are printed --%>
             <div class="col-md-12 investFormInside">
