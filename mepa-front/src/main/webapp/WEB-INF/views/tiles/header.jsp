@@ -23,10 +23,6 @@
                         <c:url var="postinvestUrl" value="/postinvest/project-list"/>
                         <li><a href="${postinvestUrl}">Projets terminés</a></li>
                     </ul>
-                    <ul class="nav navbar-nav">
-                        <c:url var="ongoinginvestUrl" value="/home"/>
-                        <li><a href="${ongoinginvestUrl}">Projets en cours</a></li>
-                    </ul>
 
                     <ul class="nav navbar-nav navbar-right">
                         <c:if test="${!isCo}">
