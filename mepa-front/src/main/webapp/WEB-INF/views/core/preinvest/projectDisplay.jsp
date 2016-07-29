@@ -166,7 +166,7 @@
                     </thead>
                     <tbody id="infiniteInvestorsList">
                     <c:if test="${investorsList.size() > 0}">
-                        <c:forEach items="${investorsList}" var="investor" varStatus="status">
+                        <c:forEach items="${investorsList}" begin="0" end="25" var="investor" varStatus="status">
                             <tr>
                                 <c:choose>
                                     <c:when test="${investor.anonymous}">
@@ -203,6 +203,7 @@
             </c:if>
         </div>
     </div>
+
     <c:if test="${userco != null}">
         <form:form role="form" action="/core/preinvest/projectDisplay/newsletter/${project.id}" method="post">
             <div class="form-group">
@@ -325,31 +326,30 @@
 </div>
 
 <script>
-    var startStep = 0;
+    var startStep = 5;
     startStep = Number(startStep).toFixed();
-    var stepSlider =
-    ${project.goalAmount} *
-    0.1;
+    var stepSlider = 5;
     stepSlider = Number(stepSlider).toFixed();
     var maxSlider = ${project.goalAmount};
     var infiniteListSize = ${investorsList.size()};
-
+    var infiniteScrollInitIndex = 10;
     var infiniteScrollerElements = [
-        <c:forEach items="${investorsList}" begin="10" end="${investorsList.size()}" var="investor" varStatus="status">
-        [
-            <c:choose>
-            <c:when test="${investor.anonymous}">
-            "Anonyme",
-            </c:when>
-            <c:when test="${investor.firstname == null or empty investor.firstname}">
-            "${investor.email}",
-            </c:when>
-            <c:otherwise>
-            "${investor.firstname}",
-            </c:otherwise>
-            </c:choose>
-            "${investor.moneyAmount}${amountCurrency}"
-        ]<c:if test="${not status.last}">, </c:if>
+
+        <c:forEach items="${investorsList}" begin="25" end="${investorsList.size()}" var="investor" varStatus="status">
+            [
+                <c:choose>
+                    <c:when test="${investor.anonymous}">
+                        "Anonyme",
+                    </c:when>
+                    <c:when test="${investor.firstname == null or empty investor.firstname}">
+                        "${investor.email}",
+                    </c:when>
+                    <c:otherwise>
+                        "${investor.firstname}",
+                    </c:otherwise>
+                    </c:choose>
+                        "${investor.moneyAmount}${amountCurrency}"
+            ]<c:if test="${not status.last}">,</c:if>
         </c:forEach>
     ];
 
@@ -363,6 +363,6 @@
 <script src="${investSliderJs}"></script>
 <c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>
 <script src="${investSliderPersoJs}"></script>
-<c:url var="investProgressBar" value="/js/investment/progressBar.js"/>
-<script src="${investProgressBar}"></script>
+<c:url var="investInfiniteScroll" value="/js/investment/infiniteScroll.js"/>
+<script src="${investInfiniteScroll}"></script>
 
