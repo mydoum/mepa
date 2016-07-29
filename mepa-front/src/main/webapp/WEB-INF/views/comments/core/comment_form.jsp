@@ -54,7 +54,7 @@
                 <div class="col-md-4"></div>
             </div>
         </c:if>
-        <c:if test="${userCo == null}">
+        <c:if test="${userCo != null}">
             <form:form role="form" action="/comment/submit/${project.id}" method="post">
                 <div class="form-group">
                     <label for="data">Laisser un commentaire :</label>
