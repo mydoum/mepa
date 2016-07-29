@@ -45,13 +45,13 @@ public class CommentsController {
                 modelMap.addAttribute("userco", userco);
 
                 AppCommentsModel newAppCommentsModel = new AppCommentsModel();
-                newAppCommentsModel.setData(text);
-                newAppCommentsModel.setProjectId(projectId);
-                newAppCommentsModel.setUser(userco.getLastName() + " " + userco.getFirstName());
+                newAppCommentsModel.setData_(text);
+                newAppCommentsModel.setProjectId_(projectId);
+                newAppCommentsModel.setUser_(userco.getLastName() + " " + userco.getFirstName());
                 this.commentsModelService.createCommentsModel(newAppCommentsModel);
 
                 /*Helps to sort the tickets */
-                newAppCommentsModel.setArriving(ticket);
+                newAppCommentsModel.setArriving_(ticket);
                 ticket++;
             }
 
