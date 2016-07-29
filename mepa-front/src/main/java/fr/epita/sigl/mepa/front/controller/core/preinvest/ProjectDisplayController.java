@@ -80,7 +80,6 @@ public class ProjectDisplayController {
 
         int display;
         List<NewsletterModel> newsletterlist = this.newsletterService.getAllNewsletterModels();
-        List<NewsletterModel> newsletterlistsorted = this.newsletterService.getAllSorted();
         //boolean exist = false;
         for (NewsletterModel i : newsletterlist) {
             if (i.getProjectid() == projectId) {
@@ -94,10 +93,7 @@ public class ProjectDisplayController {
                 modelMap.addAttribute("display", display);
             }
         }
-        for (NewsletterModel nm : newsletterlistsorted)
-        {
 
-        }
 
         return "/preinvest/projectDisplay";
     }
@@ -247,12 +243,13 @@ public class ProjectDisplayController {
         //J'envoi ma liste en session comme ca ils pourrons la récupérer.
         return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
     }
-    @RequestMapping(value = {"projectList/sortlist"})
-    public String projectNewsletter(ModelMap modelMap)
+    //Soufiane
+    @RequestMapping(value = {"/projectDisplay/newsletter/{projectId}"})
+    public String projectNewsletter( ModelMap modelMap)
     {
-        boolean i = true;
-        List<NewsletterModel> newsletterlistsorted = this.newsletterService.getAllSorted();
-        modelMap.addAttribute("sortedlist", newsletterlistsorted);
+        List<NewsletterModel> newslettersortedlist = this.newsletterService.getAllSorted();
+
+        modelMap.addAttribute("sortedlist", newslettersortedlist);
         return "/preinvest/projectList";
     }
 
