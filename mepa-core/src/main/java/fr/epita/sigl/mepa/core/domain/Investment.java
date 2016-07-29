@@ -68,7 +68,7 @@ public class Investment {
     }
 
     public Long getRewardId (){ return this.rewardId; }
-    public void setRewardId ( Long reward ) { this.rewardId = reward }
+    public void setRewardId ( Long reward ) { this.rewardId = reward; }
 
     public Long getProjectId (){ return this.projectId; }
     public void setProjectId ( Long project ) { this.projectId = project; }
