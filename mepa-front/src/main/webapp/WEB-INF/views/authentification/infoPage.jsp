@@ -117,6 +117,14 @@
                                            value="${nbProjectCreate}" disabled>
                                 </div>
                             </div>
+                            <div class="control-group">
+                                <label class="control-label" for="description">Nombre de projets visités</label>
+                                <div class="controls">
+                                    <input id="nbViewProject" name="comments" placeholder=""
+                                           class="form-control input-lg" type="text"
+                                           value="${nbViewProject}" disabled>
+                                </div>
+                            </div>
                         </fieldset>
                     </form>
                 </div>

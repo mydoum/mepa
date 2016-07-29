@@ -33,6 +33,7 @@ public class ProjectDisplayController {
 
     /*PostInvest Total Amount invested on Project*/
     protected static final String PROJECT_TOTAL_AMOUNT = "totalProjectAmountInvested";
+    private int NB_VIEWPROJECT = 1;
 
     @Autowired
     private ProjectService projectService;
@@ -110,7 +111,7 @@ public class ProjectDisplayController {
         }
         modelMap.addAttribute("hitsCount", project.getIp().size());
 
-
+        request.getSession().setAttribute("nbViewProject", NB_VIEWPROJECT++);
         return "/preinvest/projectDisplay";
     }
 
