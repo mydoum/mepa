@@ -118,7 +118,7 @@
                                 <div class="controls">
                                     <input id="passwordOld" name="passwordOld" placeholder=""
                                            class="form-control input-lg"
-                                           type="password" value="" pattern="[0-9a-zA-Z]{6,15}" required>
+                                           type="password" value="" pattern="{6,15}" required>
                                 </div>
                             </div>
                             <div class="control-group">
@@ -126,7 +126,7 @@
                                 <div class="controls">
                                     <input id="password" name="password" placeholder=""
                                            class="form-control input-lg"
-                                           type="password" value="" pattern="[0-9a-zA-Z]{6,15}" required>
+                                           type="password" value="" pattern="{6,15}" required>
                                 </div>
                             </div>
                             <div class="control-group">
@@ -135,7 +135,7 @@
                                 <div class="controls">
                                     <input id="passwordConf" name="passwordConf" placeholder=""
                                            class="form-control input-lg"
-                                           type="password" value="" pattern="[0-9a-zA-Z]{6,15}" required>
+                                           type="password" value="" pattern="{6,15}" required>
                                 </div>
                             </div>
                             <br/>
