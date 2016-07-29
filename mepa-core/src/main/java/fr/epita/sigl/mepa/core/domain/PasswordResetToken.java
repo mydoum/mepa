@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "PasswordResetToken.findById", query = "FROM PasswordResetToken o WHERE o.id=:id"),
-        @NamedQuery(name = "Investment.findByToken", query = "FROM PasswordResetToken o WHERE o.token=:token"),
+        @NamedQuery(name = "PasswordResetToken.findByToken", query = "FROM PasswordResetToken o WHERE o.token=:token"),
 })
 public class PasswordResetToken {
 

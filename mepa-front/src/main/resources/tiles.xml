@@ -59,6 +59,9 @@
     <definition name="/authentification/infoPage" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/infoPage.jsp"/>
     </definition>
+    <definition name="/authentification/resetPwd" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/authentification/resetPwd.jsp"/>
+    </definition>
 
     <!-- Invest -->
     <definition name="invest.definition" extends="base.definition">

@@ -28,10 +28,7 @@ import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RequestMapping("/authentification")
 @Controller
@@ -483,7 +480,7 @@ public class AuthController {
 
         String token = UUID.randomUUID().toString();
         PasswordResetToken pwdResetToken = new PasswordResetToken();
-        pwdResetToken.setLogin(user.getLogin());
+        pwdResetToken.setLogin(user.getLogin()); // FIXME CARE
         pwdResetToken.setToken(token);
         pwdResetToken.setExpiryDate(new Date()); // FIXME
         pwdResetTokenService.createPwdResetToken(pwdResetToken);
@@ -495,7 +492,7 @@ public class AuthController {
                         ":" + request.getServerPort() +
                         request.getContextPath();
 
-        String url = appUrl + "/authentification/changePassword?id=" + user.getId() + "&token=" + token;
+        String url = appUrl + "/authentification/changePwd?id=" + user.getId() + "&token=" + token;
         try {
             boolean isSent;
             String obj = "Récupération de votre mot de passe";
@@ -569,5 +566,24 @@ public class AuthController {
             return home.home(request);
         }
         return "/authentification/infoPage";
+    }
+
+    @RequestMapping(value = "/changePwd", method = RequestMethod.GET)
+    public String showChangePasswordPage(HttpServletRequest request,
+                                         @RequestParam("id") long id, @RequestParam("token") String token) {
+        PasswordResetToken passToken = pwdResetTokenService.getUserByToken(token);
+        AppUser appUser = appUserService.getUserById(id);
+        if (passToken == null || appUser ==  null) { // error
+            System.out.println("------- Utilisateur inconnu -------");
+            return home.home(request);
+        }
+
+//        Calendar cal = Calendar.getInstance();
+//        if ((passToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+//            System.out.println("------- Token périmé -------");
+//            return home.home(request);
+//        }
+
+        return "/authentification/resetPwd";
     }
 }
