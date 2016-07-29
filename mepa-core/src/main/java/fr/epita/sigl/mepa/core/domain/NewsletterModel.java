@@ -15,7 +15,6 @@ import java.util.ArrayList;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Newsletter.findById", query = "FROM NewsletterModel o WHERE o.id=:id"),
-        //Soufiane
         @NamedQuery(name = "Newsletter.findAllSorted", query = "FROM NewsletterModel o ORDER BY o.like_ "),
         @NamedQuery(name = "Newsletter.findAll", query = "FROM NewsletterModel o")})
 
@@ -72,7 +71,6 @@ public class NewsletterModel
     public void addEmail(String email_) {
 
         this.emails.add(email_);
-        System.out.println("\n LA taillle de la liste est  : " + emails.size() +  "\n");
 
     }
 

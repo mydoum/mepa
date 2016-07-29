@@ -124,6 +124,9 @@ public class ProjectDisplayController {
         return "/preinvest/projectList"; // The adress of the JSP coded in tiles.xml
     }
 
+
+
+
     @RequestMapping(value = {"/projectListInclude"}) // The adress to call the function
     public String projectListInclude(HttpServletRequest request, ModelMap modelMap) {
         /* Code your logic here */
@@ -209,9 +212,6 @@ public class ProjectDisplayController {
         /**[PROSPER]*/
         /** Get of the checkbox value and add off the user to the current project newsletter */
         boolean myCheckBox = request.getParameter("check") != null;
-        //if (myCheckBox == true)
-        //{
-
 
         int display;
         List<NewsletterModel> newsletterlist = this.newsletterService.getAllNewsletterModels();
@@ -219,18 +219,12 @@ public class ProjectDisplayController {
         if (userco != null) {
             for (NewsletterModel isd : newsletterlist) {
                 if (isd.getProjectid() == projectId) {
-                System.out.println("\n USER LOGIN : " + userco.getLogin() + "\n");
-                System.out.println("LE NOMBRE DE LIKE INITIAL SUR LE PROJ: " + project.getName() + " EST " + isd.getLike_());
-
-
                 if (isd.getEmails().contains(userco.getLogin())) {
-                    System.out.println("\n\n JE te connais déja niga\n\n");
                     isd.getEmails().remove(userco.getLogin());
                     if (isd.getLike_() != 0)
                         isd.setLike_(isd.getLike_() - 1);
                     display = 2;
                 } else {
-                    System.out.println("\n\n JE ne te connais pas niga\n\n");
                     isd.addEmail(userco.getLogin());
                     isd.setLike_(isd.getLike_() + 1);
                     display = 1;
@@ -240,30 +234,11 @@ public class ProjectDisplayController {
                 int nb_likes = isd.getLike_();
                 modelMap.addAttribute("nb_likes", nb_likes);
                     project.likeProject = nb_likes;
-                System.out.println("LE NOMBRE DE LIKE FINAL SUR LE PROJ: " + project.getName() + " EST " + isd.getLike_() + "VOILA:" +
-                project.likeProject);
                 }
             }
         }
-
-        /**[PROSPER]*/
-        /** Mapping in the current project page of the list containing all the comments of any projects*/
-            /*List<NewsletterModel>  newsletterlist = this.newsletterService.getAllNewsletterModels();
-            modelMap.addAttribute("newsletterlist",newsletterlist) ;*/
-        //}
-        //J'envoi ma liste en session comme ca ils pourrons la récupérer.
         return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
     }
-    //Soufiane
-    @RequestMapping(value = {"/projectlist/newsletter/{projectId}"})
-    public String projectNewsletter( ModelMap modelMap)
-    {
-        List<NewsletterModel> newslettersortedlist = this.newsletterService.getAllSorted();
-
-        modelMap.addAttribute("sortedlist", newslettersortedlist);
-        return "/preinvest/projectList";
-    }
-
     /***********************************************************************************************************/
 
 }
