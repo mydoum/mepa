@@ -15,25 +15,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 
-<%
-    Integer hitsCount = (Integer) application.getAttribute("hitCounter");
-    ArrayList<String> visits = (ArrayList<String>) application.getAttribute("visits");
-    if (visits == null)
-        visits = new ArrayList<>();
-    String id = request.getSession().getId();
-    if (hitsCount == null || hitsCount == 0) {
-        hitsCount = 1;
-        visits.add(id);
-    } else {
-        if (!visits.contains(id)) {
-            visits.add(id);
-            ++hitsCount;
-        }
-    }
-    application.setAttribute("hitCounter", hitsCount);
-    System.out.println(visits.size());
-    application.setAttribute("visits", visits);
-%>
+
 
 <script>
     $(document).ready(function(){
@@ -123,8 +105,7 @@
                     </div>
                     <div class="col-md-2">
                         <c:if test="${isAdmin == true}">
-                            <p>Nombre de visiteurs: <%= hitsCount%>
-                            </p>
+                            <p>Nombre de visiteur : ${hitsCount}</p>
                         </c:if>
                     </div>
                 </div>

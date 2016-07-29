@@ -58,6 +58,8 @@ public class Project implements Serializable {
 
     private Float totalAmountFinal;
 
+    private ArrayList<String> ip;
+
     @OneToMany(fetch = FetchType.EAGER) //, mappedBy="project"
     @JoinColumn(name="project_id")
     private Set<Reward> rewards;
@@ -85,6 +87,7 @@ public class Project implements Serializable {
         this.rewards= new HashSet<>();
         this.goalAmount = 0L;
         this.currency = Currency.DOLLAR;
+        this.ip = new ArrayList<>();
     }
 
     public Project(int nb) {
@@ -98,6 +101,7 @@ public class Project implements Serializable {
         this.rewards= new HashSet<>();
         this.goalAmount = 0L;
         this.currency = Currency.DOLLAR;
+        this.ip = new ArrayList<>();
     }
 
     //return Date with a specific format
@@ -211,6 +215,14 @@ public class Project implements Serializable {
 
     public void increaseVisits() {
         ++this.visitNumber;
+    }
+
+    public ArrayList<String> getIp(){
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip.add(ip);
     }
 
     public Boolean getTwitterAllowed() {

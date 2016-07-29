@@ -56,6 +56,9 @@ public class ProjectDisplayController {
         Project project = this.projectService.getProjectById(projectId);
         modelMap.addAttribute(PROJECT_ATTRIBUTE, project);
 
+        if (project == null)
+            return this.projectList(modelMap);
+
         /*PostInvest Total Amount invested on Project*/
         Float totalProjectAmountInvested = getProjectMoneyInvested(projectId);
         modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
@@ -98,6 +101,16 @@ public class ProjectDisplayController {
                 modelMap.addAttribute("nb_likes", nb_likes);
             }
         }
+
+
+        String id = request.getSession().getId();//get le ip string
+        System.out.println(id);
+
+        if (project.getIp() != null && !project.getIp().contains(id)) {//comparer si la string existe dans la liste des strings
+            project.setIp(id); // je rajoute le string
+            projectService.updateProject(project);
+        }
+        modelMap.addAttribute("hitsCount", project.getIp().size());
 
 
         return "/preinvest/projectDisplay";
