@@ -206,28 +206,31 @@ public class ProjectDisplayController {
         List<NewsletterModel> newsletterlist = this.newsletterService.getAllNewsletterModels();
         //boolean exist = false;
         if (userco != null) {
-            for (NewsletterModel i : newsletterlist) {
-                if (i.getProjectid() == projectId) {
+            for (NewsletterModel isd : newsletterlist) {
+                if (isd.getProjectid() == projectId) {
                 System.out.println("\n USER LOGIN : " + userco.getLogin() + "\n");
-                System.out.println("LE NOMBRE DE LIKE INITIAL SUR LE PROJ: " + project.getName() + " EST " + i.getLike_());
+                System.out.println("LE NOMBRE DE LIKE INITIAL SUR LE PROJ: " + project.getName() + " EST " + isd.getLike_());
 
-                if (i.getEmails().contains(userco.getLogin())) {
+
+                if (isd.getEmails().contains(userco.getLogin())) {
                     System.out.println("\n\n JE te connais déja niga\n\n");
-                    i.getEmails().remove(userco.getLogin());
-                    if (i.getLike_() != 0)
-                        i.setLike_(i.getLike_() - 1);
+                    isd.getEmails().remove(userco.getLogin());
+                    if (isd.getLike_() != 0)
+                        isd.setLike_(isd.getLike_() - 1);
                     display = 2;
                 } else {
                     System.out.println("\n\n JE ne te connais pas niga\n\n");
-                    i.addEmail(userco.getLogin());
-                    i.setLike_(i.getLike_() + 1);
+                    isd.addEmail(userco.getLogin());
+                    isd.setLike_(isd.getLike_() + 1);
                     display = 1;
                 }
-                this.newsletterService.updateNewsletter(i);
+                this.newsletterService.updateNewsletter(isd);
                 modelMap.addAttribute("display", display);
-                int nb_likes = i.getLike_();
+                int nb_likes = isd.getLike_();
                 modelMap.addAttribute("nb_likes", nb_likes);
-                System.out.println("LE NOMBRE DE LIKE FINAL SUR LE PROJ: " + project.getName() + " EST " + i.getLike_());
+                    project.likeProject = nb_likes;
+                System.out.println("LE NOMBRE DE LIKE FINAL SUR LE PROJ: " + project.getName() + " EST " + isd.getLike_() + "VOILA:" +
+                project.likeProject);
                 }
             }
         }

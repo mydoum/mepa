@@ -48,6 +48,8 @@ public class Project implements Serializable {
 
     private ArrayList<String> imagesLinks;
 
+    public long likeProject;
+
     private Long goalAmount;
 
     private Currency currency;
@@ -61,7 +63,6 @@ public class Project implements Serializable {
     private Boolean twitterAllowed;
 
     private Boolean facebookAllowed;
-
 
 
     /*
@@ -217,6 +218,11 @@ public class Project implements Serializable {
     public Boolean getFacebookAllowed() {
         return facebookAllowed;
     }
+    public long getlikeProject() {return likeProject;
+    }
+    public void setlikeProject(Boolean facebookAllowed) {
+        this.likeProject = likeProject;
+    }
 
     public void setFacebookAllowed(Boolean facebookAllowed) {
         this.facebookAllowed = facebookAllowed;
@@ -242,4 +248,5 @@ public class Project implements Serializable {
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
 }
