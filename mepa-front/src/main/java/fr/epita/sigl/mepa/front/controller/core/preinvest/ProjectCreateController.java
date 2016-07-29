@@ -137,6 +137,7 @@ public class ProjectCreateController {
         if (is_date || is_null || is_unique)
         {
             projectService.deleteProject(newProject);
+            model.addAttribute("project", newProject);
             return this.projectCreate(request, model);
         }
 

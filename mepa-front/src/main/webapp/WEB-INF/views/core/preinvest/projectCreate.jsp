@@ -10,6 +10,7 @@
   Time: 16:25
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css"/>
@@ -73,39 +74,9 @@
         });
     });
 
-
-    document.getElementsByName("Name").value = localStorage.getItem("name");
-    document.getElementsByName("starDate").value = localStorage.getItem("name");
-    document.getElementsByName("endDate").value = localStorage.getItem("name");
-    document.getElementsByName("goal").value = localStorage.getItem("name");
-    document.getElementsByName("currency").value = localStorage.getItem("name");
-    document.getElementsByName("description").value = localStorage.getItem("name");
-    document.getElementsByName("imageUrl").value = localStorage.getItem("name");
-
-
-
-    function save() {
-        var name = document.getElementsByName("Name").value;
-        var startDate = document.getElementsByName("starDate").value;
-        var endDate = document.getElementsByName("endDate").value;
-        var goal = document.getElementsByName("goal").value;
-        var currency = document.getElementsByName("currency").value;
-        var description = document.getElementsByName("description").value;
-        var imageUrl = document.getElementsByName("imageUrl").value;
-        localStorage.setItem("name", name);
-        localStorage.setItem("startDate", startDate);
-        localStorage.setItem("endDate", endDate);
-        localStorage.setItem("goal", goal);
-        localStorage.setItem("currency", currency);
-        localStorage.setItem("description", description);
-        localStorage.setItem("imageUrl", imageUrl);
-
-        location.reload();
-        return true;
-    }
-
-
 </script>
+
+
 
 <div class="container">
     <c:if test="${is_connected}">
@@ -126,13 +97,13 @@
     </c:if>
 
     <div class="well bs-component">
-        <sf:form method="post" modelAttribute="newProject" action="processCreation" onsubmit="return save();">
+        <sf:form method="post" modelAttribute="newProject" action="processCreation" onsubmit="save();">
         <div class="control-group">
             <label class="control-label">Nom du projet</label>
 
             <div class="controls">
                 <td><form:input path="Name" class="form-control input-lg" placeholder="Définissez le nom du projet"
-                                required="required"/></td>
+                                required="required" value="${project.name}"/></td>
             </div>
         </div>
         <br/>
@@ -144,7 +115,8 @@
             <div class="controls">
                 <div class="input-group input-append date" id="datePicker1">
                     <td><form:input path="startDate" class="form-control input-lg" placeholder="jj/mm/aaaa"
-                                    value='${current_date}' required="required" /></td>
+                                    value='${project.dateFormat(\"dd/MM/YYYY\", project.startDate)}'
+                                    required="required" /></td>
                                     <span class="input-group-addon add-on">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -159,7 +131,7 @@
             <div class="controls">
                 <div class="input-group input-append date" id="datePicker2">
                     <td><form:input path="endDate" class="form-control input-lg" placeholder="jj/mm/aaaa"
-                                    required="required"/></td>
+                                    required="required" value="${project.dateFormat(\"dd/MM/YYYY\", project.endDate)}"/></td>
                                     <span class="input-group-addon add-on">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -186,7 +158,7 @@
 
             <div class="controls">
                 <td><form:input name="goal" type="number" path="goalAmount" class="form-control input-lg"
-                                placeholder="Entrez la somme à atteindre" required="required"/></td>
+                                placeholder="Entrez la somme à atteindre" required="required" value="${project.goalAmount}"/></td>
             </div>
         </div>
         <br/>
@@ -196,7 +168,7 @@
 
             <div class="controls">
                 <td><form:textarea name="desription" path="description" class="form-control input-lg" placeholder="Description"
-                                   style="margin-top: 0px;"/></td>
+                                   style="margin-top: 0px;" value="${project.description}"/></td>
             </div>
         </div>
         <br/>

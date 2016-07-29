@@ -8,6 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
+<script src="js/investment/wizardForm.js"></script>
 
 
     <div class="container">
