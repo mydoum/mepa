@@ -12,10 +12,6 @@
                     startDate: '01/01/1900',
                     endDate: '29/07/2016'
                 })
-                .on('changeDate', function (e) {
-                    // Revalidate the date field
-                    $('#eventForm').formValidation('revalidateField', 'date');
-                });
     });
 </script>
 

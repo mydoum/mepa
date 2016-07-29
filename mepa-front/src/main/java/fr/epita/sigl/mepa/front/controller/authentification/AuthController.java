@@ -255,12 +255,13 @@ public class AuthController {
                         && StringUtils.equalsIgnoreCase(login, this.appUserService.getUserByLogin(login).getLogin())
                         && !StringUtils.equalsIgnoreCase(this.appUserService.getUserByLogin(login).getLogin(), userCo.getLogin())){
                     modelMap.addAttribute("isNotEdited", true);
-                    return "/authentification/editUser";
+                    return this.showEditUserPage(request, modelMap);
                 }
                 Date birthdateDate = new Date();
                 if (birthdate != "") {
-                    System.out.println("INSIDEEEEEEEEEEEE");
+
                     try {
+                        System.out.println("INSIDEEEEEEEEEEEE");
                         DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
                         birthdateDate = sourceFormat.parse(birthdate);
                     } catch (ParseException e) {
@@ -269,22 +270,23 @@ public class AuthController {
                     System.out.println("hello    ===== " + birthdateDate.toString());
                     user.setBirthDate(birthdateDate);
                 } else {
-                    System.out.println("ELLLLLLLSSSSSEEEE");
+//                    System.out.println("ELLLLLLLSSSSSEEEE");
                     birthdateDate = null;
                     user.setBirthDate(birthdateDate);
                 }
 
-                user.setLogin(login);
-                user.setDescription(description);
-                user.setAddress(address);
-
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
+                user.setLogin(login);
+                user.setAddress(address);
+                user.setDescription(description);
+
                 this.appUserService.updateUser(user);
+                System.out.println("user birthday is now : " + user.getBirthDate().toString());
                 request.getSession().setAttribute("userCo", user);
             }
             modelMap.addAttribute("isEdited", true);
-            return "/authentification/editUser";
+            return this.showEditUserPage(request, modelMap);
         }
         if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
             request.getSession().removeAttribute("oneTime");
