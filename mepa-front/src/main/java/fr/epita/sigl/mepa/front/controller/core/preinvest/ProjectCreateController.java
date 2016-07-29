@@ -147,6 +147,7 @@ public class ProjectCreateController {
         ArrayList<String> email_list = new ArrayList<>();
         new_newsletermodel.setEmails(email_list);
         new_newsletermodel.setLike_(0);
+        new_newsletermodel.setProject_name(newProject.getName());
         this.newsletterService.createNewsletter(new_newsletermodel);
         return this.rewardAddController.display(newProject.getId(), model);
     }
