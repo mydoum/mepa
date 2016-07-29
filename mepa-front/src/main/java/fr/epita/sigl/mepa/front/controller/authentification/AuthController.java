@@ -304,7 +304,6 @@ public class AuthController {
                 user.setDescription(description);
 
                 this.appUserService.updateUser(user);
-                System.out.println("user birthday is now : " + user.getBirthDate().toString());
                 request.getSession().setAttribute("userCo", user);
             }
             modelMap.addAttribute("isEdited", true);
