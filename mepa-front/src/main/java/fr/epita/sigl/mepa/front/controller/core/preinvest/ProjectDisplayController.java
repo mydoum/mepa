@@ -78,19 +78,24 @@ public class ProjectDisplayController {
         investController.investorsList(modelMap, request, project);
 
 
+
         int display;
         List<NewsletterModel> newsletterlist = this.newsletterService.getAllNewsletterModels();
         //boolean exist = false;
-        for (NewsletterModel i : newsletterlist) {
-            if (i.getProjectid() == projectId) {
-                if (i.getEmails().contains(userco.getLogin())) {
-                    System.out.println("\n\n JE te connais déja niga\n\n");
-                    display = 1;
-                } else {
-                    System.out.println("\n\n JE ne te connais pas niga\n\n");
-                    display = 2;
+        if (userco != null) {
+            for (NewsletterModel i : newsletterlist) {
+                if (i.getProjectid() == projectId) {
+                    if (i.getEmails().contains(userco.getLogin())) {
+                        System.out.println("\n\n JE te connais déja niga\n\n");
+                        display = 1;
+                    } else {
+                        System.out.println("\n\n JE ne te connais pas niga\n\n");
+                        display = 2;
+                    }
+                    modelMap.addAttribute("display", display);
                 }
-                modelMap.addAttribute("display", display);
+                int nb_likes = i.getLike_();
+                modelMap.addAttribute("nb_likes", nb_likes);
             }
         }
 
@@ -200,8 +205,9 @@ public class ProjectDisplayController {
         int display;
         List<NewsletterModel> newsletterlist = this.newsletterService.getAllNewsletterModels();
         //boolean exist = false;
-        for (NewsletterModel i : newsletterlist) {
-            if (i.getProjectid() == projectId) {
+        if (userco != null) {
+            for (NewsletterModel i : newsletterlist) {
+                if (i.getProjectid() == projectId) {
                 System.out.println("\n USER LOGIN : " + userco.getLogin() + "\n");
                 System.out.println("LE NOMBRE DE LIKE INITIAL SUR LE PROJ: " + project.getName() + " EST " + i.getLike_());
 
@@ -219,21 +225,12 @@ public class ProjectDisplayController {
                 }
                 this.newsletterService.updateNewsletter(i);
                 modelMap.addAttribute("display", display);
+                int nb_likes = i.getLike_();
+                modelMap.addAttribute("nb_likes", nb_likes);
                 System.out.println("LE NOMBRE DE LIKE FINAL SUR LE PROJ: " + project.getName() + " EST " + i.getLike_());
+                }
             }
         }
-
-            /*if (exist == false)
-            {
-                NewsletterModel new_newsletermodel = new NewsletterModel();
-                new_newsletermodel.setProjectid(projectId);
-                new_newsletermodel.addEmail(userco.getLogin());
-                new_newsletermodel.setLike(1);
-                ArrayList<String> email_list = new ArrayList<>();
-                new_newsletermodel.setEmail_list(email_list);
-                this.newsletterService.createNewsletter(new_newsletermodel);
-                System.out.println("LE NOMBRE DE LIKE SUR LE PROJ: " + project.getName() + " EST "+ new_newsletermodel.getLike());
-            }*/
 
         /**[PROSPER]*/
         /** Mapping in the current project page of the list containing all the comments of any projects*/
