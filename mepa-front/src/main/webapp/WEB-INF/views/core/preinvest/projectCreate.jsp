@@ -198,7 +198,7 @@
 
             <div class="controls">
                 <td><form:textarea name="desription" path="description" class="form-control input-lg" placeholder="Description"
-                                   style="margin-top: 0px;" value="${project.description}"/></td>
+                                   style="margin-top: 0px;"/>${project.description}</td>
             </div>
         </div>
         <br/>
@@ -207,7 +207,7 @@
             <label class="control-label">Image</label><label class="text-muted"> - Facultatif</label>
 
             <div class="controls">
-                <input name="imageUrl" class="form-control input-lg" placeholder="URL pour insérer une image"/>
+                <input name="imageUrl" class="form-control input-lg" placeholder="URL pour insérer une image" value="${project.imagesLinks.get(0)}"/>
             </div>
 
             <form action="http://www.html.am/html-codes/forms/html-form-tag-action.cfm" target="result" method="get">
