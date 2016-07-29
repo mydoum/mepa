@@ -249,18 +249,37 @@ public class AuthController {
                 String login = request.getParameter("email");
                 String description = request.getParameter("description");
                 String address = request.getParameter("address");
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
+                String birthdate = request.getParameter("birthdate");
+
                 if (this.appUserService.getUserByLogin(login) != null
                         && StringUtils.equalsIgnoreCase(login, this.appUserService.getUserByLogin(login).getLogin())
                         && !StringUtils.equalsIgnoreCase(this.appUserService.getUserByLogin(login).getLogin(), userCo.getLogin())){
                     modelMap.addAttribute("isNotEdited", true);
                     return "/authentification/editUser";
                 }
+                Date birthdateDate = new Date();
+                if (birthdate != "") {
+                    System.out.println("INSIDEEEEEEEEEEEE");
+                    try {
+                        DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        birthdateDate = sourceFormat.parse(birthdate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("hello    ===== " + birthdateDate.toString());
+                    user.setBirthDate(birthdateDate);
+                } else {
+                    System.out.println("ELLLLLLLSSSSSEEEE");
+                    birthdateDate = null;
+                    user.setBirthDate(birthdateDate);
+                }
+
                 user.setLogin(login);
                 user.setDescription(description);
                 user.setAddress(address);
 
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
                 this.appUserService.updateUser(user);
                 request.getSession().setAttribute("userCo", user);
             }

@@ -92,7 +92,6 @@
                                 </div>
                             </div>
                             <br/>
-                            <br/>
                             <div class="control-group">
                                 <!-- Button -->
                                 <div class="controls">
@@ -143,6 +142,7 @@
                                            type="password" value="" pattern="[0-9a-zA-Z]{6,15}" required>
                                 </div>
                             </div>
+                            <br/>
                             <div class="control-group">
                                 <!-- Button -->
                                 <div class="controls">
