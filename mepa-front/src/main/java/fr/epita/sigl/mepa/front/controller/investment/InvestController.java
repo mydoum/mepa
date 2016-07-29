@@ -171,8 +171,9 @@ public class InvestController {
         Project project = projectService.getProjectById(projectId);
         totalAmount = getallinvestors(investors, totalAmount, project, true);
         ArrayList<Investment> investments = new ArrayList<>(investmentService.getAllInvestmentsByProjectId(projectId));
+        ArrayList<Reward> rewards = new ArrayList<>(rewardService.getAllRewards());
         if (investors != null && investors.size() > 0) {
-            String fileWriter = Tools.writeCsvFile(investors, investments);
+            String fileWriter = Tools.writeCsvFile(investors, investments, rewards);
             response.setContentType("text/csv");
             response.setHeader("Content-Disposition", "attachment; filename=\"Investors_export_" + date + ".csv\"");
             try {
