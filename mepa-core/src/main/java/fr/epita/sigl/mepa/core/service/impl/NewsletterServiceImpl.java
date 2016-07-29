@@ -47,6 +47,7 @@ public class NewsletterServiceImpl implements NewsletterService
     public List<NewsletterModel> getAllNewsletterModels() {
         return this.newsletterDao.getAll();
     }
+    //Soufiane
     @Override
     @Transactional(readOnly = true)
     public List<NewsletterModel> getAllSorted()

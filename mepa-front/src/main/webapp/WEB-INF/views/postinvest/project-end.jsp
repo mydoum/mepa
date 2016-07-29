@@ -29,7 +29,7 @@
     </header>
 
     <jsp:useBean id="now" class="java.util.Date"/>
-    <c:if test="${totalDonationDummy gt project.goalAmount  && project.endDate lt now}">
+    <c:if test="${totalDonation gt project.goalAmount  && project.endDate lt now}">
     <div class="container">
         <br>
         <div class="alert alert-success" >
@@ -37,7 +37,7 @@
         </div>
     </div>
     </c:if>
-    <c:if test="${totalDonationDummy lt project.goalAmount  && project.endDate lt now}">
+    <c:if test="${totalDonation lt project.goalAmount  && project.endDate lt now}">
     <div class="container">
         <div class="alert alert-danger">
             <h2><strong><center>Ce Projet est terminé et n'a malheureusement pas été financé !</center></strong></h2>
@@ -189,7 +189,7 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <h4>Contribution totale : ${totalDonationDummy}€</h4>
+                        <h4>Contribution totale : ${totalDonation}€</h4>
                     </div>
                     <div class="col-md-12">
                         <h4>Objectif : <%--${project.requestAmount}--%>${project.goalAmount} €</h4>
@@ -198,7 +198,7 @@
                         <%-- POST INVEST --%>
                         <%-- PARTI POUR LE POST INVEST --%>
                         <jsp:useBean id="todayDate" class="java.util.Date"/>
-                            <c:if test="${totalDonationDummy lt project.goalAmount  && project.endDate lt now}">
+                            <c:if test="${totalDonation lt project.goalAmount  && project.endDate lt now}">
                             <c:url var="addAmountUrl" value="/admin/addAmount/"/>
                             <form:form id="Post-Invest-Form" role="form" controller="AdminController" method="post"
                                        action="${addAmountUrl}">

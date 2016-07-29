@@ -12,28 +12,42 @@
                 <th>Nom du projet</th>
                 <th>Date de fin</th>
                 <th>Description</th>
+                <th>Popularité</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <button type="submit" id="like" data-loading-text="Trier" class="btn btn-success">Trier par popularité</button><center/>
-            <sf:form method="get" modelAttribute="newProject" action="processCreation">
-                <c:forEach items="${project_list}" var="project" varStatus="loop">
-                    <tr>
-                        <td><img src="${project.imagesLinks.get(0)}" alt="Illustration" style="height: 80px;"></td>
-                        <td><a href="<c:url value='/core/preinvest/projectDisplay/${project.id}'/>" >${project.name} </a></td>
-                        <td>${project.dateFormat("dd/MM/yyyy",project.endDate)}</td>
-                        <td>${project.description}</td>
-                        <!--<td>
-                            Rewards:
+            <c:if test="${userco != null}">
+            <button type="submit" id="sort" data-loading-text="Trier" class="btn btn-success">Trier par popularité</button><center/>
+                <c:forEach items="${sortedlist}" var="sortlist" varStatus="loop">
+                    <c:if test="${sortlist.projectId == project.id}">
 
-                            <c:forEach items="${project.rewards}" var="reward" varStatus="loop">
-                                - ${reward.name} :${reward.description} <br />
-                            </c:forEach>
-                        </td>-->
-                    </tr>
+                            <td>${sortlist.likes_}</td>
+                            <td><fmt:formatDate value="${c_model.created}" pattern="HH:mm:ss"/></td>
+                            <td>${c_model.data}</td>
+                        </tr>
+                    </c:if>
                 </c:forEach>
-            </sf:form>
+            </c:if>
+            <c:forEach items="${project_list}" var="project" varStatus="loop">
+                <tr>
+                    <td><img src="${project.imagesLinks.get(0)}" alt="Illustration" style="height: 80px;"></td>
+                    <td><a href="<c:url value='/core/preinvest/projectDisplay/${project.id}'/>" >${project.name} </a></td>
+                    <td>${project.dateFormat("dd/MM/yyyy",project.endDate)}</td>
+                    <td>${project.description}</td>
+                <td>${(project.getlikeProject())}</td>
+
+            </tr>
+
+                    <!--<td>
+                        Rewards:
+
+                        <c:forEach items="${project.rewards}" var="reward" varStatus="loop">
+                            - ${reward.name} :${reward.description} <br />
+                        </c:forEach>
+                    </td>--> 
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

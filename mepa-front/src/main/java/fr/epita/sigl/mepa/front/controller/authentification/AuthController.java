@@ -1,19 +1,25 @@
 package fr.epita.sigl.mepa.front.controller.authentification;
 
 import fr.epita.sigl.mepa.core.domain.AppUser;
+import fr.epita.sigl.mepa.core.domain.PasswordResetToken;
 import fr.epita.sigl.mepa.core.service.AppUserService;
+import fr.epita.sigl.mepa.core.service.PasswordResetTokenService;
+import fr.epita.sigl.mepa.core.service.impl.PasswordResetTokenServiceImpl;
 import fr.epita.sigl.mepa.front.Service.AuthentificationFrontService;
 import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayController;
 import fr.epita.sigl.mepa.front.controller.home.HomeController;
 import fr.epita.sigl.mepa.front.utilities.Tools;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("/authentification")
 @Controller
@@ -34,6 +41,9 @@ public class AuthController {
     private AppUserService appUserService;
 
     @Autowired
+    PasswordResetTokenService pwdResetTokenService;
+
+    @Autowired
     private HomeController home;
 
     @Autowired
@@ -41,6 +51,15 @@ public class AuthController {
 
     private Tools tools = new Tools();
     private AuthentificationFrontService authentificationFrontService = new AuthentificationFrontService();
+
+    private int NB_VIEWINSCRIPTION = 1;
+    private int NB_INSCRIPTION = 1;
+    private int NB_VIEWLOGIN = 1;
+    private int NB_LOGIN = 1;
+    private int NB_VIEWFORGET = 1;
+    private int NB_FORGET = 1;
+    private int NB_VIEWEDITUSER = 1;
+    private int NB_EDITUSER = 1;
 
     @RequestMapping(value = {"/signup"}, method = {RequestMethod.GET})
     public String showSignUpPage(HttpServletRequest request, ModelMap modelMap) {
@@ -101,6 +120,7 @@ public class AuthController {
         request.getSession().setAttribute("isCo", true);
         request.getSession().setAttribute("oneTime", true);
         modelMap.addAttribute("isCo", true);
+        request.getSession().setAttribute("nbInscription", NB_INSCRIPTION++);
         return home.home(request);
     }
 
@@ -111,6 +131,7 @@ public class AuthController {
         if (userCo != null && isCo) { // The user in already log in
             return home.home(request);
         }
+        request.getSession().setAttribute("nbViewForget", NB_VIEWFORGET++);
         return "/authentification/resendPwd";
     }
 
@@ -132,10 +153,10 @@ public class AuthController {
             } catch (Exception e) {
                 modelMap.addAttribute("isNotSent", true);
             }
-        }
-        else {
+        } else {
             modelMap.addAttribute("isNotSent", true);
         }
+        request.getSession().setAttribute("nbForget", NB_FORGET++);
         return "/authentification/resendPwd";
     }
 
@@ -151,6 +172,7 @@ public class AuthController {
         if (appUsers.size() > 0) {
             modelMap.addAttribute("usersList", appUsers);
         }
+        request.getSession().setAttribute("nbViewLogin", NB_VIEWLOGIN++);
         return "/authentification/signin";
     }
 
@@ -170,7 +192,8 @@ public class AuthController {
 
         AppUser signinUser = this.appUserService.getUserByLogin(inputLogin);
         if (authentificationFrontService.isUserValid(signinUser, inputPwd, request, modelMap)) {
-            return "/home/home";
+            request.getSession().setAttribute("nbLogin", NB_LOGIN++);
+            return home.home(request);
         } else {
             return "/authentification/signin";
         }
@@ -189,7 +212,7 @@ public class AuthController {
 
         AppUser signinUser = this.appUserService.getUserByLogin(inputLogin);
         if (authentificationFrontService.isUserValid(signinUser, inputPwd, request, modelMap)) {
-            System.out.println("otot");
+            request.getSession().setAttribute("nbLogin", NB_LOGIN++);
             return projectDisplayController.projectDisplay(request, modelMap, projectId);
         } else {
             return "/authentification/signin";
@@ -205,7 +228,7 @@ public class AuthController {
             request.getSession().removeAttribute("userCo");
             request.getSession().removeAttribute("isCo");
         }
-        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")) {
             request.getSession().removeAttribute("oneTime");
         }
         return home.home(request);
@@ -228,9 +251,10 @@ public class AuthController {
 
         if (userCo != null && isCo) {
             // tu peux afficher les données user
+            request.getSession().setAttribute("nbViewEditUser", NB_VIEWEDITUSER++);
             return "/authentification/editUser";
         }
-        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")) {
             request.getSession().removeAttribute("oneTime");
         }
         return home.home(request);
@@ -253,14 +277,15 @@ public class AuthController {
 
                 if (this.appUserService.getUserByLogin(login) != null
                         && StringUtils.equalsIgnoreCase(login, this.appUserService.getUserByLogin(login).getLogin())
-                        && !StringUtils.equalsIgnoreCase(this.appUserService.getUserByLogin(login).getLogin(), userCo.getLogin())){
+                        && !StringUtils.equalsIgnoreCase(this.appUserService.getUserByLogin(login).getLogin(), userCo.getLogin())) {
                     modelMap.addAttribute("isNotEdited", true);
-                    return "/authentification/editUser";
+                    return this.showEditUserPage(request, modelMap);
                 }
                 Date birthdateDate = new Date();
                 if (birthdate != "") {
-                    System.out.println("INSIDEEEEEEEEEEEE");
+
                     try {
+                        System.out.println("INSIDEEEEEEEEEEEE");
                         DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
                         birthdateDate = sourceFormat.parse(birthdate);
                     } catch (ParseException e) {
@@ -269,24 +294,26 @@ public class AuthController {
                     System.out.println("hello    ===== " + birthdateDate.toString());
                     user.setBirthDate(birthdateDate);
                 } else {
-                    System.out.println("ELLLLLLLSSSSSEEEE");
+//                    System.out.println("ELLLLLLLSSSSSEEEE");
                     birthdateDate = null;
                     user.setBirthDate(birthdateDate);
                 }
 
-                user.setLogin(login);
-                user.setDescription(description);
-                user.setAddress(address);
-
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
+                user.setLogin(login);
+                user.setAddress(address);
+                user.setDescription(description);
+
                 this.appUserService.updateUser(user);
+                System.out.println("user birthday is now : " + user.getBirthDate().toString());
                 request.getSession().setAttribute("userCo", user);
             }
             modelMap.addAttribute("isEdited", true);
-            return "/authentification/editUser";
+            request.getSession().setAttribute("nbEditUser", NB_EDITUSER++);
+            return this.showEditUserPage(request, modelMap);
         }
-        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")) {
             request.getSession().removeAttribute("oneTime");
         }
         return home.home(request);
@@ -352,7 +379,7 @@ public class AuthController {
     public String getCheckUsersPage(HttpServletRequest request, ModelMap modelMap) {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
-        if ((userCo == null) || !isCo || !userCo.getIsAdmin()){
+        if ((userCo == null) || !isCo || !userCo.getIsAdmin()) {
             return home.home(request);
         }
         List<AppUser> appUsers = this.appUserService.getAllUsers();
@@ -380,14 +407,13 @@ public class AuthController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             modelMap.addAttribute("noUsers", true);
         }
         return "/authentification/checkUsers";
     }
 
-        @RequestMapping(value = {"/modifyPassword"}, method = {RequestMethod.GET})
+    @RequestMapping(value = {"/modifyPassword"}, method = {RequestMethod.GET})
     public String showModifyPassordPage(HttpServletRequest request, ModelMap modelMap) {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
         Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
@@ -395,7 +421,10 @@ public class AuthController {
 
             return "/authentification/modifyPassword";
         }
-        return "/home/home";
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")) {
+            request.getSession().removeAttribute("oneTime");
+        }
+        return home.home(request);
     }
 
     @RequestMapping(value = {"/modifyPassword"}, method = {RequestMethod.POST})
@@ -414,7 +443,7 @@ public class AuthController {
                 boolean newPassword = true;
                 System.out.println("login = " + userCo.getLogin());
 
-                if (!passwordOld.equals(userCo.getPassword())){
+                if (!passwordOld.equals(userCo.getPassword())) {
                     newPassword = false;
                     modelMap.addAttribute("newPassword", newPassword);
                     return "/authentification/modifyPassword";
@@ -422,17 +451,70 @@ public class AuthController {
                     confPassword = false;
                     modelMap.addAttribute("confPassword", confPassword);
                     return "/authentification/modifyPassword";
-                } else  {
+                } else {
                     userCo.setPassword(password);
                     this.appUserService.updateUser(userCo);
                     request.getSession().setAttribute("userCo", userCo);
                     newPassword = true;
                     confPassword = true;
-                    return "/home/home";
+                    if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")) {
+                        request.getSession().removeAttribute("oneTime");
+                    }
+                    return home.home(request);
                 }
             }
         }
-        return "/home/home";
+        if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")) {
+            request.getSession().removeAttribute("oneTime");
+        }
+        return home.home(request);
+    }
 
+    @RequestMapping(value = {"/getStatistics"}, method = {RequestMethod.GET})
+    public String showStatistics(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        int nbViewInscription = 0;
+        int nbInscription = 0;
+        int nbViewLogin = 0;
+        int nbLogin = 0;
+        int nbViewForget = 0;
+        int nbForget = 0;
+        int nbViewEditUser = 0;
+        int nbEditUser = 0;
+        int nbComments = 0;
+        if (request.getSession().getAttribute("nbViewInscription") != null) {
+            nbViewInscription = (Integer) request.getSession().getAttribute("nbViewInscription");
+            System.out.println("VIEW INSCRIPTION = " + nbViewInscription);
+        }
+        if (request.getSession().getAttribute("nbInscription") != null)
+            nbInscription = (Integer) request.getSession().getAttribute("nbInscription");
+        if (request.getSession().getAttribute("nbViewLogin") != null)
+            nbViewLogin = (Integer) request.getSession().getAttribute("nbViewLogin");
+        if (request.getSession().getAttribute("nbLogin") != null)
+            nbLogin = (Integer) request.getSession().getAttribute("nbLogin");
+        if (request.getSession().getAttribute("nbViewForget") != null)
+            nbViewForget = (Integer) request.getSession().getAttribute("nbViewForget");
+        if (request.getSession().getAttribute("nbForget") != null)
+            nbForget = (Integer) request.getSession().getAttribute("nbForget");
+        if (request.getSession().getAttribute("nbViewEditUser") != null)
+            nbViewEditUser = (Integer) request.getSession().getAttribute("nbViewEditUser");
+        if (request.getSession().getAttribute("nbEditUser") != null)
+            nbEditUser = (Integer) request.getSession().getAttribute("nbEditUser");
+        if (request.getSession().getAttribute("nbComments") != null)
+            nbEditUser = (Integer) request.getSession().getAttribute("nbComments");
+        modelMap.addAttribute("nbViewInscription", nbViewInscription);
+        modelMap.addAttribute("nbInscription", nbInscription);
+        modelMap.addAttribute("nbViewLogin", nbViewLogin);
+        modelMap.addAttribute("nbLogin", nbLogin);
+        modelMap.addAttribute("nbViewForget", nbViewForget);
+        modelMap.addAttribute("nbForget", nbForget);
+        modelMap.addAttribute("nbViewEditUser", nbViewEditUser);
+        modelMap.addAttribute("nbEditUser", nbEditUser);
+        modelMap.addAttribute("nbComments", nbComments);
+        if ((userCo == null) || !isCo || !userCo.getIsAdmin()) {
+            return home.home(request);
+        }
+        return "/authentification/infoPage";
     }
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Newsletter.findById", query = "FROM NewsletterModel o WHERE o.id=:id"),
+        //Soufiane
         @NamedQuery(name = "Newsletter.findAllSorted", query = "FROM NewsletterModel o ORDER BY o.like_ "),
         @NamedQuery(name = "Newsletter.findAll", query = "FROM NewsletterModel o")})
 
@@ -30,7 +31,7 @@ public class NewsletterModel
 
     private Long projectid;
 
-
+    private String project_name;
 
     private ArrayList<String> emails;
     private int like_;
@@ -52,7 +53,13 @@ public class NewsletterModel
         this.like_ = like_;
     }
 
+    public String getProject_name() {
+        return project_name;
+    }
 
+    public void setProject_name(String project_name) {
+        this.project_name = project_name;
+    }
 
     public long getProjectid() {
         return projectid;

@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by prosp_000 on 21/07/2016.
@@ -27,6 +30,7 @@ import java.io.IOException;
 public class CommentsController {
     private static final Logger LOG = LoggerFactory.getLogger(CommentsController.class);
     private int ticket = 1;
+    private int NB_COMMENTS = 1;
 
     protected static final String COMMENTS_MODELS_MODEL_ATTRIBUTE = "c_models";
     // private static final String ADD_CUSTOM_COMMENTS_MODEL_FORM_BEAN_MODEL_ATTRIBUTE = "addCustomCommentsModelFormBean";
@@ -35,28 +39,30 @@ public class CommentsController {
     private CommentsModelService commentsModelService;
 
     @RequestMapping(value = {"/", "/{projectId}"}, method = {RequestMethod.POST})
-    public String processForm(HttpServletRequest request, ModelMap modelMap, HttpServletResponse response, @PathVariable int projectId) throws IOException {
+    public String processForm(HttpServletRequest request, ModelMap modelMap, HttpServletResponse response, @PathVariable Long projectId) throws IOException {
 
         String text = request.getParameter("userText");
-            if (text != "") {
+
+        if (text != "") {
 
                 AppUser userco = new AppUser();
                 userco = (AppUser) request.getSession().getAttribute("userCo");
                 modelMap.addAttribute("userco", userco);
 
                 AppCommentsModel newAppCommentsModel = new AppCommentsModel();
-                newAppCommentsModel.setData(text);
-                newAppCommentsModel.setProjectId(projectId);
-                newAppCommentsModel.setUser(userco.getLastName() + " " + userco.getFirstName());
+                newAppCommentsModel.setData_(text);
+                newAppCommentsModel.setProjectId_(projectId);
+                newAppCommentsModel.setUser_(userco.getLastName() + " " + userco.getFirstName());
                 this.commentsModelService.createCommentsModel(newAppCommentsModel);
 
                 /*Helps to sort the tickets */
-                newAppCommentsModel.setArriving(ticket);
+                newAppCommentsModel.setArriving_(ticket);
                 ticket++;
             }
 
 
-        response.sendRedirect("/core/preinvest/projectDisplay/" + Integer.toString(projectId)+ "/comment");
+        response.sendRedirect("/core/preinvest/projectDisplay/" + Long.toString(projectId)+ "/comment");
+        request.getSession().setAttribute("nbComments", NB_COMMENTS++);
         return "/preinvest/projectDisplay";
     }
 }

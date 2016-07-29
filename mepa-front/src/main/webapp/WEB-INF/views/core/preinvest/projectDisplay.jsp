@@ -35,6 +35,12 @@
     application.setAttribute("visits", visits);
 %>
 
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
 <div class="container">
     <header class="title projectHeader">
         <h1 class="short">${project.name}</h1>
@@ -130,26 +136,20 @@
                         <p>${project.description}</p>
                     </div>
                 </div>
-            </div>
-            <br/>
-
-            <c:if test="${userco != null}">
-                <form:form role="form" action="/core/preinvest/projectDisplay/newsletter/${project.id}" method="post">
-                    <div class="form-group">
-                            <%--<Input TYPE="CHECKBOX"  NAME="check" VALUE="check" />
-                            Newsletter
-                            <br/>--%>
-                        <a style="text-align: center;">
+                <c:if test="${userco != null}">
+                    <form:form role="form" action="/core/preinvest/projectDisplay/newsletter/${project.id}" method="post">
+                        <div class="row">
                             <c:if test="${display == 2}">
-                                <button type="submit" id="like" data-loading-text="J'aime..." class="btn btn-success">J'AIME !</button>
+                                <button type="submit" data-toggle="tooltip" title="${nb_likes}" class="btn btn-success">J'AIME !</button>
                             </c:if>
                             <c:if test="${display == 1}">
-                                <button type="submit" id="dislike" data-loading-text="J'aime..." class="btn btn-danger">JE N'AIME PLUS </button>
+                                <button type="submit" data-toggle="tooltip" title="${nb_likes}" class="btn btn-danger">JE N'AIME PLUS </button>
                             </c:if>
-                        </a>
-                    </div>
-                </form:form>
-            </c:if>
+                        </div>
+                    </form:form>
+                </c:if>
+            </div>
+            <br/>
 
             <%-- Part of the page where the list of the investors are printed --%>
             <div class="col-md-12 investFormInside">
@@ -166,7 +166,7 @@
                     </thead>
                     <tbody id="infiniteInvestorsList">
                     <c:if test="${investorsList.size() > 0}">
-                        <c:forEach items="${investorsList}" var="investor" varStatus="status">
+                        <c:forEach items="${investorsList}" begin="0" end="25" var="investor" varStatus="status">
                             <tr>
                                 <c:choose>
                                     <c:when test="${investor.anonymous}">
@@ -203,26 +203,6 @@
             </c:if>
         </div>
     </div>
-<<<<<<< HEAD
-    <c:if test="${userco != null}">
-        <form:form role="form" action="/core/preinvest/projectDisplay/newsletter/${project.id}" method="post">
-            <div class="form-group">
-                    <%--<Input TYPE="CHECKBOX"  NAME="check" VALUE="check" />
-                    Newsletter
-                    <br/>--%>
-                <a style="text-align: center;">
-                    <c:if test="${display == 2}">
-                        <button type="submit" id="like" data-loading-text="J'aime..." class="btn btn-success">J'AIME !</button><center/>
-                    </c:if>
-
-                    <c:if test="${display == 1}">
-                        <button type="submit" id="dislike" data-loading-text="J'aime..." class="btn btn-danger">JE N'AIME PLUS </button><center/>
-                    </c:if>
-                </a>
-            </div>
-        </form:form>
-    </c:if>
-
 
     <%-- Right side bar for investing for the project and the list of counterparts --%>
     <aside class="col-md-4">
@@ -326,31 +306,30 @@
 </div>
 
 <script>
-    var startStep = 0;
+    var startStep = 5;
     startStep = Number(startStep).toFixed();
-    var stepSlider =
-    ${project.goalAmount} *
-    0.1;
+    var stepSlider = 5;
     stepSlider = Number(stepSlider).toFixed();
     var maxSlider = ${project.goalAmount};
     var infiniteListSize = ${investorsList.size()};
-
+    var infiniteScrollInitIndex = 10;
     var infiniteScrollerElements = [
-        <c:forEach items="${investorsList}" begin="10" end="${investorsList.size()}" var="investor" varStatus="status">
-        [
-            <c:choose>
-            <c:when test="${investor.anonymous}">
-            "Anonyme",
-            </c:when>
-            <c:when test="${investor.firstname == null or empty investor.firstname}">
-            "${investor.email}",
-            </c:when>
-            <c:otherwise>
-            "${investor.firstname}",
-            </c:otherwise>
-            </c:choose>
-            "${investor.moneyAmount}${amountCurrency}"
-        ]<c:if test="${not status.last}">, </c:if>
+
+        <c:forEach items="${investorsList}" begin="25" end="${investorsList.size()}" var="investor" varStatus="status">
+            [
+                <c:choose>
+                    <c:when test="${investor.anonymous}">
+                        "Anonyme",
+                    </c:when>
+                    <c:when test="${investor.firstname == null or empty investor.firstname}">
+                        "${investor.email}",
+                    </c:when>
+                    <c:otherwise>
+                        "${investor.firstname}",
+                    </c:otherwise>
+                    </c:choose>
+                        "${investor.moneyAmount}${amountCurrency}"
+            ]<c:if test="${not status.last}">,</c:if>
         </c:forEach>
     ];
 
@@ -364,6 +343,6 @@
 <script src="${investSliderJs}"></script>
 <c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>
 <script src="${investSliderPersoJs}"></script>
-<c:url var="investProgressBar" value="/js/investment/progressBar.js"/>
-<script src="${investProgressBar}"></script>
+<c:url var="investInfiniteScroll" value="/js/investment/infiniteScroll.js"/>
+<script src="${investInfiniteScroll}"></script>
 

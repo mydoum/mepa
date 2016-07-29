@@ -76,8 +76,9 @@ public class ProjectCreateController {
 
         if (is_co == false)
             return authController.getsignin(request, modelMap);
-        else
+        else {
             return "/preinvest/projectCreate"; // The adress of the JSP coded in tiles.xml
+        }
     }
 
     @RequestMapping(value = {"/processCreation"}, method = RequestMethod.POST) // The adress to call the function
@@ -148,6 +149,7 @@ public class ProjectCreateController {
         ArrayList<String> email_list = new ArrayList<>();
         new_newsletermodel.setEmails(email_list);
         new_newsletermodel.setLike_(0);
+        new_newsletermodel.setProject_name(newProject.getName());
         this.newsletterService.createNewsletter(new_newsletermodel);
         return this.rewardAddController.display(newProject.getId(), model);
     }

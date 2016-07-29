@@ -13,10 +13,6 @@
                     startDate: '01/01/1900',
                     endDate: '29/07/2016'
                 })
-                .on('changeDate', function (e) {
-                    // Revalidate the date field
-                    $('#eventForm').formValidation('revalidateField', 'date');
-                });
     });
 </script>
 
@@ -75,7 +71,7 @@
                                 <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
                                     Vous n'avez pas de compte ?
                                     <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
-                                        Inscrivez-vous sur MEPA !
+                                        Inscrivez-vous sur LGIS !
                                     </a>
                                 </div>
                             </div>
@@ -97,18 +93,21 @@
             </div>
             <div class="panel-body">
                 <c:url var="addCustomUserFormActionUrl" value="/authentification/createUser"/>
+                <% int nbViewInscription = 0;
+                    if (session.getAttribute("nbViewInscription") != null)
+                        nbViewInscription = (Integer) session.getAttribute("nbViewInscription");
+                    nbViewInscription = nbViewInscription + 1;
+                    session.setAttribute("nbViewInscription", nbViewInscription);
+                    System.out.println("LOLOLOLOLOLOL " + nbViewInscription);%>
                 <form data-toggle="validator" role="form" id="signupform" class="form-horizontal"
                       action="${addCustomUserFormActionUrl}"
                       modelAttribute="addCustomUserFormBean" role="form"
                       method="POST">
                     <fieldset>
-
                         <div id="signupalert" style="display:none" class="alert alert-danger">
                             <p>Error:</p>
                             <span></span>
                         </div>
-
-
                         <div class="form-group">
                             <label for="emailInput" class="col-md-3 control-label">Adresse e-mail</label>
                             <div class="col-md-9">

@@ -56,6 +56,9 @@
     <definition name="/authentification/modifyPassword" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/authentification/modifyPwd.jsp"/>
     </definition>
+    <definition name="/authentification/infoPage" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/authentification/infoPage.jsp"/>
+    </definition>
 
     <!-- Invest -->
     <definition name="invest.definition" extends="base.definition">
