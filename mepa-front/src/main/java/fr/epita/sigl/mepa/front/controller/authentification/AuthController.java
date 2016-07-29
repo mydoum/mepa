@@ -470,6 +470,28 @@ public class AuthController {
         return home.home(request);
     }
 
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    public String resetPassword(
+            HttpServletRequest request, @RequestParam("email") String userEmail) {
+
+        AppUser user = appUserService.getUserByLogin(userEmail);
+
+        if (user == null) {
+//            throw new UserNotFoundException();
+            // ERROR
+        }
+//
+//        String appUrl =
+//                "http://" + request.getServerName() +
+//                        ":" + request.getServerPort() +
+//                        request.getContextPath();
+//        SimpleMailMessage email =
+//                constructResetTokenEmail(appUrl, request.getLocale(), token, user);
+//        mailSender.send(email);
+
+        return home.home(request);
+
+    }
     @RequestMapping(value = {"/getStatistics"}, method = {RequestMethod.GET})
     public String showStatistics(HttpServletRequest request, ModelMap modelMap) {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
