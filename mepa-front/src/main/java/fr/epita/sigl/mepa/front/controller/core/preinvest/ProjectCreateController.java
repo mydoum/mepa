@@ -92,14 +92,7 @@ public class ProjectCreateController {
         newProject.setUser_id(connectedUser.getId());
 
 
-//*prosper
-        NewsletterModel new_newsletermodel = new NewsletterModel();
-        new_newsletermodel.setProjectid(newProject.getId());
-        ArrayList<String> email_list = new ArrayList<>();
-        new_newsletermodel.setEmails(email_list);
-        new_newsletermodel.setLike_(0);
 
-        this.newsletterService.createNewsletter(new_newsletermodel);
         // Change string to date
         String startDateString = request.getParameter("startDate");
         String endDateString = request.getParameter("endDate");
@@ -146,6 +139,15 @@ public class ProjectCreateController {
             projectService.deleteProject(newProject);
             return this.projectCreate(request, model);
         }
+
+
+//*prosper
+        NewsletterModel new_newsletermodel = new NewsletterModel();
+        new_newsletermodel.setProjectid(newProject.getId());
+        ArrayList<String> email_list = new ArrayList<>();
+        new_newsletermodel.setEmails(email_list);
+        new_newsletermodel.setLike_(0);
+        this.newsletterService.createNewsletter(new_newsletermodel);
         return this.rewardAddController.display(newProject.getId(), model);
     }
 

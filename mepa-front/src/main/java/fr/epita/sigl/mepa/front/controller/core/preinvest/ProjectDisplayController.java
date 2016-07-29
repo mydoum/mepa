@@ -78,7 +78,7 @@ public class ProjectDisplayController {
         investController.investorsList(modelMap, request, project);
 
 
-        /*int display;
+        int display;
         List<NewsletterModel> newsletterlist = this.newsletterService.getAllNewsletterModels();
         //boolean exist = false;
         for (NewsletterModel i : newsletterlist) {
@@ -92,7 +92,7 @@ public class ProjectDisplayController {
                 }
                 modelMap.addAttribute("display", display);
             }
-        }*/
+        }
 
         return "/preinvest/projectDisplay";
     }
