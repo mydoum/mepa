@@ -1,19 +1,25 @@
 package fr.epita.sigl.mepa.front.controller.authentification;
 
 import fr.epita.sigl.mepa.core.domain.AppUser;
+import fr.epita.sigl.mepa.core.domain.PasswordResetToken;
 import fr.epita.sigl.mepa.core.service.AppUserService;
+import fr.epita.sigl.mepa.core.service.PasswordResetTokenService;
+import fr.epita.sigl.mepa.core.service.impl.PasswordResetTokenServiceImpl;
 import fr.epita.sigl.mepa.front.Service.AuthentificationFrontService;
 import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayController;
 import fr.epita.sigl.mepa.front.controller.home.HomeController;
 import fr.epita.sigl.mepa.front.utilities.Tools;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("/authentification")
 @Controller
@@ -32,6 +39,8 @@ public class AuthController {
 
     @Autowired
     private AppUserService appUserService;
+
+    @Autowired PasswordResetTokenService pwdResetTokenService;
 
     @Autowired
     private HomeController home;
@@ -435,6 +444,54 @@ public class AuthController {
             }
         }
         return "/home/home";
+    }
 
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
+    public String resetPassword(
+            HttpServletRequest request) {
+//        , @RequestParam("email") String userEmail
+//        AppUser user = appUserService.getUserByLogin(userEmail);
+        AppUser user = appUserService.getUserByLogin("patrick.ear@epita.fr");
+
+        if (user == null) {
+//            throw new UserNotFoundException();
+            // ERROR
+        }
+
+        String token = UUID.randomUUID().toString();
+        PasswordResetToken pwdResetToken = new PasswordResetToken();
+        pwdResetToken.setLogin(user.getLogin());
+        pwdResetToken.setToken(token);
+        pwdResetToken.setExpiryDate(new Date()); // FIXME
+        pwdResetTokenService.createPwdResetToken(pwdResetToken);
+
+        System.out.println("token = " + pwdResetToken.getToken());
+
+        try {
+            boolean isSent;
+            String obj = "Récupération de votre mot de passe";
+            String text = "Voici l'url pour recuperer ton mot de passe : Voici votre mot de passe";
+            isSent = tools.sendMail("patrick-hk@outlook.com", obj, text);
+            if (isSent) {
+                System.out.println("le message a été envoyé check tes email");
+            } else {
+                System.out.println("Il y a eu un soucis");
+            }
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+
+//
+//
+//        String appUrl =
+//                "http://" + request.getServerName() +
+//                        ":" + request.getServerPort() +
+//                        request.getContextPath();
+//        SimpleMailMessage email =
+//                constructResetTokenEmail(appUrl, request.getLocale(), token, user);
+//        mailSender.send(email);
+
+        return home.home(request);
     }
 }
