@@ -4,10 +4,8 @@ package fr.epita.sigl.mepa.front.controller.core.preinvest;
  * Created by Xavier on 21/07/2016.
  */
 import fr.epita.sigl.mepa.core.domain.AppUser;
-import fr.epita.sigl.mepa.core.domain.NewsletterModel;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.Currency;
-import fr.epita.sigl.mepa.core.service.NewsletterService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import fr.epita.sigl.mepa.front.controller.authentification.AuthController;
 import org.slf4j.Logger;
@@ -54,8 +52,7 @@ public class ProjectCreateController {
     @Autowired
     private AuthController authController;
 
-    @Autowired
-    private NewsletterService newsletterService;
+
 
 
     private int NB_VIEWPROJECTCREATE = 1;
@@ -147,15 +144,7 @@ public class ProjectCreateController {
         }
 
 
-//*prosper
-        NewsletterModel new_newsletermodel = new NewsletterModel();
-        new_newsletermodel.setProjectid(newProject.getId());
-        ArrayList<String> email_list = new ArrayList<>();
-        new_newsletermodel.setEmails(email_list);
-        new_newsletermodel.setLike_(0);
-        new_newsletermodel.setProject_name(newProject.getName());
-        this.newsletterService.createNewsletter(new_newsletermodel);
-        request.getSession().setAttribute("nbProjectCreate", NB_PROJECTCREATE++);
+
         return this.rewardAddController.display(newProject.getId(), model);
     }
 

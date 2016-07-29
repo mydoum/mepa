@@ -39,6 +39,9 @@ public class RewardAddController {
     @Autowired
     private RewardService rewardService;
 
+    @Autowired
+    private ProjectShareController projectShareController;
+
 //    @RequestMapping(value = {"/display/{projectId}"}) // The adress to call the function
     public String display(Long projectId, ModelMap modelMap)
     {
@@ -85,19 +88,10 @@ public class RewardAddController {
 
 
 
-    /*
-    @RequestMapping(value = {"/add/{projectId}"}) // The adress to call the function
-    public String addReward(HttpServletRequest request, ModelMap modelMap)
+    @RequestMapping(value = {"/next/{projectId}"})
+    public String next(@PathVariable long projectId, ModelMap modelMap)
     {
-        System.out.print("\n\n reaward Add / add\n");
-        return rewardCreateController.rewardCreate(request, modelMap);
-    }
-*/
-    @RequestMapping(value = {"/projectList"})
-    public String projectList(ModelMap modelMap)
-    {
-        System.out.print("\n\n reaward Add / projectList\n");
-        return projectDisplayController.projectList(modelMap);
+        return projectShareController.display(projectId, modelMap);
     }
 
 

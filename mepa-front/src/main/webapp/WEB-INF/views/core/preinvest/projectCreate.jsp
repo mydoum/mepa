@@ -214,22 +214,6 @@
 
                 <br/>
 
-                <div class="control-group">
-                    <label class="control-label">Partager son projet</label><label class="text-muted">
-                    - Facultatif</label>
-
-                    <div class="checkbox">
-                        <label>
-                            <form:checkbox path="facebookAllowed"/> Facebook
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <form:checkbox path="twitterAllowed"/> Twitter
-                        </label>
-                    </div>
-                    <br/>
-
                     <div class="control-group">
                         <button type="submit" class="btn btn-primary">Créer le projet</button>
                     </div>

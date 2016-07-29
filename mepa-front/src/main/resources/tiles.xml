@@ -108,6 +108,10 @@
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/rewardAdd.jsp"/>
     </definition>
 
+    <definition name="/preinvest/projectShare" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/core/preinvest/projectShare.jsp"/>
+    </definition>
+
     <definition name="/preinvest/rewardCreate" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/views/core/preinvest/rewardCreate.jsp"/>
     </definition>

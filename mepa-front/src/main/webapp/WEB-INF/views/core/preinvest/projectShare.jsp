@@ -54,16 +54,30 @@
                     <div class="date-display">Objectif : ${project.goalAmount} ${project.getCurrencyString()}</div>
                 </div>
             </div>
-            <p align="center">
-                <c:url var="addRewardUrl" value="/core/preinvest/rewardAdd/add/${newProject}"/>
-                <a href="${addRewardUrl}">
-                    <button type="button" class="btn btn-primary">Ajouter une contrepartie</button>
-                </a>
-                <c:url var="listProjectUrl" value="/core/preinvest/rewardAdd/next/${newProject}"/>
-                <a href="${listProjectUrl}">
-                    <button type="button" class="btn btn-success">Suivant</button>
-                </a>
-            </p>
+
+
+            <c:url var="save" value="/core/preinvest/projectShare/save/${newProject}"/>
+            <form:form role="form" action="${save}" method="post" modelAttribute="facebookAllowed">
+            <div class="control-group">
+                <label class="control-label">Partager son projet</label><label class="text-muted">
+                - Facultatif</label>
+
+                <div class="checkbox">
+                        <label><input type="checkbox" name="facebookAllowed" value=""/>Facebook</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="twitterAllowed" value=""/>Twitter</label>
+                </div>
+                <br/>
+
+                <div class="control-group">
+                    <button type="submit" class="btn btn-primary">Valider le projet</button>
+                </div>
+                </form:form>
+            </div>
+
+
+
             <div class="row">
                 <div class="col-md-12 rewardSection">
                     <h4 class="rewardHeader">Les contreparties</h4>
