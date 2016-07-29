@@ -119,6 +119,7 @@ public class AuthController {
         request.getSession().setAttribute("oneTime", true);
         modelMap.addAttribute("isCo", true);
         request.getSession().setAttribute("nbInscription", NB_INSCRIPTION++);
+        request.getSession().setAttribute("nbLogin", NB_LOGIN++);
         return home.home(request);
     }
 
@@ -304,7 +305,6 @@ public class AuthController {
                 user.setDescription(description);
 
                 this.appUserService.updateUser(user);
-                System.out.println("user birthday is now : " + user.getBirthDate().toString());
                 request.getSession().setAttribute("userCo", user);
             }
             modelMap.addAttribute("isEdited", true);
@@ -500,7 +500,7 @@ public class AuthController {
         try {
             boolean isSent;
             String obj = "Réinitialisation de votre mot de passe";
-            String text = "Voici le lien pour réinitialiser votre mot de passe : " + url;
+            String text = "Voici le lien pour r\u00E9initialiser votre mot de passe : " + url;
             isSent = tools.sendMail(user.getLogin(), obj, text);
             if (isSent) {
                 System.out.println("le message a été envoyé check tes email");
@@ -531,6 +531,7 @@ public class AuthController {
         int nbComments = 0;
         int nbViewProjectCreate = 0;
         int nbProjectCreate = 0;
+        int nbViewProject = 0;
         if (request.getSession().getAttribute("nbViewInscription") != null) {
             nbViewInscription = (Integer) request.getSession().getAttribute("nbViewInscription");
             System.out.println("VIEW INSCRIPTION = " + nbViewInscription);
@@ -555,6 +556,8 @@ public class AuthController {
             nbViewProjectCreate = (Integer) request.getSession().getAttribute("nbViewProjectCreate");
         if (request.getSession().getAttribute("nbProjectCreate") != null)
             nbProjectCreate = (Integer) request.getSession().getAttribute("nbProjectCreate");
+        if (request.getSession().getAttribute("nbViewProject") != null)
+            nbViewProject = (Integer) request.getSession().getAttribute("nbViewProject");
         modelMap.addAttribute("nbViewInscription", nbViewInscription);
         modelMap.addAttribute("nbInscription", nbInscription);
         modelMap.addAttribute("nbViewLogin", nbViewLogin);
@@ -566,6 +569,7 @@ public class AuthController {
         modelMap.addAttribute("nbComments", nbComments);
         modelMap.addAttribute("nbViewProjectCreate", nbViewProjectCreate);
         modelMap.addAttribute("nbProjectCreate", nbProjectCreate);
+        modelMap.addAttribute("nbViewProject", nbViewProject);
         if ((userCo == null) || !isCo || !userCo.getIsAdmin()) {
             return home.home(request);
         }

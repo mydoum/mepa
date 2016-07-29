@@ -89,7 +89,7 @@ public class InvestController {
     }
 
     @RequestMapping(value = "/invest/{projectId}/investMoney", method = RequestMethod.POST)
-    public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId) {
+    public String investMoney(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId, Long rewardId) {
         float moneyAmount = 0.00f;
         Project project = this.projectService.getProjectById(projectId);
         AppUser tmpUser = (AppUser) request.getSession().getAttribute("userCo");
@@ -125,20 +125,21 @@ public class InvestController {
         model.addAttribute("amount", moneyAmount);
         boolean anonymous_id = request.getParameter("anonymous_id") != null;
 
-        if (insertNewInvestor(moneyAmount, tmpUser.getId(), projectId, anonymous_id) != 0L) {
+        if (insertNewInvestor(moneyAmount, tmpUser.getId(), projectId, anonymous_id, rewardId) != 0L) {
             String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
             model.addAttribute("errorInvest", errorMessage);
         }
         return projectDisplayController.projectDisplay(request, model, projectId);
     }
 
-    private int insertNewInvestor(float moneyAmount, Long userId, Long projectId, boolean anonymous) {
+    private int insertNewInvestor(float moneyAmount, Long userId, Long projectId, boolean anonymous, Long rewardId) {
         Investment newInvestment = new Investment();
         newInvestment.setUserId(userId);
         newInvestment.setAmount(moneyAmount);
         newInvestment.setProjectId(projectId);
         newInvestment.setUserId(userId);
         newInvestment.setAnonymous(anonymous);
+        newInvestment.setRewardId(rewardId);
         Date date = new Date();
         newInvestment.setDate(date);
 
@@ -157,7 +158,6 @@ public class InvestController {
             e.printStackTrace();
         }
 
-        investmentService.dumpAllInvestmentsByProject(projectId);
         return 0;
     }
 
@@ -171,8 +171,9 @@ public class InvestController {
         Project project = projectService.getProjectById(projectId);
         totalAmount = getallinvestors(investors, totalAmount, project, true);
         ArrayList<Investment> investments = new ArrayList<>(investmentService.getAllInvestmentsByProjectId(projectId));
+        ArrayList<Reward> rewards = new ArrayList<>(rewardService.getAllRewards());
         if (investors != null && investors.size() > 0) {
-            String fileWriter = Tools.writeCsvFile(investors, investments);
+            String fileWriter = Tools.writeCsvFile(investors, investments, rewards);
             response.setContentType("text/csv");
             response.setHeader("Content-Disposition", "attachment; filename=\"Investors_export_" + date + ".csv\"");
             try {
@@ -188,7 +189,7 @@ public class InvestController {
     }
 
     @RequestMapping(value = {"/invest/{projectId}/rewardDisplay/{rewardId}"}, method = RequestMethod.GET) // The adress to call the function
-    public String projectDisplay(HttpServletRequest request, ModelMap model, @PathVariable long projectId, @PathVariable long rewardId) {
+    public String projectDisplay(HttpServletRequest request, ModelMap model, @PathVariable Long projectId, @PathVariable Long rewardId) {
 
         AppUser tmpUser = (AppUser) request.getSession().getAttribute("userCo");
         /**
@@ -227,7 +228,7 @@ public class InvestController {
     }
 
     @RequestMapping(value = "/invest/{projectId}/rewardpay/{rewardId}/invest", method = RequestMethod.POST)
-    public String payReward(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId, @PathVariable long rewardId) {
+    public String payReward(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable Long projectId, @PathVariable long rewardId) {
         Project project = projectService.getProjectById(projectId);
         model.addAttribute("amountCurrency", project.getCurrencyString());
 
@@ -239,7 +240,7 @@ public class InvestController {
             return projectDisplayController.projectDisplay(request, model, projectId);
         }
 
-        investMoney(model, session, request, projectId);
+        investMoney(model, session, request, projectId, rewardId);
         return "/preinvest/projectDisplay";
     }
 

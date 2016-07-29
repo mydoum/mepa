@@ -276,7 +276,7 @@
 
                                 <div class="rewardDescription">
                                     <p>${reward.description}</p>
-                                    <span class="badge">${reward.costStart}</span>
+                                    <span class="badge">${rewardCounterList.size() > 0 ? rewardCounterList[status] : 0}</span>
                                 </div>
                             </li>
                         </c:forEach>

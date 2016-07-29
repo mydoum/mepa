@@ -55,41 +55,7 @@
                     <!-- End Compteur de visiteurs -->
                 </div>
                 <div class="col-md-12">
-                    <c:choose>
-                        <c:when test="${userCo == null}">
-                            <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-10">
-                                    <p align="center" class="glyphicon glyphicon-info-sign">
-                                        Vous devez être identifié pour laisser un commentaire
-                                    </p>
-                                </div>
-                                <div class="col-md-2"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <p align="center">
-                                        <a class="btn btn-success loginButton" href="/authentification/signin" role="button">Connexion</a>
-                                    </p>
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-4">
-                                    <p align="center">
-                                        <a href="/authentification/signup">S'inscrire</a>
-                                    </p>
-
-                                </div>
-                                <div class="col-md-4"></div>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <%@ include file="/WEB-INF/views/comments/core/comment_form.jsp" %>
-                        </c:otherwise>
-                    </c:choose>
+                    <%@ include file="/WEB-INF/views/comments/core/comment_form.jsp" %>
                 </div>
             </div>
         </div>

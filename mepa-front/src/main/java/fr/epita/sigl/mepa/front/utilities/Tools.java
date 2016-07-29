@@ -2,6 +2,7 @@ package fr.epita.sigl.mepa.front.utilities;
 
 import fr.epita.sigl.mepa.core.domain.AppUser;
 import fr.epita.sigl.mepa.core.domain.Investment;
+import fr.epita.sigl.mepa.core.domain.Reward;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 
 import javax.mail.Message;
@@ -34,11 +35,10 @@ public class Tools {
     private static final String FILE_HEADER_USER = "Pr\u00E9nom;Nom;Email";
 
 
-
     public Tools() {
     }
 
-    public int percentage (int a, int b) {
+    public int percentage(int a, int b) {
         if (a == 0) {
             return 100;
         }
@@ -46,7 +46,7 @@ public class Tools {
         return ((b * 100) / a);
     }
 
-    public static boolean sendMail (String mail, String Subject, String message) throws AddressException, MessagingException {
+    public static boolean sendMail(String mail, String Subject, String message) throws AddressException, MessagingException {
         //User tmpUser = userService.getUserById(userId);
         boolean result = true;
 
@@ -81,14 +81,11 @@ public class Tools {
 
     /**
      * This function export an arraylist of investors
+     *
      * @param investors
      * @return
      */
-    public static String writeCsvFile(ArrayList<Investor> investors, ArrayList<Investment> investments) {
-
-        //regrouper par investisseur
-        //pour chaque investisseur, calculer la somme totale d'investissement
-        //mettre dans l'excel
+    public static String writeCsvFile(ArrayList<Investor> investors, ArrayList<Investment> investments, ArrayList<Reward> rewards) {
 
         ArrayList<String> investorKeys = new ArrayList<>();
         HashMap<String, ArrayList<Float>> investorsMap = new HashMap<>();
@@ -104,7 +101,7 @@ public class Tools {
                         + investor.getEmail(), floats);
                 investorKeys.add(investor.getFirstname() + ";" + investor.getLastname() + ";" + investor.getEmail());
                 rewardMap.put(investor.getFirstname() + COMMA_DELIMITER + investor.getLastname() + COMMA_DELIMITER
-                        + investor.getEmail(), getAllUserRewards(investor.getUserId(), investments));
+                        + investor.getEmail(), getAllUserRewards(investor.getUserId(), investments, rewards));
             } else {
                 floats = investorsMap.get(investor.getFirstname() + COMMA_DELIMITER + investor.getLastname()
                         + COMMA_DELIMITER + investor.getEmail());
@@ -164,8 +161,7 @@ public class Tools {
         return fileWriter;
     }
 
-
-    public static Float calculSum(ArrayList<Float> floats) {
+    private static Float calculSum(ArrayList<Float> floats) {
         Float sum = 0.0f;
 
         for (Float f : floats)
@@ -174,9 +170,51 @@ public class Tools {
         return sum;
     }
 
-    public static String getAllUserRewards(Integer userId, ArrayList<Investment> investments)
-    {
+    private static String getAllUserRewards(Integer userId, ArrayList<Investment> investments, ArrayList<Reward> rewards) {
         String reward = "";
+        ArrayList<String> keys = new ArrayList<>();
+        HashMap<String, Integer> map = new HashMap<>();
+
+        if (investments != null && investments.size() > 0) {
+            for (Investment investment : investments) {
+                if (investment.getUserId().equals(userId) && investment.getRewardId() != 0) {
+                    Reward currentReward = getReward(investment.getRewardId(), rewards);
+                    if (currentReward != null) {
+                        if (!keys.contains(currentReward.getName()))
+                        {
+                            map.put(currentReward.getName(), 0);
+                            keys.add(currentReward.getName());
+                        }
+                        else
+                        {
+                            Integer quantity = map.get(currentReward.getName()) + 1;
+                            map.put(currentReward.getName(), quantity);
+                        }
+                    }
+                }
+            }
+        }
+
+        int i = 0;
+
+        for (String key : keys)
+        {
+             if (i == 0)
+                 reward += key + ": " + map.get(key);
+            reward += "; " + key + ": " + map.get(key);
+            i++;
+        }
+
         return reward;
+    }
+
+    private static Reward getReward(Long rewardId, ArrayList<Reward> rewards) {
+        if (rewards != null && rewards.size() > 0) {
+            for (Reward reward : rewards) {
+                if (reward.getId().equals(rewardId))
+                    return reward;
+            }
+        }
+        return null;
     }
 }

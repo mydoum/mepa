@@ -80,6 +80,7 @@ public class InsertDummyController {
         appUserDefault.setLastName("Admin");
         appUserDefault.setLogin("admin@admin.com");
         appUserDefault.setPassword("admin");
+        appUserDefault.setIsAdmin(true);
         Date dateDefault = new Date();
         appUserDefault.setBirthDate(dateDefault);
         this.appUserService.createUser(appUserDefault);
@@ -97,6 +98,7 @@ public class InsertDummyController {
             appUser.setLastName(lastNameList.get(i));
             appUser.setLogin(emailList.get(i));
             appUser.setPassword("password");
+            appUser.setIsAdmin(false);
             Date date = new Date();
             appUser.setBirthDate(date);
             this.appUserService.createUser(appUser);
@@ -105,12 +107,13 @@ public class InsertDummyController {
         }
 
         /* PREINVEST*/
+        ArrayList<String> nameReward = fillReward();
 
-        for (int j = 0; j < 10; ++j) {
+        for (int j = 0; j < nameReward.size(); ++j) {
             Reward r = new Reward();
-            r.setName("Coucou");
+            r.setName(nameReward.get(j));
             r.setDescription("Ceci est une description");
-            r.setCostStart((long) 10);
+            r.setCostStart((long) (10 + j * 5));
             rewardService.createReward(r);
         }
 
@@ -137,11 +140,11 @@ public class InsertDummyController {
 
             Set<Reward> rewards = new HashSet<>();
 
-            for (int j = 0; j < 10; ++j) {
+            for (int j = 0; j < nameReward.size(); ++j) {
                 Reward r = new Reward();
-                r.setName("Coucou");
+                r.setName(nameReward.get(j));
                 r.setDescription("Ceci est une description");
-                r.setCostStart((long) 10);
+                r.setCostStart((long) (10 + j * 5));
                 this.rewardService.createReward(r);
                 rewards.add(r);
             }
@@ -172,7 +175,7 @@ public class InsertDummyController {
 
             Set<Reward> rewards = new HashSet<>();
 
-            for (int j = 0; j < 10; ++j) {
+            for (int j = 0; j < nameReward.size(); ++j) {
                 Reward r = new Reward();
                 r.setName("Gildas est beau" + j);
                 r.setDescription("Ceci est une description");
@@ -271,6 +274,19 @@ public class InsertDummyController {
         firstNameList.add("Valentin");
 
         return firstNameList;
+    }
+
+    private ArrayList<String> fillReward() {
+        ArrayList<String> rewardList = new ArrayList<>();
+        rewardList.add("T-shirt");
+        rewardList.add("cadre");
+        rewardList.add("télé");
+        rewardList.add("vidéoprojecteur");
+        rewardList.add("mug");
+        rewardList.add("Xavier");
+        rewardList.add("Gildas");
+
+        return rewardList;
     }
 
     private void printAllRewards() {
