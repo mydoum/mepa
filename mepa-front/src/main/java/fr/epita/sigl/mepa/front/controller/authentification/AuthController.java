@@ -483,6 +483,8 @@ public class AuthController {
         int nbViewEditUser = 0;
         int nbEditUser = 0;
         int nbComments = 0;
+        int nbViewProjectCreate = 0;
+        int nbProjectCreate = 0;
         if (request.getSession().getAttribute("nbViewInscription") != null) {
             nbViewInscription = (Integer) request.getSession().getAttribute("nbViewInscription");
             System.out.println("VIEW INSCRIPTION = " + nbViewInscription);
@@ -502,7 +504,11 @@ public class AuthController {
         if (request.getSession().getAttribute("nbEditUser") != null)
             nbEditUser = (Integer) request.getSession().getAttribute("nbEditUser");
         if (request.getSession().getAttribute("nbComments") != null)
-            nbEditUser = (Integer) request.getSession().getAttribute("nbComments");
+            nbComments = (Integer) request.getSession().getAttribute("nbComments");
+        if (request.getSession().getAttribute("nbViewProjectCreate") != null)
+            nbViewProjectCreate = (Integer) request.getSession().getAttribute("nbViewProjectCreate");
+        if (request.getSession().getAttribute("nbProjectCreate") != null)
+            nbProjectCreate = (Integer) request.getSession().getAttribute("nbProjectCreate");
         modelMap.addAttribute("nbViewInscription", nbViewInscription);
         modelMap.addAttribute("nbInscription", nbInscription);
         modelMap.addAttribute("nbViewLogin", nbViewLogin);
@@ -512,6 +518,8 @@ public class AuthController {
         modelMap.addAttribute("nbViewEditUser", nbViewEditUser);
         modelMap.addAttribute("nbEditUser", nbEditUser);
         modelMap.addAttribute("nbComments", nbComments);
+        modelMap.addAttribute("nbViewProjectCreate", nbViewProjectCreate);
+        modelMap.addAttribute("nbProjectCreate", nbProjectCreate);
         if ((userCo == null) || !isCo || !userCo.getIsAdmin()) {
             return home.home(request);
         }
