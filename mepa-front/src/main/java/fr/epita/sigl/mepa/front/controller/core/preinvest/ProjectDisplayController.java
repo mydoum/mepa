@@ -162,6 +162,39 @@ public class ProjectDisplayController {
         }
         modelMap.addAttribute("new_c_models",new_c_models);
 
+        return "/preinvest/projectDisplay/Comment";
+
+    }
+
+    /***********************************************************************************************************/
+    /**[PROSPER]*/
+    /**
+     * Add of this function in order to catch the user action whith the newsletter checkbox
+     */
+    @RequestMapping(value = {"/projectDisplay/newsletter/{projectId}"})
+    public String projectNewsletter(HttpServletRequest request, @PathVariable Long projectId, ModelMap modelMap) {
+        /* Code your logic here */
+        Project project = this.projectService.getProjectById(projectId);
+        modelMap.addAttribute(PROJECT_ATTRIBUTE, project);
+
+        /*PostInvest Total Amount invested on Project*/
+        Float totalProjectAmountInvested = getProjectMoneyInvested(projectId);
+        modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
+        /*\PostInvest Total Amount invested on Project*/
+
+
+        /**[PROSPER]*/
+        /** Get the current user and mapping him in the current project page*/
+        AppUser userco = new AppUser();
+        userco = (AppUser) request.getSession().getAttribute("userCo");
+        modelMap.addAttribute("userco", userco);
+
+        /**[PROSPER]*/
+        /** Get of the checkbox value and add off the user to the current project newsletter */
+        boolean myCheckBox = request.getParameter("check") != null;
+        //if (myCheckBox == true)
+        //{
+
 
         int display;
         List<NewsletterModel> newsletterlist = this.newsletterService.getAllNewsletterModels();
@@ -188,7 +221,28 @@ public class ProjectDisplayController {
                 System.out.println("LE NOMBRE DE LIKE FINAL SUR LE PROJ: " + project.getName() + " EST " + i.getLike_());
             }
         }
-        return "/preinvest/projectDisplay/Comment";
 
+            /*if (exist == false)
+            {
+                NewsletterModel new_newsletermodel = new NewsletterModel();
+                new_newsletermodel.setProjectid(projectId);
+                new_newsletermodel.addEmail(userco.getLogin());
+                new_newsletermodel.setLike(1);
+                ArrayList<String> email_list = new ArrayList<>();
+                new_newsletermodel.setEmail_list(email_list);
+                this.newsletterService.createNewsletter(new_newsletermodel);
+                System.out.println("LE NOMBRE DE LIKE SUR LE PROJ: " + project.getName() + " EST "+ new_newsletermodel.getLike());
+            }*/
+
+        /**[PROSPER]*/
+        /** Mapping in the current project page of the list containing all the comments of any projects*/
+            /*List<NewsletterModel>  newsletterlist = this.newsletterService.getAllNewsletterModels();
+            modelMap.addAttribute("newsletterlist",newsletterlist) ;*/
+        //}
+        //J'envoi ma liste en session comme ca ils pourrons la récupérer.
+        return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
     }
+
+    /***********************************************************************************************************/
+
 }
