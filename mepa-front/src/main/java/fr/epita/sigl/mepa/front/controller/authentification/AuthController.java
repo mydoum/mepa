@@ -470,15 +470,14 @@ public class AuthController {
 
     @RequestMapping(value = "/resetPwd", method = RequestMethod.POST)
     public String resetPassword(
-            HttpServletRequest request, @RequestParam("email") String userEmail) {
+            HttpServletRequest request, ModelMap modelMap, @RequestParam("email") String userEmail) {
 
         AppUser user = appUserService.getUserByLogin(userEmail);
 
         if (user == null) {
             System.out.println("ALLLERTE    ====== THE USER DOES NOT EXIST");
-            return home.home(request);
-//            throw new UserNotFoundException();
-            // ERROR
+            modelMap.addAttribute("isNotSent", true);
+            return "/authentification/resendPwd";
         }
         System.out.println("USER ID IN RESETPWD = " + user.getId());
         String token = UUID.randomUUID().toString();
