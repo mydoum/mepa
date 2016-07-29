@@ -279,7 +279,7 @@ public class InvestController {
         }
     }
     @RequestMapping(value = {"/invest/{projectId}/scrollFunc"}, method = RequestMethod.GET) // The adress to call the function
-    public String projectInfiniteScroll(HttpServletRequest request, ModelMap model, @PathVariable long projectId) {
+    public String projectInfiniteScroll(HttpServletRequest request, ModelMap model, @PathVariable long projectId, Long rewardId) {
         Project project = this.projectService.getProjectById(projectId);
         AppUser tmpUser = (AppUser) request.getSession().getAttribute("userCo");
 
@@ -302,7 +302,7 @@ public class InvestController {
 
         boolean anonymous_id = request.getParameter("anonymous_id") != null;
         for (int i = 0; i < 100; ++i) {
-            if (insertNewInvestor(moneyAmount, tmpUser.getId(), projectId, anonymous_id) != 0L) {
+            if (insertNewInvestor(moneyAmount, tmpUser.getId(), projectId, anonymous_id, rewardId) != 0L) {
                 String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
                 model.addAttribute("errorInvest", errorMessage);
             }
