@@ -132,9 +132,21 @@
 
             <div class="controls">
                 <div class="input-group input-append date" id="datePicker1">
-                    <td><form:input path="startDate" class="form-control input-lg" placeholder="jj/mm/aaaa"
-                                    value='${project.dateFormat(\"dd/MM/YYYY\", project.startDate)}'
-                                    required="required" /></td>
+                    <td>
+                        <c:if test="${not empty project.startDate }">
+                            <form:input path="startDate" class="form-control input-lg" placeholder="jj/mm/aaaa"
+                                        value='${project.dateFormat(\"dd/MM/YYYY\", project.startDate)}'
+                                        required="required" />
+                        </c:if>
+                        <c:if test="${empty project.startDate }">
+                            <form:input path="startDate" class="form-control input-lg" placeholder="jj/mm/aaaa"
+                                        value='${current_date}'
+                                        required="required" />
+                        </c:if>
+                        </td>
+                        </td>
+                        </td>
+                    </td>
                                     <span class="input-group-addon add-on">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
