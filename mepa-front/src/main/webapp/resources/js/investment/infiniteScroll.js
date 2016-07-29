@@ -18,7 +18,7 @@ $(document).ready(function () {
             console.log("I am executed");
             for (var i = initIndex; i < loadNumber; ++i) {
                 var table = document.getElementById("infiniteInvestorsList");
-                var row = table.insertRow(i);
+                var row = table.insertRow(-1);
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
 
