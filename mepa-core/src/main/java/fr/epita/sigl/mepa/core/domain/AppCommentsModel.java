@@ -49,18 +49,18 @@ public class AppCommentsModel
         this.id = id_;
     }
 
-    public Date getCreated_()
+    public Date getCreated()
     {
         return this.created;
     }
 
-    public void setCreated_(Date created_)
+    public void setCreated(Date created_)
     {
         this.created = created_;
     }
 
 
-    public String getData_()
+    public String getData()
     {
         return this.data_;
     }
