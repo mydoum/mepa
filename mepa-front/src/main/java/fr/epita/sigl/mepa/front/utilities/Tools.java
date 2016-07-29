@@ -1,6 +1,7 @@
 package fr.epita.sigl.mepa.front.utilities;
 
 import fr.epita.sigl.mepa.core.domain.AppUser;
+import fr.epita.sigl.mepa.core.domain.Investment;
 import fr.epita.sigl.mepa.front.model.investment.Investor;
 
 import javax.mail.Message;
@@ -29,7 +30,7 @@ public class Tools {
     private static final String NEW_LINE_SEPARATOR = "\n";
 
     //CSV file header
-    private static final String FILE_HEADER = "Prénom;Nom;Email;Montant total;Liste des contributions";
+    private static final String FILE_HEADER = "Pr\u00E9nom;Nom;Email;Montant total;Liste des contributions";
     private static final String FILE_HEADER_USER = "Pr\u00E9nom;Nom;Email";
 
 
@@ -83,14 +84,15 @@ public class Tools {
      * @param investors
      * @return
      */
-    public static String writeCsvFile(ArrayList<Investor> investors) {
+    public static String writeCsvFile(ArrayList<Investor> investors, ArrayList<Investment> investments) {
 
         //regrouper par investisseur
         //pour chaque investisseur, calculer la somme totale d'investissement
         //mettre dans l'excel
 
-        ArrayList<String> keys = new ArrayList<>();
+        ArrayList<String> investorKeys = new ArrayList<>();
         HashMap<String, ArrayList<Float>> investorsMap = new HashMap<>();
+        HashMap<String, String> rewardMap = new HashMap<>();
 
         for (Investor investor : investors) {
             ArrayList<Float> floats;
@@ -100,7 +102,9 @@ public class Tools {
                 floats.add(investor.getMoneyAmount());
                 investorsMap.put(investor.getFirstname() + COMMA_DELIMITER + investor.getLastname() + COMMA_DELIMITER
                         + investor.getEmail(), floats);
-                keys.add(investor.getFirstname() + ";" + investor.getLastname() + ";" + investor.getEmail());
+                investorKeys.add(investor.getFirstname() + ";" + investor.getLastname() + ";" + investor.getEmail());
+                rewardMap.put(investor.getFirstname() + COMMA_DELIMITER + investor.getLastname() + COMMA_DELIMITER
+                        + investor.getEmail(), getAllUserRewards(investor.getUserId(), investments));
             } else {
                 floats = investorsMap.get(investor.getFirstname() + COMMA_DELIMITER + investor.getLastname()
                         + COMMA_DELIMITER + investor.getEmail());
@@ -114,12 +118,14 @@ public class Tools {
         fileWriter += FILE_HEADER;
         fileWriter += NEW_LINE_SEPARATOR;
 
-        for (String investor : keys) {
+        for (String investor : investorKeys) {
             ArrayList<Float> floats = investorsMap.get(investor);
             Float sum = calculSum(floats);
             fileWriter += investor;
             fileWriter += COMMA_DELIMITER;
             fileWriter += sum;
+            fileWriter += COMMA_DELIMITER;
+            fileWriter += rewardMap.get(investor);
             fileWriter += NEW_LINE_SEPARATOR;
         }
         return fileWriter;
@@ -151,8 +157,6 @@ public class Tools {
         fileWriter += NEW_LINE_SEPARATOR;
 
         for (String user : keys) {
-            ArrayList<Float> floats = usersMap.get(user);
-            Float sum = calculSum(floats);
             fileWriter += user;
             fileWriter += COMMA_DELIMITER;
             fileWriter += NEW_LINE_SEPARATOR;
@@ -168,5 +172,11 @@ public class Tools {
             sum += f;
 
         return sum;
+    }
+
+    public static String getAllUserRewards(Integer userId, ArrayList<Investment> investments)
+    {
+        String reward = "";
+        return reward;
     }
 }
