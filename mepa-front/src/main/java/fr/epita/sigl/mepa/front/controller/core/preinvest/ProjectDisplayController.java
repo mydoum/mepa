@@ -244,7 +244,7 @@ public class ProjectDisplayController {
         return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
     }
     //Soufiane
-    @RequestMapping(value = {"/projectDisplay/newsletter/{projectId}"})
+    @RequestMapping(value = {"/projectlist/newsletter/{projectId}"})
     public String projectNewsletter( ModelMap modelMap)
     {
         List<NewsletterModel> newslettersortedlist = this.newsletterService.getAllSorted();
