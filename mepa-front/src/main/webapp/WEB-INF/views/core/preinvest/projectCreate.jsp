@@ -48,17 +48,14 @@
 </script>
 
 
-<html>
 <head>
     <title>Create a new project</title>
     <style type="text/css">
         <%@include file="../../../../resources/css/preinvestment/projectCreate.css"%>
     </style>
     <script>
-        $(function()
-        {
-            $(document).on('click', '.btn-add', function(e)
-            {
+        $(function () {
+            $(document).on('click', '.btn-add', function (e) {
                 e.preventDefault();
 
                 var controlForm = $('.controls form:first'),
@@ -70,8 +67,7 @@
                         .removeClass('btn-add').addClass('btn-remove')
                         .removeClass('btn-success').addClass('btn-danger')
                         .html('<span class="glyphicon glyphicon-minus"></span>');
-            }).on('click', '.btn-remove', function(e)
-            {
+            }).on('click', '.btn-remove', function (e) {
                 $(this).parents('.entry:first').remove();
 
                 e.preventDefault();
@@ -81,91 +77,79 @@
     </script>
 </head>
 <body>
-    <div class="container">
-        <c:if test="${is_connected}">
-            <div class="wizard">
-                <div class="wizard-inner">
-                    <div class="connecting-line"></div>
-                    <ul class="nav nav-tabs" role="tablist">
+<div class="container" id="step1">
+    <c:if test="${is_connected}">
+        <div class="wizard">
+            <div class="wizard-inner">
+                <div class="connecting-line"></div>
+                <ul class="nav nav-tabs" role="tablist">
 
-                        <li role="presentation" class="active">
-                            <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+                    <li role="presentation" class="active">
+                        <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
                             <span class="round-tab">
-                                <i class="glyphicon glyphicon-folder-open"></i>
+                                <i class="glyphicon glyphicon-pencil" style="padding-top: 30%"></i>
                             </span>
-                            </a>
-                        </li>
+                        </a>
+                    </li>
 
-                        <li role="presentation" class="disabled">
-                            <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+                    <li role="presentation" class="disabled">
+                        <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
                             <span class="round-tab">
-                                <i class="glyphicon glyphicon-pencil"></i>
+                                <i class="glyphicon glyphicon-ok" style="padding-top: 30%"></i>
                             </span>
-                            </a>
-                        </li>
-                        <li role="presentation" class="disabled">
-                            <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
-                            <span class="round-tab">
-                                <i class="glyphicon glyphicon-picture"></i>
-                            </span>
-                            </a>
-                        </li>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <c:if test="${is_unique}">
+            <div class="alert alert-warning">
+                Ce nom de projet est déjà pris : veuillez choisir un autre nom
+            </div>
+        </c:if>
+        <c:if test="${is_null}">
+            <div class="alert alert-warning">
+                Vous devez rentrez un nom de projet pour créer le projet
+            </div>
+        </c:if>
+        <c:if test="${is_date}">
+            <div class="alert alert-warning">
+                La date de fin ne peut être antérieur à la date de début
+            </div>
+        </c:if>
 
-                        <li role="presentation" class="disabled">
-                            <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
-                            <span class="round-tab">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </span>
-                            </a>
-                        </li>
-                    </ul>
+        <div class="well bs-component">
+            <sf:form method="post" modelAttribute="newProject" action="processCreation">
+            <div class="control-group">
+                <label class="control-label">Nom du projet</label>
+                <div class="controls">
+                    <td><form:input path="Name" class="form-control input-lg" placeholder="Définissez le nom du projet"
+                                    required="required"/></td>
                 </div>
             </div>
-            <c:if test="${is_unique}">
-                <div class="alert alert-warning">
-                    Ce nom de projet est déjà pris : veuillez choisir un autre nom
-                </div>
-            </c:if>
-            <c:if test="${is_null}">
-                <div class="alert alert-warning">
-                    Vous devez rentrez un nom de projet pour créer le projet
-                </div>
-            </c:if>
-            <c:if test="${is_date}">
-                <div class="alert alert-warning">
-                    La date de fin ne peut être antérieur à la date de début
-                </div>
-            </c:if>
-
-            <div class="well bs-component">
-            <sf:form method="post" modelAttribute="newProject" action="processCreation">
-                <div class="control-group">
-                    <label class="control-label">Nom du projet</label>
-                    <div class="controls">
-                        <td><form:input path="Name" class="form-control input-lg" placeholder="Définissez le nom du projet" required="required"/></td>
-                    </div>
-                </div>
-                <br/>
+            <br/>
 
 
             <div class="control-group">
                 <label class="control-label">Date de début</label>
                 <div class="controls">
                     <div class="input-group input-append date" id="datePicker1">
-                        <td><form:input path="startDate" class="form-control input-lg" placeholder="jj/mm/aaaa" value='${current_date}' required="required"/></td>
+                        <td><form:input path="startDate" class="form-control input-lg" placeholder="jj/mm/aaaa"
+                                        value='${current_date}' required="required"/></td>
                                     <span class="input-group-addon add-on">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                     </div>
                 </div>
             </div>
-                <br/>
+            <br/>
 
             <div class="control-group">
                 <label class="control-label">Date de fin</label>
                 <div class="controls">
                     <div class="input-group input-append date" id="datePicker2">
-                        <td><form:input path="endDate" class="form-control input-lg" placeholder="jj/mm/aaaa" required="required"/></td>
+                        <td><form:input path="endDate" class="form-control input-lg" placeholder="jj/mm/aaaa"
+                                        required="required"/></td>
                                     <span class="input-group-addon add-on">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -173,39 +157,41 @@
                 </div>
             </div>
 
-                <br/>
-                <div class="control-group">
-                    <label class="control-label">Objectif du projet en </label>
-                        <label>
-                            <input name="currency" id="dollar" value="DOLLAR" checked="" type="radio">
-                            $
-                        </label>
+            <br/>
+            <div class="control-group">
+                <label class="control-label">Objectif du projet en </label>
+                <label>
+                    <input name="currency" id="dollar" value="DOLLAR" checked="" type="radio">
+                    $
+                </label>
 
-                        <label>
-                            <input name="currency" id="euro" value="EURO" type="radio">
-                            €
-                        </label>
+                <label>
+                    <input name="currency" id="euro" value="EURO" type="radio">
+                    €
+                </label>
 
-                            <input name="currency" id="pound" value="POUND"  type="radio">
-                            £
+                <input name="currency" id="pound" value="POUND" type="radio">
+                £
 
-                    <div class="controls">
-                        <td><form:input path="goalAmount" class="form-control input-lg" placeholder="Entrez la somme à atteindre" required="required"/></td>
-                    </div>
+                <div class="controls">
+                    <td><form:input path="goalAmount" class="form-control input-lg"
+                                    placeholder="Entrez la somme à atteindre" required="required"/></td>
                 </div>
-                <br/>
-                <div class="control-group">
-                    <label class="control-label">Description</label>
-                    <div class="controls">
-                        <td><form:textarea path="description" class="form-control input-lg" placeholder="Description" style="margin-top: 0px;"/></td>
-                    </div>
+            </div>
+            <br/>
+            <div class="control-group">
+                <label class="control-label">Description</label>
+                <div class="controls">
+                    <td><form:textarea path="description" class="form-control input-lg" placeholder="Description"
+                                       style="margin-top: 0px;"/></td>
                 </div>
-                <br/>
-                <div class="control-group">
-                    <input name="imageUrl" class="form-control input-lg" placeholder="URL pour insérer une image"/>
-                </div>
+            </div>
+            <br/>
+            <div class="control-group">
+                <input name="imageUrl" class="form-control input-lg" placeholder="URL pour insérer une image"/>
+            </div>
 
-                <form action="http://www.html.am/html-codes/forms/html-form-tag-action.cfm" target="result" method="get">
+            <form action="http://www.html.am/html-codes/forms/html-form-tag-action.cfm" target="result" method="get">
 
                 <p>Partager son projet </p>
                 <div class="checkbox">
@@ -222,15 +208,16 @@
                 <div class="control-group">
                     <button type="submit" class="btn btn-default">Créer le projet</button>
                 </div>
-            </sf:form>
-            </div>
-
-            </c:if>
-            <c:if test="${!is_connected}">
-                <h1> Vous devez être connecté pour ajouter un projet.</h1>
-            </c:if>
+                </sf:form>
         </div>
-        </form>
-    </div>
-    </body>
-    </html>
+
+    </c:if>
+    <c:if test="${!is_connected}">
+        <h1> Vous devez être connecté pour ajouter un projet.</h1>
+    </c:if>
+</div>
+</form>
+</div>
+</body>
+
+
