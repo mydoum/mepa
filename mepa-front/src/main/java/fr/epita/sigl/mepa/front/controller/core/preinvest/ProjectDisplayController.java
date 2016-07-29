@@ -247,6 +247,14 @@ public class ProjectDisplayController {
         //J'envoi ma liste en session comme ca ils pourrons la récupérer.
         return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
     }
+    @RequestMapping(value = {"projectList/sortlist"})
+    public String projectNewsletter(ModelMap modelMap)
+    {
+        boolean i = true;
+        List<NewsletterModel> newsletterlistsorted = this.newsletterService.getAllSorted();
+        modelMap.addAttribute("sortedlist", newsletterlistsorted);
+        return "/preinvest/projectList";
+    }
 
     /***********************************************************************************************************/
 

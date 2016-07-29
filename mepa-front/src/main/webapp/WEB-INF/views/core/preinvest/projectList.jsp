@@ -16,9 +16,16 @@
             </thead>
             <tbody>
             <c:if test="${userco != null}">
-            <form:form role="form" action="/core/preinvest/rewardAdd/projectList/sortlist${project.id}" method="post">
             <button type="submit" id="sort" data-loading-text="Trier" class="btn btn-success">Trier par popularité</button><center/>
-            </form:form>
+                <c:forEach items="${sortedlist}" var="sortlist" varStatus="loop">
+                    <c:if test="${sortlist.projectId == project.id}">
+                        <tr>
+                            <td>${sortlist.likes_}</td>
+                            <td><fmt:formatDate value="${c_model.created}" pattern="HH:mm:ss"/></td>
+                            <td>${c_model.data}</td>
+                        </tr>
+                    </c:if>
+                </c:forEach>
             </c:if>
             <c:forEach items="${project_list}" var="project" varStatus="loop">
                 <tr>
