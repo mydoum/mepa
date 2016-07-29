@@ -133,6 +133,24 @@
             </div>
             <br/>
 
+            <c:if test="${userco != null}">
+                <form:form role="form" action="/core/preinvest/projectDisplay/newsletter/${project.id}" method="post">
+                    <div class="form-group">
+                            <%--<Input TYPE="CHECKBOX"  NAME="check" VALUE="check" />
+                            Newsletter
+                            <br/>--%>
+                        <a style="text-align: center;">
+                            <c:if test="${display == 2}">
+                                <button type="submit" id="like" data-loading-text="J'aime..." class="btn btn-success">J'AIME !</button>
+                            </c:if>
+                            <c:if test="${display == 1}">
+                                <button type="submit" id="dislike" data-loading-text="J'aime..." class="btn btn-danger">JE N'AIME PLUS </button>
+                            </c:if>
+                        </a>
+                    </div>
+                </form:form>
+            </c:if>
+
             <%-- Part of the page where the list of the investors are printed --%>
             <div class="col-md-12 investFormInside">
                 <tr/>
@@ -185,6 +203,7 @@
             </c:if>
         </div>
     </div>
+<<<<<<< HEAD
     <c:if test="${userco != null}">
         <form:form role="form" action="/core/preinvest/projectDisplay/newsletter/${project.id}" method="post">
             <div class="form-group">
@@ -203,6 +222,7 @@
             </div>
         </form:form>
     </c:if>
+
 
     <%-- Right side bar for investing for the project and the list of counterparts --%>
     <aside class="col-md-4">
