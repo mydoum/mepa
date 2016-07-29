@@ -71,6 +71,11 @@ public class ProjectCreateController {
         if (is_co == null)
             is_co = false;
 
+
+        Project p_repeat = (Project) modelMap.get("project");
+        if (p_repeat != null)
+            p.setDescription(p_repeat.getDescription());
+
         modelMap.addAttribute(NEWPROJECT, p);
         modelMap.addAttribute(IS_CONNECTED_ATTRIBUTE, is_co);
 
@@ -91,7 +96,6 @@ public class ProjectCreateController {
         boolean is_date = false;
         AppUser connectedUser = (AppUser) request.getSession().getAttribute("userCo");
         newProject.setUser_id(connectedUser.getId());
-
 
 
         // Change string to date
