@@ -17,6 +17,9 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 
+<style type="text/css">
+    <%@include file="../../../../resources/css/preinvestment/projectCreate.css"%>
+</style>
 
 <script>
     $(document).ready(function () {
@@ -70,30 +73,6 @@
     });
 </script>
 
-<div class="container">
-    <c:if test="${is_connected}">
-    <c:if test="${is_unique}">
-    <div class="alert alert-warning">
-        Ce nom de projet est déjà pris : veuillez choisir un autre nom
-    </div>
-    </c:if>
-    <c:if test="${is_null}">
-    <div class="alert alert-warning">
-        Vous devez rentrez un nom de projet pour créer le projet
-    </div>
-    </c:if>
-    <c:if test="${is_date}">
-    <div class="alert alert-warning">
-        La date de fin ne peut être antérieur à la date de début
-    </div>
-    </c:if>
-                e.preventDefault();
-                return false;
-            });
-        });
-    </script>
-</head>
-<body>
 <div class="container" id="step1">
     <c:if test="${is_connected}">
         <div class="wizard">
