@@ -30,7 +30,7 @@ public class NewsletterModel
 
     private Long projectid;
 
-
+    private String project_name;
 
     private ArrayList<String> emails;
     private int like_;
@@ -52,7 +52,13 @@ public class NewsletterModel
         this.like_ = like_;
     }
 
+    public String getProject_name() {
+        return project_name;
+    }
 
+    public void setProject_name(String project_name) {
+        this.project_name = project_name;
+    }
 
     public long getProjectid() {
         return projectid;
