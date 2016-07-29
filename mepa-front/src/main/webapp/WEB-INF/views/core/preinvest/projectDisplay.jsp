@@ -195,6 +195,7 @@
                     <c:if test="${display == 2}">
                         <button type="submit" id="like" data-loading-text="J'aime..." class="btn btn-success">J'AIME !</button><center/>
                     </c:if>
+
                     <c:if test="${display == 1}">
                         <button type="submit" id="dislike" data-loading-text="J'aime..." class="btn btn-danger">JE N'AIME PLUS </button><center/>
                     </c:if>

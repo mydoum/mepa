@@ -13,4 +13,6 @@ public interface NewsletterService {
     void deleteNewsletter(NewsletterModel newslettermodel);
     NewsletterModel getNewsletterById(Long id);
     List<NewsletterModel> getAllNewsletterModels();
+    List<NewsletterModel> getAllSorted();
+
 }

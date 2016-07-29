@@ -15,6 +15,7 @@ import java.util.ArrayList;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Newsletter.findById", query = "FROM NewsletterModel o WHERE o.id=:id"),
+        @NamedQuery(name = "Newsletter.findAllSorted", query = "FROM NewsletterModel o ORDER BY o.like_ "),
         @NamedQuery(name = "Newsletter.findAll", query = "FROM NewsletterModel o")})
 
 

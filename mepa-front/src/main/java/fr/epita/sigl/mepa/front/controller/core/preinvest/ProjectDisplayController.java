@@ -80,6 +80,7 @@ public class ProjectDisplayController {
 
         int display;
         List<NewsletterModel> newsletterlist = this.newsletterService.getAllNewsletterModels();
+        List<NewsletterModel> newsletterlistsorted = this.newsletterService.getAllSorted();
         //boolean exist = false;
         for (NewsletterModel i : newsletterlist) {
             if (i.getProjectid() == projectId) {
@@ -92,6 +93,10 @@ public class ProjectDisplayController {
                 }
                 modelMap.addAttribute("display", display);
             }
+        }
+        for (NewsletterModel nm : newsletterlistsorted)
+        {
+
         }
 
         return "/preinvest/projectDisplay";

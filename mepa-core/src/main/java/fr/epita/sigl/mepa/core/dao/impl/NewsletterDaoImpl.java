@@ -50,4 +50,10 @@ public class NewsletterDaoImpl implements NewsletterDAO
         Query query = this.getSession().getNamedQuery("Newsletter.findAll");
         return query.list();
     }
+    @Override
+    public List<NewsletterModel> getAllSorted()
+    {
+        Query query = this.getSession().getNamedQuery("Newsletter.findAllSorted");
+        return query.list();
+    }
 }

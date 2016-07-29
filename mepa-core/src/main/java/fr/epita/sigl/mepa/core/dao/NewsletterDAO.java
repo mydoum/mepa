@@ -13,5 +13,6 @@ public interface NewsletterDAO {
     void delete (NewsletterModel newslettermodel);
     NewsletterModel getById (Long Id);
     List<NewsletterModel> getAll();
+    List<NewsletterModel> getAllSorted();
 }
 
