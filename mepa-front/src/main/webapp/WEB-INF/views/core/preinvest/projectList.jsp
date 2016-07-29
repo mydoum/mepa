@@ -1,4 +1,3 @@
-<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 
 <div class="container">
@@ -16,8 +15,11 @@
             </tr>
             </thead>
             <tbody>
-            <button type="submit" id="like" data-loading-text="Trier" class="btn btn-success">Trier par popularité</button><center/>
-            <sf:form method="get" modelAttribute="newProject" action="processCreation">
+            <c:if test="${userco != null}">
+            <form:form role="form" action="/core/preinvest/rewardAdd/projectList/sortlist${project.id}" method="post">
+            <button type="submit" id="sort" data-loading-text="Trier" class="btn btn-success">Trier par popularité</button><center/>
+            </form:form>
+            </c:if>
             <c:forEach items="${project_list}" var="project" varStatus="loop">
                 <tr>
                     <td><img src="${project.imagesLinks.get(0)}" alt="Illustration" style="height: 80px;"></td>

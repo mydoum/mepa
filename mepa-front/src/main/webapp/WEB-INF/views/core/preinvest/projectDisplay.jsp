@@ -203,7 +203,6 @@
             </c:if>
         </div>
     </div>
-<<<<<<< HEAD
     <c:if test="${userco != null}">
         <form:form role="form" action="/core/preinvest/projectDisplay/newsletter/${project.id}" method="post">
             <div class="form-group">
