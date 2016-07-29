@@ -268,7 +268,7 @@
                 <h4 class="rewardHeader">Choisissez votre contrepartie</h4>
                 <ol>
                     <c:if test="${project.rewards != null and project.rewards.size() > 0}">
-                        <c:forEach items="${project.rewards}" begin="0" end="25" var="reward" varStatus="status">
+                        <c:forEach items="${project.rewards}" var="reward" varStatus="status">
                             <li class="rewardItem" name="reward/${reward.id}">
                                 <h4 class="rewardTitle"><a
                                         href="/invest/${project.id}/rewardDisplay/${reward.id}"> ${reward.name} à partir
@@ -276,6 +276,7 @@
 
                                 <div class="rewardDescription">
                                     <p>${reward.description}</p>
+                                    <span class="badge">${reward.costStart}</span>
                                 </div>
                             </li>
                         </c:forEach>
