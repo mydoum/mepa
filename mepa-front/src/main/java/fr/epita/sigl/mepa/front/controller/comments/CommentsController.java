@@ -30,6 +30,7 @@ import java.util.ListIterator;
 public class CommentsController {
     private static final Logger LOG = LoggerFactory.getLogger(CommentsController.class);
     private int ticket = 1;
+    private int NB_COMMENTS = 1;
 
     protected static final String COMMENTS_MODELS_MODEL_ATTRIBUTE = "c_models";
     // private static final String ADD_CUSTOM_COMMENTS_MODEL_FORM_BEAN_MODEL_ATTRIBUTE = "addCustomCommentsModelFormBean";
@@ -61,6 +62,7 @@ public class CommentsController {
 
 
         response.sendRedirect("/core/preinvest/projectDisplay/" + Long.toString(projectId)+ "/comment");
+        request.getSession().setAttribute("nbComments", NB_COMMENTS++);
         return "/preinvest/projectDisplay";
     }
 }

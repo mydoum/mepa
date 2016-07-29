@@ -76,8 +76,9 @@ public class ProjectCreateController {
 
         if (is_co == false)
             return authController.getsignin(request, modelMap);
-        else
+        else {
             return "/preinvest/projectCreate"; // The adress of the JSP coded in tiles.xml
+        }
     }
 
     @RequestMapping(value = {"/processCreation"}, method = RequestMethod.POST) // The adress to call the function
