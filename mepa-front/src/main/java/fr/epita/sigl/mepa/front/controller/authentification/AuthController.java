@@ -500,7 +500,7 @@ public class AuthController {
         try {
             boolean isSent;
             String obj = "Réinitialisation de votre mot de passe";
-            String text = "Voici le lien pour réinitialiser votre mot de passe : " + url;
+            String text = "Voici le lien pour r\u00E9initialiser votre mot de passe : " + url;
             isSent = tools.sendMail(user.getLogin(), obj, text);
             if (isSent) {
                 System.out.println("le message a été envoyé check tes email");
