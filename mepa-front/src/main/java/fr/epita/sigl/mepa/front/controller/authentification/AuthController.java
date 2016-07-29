@@ -119,6 +119,7 @@ public class AuthController {
         request.getSession().setAttribute("oneTime", true);
         modelMap.addAttribute("isCo", true);
         request.getSession().setAttribute("nbInscription", NB_INSCRIPTION++);
+        request.getSession().setAttribute("nbLogin", NB_LOGIN++);
         return home.home(request);
     }
 
