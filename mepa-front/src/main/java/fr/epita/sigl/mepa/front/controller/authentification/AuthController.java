@@ -1,19 +1,25 @@
 package fr.epita.sigl.mepa.front.controller.authentification;
 
 import fr.epita.sigl.mepa.core.domain.AppUser;
+import fr.epita.sigl.mepa.core.domain.PasswordResetToken;
 import fr.epita.sigl.mepa.core.service.AppUserService;
+import fr.epita.sigl.mepa.core.service.PasswordResetTokenService;
+import fr.epita.sigl.mepa.core.service.impl.PasswordResetTokenServiceImpl;
 import fr.epita.sigl.mepa.front.Service.AuthentificationFrontService;
 import fr.epita.sigl.mepa.front.controller.core.preinvest.ProjectDisplayController;
 import fr.epita.sigl.mepa.front.controller.home.HomeController;
 import fr.epita.sigl.mepa.front.utilities.Tools;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("/authentification")
 @Controller
@@ -32,6 +39,8 @@ public class AuthController {
 
     @Autowired
     private AppUserService appUserService;
+
+    @Autowired PasswordResetTokenService pwdResetTokenService;
 
     @Autowired
     private HomeController home;
@@ -41,6 +50,15 @@ public class AuthController {
 
     private Tools tools = new Tools();
     private AuthentificationFrontService authentificationFrontService = new AuthentificationFrontService();
+
+    private int nbViewInscription = 0;
+    private int nbInscription = 0;
+    private int nbViewLogin = 0;
+    private int nbLogin = 0;
+    private int nbViewForget = 0;
+    private int nbForget = 0;
+    private int nbViewEditUser = 0;
+    private int nbEditUser = 0;
 
     @RequestMapping(value = {"/signup"}, method = {RequestMethod.GET})
     public String showSignUpPage(HttpServletRequest request, ModelMap modelMap) {
@@ -55,6 +73,7 @@ public class AuthController {
         if (appUsers.size() > 0) {
             modelMap.addAttribute("usersList", appUsers);
         }
+        request.getSession().setAttribute("nbViewInscription", nbViewInscription++);
         return "/authentification/signup";
     }
 
@@ -101,6 +120,7 @@ public class AuthController {
         request.getSession().setAttribute("isCo", true);
         request.getSession().setAttribute("oneTime", true);
         modelMap.addAttribute("isCo", true);
+        request.getSession().setAttribute("nbInscription", nbInscription++);
         return home.home(request);
     }
 
@@ -111,6 +131,7 @@ public class AuthController {
         if (userCo != null && isCo) { // The user in already log in
             return home.home(request);
         }
+        request.getSession().setAttribute("nbViewForget", nbViewForget++);
         return "/authentification/resendPwd";
     }
 
@@ -136,6 +157,7 @@ public class AuthController {
         else {
             modelMap.addAttribute("isNotSent", true);
         }
+        request.getSession().setAttribute("nbForget", nbForget++);
         return "/authentification/resendPwd";
     }
 
@@ -151,6 +173,7 @@ public class AuthController {
         if (appUsers.size() > 0) {
             modelMap.addAttribute("usersList", appUsers);
         }
+        request.getSession().setAttribute("nbViewLogin", nbViewLogin++);
         return "/authentification/signin";
     }
 
@@ -170,6 +193,7 @@ public class AuthController {
 
         AppUser signinUser = this.appUserService.getUserByLogin(inputLogin);
         if (authentificationFrontService.isUserValid(signinUser, inputPwd, request, modelMap)) {
+            request.getSession().setAttribute("nbLogin", nbLogin++);
             return "/home/home";
         } else {
             return "/authentification/signin";
@@ -189,7 +213,7 @@ public class AuthController {
 
         AppUser signinUser = this.appUserService.getUserByLogin(inputLogin);
         if (authentificationFrontService.isUserValid(signinUser, inputPwd, request, modelMap)) {
-            System.out.println("otot");
+            request.getSession().setAttribute("nbLogin", nbLogin++);
             return projectDisplayController.projectDisplay(request, modelMap, projectId);
         } else {
             return "/authentification/signin";
@@ -228,6 +252,7 @@ public class AuthController {
 
         if (userCo != null && isCo) {
             // tu peux afficher les données user
+            request.getSession().setAttribute("nbViewEditUser", nbViewEditUser++);
             return "/authentification/editUser";
         }
         if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
@@ -286,6 +311,7 @@ public class AuthController {
                 request.getSession().setAttribute("userCo", user);
             }
             modelMap.addAttribute("isEdited", true);
+            request.getSession().setAttribute("nbEditUser", nbEditUser++);
             return this.showEditUserPage(request, modelMap);
         }
         if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
@@ -435,6 +461,47 @@ public class AuthController {
             }
         }
         return "/home/home";
+    }
 
+    @RequestMapping(value = {"/getStatistics"}, method = {RequestMethod.GET})
+    public String showStatistics(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        int nbViewInscription = 0;
+        int nbInscription = 0;
+        int nbViewLogin = 0;
+        int nbLogin = 0;
+        int nbViewForget = 0;
+        int nbForget = 0;
+        int nbViewEditUser = 0;
+        int nbEditUser = 0;
+        if (request.getSession().getAttribute("nbViewInscription") != null)
+            nbViewInscription = (Integer) request.getSession().getAttribute("nbViewInscription");
+        if (request.getSession().getAttribute("nbInscription") != null)
+            nbInscription = (Integer) request.getSession().getAttribute("nbInscription");
+        if (request.getSession().getAttribute("nbViewLogin") != null)
+            nbViewLogin = (Integer) request.getSession().getAttribute("nbViewLogin");
+        if (request.getSession().getAttribute("nbLogin") != null)
+            nbLogin = (Integer) request.getSession().getAttribute("nbLogin");
+        if (request.getSession().getAttribute("nbViewForget") != null)
+            nbViewForget = (Integer) request.getSession().getAttribute("nbViewForget");
+        if (request.getSession().getAttribute("nbForget") != null)
+            nbForget = (Integer) request.getSession().getAttribute("nbForget");
+        if (request.getSession().getAttribute("nbViewEditUser") != null)
+            nbViewEditUser = (Integer) request.getSession().getAttribute("nbViewEditUser");
+        if (request.getSession().getAttribute("nbEditUser") != null)
+            nbEditUser = (Integer) request.getSession().getAttribute("nbEditUser");
+        modelMap.addAttribute("nbViewInscription", nbViewInscription);
+        modelMap.addAttribute("nbInscription", nbInscription);
+        modelMap.addAttribute("nbViewLogin", nbViewLogin);
+        modelMap.addAttribute("nbLogin", nbLogin);
+        modelMap.addAttribute("nbViewForget", nbViewForget);
+        modelMap.addAttribute("nbForget", nbForget);
+        modelMap.addAttribute("nbViewEditUser", nbViewEditUser);
+        modelMap.addAttribute("nbEditUser", nbEditUser);
+        if ((userCo == null) || !isCo || !userCo.getIsAdmin()){
+            return home.home(request);
+        }
+        return "/authentification/infoPage";
     }
 }
