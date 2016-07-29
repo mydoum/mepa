@@ -499,7 +499,8 @@ public class AuthController {
         try {
             boolean isSent;
             String obj = "Réinitialisation de votre mot de passe";
-            String text = "Voici le lien pour r\u00E9initialiser votre mot de passe : " + url;
+            String text = "Bonjour, \r\n cliquer sur le lien suivant afin de redéfinir votre mot de passe : " + url + "\r\n" + "Ce lien est strictement confidentiel\r\n" +
+                    "Cordialement, \r\n" + "L'équipe LGIS";
             isSent = tools.sendMail(user.getLogin(), obj, text);
             if (isSent) {
                 System.out.println("le message a été envoyé check tes email");
@@ -512,7 +513,6 @@ public class AuthController {
         modelMap.addAttribute("isNotSent", false);
         modelMap.addAttribute("email", user.getLogin());
         return "/authentification/resendPwd";
-
     }
 
     @RequestMapping(value = {"/getStatistics"}, method = {RequestMethod.GET})
