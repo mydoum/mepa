@@ -203,8 +203,14 @@
             <label class="control-label">Description</label><label class="text-muted"> - Facultatif</label>
 
             <div class="controls">
-                <td><form:textarea name="desription" path="description" class="form-control input-lg" placeholder="Description"
-                                   style="margin-top: 0px;"/>${project.description}</td>
+                <td>
+                    <form:textarea path="description"  class="form-control input-lg"/>
+                    <!--
+                    <textarea name="desription" class="form-control input-lg" placeholder="Description"
+                                   style="margin-top: 0px;">
+
+                    </textarea>-->
+                </td>
             </div>
         </div>
         <br/>
