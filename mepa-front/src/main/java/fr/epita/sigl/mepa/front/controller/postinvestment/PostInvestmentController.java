@@ -110,6 +110,17 @@ public class PostInvestmentController {
         modelMap.addAttribute("userco", userco);
 
         investController.investorsList(modelMap, request, project);
+
+        /* Check if the user connected is the administrator of the projet */
+        if (userco != null && project != null && ((userco.getId().equals(project.getUser_id()))
+                || (userco.getIsAdmin())))
+            request.getSession().setAttribute("isAdmin", "true");
+        else
+            request.getSession().setAttribute("isAdmin", "false");
+
+        investController.investorsList(modelMap, request, project);
+
+
         /*
         List<AppCommentsModel> list = this.commentsModelService.getAllCommentsModels();
 
