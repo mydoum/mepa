@@ -28,7 +28,7 @@
 .wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
     color: #555555;
     cursor: default;
-    padding-left: 17%;
+    padding-left: 21%;
     position: relative;
     border: 0;
     border-bottom-color: transparent;
@@ -66,7 +66,7 @@ span.round-tab:hover {
 }
 
 .wizard .nav-tabs > li {
-    width: 50%;
+    width: 33%;
 }
 
 .wizard li:after {

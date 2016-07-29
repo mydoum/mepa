@@ -30,6 +30,13 @@
                         <li role="presentation" class="active">
                             <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
                             <span class="round-tab">
+                                <i class="glyphicon glyphicon-piggy-bank" style="padding-top: 30%"></i>
+                            </span>
+                            </a>
+                        </li>
+                        <li role="presentation" class="disabled">
+                            <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+                            <span class="round-tab">
                                 <i class="glyphicon glyphicon-ok" style="padding-top: 30%"></i>
                             </span>
                             </a>
