@@ -30,8 +30,11 @@
                         <c:if test="${isCo == true}">
                             <c:if test="${userCo.isAdmin}">
                                 <c:url var="checkUsers" value="/authentification/checkUsers"/>
+                                <c:url var="statistics" value="/authentification/getStatistics"/>
                                 <li><a href="${checkUsers}"><span
                                         class="glyphicon glyphicon-th-list"></span> Liste des utilisateurs</a></li>
+                                <li><a href="${statistics}"><span
+                                        class="glyphicon glyphicon-signal"></span> Statistiques</a></li>
                             </c:if>
                             <c:url var="editUser" value="/authentification/editUser"/>
                             <c:choose>

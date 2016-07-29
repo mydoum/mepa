@@ -51,6 +51,15 @@ public class AuthController {
     private Tools tools = new Tools();
     private AuthentificationFrontService authentificationFrontService = new AuthentificationFrontService();
 
+    private int nbViewInscription = 0;
+    private int nbInscription = 0;
+    private int nbViewLogin = 0;
+    private int nbLogin = 0;
+    private int nbViewForget = 0;
+    private int nbForget = 0;
+    private int nbViewEditUser = 0;
+    private int nbEditUser = 0;
+
     @RequestMapping(value = {"/signup"}, method = {RequestMethod.GET})
     public String showSignUpPage(HttpServletRequest request, ModelMap modelMap) {
         // Checking if user is login need to handle this in the model
@@ -64,6 +73,7 @@ public class AuthController {
         if (appUsers.size() > 0) {
             modelMap.addAttribute("usersList", appUsers);
         }
+        request.getSession().setAttribute("nbViewInscription", nbViewInscription++);
         return "/authentification/signup";
     }
 
@@ -110,6 +120,7 @@ public class AuthController {
         request.getSession().setAttribute("isCo", true);
         request.getSession().setAttribute("oneTime", true);
         modelMap.addAttribute("isCo", true);
+        request.getSession().setAttribute("nbInscription", nbInscription++);
         return home.home(request);
     }
 
@@ -120,6 +131,7 @@ public class AuthController {
         if (userCo != null && isCo) { // The user in already log in
             return home.home(request);
         }
+        request.getSession().setAttribute("nbViewForget", nbViewForget++);
         return "/authentification/resendPwd";
     }
 
@@ -145,6 +157,7 @@ public class AuthController {
         else {
             modelMap.addAttribute("isNotSent", true);
         }
+        request.getSession().setAttribute("nbForget", nbForget++);
         return "/authentification/resendPwd";
     }
 
@@ -160,6 +173,7 @@ public class AuthController {
         if (appUsers.size() > 0) {
             modelMap.addAttribute("usersList", appUsers);
         }
+        request.getSession().setAttribute("nbViewLogin", nbViewLogin++);
         return "/authentification/signin";
     }
 
@@ -179,6 +193,7 @@ public class AuthController {
 
         AppUser signinUser = this.appUserService.getUserByLogin(inputLogin);
         if (authentificationFrontService.isUserValid(signinUser, inputPwd, request, modelMap)) {
+            request.getSession().setAttribute("nbLogin", nbLogin++);
             return "/home/home";
         } else {
             return "/authentification/signin";
@@ -198,7 +213,7 @@ public class AuthController {
 
         AppUser signinUser = this.appUserService.getUserByLogin(inputLogin);
         if (authentificationFrontService.isUserValid(signinUser, inputPwd, request, modelMap)) {
-            System.out.println("otot");
+            request.getSession().setAttribute("nbLogin", nbLogin++);
             return projectDisplayController.projectDisplay(request, modelMap, projectId);
         } else {
             return "/authentification/signin";
@@ -237,6 +252,7 @@ public class AuthController {
 
         if (userCo != null && isCo) {
             // tu peux afficher les données user
+            request.getSession().setAttribute("nbViewEditUser", nbViewEditUser++);
             return "/authentification/editUser";
         }
         if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
@@ -295,6 +311,7 @@ public class AuthController {
                 request.getSession().setAttribute("userCo", user);
             }
             modelMap.addAttribute("isEdited", true);
+            request.getSession().setAttribute("nbEditUser", nbEditUser++);
             return this.showEditUserPage(request, modelMap);
         }
         if (request.getSession().getAttribute("oneTime") != null && (Boolean) request.getSession().getAttribute("oneTime")){
@@ -446,52 +463,45 @@ public class AuthController {
         return "/home/home";
     }
 
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
-    public String resetPassword(
-            HttpServletRequest request) {
-//        , @RequestParam("email") String userEmail
-//        AppUser user = appUserService.getUserByLogin(userEmail);
-        AppUser user = appUserService.getUserByLogin("patrick.ear@epita.fr");
-
-        if (user == null) {
-//            throw new UserNotFoundException();
-            // ERROR
+    @RequestMapping(value = {"/getStatistics"}, method = {RequestMethod.GET})
+    public String showStatistics(HttpServletRequest request, ModelMap modelMap) {
+        AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");
+        Boolean isCo = (Boolean) request.getSession().getAttribute("isCo");
+        int nbViewInscription = 0;
+        int nbInscription = 0;
+        int nbViewLogin = 0;
+        int nbLogin = 0;
+        int nbViewForget = 0;
+        int nbForget = 0;
+        int nbViewEditUser = 0;
+        int nbEditUser = 0;
+        if (request.getSession().getAttribute("nbViewInscription") != null)
+            nbViewInscription = (Integer) request.getSession().getAttribute("nbViewInscription");
+        if (request.getSession().getAttribute("nbInscription") != null)
+            nbInscription = (Integer) request.getSession().getAttribute("nbInscription");
+        if (request.getSession().getAttribute("nbViewLogin") != null)
+            nbViewLogin = (Integer) request.getSession().getAttribute("nbViewLogin");
+        if (request.getSession().getAttribute("nbLogin") != null)
+            nbLogin = (Integer) request.getSession().getAttribute("nbLogin");
+        if (request.getSession().getAttribute("nbViewForget") != null)
+            nbViewForget = (Integer) request.getSession().getAttribute("nbViewForget");
+        if (request.getSession().getAttribute("nbForget") != null)
+            nbForget = (Integer) request.getSession().getAttribute("nbForget");
+        if (request.getSession().getAttribute("nbViewEditUser") != null)
+            nbViewEditUser = (Integer) request.getSession().getAttribute("nbViewEditUser");
+        if (request.getSession().getAttribute("nbEditUser") != null)
+            nbEditUser = (Integer) request.getSession().getAttribute("nbEditUser");
+        modelMap.addAttribute("nbViewInscription", nbViewInscription);
+        modelMap.addAttribute("nbInscription", nbInscription);
+        modelMap.addAttribute("nbViewLogin", nbViewLogin);
+        modelMap.addAttribute("nbLogin", nbLogin);
+        modelMap.addAttribute("nbViewForget", nbViewForget);
+        modelMap.addAttribute("nbForget", nbForget);
+        modelMap.addAttribute("nbViewEditUser", nbViewEditUser);
+        modelMap.addAttribute("nbEditUser", nbEditUser);
+        if ((userCo == null) || !isCo || !userCo.getIsAdmin()){
+            return home.home(request);
         }
-
-        String token = UUID.randomUUID().toString();
-        PasswordResetToken pwdResetToken = new PasswordResetToken();
-        pwdResetToken.setLogin(user.getLogin());
-        pwdResetToken.setToken(token);
-        pwdResetToken.setExpiryDate(new Date()); // FIXME
-        pwdResetTokenService.createPwdResetToken(pwdResetToken);
-
-        System.out.println("token = " + pwdResetToken.getToken());
-
-        try {
-            boolean isSent;
-            String obj = "Récupération de votre mot de passe";
-            String text = "Voici l'url pour recuperer ton mot de passe : Voici votre mot de passe";
-            isSent = tools.sendMail("patrick-hk@outlook.com", obj, text);
-            if (isSent) {
-                System.out.println("le message a été envoyé check tes email");
-            } else {
-                System.out.println("Il y a eu un soucis");
-            }
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-
-
-//
-//
-//        String appUrl =
-//                "http://" + request.getServerName() +
-//                        ":" + request.getServerPort() +
-//                        request.getContextPath();
-//        SimpleMailMessage email =
-//                constructResetTokenEmail(appUrl, request.getLocale(), token, user);
-//        mailSender.send(email);
-
-        return home.home(request);
+        return "/authentification/infoPage";
     }
 }
