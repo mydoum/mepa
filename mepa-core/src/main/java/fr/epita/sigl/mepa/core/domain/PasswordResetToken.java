@@ -26,12 +26,17 @@ public class PasswordResetToken {
     @Column(name = "login")
     private String login;
 
+    @Column(name = "userid")
+    private Long userId;
+
     @Column(name = "expireDate")
     private Date expiryDate;
 
     public String getToken() { return this.token; }
 
     public String getLogin() { return this.login; }
+
+    public Long getUserId() { return this.userId; }
 
     public Date getExpiryDate() { return this.expiryDate; }
 
@@ -40,5 +45,7 @@ public class PasswordResetToken {
     public void setLogin(String login) { this.login = login; }
 
     public void setExpiryDate(Date expiryDate) { this.expiryDate = expiryDate; }
+
+    public void setUserId(Long userId) { this.userId = userId; }
 
 }

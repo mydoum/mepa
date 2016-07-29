@@ -6,51 +6,56 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
+<!-- Include Bootstrap Datepicker -->
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css"/>
 
 <div class="container">
-    <c:choose>
-        <c:when test="${isNotSent == false}">
-            <div class="col-md-12 text-center alert alert-success investFormInside">
-                Un mail a été envoyé à ${email}!
-            </div>
-            <br/>
-        </c:when>
-        <c:when test="${isNotSent == true}">
-            <div class="col-md-12 text-center alert alert-danger investFormInside">
-                Email incorrect. Veuillez sélectionner l'email affilié à votre compte.
-            </div>
-            <br/>
-        </c:when>
-        <c:otherwise>
-        </c:otherwise>
-    </c:choose>
+    <c:if test="${newPassword == false}">
+        <div class="col-md-12 text-center alert alert-danger investFormInside">
+            Le mot de passe actuel est incorrect.
+        </div>
+    </c:if>
+    <c:if test="${confPassword == false}">
+        <div class="col-md-12 text-center alert alert-danger investFormInside">
+            Le mot de passe de confirmation est incorrect.
+        </div>
+    </c:if>
     <div class="row">
         <div class="col-md-6">
-            <c:url var="resendPwdFormActionUrl" value="/authentification/resetPwd"/>
-            <form id="eventForm" class="form-horizontal" action="${resendPwdFormActionUrl}"
-                  modelAttribute="resendPwdFormBean"
+            <c:url var="addCustomUserFormActionUrl" value="/authentification/changePwd"/>
+            <form id="eventForm" class="form-horizontal" action="${addCustomUserFormActionUrl}"
+                  modelAttribute="addCustomUserFormBean"
                   method="POST">
                 <fieldset>
-                    <div id="legend">
-                        <legend class="">Récupération du mot de passe</legend>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="email">Veuillez indiquer l'adresse email associée à votre
-                            compte</label>
-                        <div class="controls">
-                            <input id="email" name="email" placeholder="" class="form-control input-lg" type="email">
+                    <div id="modifyPasswordTab">
+                        <div id="legend">
+                            <legend class="">Modification du mot de passe</legend>
                         </div>
-                    </div>
-
-                    <br/>
-                    <br/>
-                    <div class="control-group">
-                        <!-- Buttons -->
-                        <div class="controls">
-                            <center>
-                                <button type="submit" class="btn btn-default">Récupérer le mot de passe</button>
-                            </center>
+                        <div class="control-group">
+                            <label class="control-label" for="newPassword">Nouveau mot de passe</label>
+                            <div class="controls">
+                                <input id="newPassword" name="newPassword" placeholder="" class="form-control input-lg"
+                                       type="password" value="" pattern="[0-9a-zA-Z]{6,15}" required>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="passwordConf">Confirmation du nouveau mot de passe</label>
+                            <div class="controls">
+                                <input id="passwordConf" name="passwordConf" placeholder="" class="form-control input-lg"
+                                       type="password" value="" pattern="[0-9a-zA-Z]{6,15}" required>
+                            </div>
+                        </div>
+                        <div hidden>
+                            <input id="hidden-user-id" name="hidden-user-id" class="form-control input-lg"
+                                   type="text" value="${hiddenuserid}">
+                        </div>
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                <button type="submit" class="btn btn-default">Réinitialiser mon mot de passe</button>
+                            </div>
                         </div>
                     </div>
                 </fieldset>

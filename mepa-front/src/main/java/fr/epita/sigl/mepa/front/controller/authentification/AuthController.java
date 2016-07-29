@@ -109,6 +109,7 @@ public class AuthController {
         newAppUser.setIsAdmin(false);
 
         this.appUserService.createUser(newAppUser);
+        System.out.print("user id at creation ======== " + newAppUser.getId());
         //        String msg = "Le compte a bien été créé";
 //        modelMap.addAttribute("userIsCreated", msg);
         List<AppUser> appUsers = this.appUserService.getAllUsers();
@@ -474,14 +475,17 @@ public class AuthController {
         AppUser user = appUserService.getUserByLogin(userEmail);
 
         if (user == null) {
+            System.out.println("ALLLERTE    ====== THE USER DOES NOT EXIST");
+            return home.home(request);
 //            throw new UserNotFoundException();
             // ERROR
         }
-
+        System.out.println("USER ID IN RESETPWD = " + user.getId());
         String token = UUID.randomUUID().toString();
         PasswordResetToken pwdResetToken = new PasswordResetToken();
         pwdResetToken.setLogin(user.getLogin()); // FIXME CARE
         pwdResetToken.setToken(token);
+        pwdResetToken.setUserId(user.getId());
         pwdResetToken.setExpiryDate(new Date()); // FIXME
         pwdResetTokenService.createPwdResetToken(pwdResetToken);
 
@@ -495,9 +499,9 @@ public class AuthController {
         String url = appUrl + "/authentification/changePwd?id=" + user.getId() + "&token=" + token;
         try {
             boolean isSent;
-            String obj = "Récupération de votre mot de passe";
-            String text = "Voici l'url pour reset ton mot de passe : " + url;
-            isSent = tools.sendMail("patrick-hk@outlook.com", obj, text);
+            String obj = "Réinitialisation de votre mot de passe";
+            String text = "Voici le lien pour réinitialiser votre mot de passe : " + url;
+            isSent = tools.sendMail(user.getLogin(), obj, text);
             if (isSent) {
                 System.out.println("le message a été envoyé check tes email");
             } else {
@@ -569,7 +573,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/changePwd", method = RequestMethod.GET)
-    public String showChangePasswordPage(HttpServletRequest request,
+    public String showChangePasswordPage(HttpServletRequest request, ModelMap modelMap,
                                          @RequestParam("id") long id, @RequestParam("token") String token) {
         PasswordResetToken passToken = pwdResetTokenService.getUserByToken(token);
         AppUser appUser = appUserService.getUserById(id);
@@ -577,13 +581,35 @@ public class AuthController {
             System.out.println("------- Utilisateur inconnu -------");
             return home.home(request);
         }
+        System.out.println("USER ID IN PWD CHANGE = " + String.valueOf(id));
 
-//        Calendar cal = Calendar.getInstance();
+//        Calendar cal = Calendar.getInstance(); // FIXME Handle date
 //        if ((passToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
 //            System.out.println("------- Token périmé -------");
 //            return home.home(request);
 //        }
-
+        modelMap.addAttribute("hiddenuserid", id);
+        modelMap.addAttribute("toto", "test");
         return "/authentification/resetPwd";
     }
+
+    @RequestMapping(value = "/changePwd", method = RequestMethod.POST)
+    public String resetForgetPwd(HttpServletRequest request,
+                                         @RequestParam("hidden-user-id") String id, @RequestParam("newPassword") String newPassword) {
+        System.out.println("id = " + id);
+        AppUser appUser = appUserService.getUserById(Long.valueOf(id));
+        System.out.println("user = "+ appUser.getLogin());
+        if (appUser != null) {
+            String newPwd = newPassword;
+            if (newPwd != "") {
+                appUser.setPassword(newPwd);
+                this.appUserService.updateUser(appUser);
+                System.out.println("user pwd is now  = "+ appUser.getPassword());
+            }
+        }
+
+        // Change le mot de passe et redirige vers la home
+        return home.home(request);
+    }
+
 }
