@@ -1,11 +1,9 @@
 package fr.epita.sigl.mepa.front.controller.core.preinvest;
 
-import fr.epita.sigl.mepa.core.domain.AppUser;
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
-import fr.epita.sigl.mepa.core.domain.Investment;
-import fr.epita.sigl.mepa.core.domain.Project;
+import fr.epita.sigl.mepa.core.domain.*;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
 import fr.epita.sigl.mepa.core.service.InvestmentService;
+import fr.epita.sigl.mepa.core.service.NewsletterService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import fr.epita.sigl.mepa.front.controller.investment.InvestController;
 import org.hibernate.Hibernate;
@@ -48,6 +46,9 @@ public class ProjectDisplayController {
     @Autowired
     private InvestController investController;
 
+    @Autowired
+    private NewsletterService newsletterService;
+
 
     @RequestMapping(value = {"/projectDisplay/{projectId}"}) // The adress to call the function
     public String projectDisplay(HttpServletRequest request, ModelMap modelMap, @PathVariable long projectId) {
@@ -62,6 +63,7 @@ public class ProjectDisplayController {
 
          /*Get the current user in the session in order to know if he is
         * connected */
+
         AppUser userco = new AppUser();
         userco = (AppUser) request.getSession().getAttribute("userCo");
         modelMap.addAttribute("userco", userco);
@@ -74,6 +76,30 @@ public class ProjectDisplayController {
             request.getSession().setAttribute("isAdmin", "false");
 
         investController.investorsList(modelMap, request, project);
+
+
+
+        int display;
+        List<NewsletterModel> newsletterlist = this.newsletterService.getAllNewsletterModels();
+        //boolean exist = false;
+        if (userco != null) {
+            for (NewsletterModel i : newsletterlist) {
+                if (i.getProjectid() == projectId) {
+                    if (i.getEmails().contains(userco.getLogin())) {
+                        System.out.println("\n\n JE te connais déja niga\n\n");
+                        display = 1;
+                    } else {
+                        System.out.println("\n\n JE ne te connais pas niga\n\n");
+                        display = 2;
+                    }
+                    modelMap.addAttribute("display", display);
+                }
+                int nb_likes = i.getLike_();
+                modelMap.addAttribute("nb_likes", nb_likes);
+            }
+        }
+
+
         return "/preinvest/projectDisplay";
     }
 
@@ -132,16 +158,98 @@ public class ProjectDisplayController {
 
         investController.investorsList(modelMap, request, project);
 
-        List<CommentsModel> list = this.commentsModelService.getAllCommentsModels();
+        List<AppCommentsModel> list = this.commentsModelService.getAllCommentsModels();
         /*Sort of the comments by the arriving tickets*/
-        List<CommentsModel>new_c_models = new ArrayList<CommentsModel>();
-        ListIterator<CommentsModel> i= list.listIterator(list.size());
-        while(i.hasPrevious())
+        List<AppCommentsModel>new_c_models = new ArrayList<AppCommentsModel>();
+        ListIterator<AppCommentsModel> a= list.listIterator(list.size());
+        while(a.hasPrevious())
         {
-            new_c_models.add(i.previous());
+            new_c_models.add(a.previous());
         }
         modelMap.addAttribute("new_c_models",new_c_models);
+
         return "/preinvest/projectDisplay/Comment";
 
     }
+
+    /***********************************************************************************************************/
+    /**[PROSPER]*/
+    /**
+     * Add of this function in order to catch the user action whith the newsletter checkbox
+     */
+    @RequestMapping(value = {"/projectDisplay/newsletter/{projectId}"})
+    public String projectNewsletter(HttpServletRequest request, @PathVariable Long projectId, ModelMap modelMap) {
+        /* Code your logic here */
+        Project project = this.projectService.getProjectById(projectId);
+        modelMap.addAttribute(PROJECT_ATTRIBUTE, project);
+
+        /*PostInvest Total Amount invested on Project*/
+        Float totalProjectAmountInvested = getProjectMoneyInvested(projectId);
+        modelMap.addAttribute(PROJECT_TOTAL_AMOUNT, totalProjectAmountInvested);
+        /*\PostInvest Total Amount invested on Project*/
+
+
+        /**[PROSPER]*/
+        /** Get the current user and mapping him in the current project page*/
+        AppUser userco = new AppUser();
+        userco = (AppUser) request.getSession().getAttribute("userCo");
+        modelMap.addAttribute("userco", userco);
+
+        /**[PROSPER]*/
+        /** Get of the checkbox value and add off the user to the current project newsletter */
+        boolean myCheckBox = request.getParameter("check") != null;
+        //if (myCheckBox == true)
+        //{
+
+
+        int display;
+        List<NewsletterModel> newsletterlist = this.newsletterService.getAllNewsletterModels();
+        //boolean exist = false;
+        if (userco != null) {
+            for (NewsletterModel i : newsletterlist) {
+                if (i.getProjectid() == projectId) {
+                System.out.println("\n USER LOGIN : " + userco.getLogin() + "\n");
+                System.out.println("LE NOMBRE DE LIKE INITIAL SUR LE PROJ: " + project.getName() + " EST " + i.getLike_());
+
+                if (i.getEmails().contains(userco.getLogin())) {
+                    System.out.println("\n\n JE te connais déja niga\n\n");
+                    i.getEmails().remove(userco.getLogin());
+                    if (i.getLike_() != 0)
+                        i.setLike_(i.getLike_() - 1);
+                    display = 2;
+                } else {
+                    System.out.println("\n\n JE ne te connais pas niga\n\n");
+                    i.addEmail(userco.getLogin());
+                    i.setLike_(i.getLike_() + 1);
+                    display = 1;
+                }
+                this.newsletterService.updateNewsletter(i);
+                modelMap.addAttribute("display", display);
+                int nb_likes = i.getLike_();
+                modelMap.addAttribute("nb_likes", nb_likes);
+                System.out.println("LE NOMBRE DE LIKE FINAL SUR LE PROJ: " + project.getName() + " EST " + i.getLike_());
+                }
+            }
+        }
+
+        /**[PROSPER]*/
+        /** Mapping in the current project page of the list containing all the comments of any projects*/
+            /*List<NewsletterModel>  newsletterlist = this.newsletterService.getAllNewsletterModels();
+            modelMap.addAttribute("newsletterlist",newsletterlist) ;*/
+        //}
+        //J'envoi ma liste en session comme ca ils pourrons la récupérer.
+        return "/preinvest/projectDisplay"; // The adress of the JSP coded in tiles.xml
+    }
+    //Soufiane
+    @RequestMapping(value = {"/projectlist/newsletter/{projectId}"})
+    public String projectNewsletter( ModelMap modelMap)
+    {
+        List<NewsletterModel> newslettersortedlist = this.newsletterService.getAllSorted();
+
+        modelMap.addAttribute("sortedlist", newslettersortedlist);
+        return "/preinvest/projectList";
+    }
+
+    /***********************************************************************************************************/
+
 }

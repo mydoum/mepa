@@ -17,4 +17,6 @@ public interface InvestmentDao {
     List<Investment> getAll();
 
     List<Investment> getAllByProjectId(Long id);
+
+    List<Investment> getAllByRewardId(Long projectId, Long rewardId);
 }

@@ -1,8 +1,7 @@
 package fr.epita.sigl.mepa.front.controller.comments;
 
 import fr.epita.sigl.mepa.core.domain.AppUser;
-import fr.epita.sigl.mepa.core.domain.CommentsModel;
-import fr.epita.sigl.mepa.core.domain.Project;
+import fr.epita.sigl.mepa.core.domain.AppCommentsModel;
 import fr.epita.sigl.mepa.core.service.CommentsModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,28 +38,29 @@ public class CommentsController {
     private CommentsModelService commentsModelService;
 
     @RequestMapping(value = {"/", "/{projectId}"}, method = {RequestMethod.POST})
-    public String processForm(HttpServletRequest request, ModelMap modelMap, HttpServletResponse response, @PathVariable int projectId) throws IOException {
+    public String processForm(HttpServletRequest request, ModelMap modelMap, HttpServletResponse response, @PathVariable Long projectId) throws IOException {
 
         String text = request.getParameter("userText");
-            if (text != "") {
+
+        if (text != "") {
 
                 AppUser userco = new AppUser();
                 userco = (AppUser) request.getSession().getAttribute("userCo");
                 modelMap.addAttribute("userco", userco);
 
-                CommentsModel newCommentsModel = new CommentsModel();
-                newCommentsModel.setData(text);
-                newCommentsModel.setProjectId(projectId);
-                newCommentsModel.setUser(userco.getLastName() + " " + userco.getFirstName());
-                this.commentsModelService.createCommentsModel(newCommentsModel);
+                AppCommentsModel newAppCommentsModel = new AppCommentsModel();
+                newAppCommentsModel.setData_(text);
+                newAppCommentsModel.setProjectId_(projectId);
+                newAppCommentsModel.setUser_(userco.getLastName() + " " + userco.getFirstName());
+                this.commentsModelService.createCommentsModel(newAppCommentsModel);
 
                 /*Helps to sort the tickets */
-                newCommentsModel.setArriving(ticket);
+                newAppCommentsModel.setArriving_(ticket);
                 ticket++;
             }
 
 
-        response.sendRedirect("/core/preinvest/projectDisplay/" + Integer.toString(projectId)+ "/comment");
+        response.sendRedirect("/core/preinvest/projectDisplay/" + Long.toString(projectId)+ "/comment");
         return "/preinvest/projectDisplay";
     }
 }

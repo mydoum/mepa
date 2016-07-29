@@ -12,6 +12,7 @@ import fr.epita.sigl.mepa.core.service.InvestmentService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
 import fr.epita.sigl.mepa.core.service.RewardService;
 import fr.epita.sigl.mepa.front.controller.home.HomeController;
+import fr.epita.sigl.mepa.front.controller.postinvestment.PostInvestmentController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.asm.Label;
@@ -99,6 +100,8 @@ public class InsertDummyController {
             Date date = new Date();
             appUser.setBirthDate(date);
             this.appUserService.createUser(appUser);
+
+
         }
 
         /* PREINVEST*/
@@ -107,7 +110,7 @@ public class InsertDummyController {
             Reward r = new Reward();
             r.setName("Coucou");
             r.setDescription("Ceci est une description");
-            r.setCostStart((float) 10);
+            r.setCostStart((long) 10);
             rewardService.createReward(r);
         }
 
@@ -138,7 +141,7 @@ public class InsertDummyController {
                 Reward r = new Reward();
                 r.setName("Coucou");
                 r.setDescription("Ceci est une description");
-                r.setCostStart((float) 10);
+                r.setCostStart((long) 10);
                 this.rewardService.createReward(r);
                 rewards.add(r);
             }
@@ -152,7 +155,7 @@ public class InsertDummyController {
             rand.nextLong();
             Project newProject = new Project((long) 1, "YoloSwag", getRandomDateFinishedDate());
             Date d = getRandomDateFinishedDate();
-            newProject.setGoalAmount((long) 600);
+            newProject.setGoalAmount((long) (long) PostInvestmentController.randomWithRange(500, 1000));
             while (d.after(newProject.getEndDate()))
                 d = getRandomDateFinishedDate();
 
@@ -165,7 +168,6 @@ public class InsertDummyController {
             newProject.setDescription("Gildas est trop beau");
 
 
-
             this.projectService.createProject(newProject);
 
             Set<Reward> rewards = new HashSet<>();
@@ -174,7 +176,7 @@ public class InsertDummyController {
                 Reward r = new Reward();
                 r.setName("Gildas est beau" + j);
                 r.setDescription("Ceci est une description");
-                r.setCostStart((float) 10);
+                r.setCostStart((long) 10);
                 this.rewardService.createReward(r);
                 rewards.add(r);
             }
@@ -182,7 +184,21 @@ public class InsertDummyController {
             newProject.setRewards(rewards);
             this.projectService.updateProject(newProject);
 
+            for (String s : emailList){
+                Investment invest = new Investment();
+                float totalAmount = PostInvestmentController.randomWithRange(0, 150);
+                invest.setAmount(totalAmount);
+                invest.setProjectId(newProject.getId());
+                invest.setUserId(appUserService.getUserByLogin(s).getId());
+                invest.setAnonymous(false);
+                Date date = new Date();
+                invest.setDate(date);
+                investmentService.createInvestment(invest);
+                this.projectService.updateProject(newProject);
+            }
+
         }
+
         /* INVEST*/
         for (int i = 0; i < 100; i++) {
             Investment invest = new Investment();

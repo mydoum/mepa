@@ -27,17 +27,20 @@
         <div class="col-md-12 investForm">
             <c:url var="payReward" value="/invest/${projectId}/rewardpay/${rewardId}/invest"/>
             <form:form role="form" action="${payReward}" method="post" modelAttribute="User">
-                <label class="investFormInside col-md-12">Amount (€):</label>
+                <label class="investFormInside col-md-12">Montant :</label>
                 <div class="col-md-12 InvestFormInside">
-                    <input name="investAmount" id="input-with-keypress"
+                    <div class="input-group">
+                        <span class="input-group-addon">${amountCurrency}</span>
+                        <input name="investAmount" id="input-with-keypress"
                            class="form-control" type="number" required="required" value="${rewardPrice}"/>
                 </div>
                 <br/>
-                <label class="investFormInside col-md-12">Anonyme: </label>
-                <div class="col-md-12 InvestFormInside">
-                    <input type="checkbox" id="anonymous_id" name="anonymous_id" value="anonymous_id_value"
-                           class="form-control"/>
-                </div>
+                    <div class="col-md-4">
+                        <div class="col-md-1 checkbox">
+                            <label><input type="checkbox" name="anonymous_id" value=""/>Anonyme</label>
+                                <%--      <label class="investFormInside col-md-12">Anonyme:</label>--%>
+                        </div>
+                    </div>
                 <br/>
                 <div class="col-md-4">
                     <p align="center"><input type="submit" class="btn btn-primary InvestFormInside" value="Contribuer"></p>

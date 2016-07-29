@@ -55,6 +55,12 @@ public class InvestmentServiceImpl implements InvestmentService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Investment> getAllInvestmentsByRewardId(Long projectId, Long rewardId) {
+        return this.investmentDao.getAllByRewardId(projectId, rewardId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public void dumpAllInvestmentsByProject(Long id) {
         ArrayList<Investment> investments = new ArrayList<>(this.investmentDao.getAllByProjectId(id));
 

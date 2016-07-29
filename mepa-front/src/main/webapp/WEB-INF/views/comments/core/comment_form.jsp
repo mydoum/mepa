@@ -20,11 +20,11 @@
                 </thead>
                     <tbody>
                 <c:forEach items="${new_c_models}" var="c_model" varStatus="loop">
-                        <c:if test="${c_model.projectId == project.id}">
+                        <c:if test="${c_model.projectId_ == project.id}">
                             <tr>
-                                <td>${c_model.user}</td>
-                                <td><fmt:formatDate value="${c_model.created}" pattern="HH:mm:ss"/></td>
-                                <td>${c_model.data}</td>
+                                <td>${c_model.user_}</td>
+                                <td><fmt:formatDate value="${c_model.created_}" pattern="HH:mm:ss"/></td>
+                                <td>${c_model.data_}</td>
                             </tr>
                         </c:if>
                     </c:forEach>

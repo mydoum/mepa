@@ -48,10 +48,11 @@
                 <br/>
                 <div class="control-group">
 
-                    <label class="control-label">Montant de départ(€):</label>
+                    <label class="control-label">Montant</label>
                     <div id="keypress"
                          class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12"></div>
-                    <div class=control-label">
+                    <div class="input-group">
+                        <span class="input-group-addon">${project.getCurrencyString()}</span>
                         <td><form:input path="costStart" class="form-control input-lg" placeholder="Montant à partir du quel la contrepartie s'applique" id="input-with-keypress"
                               type="text" required="required" readonly="true" />
                         </td>
@@ -61,7 +62,7 @@
                 <br/>
 
                 <div class="control-group">
-                    <label class="control-label">Description</label>
+                    <label class="control-label">Description </label><label class="text-muted"> - Facultatif</label>
                     <div class="controls">
                         <td><form:textarea path="description" class="form-control input-lg" placeholder="Description" style="margin-top: 0px;"/></td>
                     </div>
@@ -74,6 +75,7 @@
                 </div>
             </sf:form>
                 </div>
+
 <%--
         </c:if>
         <c:if test="${!is_connected}">

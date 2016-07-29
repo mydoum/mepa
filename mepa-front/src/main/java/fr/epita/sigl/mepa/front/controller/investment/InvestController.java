@@ -147,7 +147,7 @@ public class InvestController {
         Project tmpProject = projectService.getProjectById(projectId);
 
         String mail = tmpUser.getLogin();
-        String subject = "Merci pour votre contributn clion au projet " + tmpProject.getName();
+        String subject = "Merci pour votre contribution au projet " + tmpProject.getName();
         String message = "Votre contribution est de " + moneyAmount + " euros";
 
         try {
@@ -211,18 +211,32 @@ public class InvestController {
         float rewardPrice = reward.getCostStart();
         String description = reward.getDescription();
         String rewardName = reward.getName();
+        Project project = projectService.getProjectById(projectId);
 
         model.addAttribute("rewardPrice", rewardPrice);
         model.addAttribute("description", description);
         model.addAttribute("rewardName", rewardName);
         model.addAttribute("projectId", projectId);
         model.addAttribute("rewardId", rewardId);
+        model.addAttribute("amountCurrency", project.getCurrencyString());
+
 
         return "/invest/rewardpay"; // The adress of the JSP coded in tiles.xml
     }
 
     @RequestMapping(value = "/invest/{projectId}/rewardpay/{rewardId}/invest", method = RequestMethod.POST)
     public String payReward(ModelMap model, HttpSession session, HttpServletRequest request, @PathVariable long projectId, @PathVariable long rewardId) {
+        Project project = projectService.getProjectById(projectId);
+        model.addAttribute("amountCurrency", project.getCurrencyString());
+
+        float moneyAmount = Float.parseFloat(request.getParameter("investAmount"));
+        Reward reward = rewardService.getRewardById(rewardId);
+        if (moneyAmount < reward.getCostStart()) {
+            String errorMessage = "Votre donation n'a pu être prise en compte, le montant est insuffisant. Veuillez rééssayer ultérieurement.";
+            model.addAttribute("errorInvest", errorMessage);
+            return projectDisplayController.projectDisplay(request, model, projectId);
+        }
+
         investMoney(model, session, request, projectId);
         return "/preinvest/projectDisplay";
     }

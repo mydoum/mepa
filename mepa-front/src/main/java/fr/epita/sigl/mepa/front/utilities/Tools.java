@@ -47,7 +47,7 @@ public class Tools {
 
     public static boolean sendMail (String mail, String Subject, String message) throws AddressException, MessagingException {
         //User tmpUser = userService.getUserById(userId);
-        boolean result = false;
+        boolean result = true;
 
         try {
             mailServerProperties = System.getProperties();

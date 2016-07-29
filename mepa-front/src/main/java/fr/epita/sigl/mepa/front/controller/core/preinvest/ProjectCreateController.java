@@ -4,9 +4,12 @@ package fr.epita.sigl.mepa.front.controller.core.preinvest;
  * Created by Xavier on 21/07/2016.
  */
 import fr.epita.sigl.mepa.core.domain.AppUser;
+import fr.epita.sigl.mepa.core.domain.NewsletterModel;
 import fr.epita.sigl.mepa.core.domain.Project;
 import fr.epita.sigl.mepa.core.service.Currency;
+import fr.epita.sigl.mepa.core.service.NewsletterService;
 import fr.epita.sigl.mepa.core.service.ProjectService;
+import fr.epita.sigl.mepa.front.controller.authentification.AuthController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +51,12 @@ public class ProjectCreateController {
 
     @Autowired
     private RewardAddController rewardAddController;
+    @Autowired
+    private AuthController authController;
+
+    @Autowired
+    private NewsletterService newsletterService;
+
 
     @RequestMapping(value = {"/projectCreate"}, method = RequestMethod.GET) // The adress to call the function
     public String projectCreate(HttpServletRequest request, ModelMap modelMap) {
@@ -62,11 +71,13 @@ public class ProjectCreateController {
         if (is_co == null)
             is_co = false;
 
-        System.out.println("Is Co" + is_co);
         modelMap.addAttribute(NEWPROJECT, p);
         modelMap.addAttribute(IS_CONNECTED_ATTRIBUTE, is_co);
 
-        return "/preinvest/projectCreate"; // The adress of the JSP coded in tiles.xml
+        if (is_co == false)
+            return authController.getsignin(request, modelMap);
+        else
+            return "/preinvest/projectCreate"; // The adress of the JSP coded in tiles.xml
     }
 
     @RequestMapping(value = {"/processCreation"}, method = RequestMethod.POST) // The adress to call the function
@@ -79,6 +90,7 @@ public class ProjectCreateController {
         boolean is_date = false;
         AppUser connectedUser = (AppUser) request.getSession().getAttribute("userCo");
         newProject.setUser_id(connectedUser.getId());
+
 
 
         // Change string to date
@@ -127,6 +139,16 @@ public class ProjectCreateController {
             projectService.deleteProject(newProject);
             return this.projectCreate(request, model);
         }
+
+
+//*prosper
+        NewsletterModel new_newsletermodel = new NewsletterModel();
+        new_newsletermodel.setProjectid(newProject.getId());
+        ArrayList<String> email_list = new ArrayList<>();
+        new_newsletermodel.setEmails(email_list);
+        new_newsletermodel.setLike_(0);
+        new_newsletermodel.setProject_name(newProject.getName());
+        this.newsletterService.createNewsletter(new_newsletermodel);
         return this.rewardAddController.display(newProject.getId(), model);
     }
 

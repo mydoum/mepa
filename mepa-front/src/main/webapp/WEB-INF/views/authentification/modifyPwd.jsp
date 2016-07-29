@@ -21,6 +21,7 @@
                   modelAttribute="addCustomUserFormBean"
                   method="POST">
                 <fieldset>
+                    <div id="modifyPasswordTab">
                     <div id="legend">
                         <legend class="">Modification du mot de passe</legend>
                     </div>
@@ -56,6 +57,7 @@
                         <div class="controls">
                             <button type="submit" class="btn btn-default">Enregistrer</button>
                         </div>
+                    </div>
                     </div>
                 </fieldset>
 

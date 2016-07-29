@@ -1,4 +1,5 @@
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%--
   Created by IntelliJ IDEA.
   User: Valentin ZHENG
   Date: 24/07/2016
@@ -7,6 +8,13 @@
 --%>
 <%@ include file="/WEB-INF/views/includes/common.jsp" %>
 <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900" rel="stylesheet" type="text/css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css"/>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+
 <%
     Integer hitsCount = (Integer) application.getAttribute("hitCounter");
     ArrayList<String> visits = (ArrayList<String>) application.getAttribute("visits");
@@ -27,12 +35,18 @@
     application.setAttribute("visits", visits);
 %>
 
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
 <div class="container">
     <header class="title projectHeader">
         <h1 class="short">${project.name}</h1>
         <jsp:useBean id="now" class="java.util.Date"/>
         <c:if test="${project.goalAmount <= totalDonation && project.endDate gt now}">
-            <h1 class="short">88888888888888888</h1>
+            <h1 class="short"></h1>
         </c:if>
     </header>
     <c:if test="${amount != null}">
@@ -48,35 +62,33 @@
     <div class="col-md-8 investFormInside">
         <div class="row">
             <div class="col-md-12">
-                <nav class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="/core/preinvest/projectDisplay/${project.id}">${project.name}</a>
+                            <a href="/core/preinvest/projectDisplay/${project.id}">Description</a>
                         </li>
                         <li>
-                            <a href="/core/preinvest/projectDisplay/${project.id}/comment">Commentaires</a>
+                            <a href="/core/preinvest/projectDisplay/${project.id}/comment" >Commentaires</a>
                         </li>
                     </ul>
-                </nav>
                 <%-- Part of the page where the slideshow and the project date are printed --%>
-                <div class="well bs-component">
-                <div class="row">
-                    <div class="col-md-4" id="slideshow">
-                        <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
-                            <div>
-                                <img src="${image}" style="width:100%"
-                                     class="projectImageInvest img-responsive img-rounded"/>
-                            </div>
-                        </c:forEach>
+                <div class="bs-component" >
+                    <div class="row">
+                        <div class="col-md-4" id="slideshow">
+                            <c:forEach items="${project.imagesLinks}" var="image" varStatus="loop">
+                                <div>
+                                    <img src="${image}" style="width:100%"
+                                         class="projectImageInvest img-responsive img-rounded"/>
+                                </div>
+                            </c:forEach>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="date-display firstDate">Date de début:</div>
+                            <div class="date-display">${project.dateFormat("dd/MM/yyyy", project.startDate)}</div>
+                            <div class="date-display">Date de fin:</div>
+                            <div class="date-display">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
+                            <div class="date-display">Nombre de contributeurs : ${nbrContributos}</div>
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="date-display firstDate">Date de début:</div>
-                        <div class="date-display">${project.dateFormat("dd/MM/yyyy", project.startDate)}</div>
-                        <div class="date-display">Date de fin:</div>
-                        <div class="date-display">${project.dateFormat("dd/MM/yyyy", project.endDate)}</div>
-                        <div class="date-display">Nombre de contributeurs : ${nbrContributos}</div>
-                    </div>
-                </div>
                 </div>
                 <%-- Part of the page for Social buttons --%>
                 <div class="row">
@@ -124,6 +136,18 @@
                         <p>${project.description}</p>
                     </div>
                 </div>
+                <c:if test="${userco != null}">
+                    <form:form role="form" action="/core/preinvest/projectDisplay/newsletter/${project.id}" method="post">
+                        <div class="row">
+                            <c:if test="${display == 2}">
+                                <button type="submit" data-toggle="tooltip" title="${nb_likes}" class="btn btn-success">J'AIME !</button>
+                            </c:if>
+                            <c:if test="${display == 1}">
+                                <button type="submit" data-toggle="tooltip" title="${nb_likes}" class="btn btn-danger">JE N'AIME PLUS </button>
+                            </c:if>
+                        </div>
+                    </form:form>
+                </c:if>
             </div>
             <br/>
 
@@ -142,7 +166,7 @@
                     </thead>
                     <tbody id="infiniteInvestorsList">
                     <c:if test="${investorsList.size() > 0}">
-                        <c:forEach items="${investorsList}" var="investor" varStatus="status">
+                        <c:forEach items="${investorsList}" begin="0" end="25" var="investor" varStatus="status">
                             <tr>
                                 <c:choose>
                                     <c:when test="${investor.anonymous}">
@@ -220,22 +244,28 @@
                 </div>
                 <c:url var="investMoney" value="/invest/${project.id}/investMoney"/>
                 <form:form role="form" action="${investMoney}" method="post" modelAttribute="User">
+                    <label class="investFormInside col-md-12">Montant :</label>
                     <div id="keypress"
                          class="InvestFormInside noUi-target noUi-ltr noUi-horizontal noUi-background col-md-12"></div>
-                    <label class="investFormInside col-md-12">Montant (${amountCurrency}):</label>
+
                     <div class="col-md-12 InvestFormInside">
-                        <input name="investAmount" id="input-with-keypress"
-                               class="form-control" type="text" required="required" readonly/>
+                        <div class="input-group">
+                            <span class="input-group-addon">${project.getCurrencyString()}</span>
+                            <input name="investAmount" id="input-with-keypress"
+                                   class="form-control" type="text" required="required" readonly/>
+                        </div>
+
                     </div>
                     <br/>
+
                     <div class="row">
                         <div class="col-md-4">
-                            <label class="investFormInside col-md-12">Anonyme:</label>
+                            <div class="col-md-1 checkbox">
+                                <label><input type="checkbox" name="anonymous_id" value=""/>Anonyme</label>
+                                    <%--      <label class="investFormInside col-md-12">Anonyme:</label>--%>
+                            </div>
                         </div>
                         <div class="col-md-4"></div>
-                        <div class="col-md-1 checkbox">
-                            <label><input type="checkbox" name="anonymous_id" value=""/></label>
-                        </div>
                         <div class="col-md-7"></div>
                     </div>
 
@@ -262,6 +292,7 @@
                                 <h4 class="rewardTitle"><a
                                         href="/invest/${project.id}/rewardDisplay/${reward.id}"> ${reward.name} à partir
                                     de ${reward.costStart}${amountCurrency}</a></h4>
+
                                 <div class="rewardDescription">
                                     <p>${reward.description}</p>
                                 </div>
@@ -275,15 +306,16 @@
 </div>
 
 <script>
-    var startStep = 0;
+    var startStep = 5;
     startStep = Number(startStep).toFixed();
-    var stepSlider = ${project.goalAmount} * 0.1;
+    var stepSlider = 5;
     stepSlider = Number(stepSlider).toFixed();
     var maxSlider = ${project.goalAmount};
     var infiniteListSize = ${investorsList.size()};
-
+    var infiniteScrollInitIndex = 10;
     var infiniteScrollerElements = [
-        <c:forEach items="${investorsList}" begin="10" end="${investorsList.size()}" var="investor" varStatus="status">
+
+        <c:forEach items="${investorsList}" begin="25" end="${investorsList.size()}" var="investor" varStatus="status">
             [
                 <c:choose>
                     <c:when test="${investor.anonymous}">
@@ -311,6 +343,6 @@
 <script src="${investSliderJs}"></script>
 <c:url var="investSliderPersoJs" value="/js/investment/slider.js"/>
 <script src="${investSliderPersoJs}"></script>
-<c:url var="investProgressBar" value="/js/investment/progressBar.js"/>
-<script src="${investProgressBar}"></script>
+<c:url var="investInfiniteScroll" value="/js/investment/infiniteScroll.js"/>
+<script src="${investInfiniteScroll}"></script>
 
