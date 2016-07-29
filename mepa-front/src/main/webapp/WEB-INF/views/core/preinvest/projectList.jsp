@@ -18,21 +18,22 @@
             <tbody>
             <button type="submit" id="like" data-loading-text="Trier" class="btn btn-success">Trier par popularité</button><center/>
             <sf:form method="get" modelAttribute="newProject" action="processCreation">
-            <c:forEach items="${project_list}" var="project" varStatus="loop">
-                <tr>
-                    <td><img src="${project.imagesLinks.get(0)}" alt="Illustration" style="height: 80px;"></td>
-                    <td><a href="<c:url value='/core/preinvest/projectDisplay/${project.id}'/>" >${project.name} </a></td>
-                    <td>${project.dateFormat("dd/MM/yyyy",project.endDate)}</td>
-                    <td>${project.description}</td>
-                    <!--<td>
-                        Rewards:
+                <c:forEach items="${project_list}" var="project" varStatus="loop">
+                    <tr>
+                        <td><img src="${project.imagesLinks.get(0)}" alt="Illustration" style="height: 80px;"></td>
+                        <td><a href="<c:url value='/core/preinvest/projectDisplay/${project.id}'/>" >${project.name} </a></td>
+                        <td>${project.dateFormat("dd/MM/yyyy",project.endDate)}</td>
+                        <td>${project.description}</td>
+                        <!--<td>
+                            Rewards:
 
-                        <c:forEach items="${project.rewards}" var="reward" varStatus="loop">
-                            - ${reward.name} :${reward.description} <br />
-                        </c:forEach>
-                    </td>--> 
-                </tr>
-            </c:forEach>
+                            <c:forEach items="${project.rewards}" var="reward" varStatus="loop">
+                                - ${reward.name} :${reward.description} <br />
+                            </c:forEach>
+                        </td>-->
+                    </tr>
+                </c:forEach>
+            </sf:form>
             </tbody>
         </table>
     </div>
