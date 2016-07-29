@@ -155,7 +155,7 @@ public class InsertDummyController {
             rand.nextLong();
             Project newProject = new Project((long) 1, "YoloSwag", getRandomDateFinishedDate());
             Date d = getRandomDateFinishedDate();
-            newProject.setGoalAmount((long) 600);
+            newProject.setGoalAmount((long) (long) PostInvestmentController.randomWithRange(500, 1000));
             while (d.after(newProject.getEndDate()))
                 d = getRandomDateFinishedDate();
 
@@ -186,7 +186,7 @@ public class InsertDummyController {
 
             for (String s : emailList){
                 Investment invest = new Investment();
-                float totalAmount = PostInvestmentController.randomWithRange(0, 200);
+                float totalAmount = PostInvestmentController.randomWithRange(0, 150);
                 invest.setAmount(totalAmount);
                 invest.setProjectId(newProject.getId());
                 invest.setUserId(appUserService.getUserByLogin(s).getId());

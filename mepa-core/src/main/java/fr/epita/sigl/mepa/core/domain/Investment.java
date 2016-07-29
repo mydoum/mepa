@@ -42,7 +42,6 @@ public class Investment {
     @NotNull
     private Long projectId;
 
-    @NotNull
     private Long rewardId;
 
     @NotNull

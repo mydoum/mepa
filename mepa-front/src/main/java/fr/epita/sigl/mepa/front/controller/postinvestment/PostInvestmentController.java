@@ -52,11 +52,17 @@ public class PostInvestmentController {
         List<Project> projects = this.projectService.getAllFinishedProjects();
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
         float totalAmount = 0.00f;
+        boolean status = false;
         for (Project p : projects) {
             totalAmount = 0.00f;
             totalAmount = investController.getallinvestors(listinvestors, totalAmount, p, false);
+            p.setTotalAmountFinal(totalAmount);
             model.addAttribute("investorsList", listinvestors);
-            model.addAttribute("totalDonation", totalAmount);
+            //model.addAttribute("totalDonation", p.getTotalAmountFinal());
+            if (p.getTotalAmountFinal() > p.getGoalAmount())
+                status = true;
+            //model.addAttribute("objectif", p.getGoalAmount());
+            model.addAttribute("financed", status);
             Hibernate.initialize(p.getRewards());
         }
         model.addAttribute(PROJECTS_LIST_ATTRIBUTE, projects);
@@ -91,7 +97,7 @@ public class PostInvestmentController {
         ArrayList<Investor> listinvestors = new ArrayList<Investor>();
         float  totalAmount = 0.00f;
         totalAmount = investController.getallinvestors(listinvestors, totalAmount, project, false);
-        modelMap.addAttribute("totalDonationDummy", totalAmount);
+        modelMap.addAttribute("totalDonation", totalAmount);
 
         int var = 100 * (int) totalAmount / toIntExact(project.getGoalAmount());
         modelMap.addAttribute("varpercentage", var);
