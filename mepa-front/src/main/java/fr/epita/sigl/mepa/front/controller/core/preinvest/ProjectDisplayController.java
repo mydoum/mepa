@@ -73,14 +73,12 @@ public class ProjectDisplayController {
 
         /* Check if the user connected is the administrator of the projet */
         if (userco != null && project != null && ((userco.getId().equals(project.getUser_id()))
-                || (userco.getFirstName().compareTo("Admin") == 0)))
+                || userco.getIsAdmin()))
             request.getSession().setAttribute("isAdmin", "true");
         else
             request.getSession().setAttribute("isAdmin", "false");
 
         investController.investorsList(modelMap, request, project);
-
-
 
         int display;
         List<NewsletterModel> newsletterlist = this.newsletterService.getAllNewsletterModels();

@@ -34,7 +34,7 @@ public class PasswordResetTokenDaoImpl implements PasswordResetTokenDao {
 
     @Override
     public PasswordResetToken getByToken(String token) {
-        Query query = this.getSession().getNamedQuery("PasswordResetToken.findById");
+        Query query = this.getSession().getNamedQuery("PasswordResetToken.findByToken");
         query.setParameter("token", token);
         return (PasswordResetToken) query.uniqueResult();
     }

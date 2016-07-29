@@ -49,7 +49,7 @@ public class InvestmentFrontService {
             investorIsPresent = false;
         }
         email = user.getLogin();
-        Investor tmpInvestor = new Investor(email, firstname, lastname, amount, created, anonymous);
+        Investor tmpInvestor = new Investor(user.getId().intValue(), email, firstname, lastname, amount, created, anonymous);
         if (investorIsPresent) {
             groupInvestors(listOfInvestors, tmpInvestor);
         } else {

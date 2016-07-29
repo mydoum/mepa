@@ -134,6 +134,7 @@ public class InvestController {
 
     private int insertNewInvestor(float moneyAmount, Long userId, Long projectId, boolean anonymous) {
         Investment newInvestment = new Investment();
+        newInvestment.setUserId(userId);
         newInvestment.setAmount(moneyAmount);
         newInvestment.setProjectId(projectId);
         newInvestment.setUserId(userId);
@@ -169,8 +170,9 @@ public class InvestController {
         ArrayList<Investor> investors = new ArrayList<Investor>();
         Project project = projectService.getProjectById(projectId);
         totalAmount = getallinvestors(investors, totalAmount, project, true);
+        ArrayList<Investment> investments = new ArrayList<>(investmentService.getAllInvestmentsByProjectId(projectId));
         if (investors != null && investors.size() > 0) {
-            String fileWriter = Tools.writeCsvFile(investors);
+            String fileWriter = Tools.writeCsvFile(investors, investments);
             response.setContentType("text/csv");
             response.setHeader("Content-Disposition", "attachment; filename=\"Investors_export_" + date + ".csv\"");
             try {

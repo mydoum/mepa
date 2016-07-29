@@ -11,6 +11,7 @@ import java.util.Date;
  * Created by Simon MACE on 20/07/2016.
  */
 public class Investor implements Comparable<Investor>{
+    private Integer userId;
     private String firstname;
     private String lastname;
     private String email;
@@ -19,8 +20,9 @@ public class Investor implements Comparable<Investor>{
     private String stringDate;
     private boolean anonymous;
 
-    public Investor(String email, String firstname, String lastname, Float moneyAmount, Date dateOfInvestment,
+    public Investor(Integer userId, String email, String firstname, String lastname, Float moneyAmount, Date dateOfInvestment,
                     boolean anonymous) {
+        this.userId = userId;
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -29,6 +31,14 @@ public class Investor implements Comparable<Investor>{
         SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
         this.stringDate = formater.format(dateOfInvestment);
         this.anonymous = anonymous;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {return email; }

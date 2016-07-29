@@ -9,7 +9,8 @@
         <div class="col-md-6">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#editUserTab">Authentification</a></li>
-                <li><a data-toggle="tab" href="#modifyPasswordTab">Comments</a></li>
+                <li><a data-toggle="tab" href="#modifyPasswordTab">Commentaires</a></li>
+                <li><a data-toggle="tab" href="#project">Projets</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="editUserTab">
@@ -92,6 +93,28 @@
                                     <input id="comments" name="comments" placeholder=""
                                            class="form-control input-lg" type="text"
                                            value="${nbComments}" disabled>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div id="project" class="tab-pane fade">
+                    <form id="eventForm2" class="form-horizontal">
+                        <fieldset>
+                            <div class="control-group">
+                                <label class="control-label" for="description">Nombre de vues sur la création de projet</label>
+                                <div class="controls">
+                                    <input id="viewProjectCreate" name="comments" placeholder=""
+                                           class="form-control input-lg" type="text"
+                                           value="${nbViewProjectCreate}" disabled>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="description">Nombre de projets créés</label>
+                                <div class="controls">
+                                    <input id="nbProjectCreate" name="comments" placeholder=""
+                                           class="form-control input-lg" type="text"
+                                           value="${nbProjectCreate}" disabled>
                                 </div>
                             </div>
                         </fieldset>

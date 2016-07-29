@@ -58,6 +58,9 @@ public class ProjectCreateController {
     private NewsletterService newsletterService;
 
 
+    private int NB_VIEWPROJECTCREATE = 1;
+    private int NB_PROJECTCREATE = 1;
+
     @RequestMapping(value = {"/projectCreate"}, method = RequestMethod.GET) // The adress to call the function
     public String projectCreate(HttpServletRequest request, ModelMap modelMap) {
         /* Code your logic here */
@@ -77,6 +80,7 @@ public class ProjectCreateController {
         if (is_co == false)
             return authController.getsignin(request, modelMap);
         else {
+            request.getSession().setAttribute("nbViewProjectCreate", NB_VIEWPROJECTCREATE++);
             return "/preinvest/projectCreate"; // The adress of the JSP coded in tiles.xml
         }
     }
@@ -151,6 +155,7 @@ public class ProjectCreateController {
         new_newsletermodel.setLike_(0);
         new_newsletermodel.setProject_name(newProject.getName());
         this.newsletterService.createNewsletter(new_newsletermodel);
+        request.getSession().setAttribute("nbProjectCreate", NB_PROJECTCREATE++);
         return this.rewardAddController.display(newProject.getId(), model);
     }
 
