@@ -32,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Random;
 
 import static java.lang.Math.toIntExact;
 
@@ -276,5 +277,37 @@ public class InvestController {
             System.out.println(appUser.getLastName());
             System.out.println(appUser.getId());
         }
+    }
+    @RequestMapping(value = {"/invest/{projectId}/scrollFunc"}, method = RequestMethod.GET) // The adress to call the function
+    public String projectInfiniteScroll(HttpServletRequest request, ModelMap model, @PathVariable long projectId, Long rewardId) {
+        Project project = this.projectService.getProjectById(projectId);
+        AppUser tmpUser = (AppUser) request.getSession().getAttribute("userCo");
+
+        /**
+         * Check is the user is signed-in
+         */
+        if ((boolean) request.getSession().getAttribute("isCo") == false || tmpUser == null) {
+            String errorCo = "Veuillez vous identifier pour investir dans un projet";
+            model.addAttribute("messageRedirect", errorCo);
+            model.addAttribute("projectId", projectId);
+            return "/authentification/signin";
+        }
+
+        float minX = 50.0f;
+        float maxX = 250.0f;
+
+        Random rand = new Random();
+
+        float moneyAmount = rand.nextFloat() * (maxX - minX) + minX;
+
+        boolean anonymous_id = request.getParameter("anonymous_id") != null;
+        for (int i = 0; i < 100; ++i) {
+            if (insertNewInvestor(moneyAmount, tmpUser.getId(), projectId, anonymous_id, rewardId) != 0L) {
+                String errorMessage = "Votre donation n'a pu être prise en compte. Veuillez rééssayer ultérieurement.";
+                model.addAttribute("errorInvest", errorMessage);
+            }
+            moneyAmount = (maxX - minX) * rand.nextFloat() + minX;
+        }
+        return projectDisplayController.projectDisplay(request, model, projectId);
     }
 }

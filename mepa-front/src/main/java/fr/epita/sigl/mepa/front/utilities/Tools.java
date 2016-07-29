@@ -175,19 +175,20 @@ public class Tools {
         ArrayList<String> keys = new ArrayList<>();
         HashMap<String, Integer> map = new HashMap<>();
 
+        System.out.println("titi");
         if (investments != null && investments.size() > 0) {
             for (Investment investment : investments) {
-                if (investment.getUserId().equals(userId) && investment.getRewardId() != 0) {
+                System.out.println("tutu: " + userId + " " + investment.getUserId() + " " + investment.getRewardId());
+                if ((investment.getUserId().intValue() == userId) && investment.getRewardId() != 0) {
                     Reward currentReward = getReward(investment.getRewardId(), rewards);
+                    System.out.println("test " + currentReward.getName());
                     if (currentReward != null) {
-                        if (!keys.contains(currentReward.getName()))
-                        {
-                            map.put(currentReward.getName(), 0);
+                        if (!keys.contains(currentReward.getName())) {
+                            map.put(currentReward.getName(), 1);
                             keys.add(currentReward.getName());
-                        }
-                        else
-                        {
+                        } else {
                             Integer quantity = map.get(currentReward.getName()) + 1;
+                            map.remove(currentReward.getName());
                             map.put(currentReward.getName(), quantity);
                         }
                     }
@@ -197,11 +198,11 @@ public class Tools {
 
         int i = 0;
 
-        for (String key : keys)
-        {
-             if (i == 0)
-                 reward += key + ": " + map.get(key);
-            reward += "; " + key + ": " + map.get(key);
+        for (String key : keys) {
+            if (i == 0)
+                reward += key + ": " + map.get(key);
+            else
+                reward += ", " + key + ": " + map.get(key);
             i++;
         }
 
