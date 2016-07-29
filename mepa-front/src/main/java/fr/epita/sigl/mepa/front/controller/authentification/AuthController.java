@@ -470,7 +470,7 @@ public class AuthController {
         return home.home(request);
     }
 
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/resetPwd", method = RequestMethod.POST)
     public String resetPassword(
             HttpServletRequest request, @RequestParam("email") String userEmail) {
 
@@ -480,18 +480,41 @@ public class AuthController {
 //            throw new UserNotFoundException();
             // ERROR
         }
-//
-//        String appUrl =
-//                "http://" + request.getServerName() +
-//                        ":" + request.getServerPort() +
-//                        request.getContextPath();
-//        SimpleMailMessage email =
-//                constructResetTokenEmail(appUrl, request.getLocale(), token, user);
-//        mailSender.send(email);
+
+        String token = UUID.randomUUID().toString();
+        PasswordResetToken pwdResetToken = new PasswordResetToken();
+        pwdResetToken.setLogin(user.getLogin());
+        pwdResetToken.setToken(token);
+        pwdResetToken.setExpiryDate(new Date()); // FIXME
+        pwdResetTokenService.createPwdResetToken(pwdResetToken);
+
+        System.out.println("token = " + pwdResetToken.getToken());
+
+        String appUrl =
+                "http://" + request.getServerName() +
+                        ":" + request.getServerPort() +
+                        request.getContextPath();
+
+        String url = appUrl + "/authentification/changePassword?id=" + user.getId() + "&token=" + token;
+        try {
+            boolean isSent;
+            String obj = "Récupération de votre mot de passe";
+            String text = "Voici l'url pour reset ton mot de passe : " + url;
+            isSent = tools.sendMail("patrick-hk@outlook.com", obj, text);
+            if (isSent) {
+                System.out.println("le message a été envoyé check tes email");
+            } else {
+                System.out.println("Il y a eu un soucis");
+            }
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        
 
         return home.home(request);
 
     }
+
     @RequestMapping(value = {"/getStatistics"}, method = {RequestMethod.GET})
     public String showStatistics(HttpServletRequest request, ModelMap modelMap) {
         AppUser userCo = (AppUser) request.getSession().getAttribute("userCo");

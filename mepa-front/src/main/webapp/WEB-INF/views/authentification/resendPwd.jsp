@@ -19,7 +19,7 @@
     </c:choose>
     <div class="row">
         <div class="col-md-6">
-            <c:url var="resendPwdFormActionUrl" value="/authentification/resendPwd"/>
+            <c:url var="resendPwdFormActionUrl" value="/authentification/resetPwd"/>
             <form id="eventForm" class="form-horizontal" action="${resendPwdFormActionUrl}"
                   modelAttribute="resendPwdFormBean"
                   method="POST">
